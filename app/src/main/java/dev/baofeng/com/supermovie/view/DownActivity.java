@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -119,6 +120,11 @@ public class DownActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+            }
+
+            @Override
+            public void onBaiduPanClick(String url) {
+                Toast.makeText(DownActivity.this, "即将打开浏览器，前往浏览器继续操作", Toast.LENGTH_SHORT).show();
             }
         });
         rvlist.setLayoutManager(new GridLayoutManager(this, 3));
