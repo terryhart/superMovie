@@ -21,7 +21,7 @@ public class CommonHolder extends RecyclerView.ViewHolder {
 
     public CommonHolder(View itemView) {
         super(itemView);
-        itemimg = itemView.findViewById(R.id.post_img);
-        itemtitle = itemView.findViewById(R.id.post_title);
+        itemimg = (ImageView) itemView.findViewById(R.id.post_img);
+        itemtitle = (TextView) itemView.findViewById(R.id.post_title);
     }
 }

@@ -1,6 +1,7 @@
 package dev.baofeng.com.supermovie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import com.bumptech.glide.Glide;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
+import dev.baofeng.com.supermovie.view.DownActivity;
+import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -37,6 +40,21 @@ public class MainAdapter extends RecyclerView.Adapter {
         Glide.with(context).load(info.getData().get(position).getDownimgurl()).into(((CommonHolder)holder).itemimg);
         Log.d("HHAHHDHHDH",info.getData().get(position).getDownimgurl());
         ((CommonHolder)holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
+
+        ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               try {
+                   Intent intent = new Intent(context, DownActivity.class);
+                   intent.putExtra(GlobalMsg.KEY_POST_IMG,info.getData().get(position).getDownimgurl());
+                   intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
+                   intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE,info.getData().get(position).getDownLoadName());
+                   context.startActivity(intent);
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+            }
+        });
     }
 
     @Override

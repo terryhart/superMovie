@@ -9,39 +9,36 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="46dp"
         android:layout_height="match_parent">
     </FrameLayout>
-    <Button
-        android:layout_width="0dp"
-        android:id="@+id/main"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="首页"
-        app:layout_constraintHorizontal_weight="1"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintRight_toLeftOf="@+id/down"
-        />
-    <Button
-        android:layout_width="0dp"
-        app:layout_constraintRight_toRightOf="@id/my"
-        app:layout_constraintLeft_toRightOf="@+id/main"
-        android:id="@+id/down"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="分类"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:layout_height="50dp"
-        />
-    <Button
-        android:layout_width="0dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/down"
-        android:id="@+id/my"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="个人中心"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:layout_height="50dp"
-        />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:background="#fff"
+      android:layout_height="wrap_content">
+      <Button
+          android:id="@+id/main"
+          android:text="首页"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="50dp"
+          />
+      <Button
+          android:id="@+id/down"
+          android:text="分类"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="50dp"
+          />
+      <Button
+          android:id="@+id/my"
+          android:text="个人中心"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="50dp"
+          />
+  </LinearLayout>
 </android.support.constraint.ConstraintLayout>
