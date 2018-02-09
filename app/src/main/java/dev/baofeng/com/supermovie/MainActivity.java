@@ -4,28 +4,26 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-
-import com.xunlei.downloadlib.XLTaskHelper;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.HomeFragment;
-import dev.baofeng.com.supermovie.view.DownFragment;
+import dev.baofeng.com.supermovie.view.BTFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.content)
     FrameLayout content;
     @BindView(R.id.main)
-    Button main;
+    TextView main;
     @BindView(R.id.down)
-    Button down;
+    TextView down;
     @BindView(R.id.my)
-    Button my;
-    private DownFragment downfragment;
+    TextView my;
+    private BTFragment downfragment;
     private HomeFragment homeFragment;
     private CenterFragment centerFragment;
 
@@ -41,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main.setOnClickListener(this);
         down.setOnClickListener(this);
         my.setOnClickListener(this);
-
-        downfragment = new DownFragment();
+        main.setSelected(true);
+        downfragment = BTFragment.getInstance();
         homeFragment = HomeFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
         FragmentTransaction fragmentTransaction =getSupportFragmentManager().beginTransaction();
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.show(homeFragment);
         fragmentTransaction.commitAllowingStateLoss();
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -78,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.hide(centerFragment);
                 fragmentTransaction.hide(downfragment);
                 fragmentTransaction.commit();
+                main.setSelected(true);
+                down.setSelected(false);
+                my.setSelected(false);
                 break;
             case 2:
                 FragmentTransaction fragmentTran2 =getSupportFragmentManager().beginTransaction();
@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTran2.hide(centerFragment);
                 fragmentTran2.hide(homeFragment);
                 fragmentTran2.commit();
+                main.setSelected(false);
+                down.setSelected(true);
+                my.setSelected(false);
                 break;
             case 3:
                 FragmentTransaction fragmentTran3 =getSupportFragmentManager().beginTransaction();
@@ -92,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTran3.hide(homeFragment);
                 fragmentTran3.hide(downfragment);
                 fragmentTran3.commit();
+                main.setSelected(false);
+                down.setSelected(false);
+                my.setSelected(true);
                 break;
         }
     }

@@ -18,25 +18,35 @@
       android:layout_width="match_parent"
       app:layout_constraintBottom_toBottomOf="parent"
       android:background="#fff"
+      android:paddingTop="4dp"
       android:layout_height="wrap_content">
-      <Button
+      <TextView
           android:id="@+id/main"
+          android:drawableTop="@drawable/home_bt"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:drawablePadding="0dp"
+          android:gravity="center"
           android:text="首页"
-          android:layout_width="0dp"
-          android:layout_weight="1"
           android:layout_height="50dp"
           />
-      <Button
+      <TextView
           android:id="@+id/down"
-          android:text="分类"
+          android:drawableTop="@drawable/bt_bt"
           android:layout_width="0dp"
           android:layout_weight="1"
+          android:text="BT频道"
+          android:drawablePadding="0dp"
+          android:gravity="center"
           android:layout_height="50dp"
           />
-      <Button
+      <TextView
           android:id="@+id/my"
+          android:drawableTop="@drawable/user_bt"
           android:text="个人中心"
           android:layout_width="0dp"
+          android:drawablePadding="0dp"
+          android:gravity="center"
           android:layout_weight="1"
           android:layout_height="50dp"
           />

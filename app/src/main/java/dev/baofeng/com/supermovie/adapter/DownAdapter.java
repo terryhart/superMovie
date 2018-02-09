@@ -73,6 +73,4 @@ public class DownAdapter extends RecyclerView.Adapter<DownHolder> {
     public void setOnItemClickListener(onItemClick listener){
         this.listener = listener;
     }
-
-
 }

@@ -6,13 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +19,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.MainAdapter;
-import dev.baofeng.com.supermovie.domain.MovieBean;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
@@ -32,14 +28,14 @@ import dev.baofeng.com.supermovie.utils.NetworkUtils;
  * Created by huangyong on 2018/1/31.
  */
 
-public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class BtListFragment extends Fragment implements IMoview, BGARefreshLayout.BGARefreshLayoutDelegate {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
     @BindView(R.id.bga_refresh)
     BGARefreshLayout bgaRefresh;
     private GetRecpresenter recpresenter;
     private MainAdapter adapter;
-    private static ChannelFragment channelFragment;
+    private static BtListFragment btlistFragment;
     private Unbinder bind;
     private String type;
     private MovieInfo infos;
@@ -54,12 +50,12 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
         return view;
     }
 
-    public static ChannelFragment newInstance(String type) {
-        channelFragment = new ChannelFragment();
+    public static BtListFragment newInstance(String type) {
+        btlistFragment = new BtListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Type", type);
-        channelFragment.setArguments(bundle);
-        return channelFragment;
+        btlistFragment.setArguments(bundle);
+        return btlistFragment;
 
     }
 
@@ -74,13 +70,14 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
         Bundle bundle = getArguments();
         type = bundle.getString("Type");
         index = 1;
-        recpresenter.getRecommend(type, index, 18);
+        recpresenter.getBtRecommend(type, index, 18);
     }
 
     @Override
     public void loadData(MovieInfo info) {
         infos = info;
         adapter = new MainAdapter(getContext(), info);
+
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
 
@@ -119,7 +116,7 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
             //网络可用。异步加载后停止刷新
             // 加载完毕后在 UI 线程结束加载更多
             new Handler().postDelayed(()->  {
-                    recpresenter.getRecommend(type, index, 18);
+                    recpresenter.getBtRecommend(type, index, 18);
                     bgaRefresh.endRefreshing();
             }, 2500);
         } else {
@@ -139,7 +136,7 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         new Handler().postDelayed(()-> {
             bgaRefresh.endLoadingMore();
-            recpresenter.getMoreData(type, ++index, 18);
+            recpresenter.getBtMoreData(type, ++index, 18);
         }, 2000);
         return true;
     }

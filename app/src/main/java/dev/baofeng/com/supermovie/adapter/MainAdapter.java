@@ -2,6 +2,7 @@ package dev.baofeng.com.supermovie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
@@ -37,8 +39,9 @@ public class MainAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Glide.with(context).load(info.getData().get(position).getDownimgurl()).into(((CommonHolder)holder).itemimg);
-        Log.d("HHAHHDHHDH",info.getData().get(position).getDownimgurl());
+        Uri uri = Uri.parse(info.getData().get(position).getDownimgurl());
+        Glide.with(context).load(uri).asBitmap().override(180,240).priority(Priority.LOW).into(((CommonHolder)holder).itemimg);
+
         ((CommonHolder)holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
 
         ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {

@@ -76,6 +76,7 @@ public class DownActivity extends AppCompatActivity {
         downUrl = getIntent().getStringExtra(GlobalMsg.KEY_DOWN_URL);
         postImg1 = getIntent().getStringExtra(GlobalMsg.KEY_POST_IMG);
         title = getIntent().getStringExtra(GlobalMsg.KEY_MOVIE_TITLE);
+        tvMvMame.setText(title);
         Glide.with(this).load(postImg1).into(postImg);
         Gson gson = new Gson();
 
@@ -86,12 +87,10 @@ public class DownActivity extends AppCompatActivity {
         String bbb = "";
         if (bean.getDate().size()>=2){
             for (int i = 0; i < bean.getDate().size(); i++) {
-                Log.d("ZIZIZIZIIZI:",bean.getDate().get(i)+"*****"+i);
                 if (bean.getDate().get(i).contains("http://pan.baidu.com")) ;
 //                bean.getDate().remove(i+1);
             }
             for (int i = 0; i < bean.getDate().size(); i++) {
-                Log.d("ZIZIZIZIIZI:",bean.getDate().get(i)+"*****"+i);
                 bbb += bean.getDate().get(i) + "\n";
             }
         }else {

@@ -4,7 +4,14 @@ import android.app.Application;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.xunlei.downloadlib.XLTaskHelper;
+
+import java.io.InputStream;
+
+import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.https.OkHttpUrlLoader;
 
 /**
  * Created by oceanzhang on 2017/9/28.
@@ -19,6 +26,9 @@ public class MyApp extends Application{
         super.onCreate();
         instance = this;
         XLTaskHelper.init(getApplicationContext());
+
+        //让Glide能用HTTPS
+        Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(ApiManager.getClientInstance()));
     }
 
     public static MyApp appInstance() {

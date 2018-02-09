@@ -50,4 +50,7 @@ public class ApiManager {
         }
         return api;
     }
+    public static OkHttpClient getClientInstance(){
+        return client;
+    }
 }

@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_findFragment_title"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        app:tabIndicatorColor="#1f90bc"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabSelectedTextColor="#1f90bc"
-        app:tabTextColor="#232323"
-        />
-    <View
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
+        android:layout_height="200dp">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+                <include layout="@layout/searchbar"/>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_findFragment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_alignParentTop="true"
+            app:tabIndicatorColor="#1f90bc"
+            app:tabSelectedTextColor="#1f90bc"
+            app:tabTextColor="#232323"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:id="@+id/line"
+            android:background="#d7dedede"
+            />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:id="@+id/line"
-        app:layout_constraintTop_toBottomOf="@+id/tab_findFragment_title"
-        android:background="#d7dedede"
-        />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        android:layout_height="wrap_content"/>
-</android.support.constraint.ConstraintLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

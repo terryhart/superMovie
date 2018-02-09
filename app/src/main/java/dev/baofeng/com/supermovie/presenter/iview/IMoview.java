@@ -9,4 +9,6 @@ import dev.baofeng.com.supermovie.domain.MovieInfo;
 public interface IMoview {
     void loadData(MovieInfo info);
     void loadError(String msg);
+
+    void loadMore(MovieInfo result);
 }

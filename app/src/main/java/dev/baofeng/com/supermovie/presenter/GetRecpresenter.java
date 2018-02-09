@@ -1,6 +1,7 @@
 package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
@@ -47,9 +48,79 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 });
         addSubscription(subscription);
     }
+    public void getBtRecommend(String type ,int page,int pagesize){
+
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getBtRecomend(type,page,pagesize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieInfo>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(MovieInfo result) {
+                        iview.loadData(result);
+                    }
+                });
+        addSubscription(subscription);
+    }
 
     @Override
     public void release() {
         unSubcription();
+    }
+
+    public void getMoreData(String type,int page,int pagesize) {
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getRecomend(type,page,pagesize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieInfo>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(MovieInfo result) {
+                        iview.loadMore(result);
+                    }
+                });
+        addSubscription(subscription);
+    }
+    public void getBtMoreData(String type,int page,int pagesize) {
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getBtRecomend(type,page,pagesize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieInfo>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(MovieInfo result) {
+                        iview.loadMore(result);
+                    }
+                });
+        addSubscription(subscription);
     }
 }

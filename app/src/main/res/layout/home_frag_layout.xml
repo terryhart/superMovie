@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.v7.widget.RecyclerView
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/bga_refresh"
         android:layout_width="match_parent"
-        android:id="@+id/rvlist"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="50dp"
-        android:layout_height="match_parent"/>
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rvlist"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"/>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+</RelativeLayout>
