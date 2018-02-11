@@ -11,4 +11,6 @@ public interface IMoview {
     void loadError(String msg);
 
     void loadMore(MovieInfo result);
+
+    void loadBtData(MovieInfo result);
 }

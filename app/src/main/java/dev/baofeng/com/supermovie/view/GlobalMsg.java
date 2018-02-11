@@ -10,4 +10,8 @@ public class GlobalMsg {
     public static final String KEY_POST_IMG = "POST_IMG";
 
     public static final String KEY_MOVIE_TITLE ="MOVIE_TITLE";
+
+    public static final int ITEM_TYPE_1 =1;
+    public static final int ITEM_TYPE_2=2;
+    public static final int ITEM_TYPE_3 =3;
 }

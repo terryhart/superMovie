@@ -83,7 +83,6 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
         adapter = new MainAdapter(getContext(), info);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-
     }
 
     @Override
@@ -95,6 +94,11 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
     public void loadMore(MovieInfo result) {
         infos.getData().addAll(result.getData());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadBtData(MovieInfo result) {
+
     }
 
     @Override

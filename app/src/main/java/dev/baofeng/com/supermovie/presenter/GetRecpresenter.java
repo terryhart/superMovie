@@ -66,7 +66,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                     }
                     @Override
                     public void onNext(MovieInfo result) {
-                        iview.loadData(result);
+                        iview.loadBtData(result);
                     }
                 });
         addSubscription(subscription);

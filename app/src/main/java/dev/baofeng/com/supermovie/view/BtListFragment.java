@@ -90,10 +90,13 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
 
     @Override
     public void loadMore(MovieInfo result) {
+    }
+
+    @Override
+    public void loadBtData(MovieInfo result) {
         infos.getData().addAll(result.getData());
         adapter.notifyDataSetChanged();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
