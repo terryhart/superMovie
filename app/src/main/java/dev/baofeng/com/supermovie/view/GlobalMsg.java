@@ -1,5 +1,8 @@
 package dev.baofeng.com.supermovie.view;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by huangyong on 2018/1/29.
  */
@@ -14,4 +17,7 @@ public class GlobalMsg {
     public static final int ITEM_TYPE_1 =1;
     public static final int ITEM_TYPE_2=2;
     public static final int ITEM_TYPE_3 =3;
+
+    public static Queue<String> downQueue;//准备下载队列
+    public static Queue<String> doneQueue;//已下载队列
 }

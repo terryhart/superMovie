@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.http;
 
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -8,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -22,9 +24,9 @@ public interface ApiService {
   @GET(UrlConfig.GETBTRECOMEND)
   Observable<MovieInfo> getBtRecomend(@Query("type") String type,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
 
-  //获取分类
-  @GET(UrlConfig.GETRECOMEND)
-  Observable<MovieInfo> getCategory(@Query("type") String type);
+  //获取详情
+  @GET(UrlConfig.GETDETAIL)
+  Observable<BtInfo> getBtDetail(@Query("title") String title);
 
  /* @FormUrlEncoded
   @POST(UrlConfig.QUERY_COLLECT)
@@ -32,4 +34,5 @@ public interface ApiService {
   @FormUrlEncoded
   @POST(UrlConfig.DOWNLOADBASEURL+"download3.php")
   Observable<Object> getTorrentFile(@Field("id") int id,@Field("action") String action,@Field("uhash") String uhush);
+
 }

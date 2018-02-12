@@ -19,6 +19,7 @@ import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
 import java.io.File;
+import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,11 +39,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
 
     Unbinder unbinder;
     private static CenterFragment homeFragment;
-    @BindView(R.id.post)
-    Button post;
 
-    @BindView(R.id.tvstatu)
-    TextView tvstatu;
     private DownBtPresenter presenter;
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -52,13 +49,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
                 long taskId = (long) msg.obj;
                 XLTaskInfo taskInfo = XLTaskHelper.instance(MyApp.appInstance()).getTaskInfo(taskId);
                 TorrentInfo torrentInfo = XLTaskHelper.instance(MyApp.appInstance()).getTorrentInfo(Environment.getExternalStorageDirectory() + File.separator + "d.torrent");
-                tvstatu.setText(
+               /* tvstatu.setText(
                         "fileSize:" + convertFileSize(taskInfo.mFileSize)
                                 + "\n" + " downSize:" + convertFileSize(taskInfo.mDownloadSize)
                                 + "\n" + " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
                                 + "\n" + "/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
                                 + "\n" + "/s filePath:" + "/sdcard/" + torrentInfo.mSubFileInfo
-                );
+                );*/
                 handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
             }
         }
@@ -85,8 +82,9 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     }
 
     private void initView() {
-        post.setOnClickListener(this);
         presenter = new DownBtPresenter(getContext(), this);
+
+
     }
 
     @Override

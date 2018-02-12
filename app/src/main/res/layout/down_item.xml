@@ -12,5 +12,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:text="离线下载"
         android:id="@+id/tv_down"
+        android:background="@drawable/down_bt_bg"
         />
 </android.support.constraint.ConstraintLayout>

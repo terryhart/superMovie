@@ -1,6 +1,11 @@
 package dev.baofeng.com.supermovie;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.view.CenterFragment;
+import dev.baofeng.com.supermovie.view.DownloadService;
 import dev.baofeng.com.supermovie.view.HomeFragment;
 import dev.baofeng.com.supermovie.view.BTFragment;
 
@@ -26,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BTFragment downfragment;
     private HomeFragment homeFragment;
     private CenterFragment centerFragment;
+    private DownloadService downService;
+    private ServiceConnection conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        initService();
+    }
+
+    private void initService() {
+        conn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                downService = ((DownloadService.LocalBinder)service).getService();
+                downService.startLoop();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+        Intent intent = new Intent(this,DownloadService.class);
+        bindService(intent,conn, Context.BIND_AUTO_CREATE);
     }
 
     private void initView() {
@@ -100,5 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 my.setSelected(true);
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

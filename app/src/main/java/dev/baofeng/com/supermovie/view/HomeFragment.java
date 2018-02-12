@@ -11,7 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
@@ -24,6 +29,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.HomeAdapter;
 import dev.baofeng.com.supermovie.adapter.VPadapter;
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
@@ -44,6 +50,8 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     ViewPager vp;
     @BindView(R.id.bga_refresh)
     BGARefreshLayout bgaRefresh;
+    @BindView(R.id.img_bg)
+    ImageView imgBg;
     private HomeAdapter adapter;
     private GetRecpresenter getRecpresenter;
     private MovieInfo info;
@@ -78,7 +86,7 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
         // 设置下拉刷新和上拉加载更多的风格
         bgaRefresh.setRefreshViewHolder(refreshViewHolder);
         getRecpresenter.getRecommend(type[0], 1, 22);
-        getRecpresenter.getBtRecommend(type[0], 2, 8);
+        getRecpresenter.getBtRecommend("2017", 3, 8);
     }
 
     public static HomeFragment getInstance() {
@@ -103,8 +111,6 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         HomeAdapter homeAdapter = new HomeAdapter(getContext(), info);
         rvlist.setAdapter(homeAdapter);
-
-
     }
 
     @Override
@@ -121,14 +127,35 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     public void loadBtData(MovieInfo result) {
         vPadapter = new VPadapter(result, getContext());
         vp.setPageTransformer(false, new CustPagerTransformer(getContext()));
-        vPadapter.setOngetListener(new VPadapter.getCurrentBitmap() {
-            @Override
-            public void getBitmap(Bitmap bitmap) {
-                BlurUtil.setViewBg(5,5,vp,bitmap);
-            }
-        });
+
         vp.setAdapter(vPadapter);
         vp.setCurrentItem(3);
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Glide.with(getContext()).load(result.getData().get(position).getDownimgurl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        BlurUtil.setViewBg(5, 5, imgBg, resource);
+                    }
+                });
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadDetail(BtInfo result) {
+
     }
 
     @Override
@@ -136,7 +163,7 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
         if (NetworkUtils.isNetAvailable(getContext())) {
             //网络可用。异步加载后停止刷新
             // 加载完毕后在 UI 线程结束加载更多
-            new Handler().postDelayed(()->  {
+            new Handler().postDelayed(() -> {
                 bgaRefresh.endRefreshing();
             }, 2500);
         } else {
@@ -148,7 +175,7 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        new Handler().postDelayed(()-> {
+        new Handler().postDelayed(() -> {
             bgaRefresh.endLoadingMore();
         }, 2000);
         return true;

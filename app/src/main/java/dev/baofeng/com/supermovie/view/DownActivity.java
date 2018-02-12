@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
@@ -24,13 +27,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DownAdapter;
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieBean;
+import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IMoview;
+import dev.baofeng.com.supermovie.utils.BlurUtil;
 
 /**
  * Created by huangyong on 2018/1/29.
  */
 
-public class DownActivity extends AppCompatActivity {
+public class DownActivity extends AppCompatActivity implements IMoview {
 
     @BindView(R.id.post_img)
     ImageView postImg;
@@ -40,6 +48,8 @@ public class DownActivity extends AppCompatActivity {
     RecyclerView rvlist;
     @BindView(R.id.tv_statu)
     TextView tvStatu;
+    @BindView(R.id.down_bg)
+    ImageView downBg;
     private String downUrl;
     private String postImg1;
     private String pathurl;
@@ -52,16 +62,17 @@ public class DownActivity extends AppCompatActivity {
                 XLTaskInfo taskInfo = XLTaskHelper.instance(getApplicationContext()).getTaskInfo(taskId);
                 tvStatu.setText(
                         "fileSize:" + convertFileSize(taskInfo.mFileSize)
-                                + "\n"+ " downSize:" + convertFileSize(taskInfo.mDownloadSize)
-                                + "\n"+ " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
-                                +  "\n"+"/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                                + "\n"+ "/s filePath:" + "/sdcard/" + XLTaskHelper.instance(getApplicationContext()).getFileName(pathurl)
+                                + "\n" + " downSize:" + convertFileSize(taskInfo.mDownloadSize)
+                                + "\n" + " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
+                                + "\n" + "/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
+                                + "\n" + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance(getApplicationContext()).getFileName(pathurl)
                 );
                 handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
             }
         }
     };
     private String title;
+    private GetRecpresenter getRecpresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,9 +85,17 @@ public class DownActivity extends AppCompatActivity {
 
     private void iniData() {
         downUrl = getIntent().getStringExtra(GlobalMsg.KEY_DOWN_URL);
-        postImg1 = getIntent().getStringExtra(GlobalMsg.KEY_POST_IMG);
         title = getIntent().getStringExtra(GlobalMsg.KEY_MOVIE_TITLE);
+        postImg1 = getIntent().getStringExtra(GlobalMsg.KEY_POST_IMG);
         tvMvMame.setText(title);
+        getRecpresenter = new GetRecpresenter(this, this);
+        getRecpresenter.getBtDetail(title);
+        Glide.with(this).load(postImg1).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                BlurUtil.setViewBg(4, 3, downBg, resource);
+            }
+        });
         Glide.with(this).load(postImg1).into(postImg);
         Gson gson = new Gson();
 
@@ -85,7 +104,7 @@ public class DownActivity extends AppCompatActivity {
         String a = before + downUrl + later;
         MovieBean bean = gson.fromJson(a, MovieBean.class);
         String bbb = "";
-        if (bean.getDate().size()>=2){
+        if (bean.getDate().size() >= 2) {
             for (int i = 0; i < bean.getDate().size(); i++) {
                 if (bean.getDate().get(i).contains("http://pan.baidu.com")) ;
 //                bean.getDate().remove(i+1);
@@ -93,16 +112,16 @@ public class DownActivity extends AppCompatActivity {
             for (int i = 0; i < bean.getDate().size(); i++) {
                 bbb += bean.getDate().get(i) + "\n";
             }
-        }else {
+        } else {
             bbb += bean.getDate().get(0);
-            if (bbb.contains("http://pan.baidu.com")||bbb.length()<10);
-            bbb+="下载地址暂无";
+            if (bbb.contains("http://pan.baidu.com") || bbb.length() < 10) ;
+            bbb += "下载地址暂无";
             tvMvMame.setText(title + "\n" + bbb);
             return;
         }
 
         DownAdapter adapter = new DownAdapter(this, bean);
-        Log.d("ZIZIZIZIIZI:",bbb);
+        Log.d("ZIZIZIZIIZI:", bbb);
         adapter.setOnItemClickListener(new DownAdapter.onItemClick() {
             @Override
             public void onItemclicks(String url) {
@@ -115,7 +134,7 @@ public class DownActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     handler.sendMessage(handler.obtainMessage(0, taskId));
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -162,5 +181,30 @@ public class DownActivity extends AppCompatActivity {
             return String.format(f > 100 ? "%.0f K" : "%.1f K", f);
         } else
             return String.format("%d B", size);
+    }
+
+    @Override
+    public void loadData(MovieInfo info) {
+
+    }
+
+    @Override
+    public void loadError(String msg) {
+
+    }
+
+    @Override
+    public void loadMore(MovieInfo result) {
+
+    }
+
+    @Override
+    public void loadBtData(MovieInfo result) {
+
+    }
+
+    @Override
+    public void loadDetail(BtInfo result) {
+
     }
 }

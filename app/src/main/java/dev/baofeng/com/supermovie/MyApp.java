@@ -9,9 +9,12 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 import java.io.InputStream;
+import java.util.LinkedList;
 
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.https.OkHttpUrlLoader;
+import dev.baofeng.com.supermovie.utils.SPUtils;
+import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 /**
  * Created by oceanzhang on 2017/9/28.
@@ -20,13 +23,16 @@ import dev.baofeng.com.supermovie.https.OkHttpUrlLoader;
 public class MyApp extends Application{
 
     public static MyApp instance = null;
+    public SPUtils spUtils;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         XLTaskHelper.init(getApplicationContext());
-
+        spUtils = new SPUtils(this,"SuperMovie");//初始化SP
+        GlobalMsg.downQueue =new LinkedList<String>();//初始化全局未下载队列，存本地数据库
+        GlobalMsg.doneQueue =new LinkedList<String>();//初始化全局已下载队列，存本地数据库
         //让Glide能用HTTPS
         Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(ApiManager.getClientInstance()));
     }

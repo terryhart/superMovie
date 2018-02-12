@@ -22,6 +22,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.MainAdapter;
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieBean;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
@@ -98,6 +99,11 @@ public class ChannelFragment extends Fragment implements IMoview, BGARefreshLayo
 
     @Override
     public void loadBtData(MovieInfo result) {
+
+    }
+
+    @Override
+    public void loadDetail(BtInfo result) {
 
     }
 

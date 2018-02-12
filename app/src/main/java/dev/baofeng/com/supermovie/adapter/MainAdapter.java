@@ -15,6 +15,7 @@ import com.bumptech.glide.Priority;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
+import dev.baofeng.com.supermovie.view.BtDownActivity;
 import dev.baofeng.com.supermovie.view.DownActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 
@@ -40,7 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Uri uri = Uri.parse(info.getData().get(position).getDownimgurl());
-        Glide.with(context).load(uri).asBitmap().override(180,240).priority(Priority.LOW).into(((CommonHolder)holder).itemimg);
+        Glide.with(context).load(uri).into(((CommonHolder)holder).itemimg);
 
         ((CommonHolder)holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
 
@@ -48,9 +49,8 @@ public class MainAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                try {
-                   Intent intent = new Intent(context, DownActivity.class);
+                   Intent intent = new Intent(context, BtDownActivity.class);
                    intent.putExtra(GlobalMsg.KEY_POST_IMG,info.getData().get(position).getDownimgurl());
-                   intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
                    intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE,info.getData().get(position).getDownLoadName());
                    context.startActivity(intent);
                }catch (Exception e){

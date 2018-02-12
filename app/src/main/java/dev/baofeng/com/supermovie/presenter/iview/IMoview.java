@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.presenter.iview;
 
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 
 /**
@@ -13,4 +14,6 @@ public interface IMoview {
     void loadMore(MovieInfo result);
 
     void loadBtData(MovieInfo result);
+
+    void loadDetail(BtInfo result);
 }

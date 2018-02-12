@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/detail_img_bg"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="280dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:id="@+id/poster"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="名称"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_below="@+id/poster"
+        android:layout_marginTop="10dp"
+        android:id="@+id/mvname"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/btdownrv"
+        android:layout_below="@+id/mvname"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

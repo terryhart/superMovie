@@ -59,7 +59,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         }else {
             Uri uri = Uri.parse(datas.getData().get(position).getDownimgurl());
-            Glide.with(context).load(uri).asBitmap().override(180,240).priority(Priority.LOW).into(((CommonHolder)holder).itemimg);
+            Glide.with(context).load(uri).asBitmap().override(180,240).into(((CommonHolder)holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(datas.getData().get(position).getDownLoadName());
 

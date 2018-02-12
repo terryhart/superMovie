@@ -3,10 +3,9 @@ package dev.baofeng.com.supermovie.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
-import dev.baofeng.com.supermovie.http.ApiService;
-import dev.baofeng.com.supermovie.http.HttpManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import rx.Subscriber;
 import rx.Subscription;
@@ -119,6 +118,29 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                     @Override
                     public void onNext(MovieInfo result) {
                         iview.loadMore(result);
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    public void getBtDetail(String title) {
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getBtDetail(title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BtInfo>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(BtInfo result) {
+                        iview.loadDetail(result);
                     }
                 });
         addSubscription(subscription);

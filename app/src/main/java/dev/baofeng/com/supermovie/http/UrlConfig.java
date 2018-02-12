@@ -22,6 +22,8 @@ public class UrlConfig {
 
     //获取推荐视频
     public static final String GETRECOMEND = "getData.php";
+    //获取详情
+    public static final String GETDETAIL = "getMore.php";
     //获取BT推荐视频
     public static final String GETBTRECOMEND = "getbt.php";
 //    public static final String GET_VIDEO_THREE = "home.json";
