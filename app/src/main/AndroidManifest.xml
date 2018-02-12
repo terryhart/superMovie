@@ -29,6 +29,7 @@
             android:name=".view.DownActivity"/>
         <activity android:name=".view.BtDownActivity"/>
         <service android:name=".view.DownloadService"/>
+        <activity android:name=".view.SearchActivity"/>
     </application>
 
 </manifest>

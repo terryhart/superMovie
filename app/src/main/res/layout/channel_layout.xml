@@ -8,11 +8,14 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         app:elevation="0dp"
+        android:id="@+id/appbar"
+        app:contentScrim="@color/colorPrimary"
         android:gravity="bottom"
         android:layout_height="290dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
+            app:contentScrim="@color/colorPrimary"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="match_parent"
@@ -37,11 +40,14 @@
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"
                 app:paddingStart="0dp"
+                android:id="@+id/toobar"
                 android:layout_marginTop="20dp"
                 app:contentInsetStart="0dp"
                 app:layout_scrollFlags="scroll|enterAlways"
                 android:layout_height="?attr/actionBarSize">
-                <include layout="@layout/searchbar"/>
+                <include
+                    android:id="@+id/search_bar"
+                    layout="@layout/searchbar"/>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

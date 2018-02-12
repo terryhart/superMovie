@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fdf7f7f7"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/ll_search_layout"
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:layout_height="40dp">
+        <EditText
+            android:layout_width="300dp"
+            android:id="@+id/et_search"
+            android:layout_alignParentTop="true"
+            android:layout_margin="8dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/categorypage_search"
+            android:paddingStart="10dp"
+            android:textSize="13sp"
+            android:textColor="@color/editcolorhint"
+            android:drawablePadding="20dp"
+            android:hint="搜索/项目/文章/你感兴趣的"
+
+            android:textColorHint="@color/editcolorhint"
+            android:paddingLeft="20dp"
+            android:background="@drawable/edit_bg"
+            />
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:id="@+id/search_now"
+            android:textColor="@color/confirm"
+            android:layout_toRightOf="@+id/et_search"
+            android:background="@android:color/transparent"
+            />
+        <Button
+            android:layout_width="15dp"
+            android:background="@drawable/icon_clear"
+            android:layout_toLeftOf="@+id/search_now"
+            android:layout_marginRight="15dp"
+            android:id="@+id/clear_et"
+            android:layout_centerVertical="true"
+            android:layout_height="15dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_history"
+        android:paddingLeft="20dp"
+        android:background="#fff"
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/ll_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:text="热门搜索:"
+
+        />
+    <include
+        android:layout_below="@+id/tv_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/refresh_layout"/>
+</RelativeLayout>

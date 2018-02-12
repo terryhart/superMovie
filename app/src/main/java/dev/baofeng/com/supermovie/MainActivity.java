@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initService();
     }
 
+    /**
+     * 初始化下载线程
+     */
     private void initService() {
         conn = new ServiceConnection() {
             @Override

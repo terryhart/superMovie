@@ -1,13 +1,16 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +55,10 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     BGARefreshLayout bgaRefresh;
     @BindView(R.id.img_bg)
     ImageView imgBg;
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
+    @BindView(R.id.toobar)
+    Toolbar toobar;
     private HomeAdapter adapter;
     private GetRecpresenter getRecpresenter;
     private MovieInfo info;
@@ -64,7 +71,34 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
         View view = inflater.inflate(R.layout.channel_layout, null);
         unbinder = ButterKnife.bind(this, view);
         initData();
+        initEvent();
         return view;
+    }
+
+    private void initEvent() {
+        appbar.addOnOffsetChangedListener(new MyOffsetChangedListener());
+        toobar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),SearchActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+    }
+
+    private class MyOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
+
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            float progress = Math.abs(verticalOffset) * 1.0f / appBarLayout.getTotalScrollRange();
+            if (progress >= 0.4) {
+                toobar.setVisibility(View.VISIBLE);
+                toobar.setAlpha(progress);
+            } else {
+                toobar.setVisibility(View.VISIBLE);
+                toobar.setAlpha(0.4f);
+            }
+        }
     }
 
     private void initData() {
@@ -130,6 +164,12 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
 
         vp.setAdapter(vPadapter);
         vp.setCurrentItem(3);
+        Glide.with(getContext()).load(result.getData().get(3).getDownimgurl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                BlurUtil.setViewBg(5, 5, imgBg, resource);
+            }
+        });
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

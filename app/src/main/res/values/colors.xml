@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#f7f7f7</color>
+    <color name="colorPrimary">#2da5a7</color>
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#04ac99</color>
+
+    <color name="editcolor">#fdfafafa</color>
+    <color name="editcolorhint">#fd646464</color>
+    <color name="confirm">#fd5e5e5e</color>
+    <color name="pagebag">#fdf7f7f7</color>
+    <color name="tagcolor">#fde1e1e1</color>
 </resources>
