@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         conn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                downService = ((DownloadService.LocalBinder)service).getService();
-                downService.startLoop();
+//                downService = ((DownloadService.LocalBinder)service).getService();
+//                downService.startLoop();
             }
 
             @Override
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         };
-        Intent intent = new Intent(this,DownloadService.class);
+        Intent intent = new Intent(getApplicationContext(), com.yaoxiaowen.download.service.DownloadService.class);
         bindService(intent,conn, Context.BIND_AUTO_CREATE);
     }
 
@@ -143,4 +143,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

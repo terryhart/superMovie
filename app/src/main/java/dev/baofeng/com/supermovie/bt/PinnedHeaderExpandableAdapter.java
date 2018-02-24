@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 import dev.baofeng.com.supermovie.R;
+import dev.baofeng.com.supermovie.domain.TaskInfo;
 
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
         implements PinnedHeaderExpandableListView.HeaderAdapter {
@@ -48,10 +51,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         if (focusGroupList != null && focusGroupList.size() > 0) {
-            List<VeDetailBean> vehiclelist = focusGroupList.get(groupPosition)
+            List<TaskInfo> vehiclelist = focusGroupList.get(groupPosition)
                     .getGroupList();
             if (vehiclelist != null && vehiclelist.size() > 0) {
-                return vehiclelist.get(childPosition).getLicensePlate();
+                return vehiclelist.get(childPosition).getName();
             }
         }
         return "";
@@ -123,12 +126,12 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
             public void onClick(View v) {
 
                 // 弹出点击提示
-                Toast.makeText(context, "点击了" + focusGroupList.get(groupPosition).getGroupName() + "的  " + focusGroupList.get(groupPosition).getGroupList().get(childPosition).getLicensePlate(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "点击了" + focusGroupList.get(groupPosition).getGroupName() + "的  " + focusGroupList.get(groupPosition).getGroupList().get(childPosition).getName(), Toast.LENGTH_SHORT).show();
 
             }
         });
         text.setText(focusGroupList.get(groupPosition).getGroupList()
-                .get(childPosition).getLicensePlate());
+                .get(childPosition).getName());
         return view;
     }
 
@@ -136,11 +139,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
     public int getChildrenCount(int groupPosition) {
         if (focusGroupList != null && focusGroupList.size() > 0) {
             FocusGroupBean focusGroupBean = focusGroupList.get(groupPosition);
-            List<VeDetailBean> vehiclelist = focusGroupBean.getGroupList();
+            List<TaskInfo> vehiclelist = focusGroupBean.getGroupList();
             if (vehiclelist == null) {
                 return 0;
             } else if (vehiclelist.size() == 1
-                    && vehiclelist.get(0).getLicensePlate() == null) {
+                    && vehiclelist.get(0).getName() == null) {
                 // 由于当新建空组后重新获取数据则获取到的车辆集合长度为1只是里面的所有字段都为空 所以再次额外添加
                 // 判断 如果字段为空的话则将其子条目的数量强制转换成0
                 return 0;
@@ -272,11 +275,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
      */
     private void postRequestDeleteVehicle(final View animView,
                                           final int groupPosition, final int childPosition) {
-        // 获取要删除下载任务的信息
+        // 获取要删除车辆的信息
         FocusGroupBean focusGroupBean = focusGroupList.get(groupPosition);
-        VeDetailBean veDetailBean = focusGroupBean.getGroupList().get(
+        TaskInfo veDetailBean = focusGroupBean.getGroupList().get(
                 childPosition);
-        Toast.makeText(context, "删除任务成功",
+        Toast.makeText(context, "删除车辆成功",
                 Toast.LENGTH_SHORT).show();
         // 开启动画的监听
         taLeft.setAnimationListener(new AnimationListener() {
@@ -298,17 +301,19 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter
             @Override
             public void onAnimationEnd(Animation animation) {
                 // 动画结束之后 删除数据
-                List<VeDetailBean> vehiclelist = focusGroupList
+                DataSupport.deleteAll(TaskInfo.class,"id=","15");
+
+                List<TaskInfo> vehiclelist = focusGroupList
                         .get(groupPosition)
                         .getGroupList();
-                VeDetailBean veDetailBean = vehiclelist
+                TaskInfo veDetailBean = vehiclelist
                         .get(childPosition);
                 for (int i = 0, len = vehiclelist.size(); i < len; ++i) {
                     if (vehiclelist
                             .get(i)
-                            .getLicensePlate()
+                            .getName()
                             .equals(veDetailBean
-                                    .getLicensePlate())) {
+                                    .getName())) {
                         vehiclelist.remove(i);
                         --len;
                         --i;

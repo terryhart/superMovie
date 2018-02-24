@@ -79,7 +79,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         View view = inflater.inflate(R.layout.center_frag_layout, null);
         explistview = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         unbinder = ButterKnife.bind(this, view);
-
+        initView();
         return view;
     }
 
@@ -96,23 +96,26 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         presenter = new DownBtPresenter(getContext(), this);
         //初始化数据
         initData();
-        //展示数据
-        showData(focusList);
+
     }
 
     private void showData(List<FocusGroupBean> focusList) {
+
         // 设置头布局
         explistview.setHeaderView(getLayoutInflater().inflate(
                 R.layout.group_head, explistview, false));
-        // 对适配器进行非空判断
+       /* // 对适配器进行非空判断
         if (adapter == null) {
             adapter = new PinnedHeaderExpandableAdapter(focusList,
                     getActivity(), explistview);
             explistview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
-        }
-
+        }*/
+        adapter = new PinnedHeaderExpandableAdapter(focusList,
+                getActivity(), explistview);
+        explistview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         // 设置滑动的监听
         explistview.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -147,30 +150,19 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
      *
      */
     private void initData() {
-/* List<TaskInfo> all = DataSupport.findAll(TaskInfo.class);
-        for (int i = 0; i < all.size(); i++) {
-            //hbList.add(new VeDetailBean(all.get(i).getName()));
-            Log.d("DDDBADADATEA",all.get(i).getName());
-        }*/
+        List<TaskInfo> all = DataSupport.findAll(TaskInfo.class);
+
         focusList = new ArrayList<>();
         //创建河北组的数据
-        List<VeDetailBean> hbList = new ArrayList<>();
-        hbList.add(new VeDetailBean("变形金刚"));
-        hbList.add(new VeDetailBean("变形金刚"));
-        hbList.add(new VeDetailBean("变形金刚"));
-        focusList.add(new FocusGroupBean("正在下载", hbList));
+        focusList.add(new FocusGroupBean("正在下载", all));
 
         //创建北京组的数据
-        List<VeDetailBean> bjList = new ArrayList<>();
-        bjList.add(new VeDetailBean("变形金刚"));
-        bjList.add(new VeDetailBean("变形金刚2"));
-        bjList.add(new VeDetailBean("变形金刚3"));
-        bjList.add(new VeDetailBean("变形金刚2"));
-        bjList.add(new VeDetailBean("变形金刚9"));
-        bjList.add(new VeDetailBean("变形金刚7"));
-        bjList.add(new VeDetailBean("变形金刚2"));
-        bjList.add(new VeDetailBean("变形金刚2"));
+        List<TaskInfo> bjList = new ArrayList<>();
+
         focusList.add(new FocusGroupBean("下载完成", bjList));
+
+        //展示数据
+        showData(focusList);
     }
 
 
@@ -209,6 +201,5 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     @Override
     public void onResume() {
         super.onResume();
-        initView();
     }
 }

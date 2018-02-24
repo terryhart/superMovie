@@ -25,7 +25,7 @@ public class PinnedHeaderExpandableListView extends ExpandableListView
 	}
 
 	public PinnedHeaderExpandableListView(Context context, AttributeSet attrs,
-			int defStyle) {
+                                          int defStyle) {
 		super(context, attrs, defStyle);
 		registerListener();
 	}

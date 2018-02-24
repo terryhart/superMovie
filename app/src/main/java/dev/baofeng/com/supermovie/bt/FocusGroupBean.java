@@ -9,10 +9,12 @@ package dev.baofeng.com.supermovie.bt;
 import java.io.Serializable;
 import java.util.List;
 
+import dev.baofeng.com.supermovie.domain.TaskInfo;
+
 public class FocusGroupBean implements Serializable {
 
     private String groupName;
-    private List<VeDetailBean> groupList;
+    private List<TaskInfo> groupList;
 
     public int getIsDefault() {
         return isDefault;
@@ -24,7 +26,7 @@ public class FocusGroupBean implements Serializable {
 
     private int isDefault;
 
-    public FocusGroupBean(String groupName, List<VeDetailBean> groupList) {
+    public FocusGroupBean(String groupName, List<TaskInfo> groupList) {
         this.groupName = groupName;
         this.groupList = groupList;
     }
@@ -37,11 +39,11 @@ public class FocusGroupBean implements Serializable {
         this.groupName = groupName;
     }
 
-    public List<VeDetailBean> getGroupList() {
+    public List<TaskInfo> getGroupList() {
         return groupList;
     }
 
-    public void setGroupList(List<VeDetailBean> groupList) {
+    public void setGroupList(List<TaskInfo> groupList) {
         this.groupList = groupList;
     }
 
