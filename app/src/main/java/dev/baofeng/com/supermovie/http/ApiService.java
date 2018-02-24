@@ -24,13 +24,13 @@ public interface ApiService {
   @GET(UrlConfig.GETBTRECOMEND)
   Observable<MovieInfo> getBtRecomend(@Query("type") String type,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
 
+  @GET(UrlConfig.GETSEARCH)
+  Observable<MovieInfo> getSearch(@Query("key") String key);//获取搜索
+
   //获取详情
   @GET(UrlConfig.GETDETAIL)
   Observable<BtInfo> getBtDetail(@Query("title") String title);
 
- /* @FormUrlEncoded
-  @POST(UrlConfig.QUERY_COLLECT)
-  Observable<MovieInfo> QueryPageCollect(@Field("uid") String uid, @Field("num[]") List<String> num);*/
   @FormUrlEncoded
   @POST(UrlConfig.DOWNLOADBASEURL+"download3.php")
   Observable<Object> getTorrentFile(@Field("id") int id,@Field("action") String action,@Field("uhash") String uhush);

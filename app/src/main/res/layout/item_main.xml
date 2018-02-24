@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingBottom="6dp"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ImageView
         android:layout_width="120dp"
         android:layout_height="170dp"
@@ -26,7 +28,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_img"
         android:layout_marginTop="2dp"
+        android:textColor="@color/titlecor"
         android:text="电影名字"
         android:layout_marginBottom="2dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7.9分"
+        app:layout_constraintRight_toRightOf="@+id/post_img"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/post_img"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/gradecor"
         />
 </android.support.constraint.ConstraintLayout>

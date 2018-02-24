@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/focus_item_imfor"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="#B4CDE6"
+        android:gravity="center"
+        android:text="详情"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/focus_item_delete"
+        android:layout_width="80dp"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        android:background="#eeff0000"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+</LinearLayout>

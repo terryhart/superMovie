@@ -8,6 +8,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.xunlei.downloadlib.XLTaskHelper;
 
+import org.litepal.LitePalApplication;
+import org.litepal.tablemanager.Connector;
+
 import java.io.InputStream;
 import java.util.LinkedList;
 
@@ -20,7 +23,7 @@ import dev.baofeng.com.supermovie.view.GlobalMsg;
  * Created by oceanzhang on 2017/9/28.
  */
 
-public class MyApp extends Application{
+public class MyApp extends LitePalApplication {
 
     public static MyApp instance = null;
     public SPUtils spUtils;
@@ -29,6 +32,7 @@ public class MyApp extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
+        Connector.getDatabase();//创建数据库
         XLTaskHelper.init(getApplicationContext());
         spUtils = new SPUtils(this,"SuperMovie");//初始化SP
         GlobalMsg.downQueue =new LinkedList<String>();//初始化全局未下载队列，存本地数据库

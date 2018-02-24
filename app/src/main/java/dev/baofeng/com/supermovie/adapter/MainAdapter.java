@@ -18,6 +18,7 @@ import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.view.BtDownActivity;
 import dev.baofeng.com.supermovie.view.DownActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -66,4 +67,8 @@ public class MainAdapter extends RecyclerView.Adapter {
     }
 
 
+    public void clear() {
+        if (info.getData().size()>0)
+        info.getData().clear();
+    }
 }

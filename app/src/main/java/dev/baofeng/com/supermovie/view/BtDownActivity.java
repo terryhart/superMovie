@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -33,6 +34,7 @@ import dev.baofeng.com.supermovie.adapter.BtDownAdapter;
 import dev.baofeng.com.supermovie.adapter.DownAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
@@ -125,15 +127,23 @@ public class BtDownActivity extends AppCompatActivity implements IMoview {
                     long taskId = 0;
                     try {
                         taskId = XLTaskHelper.instance(getApplicationContext()).addThunderTask(url, "/sdcard/", null);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     handler.sendMessage(handler.obtainMessage(0, taskId));
                 }catch (Exception e){
                     e.printStackTrace();
-                }*/
+                }
                 Log.d("TTTTTTDOWN","正在添加新任务:"+url);
-               GlobalMsg.downQueue.add(url);
+               GlobalMsg.downQueue.add(url);*/
+                Toast.makeText(BtDownActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
+                TaskInfo info = new TaskInfo();
+                info.setId(23);
+                info.setName("变形金刚");
+                info.setPath(url);
+                info.setProgress(0);
+                info.save();
             }
         });
         btdownrv.setLayoutManager(new LinearLayoutManager(this));

@@ -25,7 +25,7 @@
             android:textSize="13sp"
             android:textColor="@color/editcolorhint"
             android:drawablePadding="20dp"
-            android:hint="搜索/项目/文章/你感兴趣的"
+            android:hint="输入搜索关键词"
 
             android:textColorHint="@color/editcolorhint"
             android:paddingLeft="20dp"

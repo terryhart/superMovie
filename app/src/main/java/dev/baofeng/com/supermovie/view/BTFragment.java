@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.PagerAdapter;
+import dev.baofeng.com.supermovie.adapter.PageAdapter;
 
 /**
  *
@@ -81,7 +81,7 @@ public class BTFragment extends Fragment {
             list.add(BtListFragment.newInstance(type[i]));
             tabTitle.addTab(tabTitle.newTab().setText(arr[i]));
         }
-        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(),list,arr);
+        PageAdapter adapter = new PageAdapter(getChildFragmentManager(),list,arr);
         tabTitle.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabTitle.setupWithViewPager(btvp);
         btvp.setAdapter(adapter);

@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.DownloadService;
 import dev.baofeng.com.supermovie.view.HomeFragment;
@@ -41,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
-        initService();
+//        initService();
     }
 
     /**
@@ -80,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.hide(centerFragment);
         fragmentTransaction.show(homeFragment);
         fragmentTransaction.commitAllowingStateLoss();
+
+
     }
     @Override
     public void onClick(View view) {

@@ -10,6 +10,8 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dev.baofeng.com.supermovie.utils.DownloadUtil;
+
 /**
  * Created by huangyong on 2018/2/12.
  */
@@ -45,9 +47,27 @@ public class DownloadService extends Service {
                  if ( GlobalMsg.downQueue.size()>0){
 //                     String peek = GlobalMsg.downQueue.element();//返回第一个元素
 //                     String peek = GlobalMsg.downQueue.peek();//返回第一个元素
-                     String peek = GlobalMsg.downQueue.peek();//返回第一个元素并在队列中删除
-                     Log.d("TTTTTTDOWN","当前有新任务了:"+peek);
                      GlobalMsg.downQueue.poll();//下载完成后删除该任务
+                     for (int i = 0; i < GlobalMsg.downQueue.size(); i++) {
+                         String peek = GlobalMsg.downQueue.peek();//返回第一个元素并在队列中删除
+
+                         DownloadUtil.get().download(i,peek, "sdcard/movie", new DownloadUtil.OnDownloadListener() {
+                             @Override
+                             public void onDownloadSuccess() {
+
+                             }
+
+                             @Override
+                             public void onDownloading(int progress) {
+
+                             }
+
+                             @Override
+                             public void onDownloadFailed() {
+
+                             }
+                         });
+                     }
                  }else {
                     // stopLoop();
                  }

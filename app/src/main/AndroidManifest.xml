@@ -24,12 +24,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".view.DownActivity"/>
         <activity android:name=".view.BtDownActivity"/>
         <service android:name=".view.DownloadService"/>
         <activity android:name=".view.SearchActivity"/>
+        <activity android:name=".view.DownTaskActivity"/>
+        <!-- 注册service -->
+        <service android:name="com.yaoxiaowen.download.service.DownloadService"/>
     </application>
 
 </manifest>

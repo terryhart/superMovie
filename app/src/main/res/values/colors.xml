@@ -5,8 +5,52 @@
     <color name="colorAccent">#04ac99</color>
 
     <color name="editcolor">#fdfafafa</color>
-    <color name="editcolorhint">#fd646464</color>
+    <color name="editcolorhint">#fda1a1a1</color>
     <color name="confirm">#fd5e5e5e</color>
     <color name="pagebag">#fdf7f7f7</color>
     <color name="tagcolor">#fde1e1e1</color>
+    <color name="titlecor">#fd2d2d2d</color>
+    <color name="gradecor">#ff7707</color>
+
+
+    <color name="common_transparent">#00000000</color>
+    <color name="scenic_item_normal">#EAEAEA</color>
+    <color name="gm_text">#666666</color>
+    <color name="gm_minor">#ff8a00</color>
+    <color name="gm_divider_line">#d8d8d8</color>
+    <color name="gm_text_silver">#aaaaaa</color>
+    <color name="gm_major_hl_alpha">#cc06a7c4</color>
+    <color name="homepage_item_normal">#ffffff</color>
+    <color name="homepage_item_press">#00bf77</color>
+    <color name="text_hint">#9e9e9e</color>
+    <color name="text_common">#868585</color>
+    <color name="text_important">#353535</color>
+    <color name="gm_header_bg">#21292c</color>
+    <color name="background">#BB000000</color>
+    <color name="main_color">#ff9a00</color>
+    <color name="secondary_color">#BDBDBD</color>
+
+    <drawable name="image_default">#454545</drawable>
+
+    <!-- 系统配色 -->
+    <color name="theme_dark">#262734</color>
+    <!-- 标题栏的颜色 -->
+    <color name="theme_yellow">#ff6b24</color>
+    <!-- 橙色 -->
+
+    <color name="theme_arrow">#AAAAAA</color>
+    <color name="theme_bgcolor">#eeeeee</color>
+    <!-- 空白区域背景色 -->
+    <color name="theme_white">#fff</color>
+    <!-- 有内容区域背景色 -->
+    <color name="theme_bottom_text">#9b9b9b</color>
+    <!-- 底部按钮的文字及图标颜色 -->
+    <color name="theme_blue">#2bbefe</color>
+    <!-- 地图页面的定位图标颜色，以及蓝色字的颜色 -->
+    <color name="theme_gray">#f4f3f3</color>
+    <!-- 底部按钮的背景色 -->
+    <color name="theme_divider">#dfdfdf</color>
+    <color name="theme_red">#f00</color>
+    <color name="color_plate">#2B76CD</color>
+    <!-- 地图上显示车牌号颜色 -->
 </resources>

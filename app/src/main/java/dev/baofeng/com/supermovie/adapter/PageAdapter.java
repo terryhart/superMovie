@@ -10,14 +10,16 @@ import java.util.List;
  * Created by huangyong on 2018/1/31.
  */
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
     private String[] tabTitle;
-    public PagerAdapter(FragmentManager fm,List<Fragment> fragments, String[] tabTiltle) {
+    public PageAdapter(FragmentManager fm, List<Fragment> fragments, String[] tabTiltle) {
         super(fm);
         this.fragments = fragments;
         this.tabTitle = tabTiltle;
     }
+
+
 
     @Override
     public Fragment getItem(int position) {

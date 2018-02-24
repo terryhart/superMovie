@@ -122,10 +122,12 @@ public class DownActivity extends AppCompatActivity implements IMoview {
 
         DownAdapter adapter = new DownAdapter(this, bean);
         Log.d("ZIZIZIZIIZI:", bbb);
+
+        //添加下载任务，这里不下载，都转移到个人中心的下载列表开始下载
         adapter.setOnItemClickListener(new DownAdapter.onItemClick() {
             @Override
             public void onItemclicks(String url) {
-                try {
+              /*  try {
                     pathurl = url;
                     long taskId = 0;
                     try {
@@ -136,7 +138,8 @@ public class DownActivity extends AppCompatActivity implements IMoview {
                     handler.sendMessage(handler.obtainMessage(0, taskId));
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
+                Toast.makeText(DownActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
 
             }
 

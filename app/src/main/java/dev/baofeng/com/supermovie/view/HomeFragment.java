@@ -31,6 +31,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.HomeAdapter;
+import dev.baofeng.com.supermovie.adapter.LAdapter;
 import dev.baofeng.com.supermovie.adapter.VPadapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
@@ -59,6 +60,10 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     AppBarLayout appbar;
     @BindView(R.id.toobar)
     Toolbar toobar;
+    @BindView(R.id.square)
+    ImageView square;
+    @BindView(R.id.downtask)
+    ImageView downtask;
     private HomeAdapter adapter;
     private GetRecpresenter getRecpresenter;
     private MovieInfo info;
@@ -77,12 +82,13 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
 
     private void initEvent() {
         appbar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-        toobar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(),SearchActivity.class);
-                getContext().startActivity(intent);
-            }
+        toobar.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            getContext().startActivity(intent);
+        });
+        downtask.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), DownTaskActivity.class);
+            getContext().startActivity(intent);
         });
     }
 
@@ -102,18 +108,8 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     }
 
     private void initData() {
-        String[] arr = {"战争", "科幻", "纪录片", "喜剧", "爱情", "恐怖", "动作", "全部"};
         String[] type = {"war", "sci", "docu", "fun", "love", "scare", "act", "all"};
-        ArrayList<Fragment> list = new ArrayList<>();
         getRecpresenter = new GetRecpresenter(getContext(), this);
-//        for (int i = 0; i < arr.length; i++) {
-//            list.add(ChannelFragment.newInstance(type[i]));
-//            tbTitle.addTab(tbTitle.newTab().setText(arr[i]));
-//        }
-//        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), list, arr);
-//        tbTitle.setTabMode(TabLayout.MODE_SCROLLABLE);
-//        rvp.setAdapter(adapter);
-//        tbTitle.setupWithViewPager(rvp);
         bgaRefresh.setDelegate(this);
         // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
         BGARefreshViewHolder refreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
@@ -161,8 +157,9 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     public void loadBtData(MovieInfo result) {
         vPadapter = new VPadapter(result, getContext());
         vp.setPageTransformer(false, new CustPagerTransformer(getContext()));
+        LAdapter adapter = new LAdapter(getContext(), (ArrayList<MovieInfo.DataBean>) result.getData(), vp);
 
-        vp.setAdapter(vPadapter);
+        vp.setAdapter(adapter);
         vp.setCurrentItem(3);
         Glide.with(getContext()).load(result.getData().get(3).getDownimgurl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
@@ -215,9 +212,7 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        new Handler().postDelayed(() -> {
-            bgaRefresh.endLoadingMore();
-        }, 2000);
+        new Handler().postDelayed(() -> bgaRefresh.endLoadingMore(), 2000);
         return true;
     }
 }

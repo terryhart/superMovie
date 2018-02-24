@@ -29,7 +29,7 @@
             </android.support.v7.widget.Toolbar>-->
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+   <!-- <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent">
@@ -70,6 +70,19 @@
                 android:paddingBottom="4dp"
                 />
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+    </android.support.v4.widget.NestedScrollView>-->
+    <dev.baofeng.com.supermovie.bt.PinnedHeaderExpandableListView
+        android:id="@+id/exp_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:cacheColorHint="#00000000"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:footerDividersEnabled="true"
+        android:groupIndicator="@null"
+        android:scrollbars="none"
+        android:scrollingCache="true"/>
 </android.support.design.widget.CoordinatorLayout>
