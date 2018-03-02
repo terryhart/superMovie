@@ -1,1 +1,1 @@
-include ':app', ':thunder', ':mff', ':muti-recycler', ':xrecy', ':downloaderHelper'
+include ':app', ':thunder', ':mff'

@@ -3,12 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/downloaderHelper/downloaderHelper.iml" filepath="$PROJECT_DIR$/downloaderHelper/downloaderHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/mff/mff.iml" filepath="$PROJECT_DIR$/mff/mff.iml" />
-      <module fileurl="file://$PROJECT_DIR$/muti-recycler/muti-recycler.iml" filepath="$PROJECT_DIR$/muti-recycler/muti-recycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/superMovie.iml" filepath="$PROJECT_DIR$/superMovie.iml" />
       <module fileurl="file://$PROJECT_DIR$/thunder/thunder.iml" filepath="$PROJECT_DIR$/thunder/thunder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/xrecy/xrecy.iml" filepath="$PROJECT_DIR$/xrecy/xrecy.iml" />
     </modules>
   </component>
 </project>

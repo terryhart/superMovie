@@ -9,11 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/downloaderHelper" />
             <option value="$PROJECT_DIR$/mff" />
-            <option value="$PROJECT_DIR$/muti-recycler" />
             <option value="$PROJECT_DIR$/thunder" />
-            <option value="$PROJECT_DIR$/xrecy" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
