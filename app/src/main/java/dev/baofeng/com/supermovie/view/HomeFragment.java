@@ -87,9 +87,14 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
             getContext().startActivity(intent);
         });
         downtask.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), DownTaskActivity.class);
-            getContext().startActivity(intent);
+           if (listener!=null){
+               listener.toggle();
+           }
         });
+    }
+    private OnDownPageListener listener;
+    public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
+        this.listener = onDownPageListener;
     }
 
     private class MyOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {

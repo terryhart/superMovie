@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -11,19 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
-import com.yaoxiaowen.download.FileInfo;
-import com.yaoxiaowen.download.db.DbHolder;
 
 import org.litepal.crud.DataSupport;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,13 +28,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.bt.FocusGroupBean;
-import dev.baofeng.com.supermovie.bt.PinnedHeaderExpandableAdapter;
-import dev.baofeng.com.supermovie.bt.PinnedHeaderExpandableListView;
-import dev.baofeng.com.supermovie.bt.VeDetailBean;
 import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.presenter.DownBtPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IBtView;
+import dev.baofeng.com.supermovie.utils.BDecoder;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -46,11 +40,12 @@ import dev.baofeng.com.supermovie.presenter.iview.IBtView;
 public class CenterFragment extends Fragment implements View.OnClickListener, IBtView {
     Unbinder unbinder;
     private static CenterFragment homeFragment;
-    //保存重点关注组的数据
-    private List<FocusGroupBean> focusList;
-    private PinnedHeaderExpandableListView explistview;
-    private PinnedHeaderExpandableAdapter adapter;
-    private int expandFlag;
+    @BindView(R.id.tv_downing)
+    TextView tvDowning;
+    @BindView(R.id.tv_about)
+    TextView tvAbout;
+    @BindView(R.id.tv_setting)
+    TextView tvSetting;
     private DownBtPresenter presenter;
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -77,7 +72,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.center_frag_layout, null);
-        explistview = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         unbinder = ButterKnife.bind(this, view);
         initView();
         return view;
@@ -96,73 +90,32 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         presenter = new DownBtPresenter(getContext(), this);
         //初始化数据
         initData();
-
-    }
-
-    private void showData(List<FocusGroupBean> focusList) {
-
-        // 设置头布局
-        explistview.setHeaderView(getLayoutInflater().inflate(
-                R.layout.group_head, explistview, false));
-       /* // 对适配器进行非空判断
-        if (adapter == null) {
-            adapter = new PinnedHeaderExpandableAdapter(focusList,
-                    getActivity(), explistview);
-            explistview.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
-        }*/
-        adapter = new PinnedHeaderExpandableAdapter(focusList,
-                getActivity(), explistview);
-        explistview.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        // 设置滑动的监听
-        explistview.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // 在滑动状态改变的时候 查看是否有保存的已打开的子条目 如果有则关闭
-                if (adapter.openLayout != null) {
-                    adapter.openLayout.closeLayout();
-                }
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                // 当列表滑动的时候 头布局进行相关变化
-                final long flatPos = explistview
-                        .getExpandableListPosition(firstVisibleItem);
-                int groupPosition = ExpandableListView
-                        .getPackedPositionGroup(flatPos);
-                int childPosition = ExpandableListView
-                        .getPackedPositionChild(flatPos);
-                explistview.configureHeaderView(groupPosition, childPosition);
-
-            }
-
-        });
     }
 
     /**
      * 以数据库的为准
-     *
      */
     private void initData() {
         List<TaskInfo> all = DataSupport.findAll(TaskInfo.class);
+        tvDowning.setOnClickListener(v -> {
+            toggle();
+        });
+        tvSetting.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AboutUsActivity.class);
+            startActivity(intent);
+        });
+        tvAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BDecoder.down();
+            }
+        });
+    }
 
-        focusList = new ArrayList<>();
-        //创建河北组的数据
-        focusList.add(new FocusGroupBean("正在下载", all));
-
-        //创建北京组的数据
-        List<TaskInfo> bjList = new ArrayList<>();
-
-        focusList.add(new FocusGroupBean("下载完成", bjList));
-
-        //展示数据
-        showData(focusList);
+    private void toggle() {
+        if (listener!=null){
+            listener.toggle();
+        }
     }
 
 
@@ -202,4 +155,10 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     public void onResume() {
         super.onResume();
     }
+
+    private OnDownPageListener listener;
+    public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
+        this.listener = onDownPageListener;
+    }
+
 }

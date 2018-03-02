@@ -38,22 +38,16 @@ public class DownAdapter extends RecyclerView.Adapter<DownHolder> {
 
         if (movieBean.getDate().get(position).contains("baidu")){
             holder.tvdown.setText("百度网盘"+(position+1));
-            holder.tvdown.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener!=null){
-                        listener.onBaiduPanClick(movieBean.getDate().get(position));
-                    }
+            holder.tvdown.setOnClickListener(view -> {
+                if (listener!=null){
+                    listener.onBaiduPanClick(movieBean.getDate().get(position));
                 }
             });
         }else if (movieBean.getDate().get(position).contains("ed2k")||movieBean.getDate().get(position).contains("magnet")){
             holder.tvdown.setText("磁力链接"+(position+1));
-            holder.tvdown.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener!=null){
-                        listener.onItemclicks(movieBean.getDate().get(position));
-                    }
+            holder.tvdown.setOnClickListener(view -> {
+                if (listener!=null){
+                    listener.onItemclicks(movieBean.getDate().get(position));
                 }
             });
         }

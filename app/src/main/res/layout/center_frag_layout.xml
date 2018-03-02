@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f4f4f4"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,60 +30,65 @@
             </android.support.v7.widget.Toolbar>-->
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-   <!-- <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent">
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="正在下载"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:text="任务列表"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
+                android:drawableLeft="@drawable/icon_tab_item_qianbao"
+                android:background="@drawable/item_pressed"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="30dp"
+                android:drawablePadding="10dp"
                 android:id="@+id/tv_downing"
                 />
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#bfbfbf"
-                android:id="@+id/line"
+                android:layout_height="50dp"
+                android:text="关于"
+                android:layout_marginTop="1px"
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_tab_item_dongtai"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:background="@drawable/item_pressed"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_about"
                 android:layout_below="@+id/tv_downing"
+                android:paddingLeft="30dp"
+                android:paddingTop="4dp"
                 />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已完成"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="1px"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/icon_tab_item_shezhi"
+                android:drawablePadding="10dp"
+                android:text="设置"
+                android:background="@drawable/item_pressed"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_done"
-                android:layout_below="@+id/line"
-                android:paddingLeft="10dp"
+                android:id="@+id/tv_setting"
+                android:layout_below="@+id/tv_about"
+                android:paddingLeft="30dp"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
                 />
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>-->
-    <dev.baofeng.com.supermovie.bt.PinnedHeaderExpandableListView
-        android:id="@+id/exp_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:cacheColorHint="#00000000"
-        android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="false"
-        android:fastScrollEnabled="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:footerDividersEnabled="true"
-        android:groupIndicator="@null"
-        android:scrollbars="none"
-        android:scrollingCache="true"/>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

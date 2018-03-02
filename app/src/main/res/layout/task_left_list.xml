@@ -6,18 +6,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="下载任务列表"
-        android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/tasktitle"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="当前没有下载任务"
+        android:id="@+id/tips"
         />
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_task_left_list"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="@+id/tasktitle"
-        android:layout_marginTop="50dp"
-        android:id="@+id/taskrv"
         android:layout_height="match_parent"/>
 </android.support.constraint.ConstraintLayout>

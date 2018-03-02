@@ -3,59 +3,41 @@ package dev.baofeng.com.supermovie.domain;
 import org.litepal.crud.DataSupport;
 
 /**
- * Created by huangyong on 2018/2/24.
+ * Created by huangyong on 2018/3/1.
  */
 
-public class TaskInfo extends DataSupport {
-    private int isWaiting;
-
-    public int getIsWaiting() {
-        return isWaiting;
-    }
-
-    public void setIsWaiting(int isWaiting) {
-        this.isWaiting = isWaiting;
-    }
+public class TaskQuene extends DataSupport {
 
     private int id;
     private String name;
     private int progress;
     private String path;
     private String action;
-    private String taskid;
-    private String downSize;
-    private String fileSize;
-    private String localpath;
+    private long taskid;
+    private long downSize;
+    private long fileSize;
 
-    public String getLocalpath() {
-        return localpath;
-    }
-
-    public void setLocalpath(String localpath) {
-        this.localpath = localpath;
-    }
-
-    public String getDownSize() {
+    public long getDownSize() {
         return downSize;
     }
 
-    public void setDownSize(String downSize) {
+    public void setDownSize(long downSize) {
         this.downSize = downSize;
     }
 
-    public String getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
     }
 
-    public String getTaskid() {
+    public long getTaskid() {
         return taskid;
     }
 
-    public void setTaskid(String taskid) {
+    public void setTaskid(long taskid) {
         this.taskid = taskid;
     }
 

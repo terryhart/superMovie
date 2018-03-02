@@ -7,10 +7,15 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.xunlei.downloadlib.XLTaskHelper;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import dev.baofeng.com.supermovie.utils.DownloadUtil;
+import dev.baofeng.com.supermovie.bt.ComDownloadTask;
+import dev.baofeng.com.supermovie.bt.ThreadUtils;
+import dev.baofeng.com.supermovie.domain.RunTaskInfo;
 
 /**
  * Created by huangyong on 2018/2/12.
@@ -33,66 +38,52 @@ public class DownloadService extends Service {
 
     }
 
-    /**
-     * 开始循环查询下载列表，如果有新任务，就开始下载
-     * 多任务下载，多次peek即可，每次取出任务都移除掉队列中的元素
-     * 如果正在下载的任务达到上限，队列中其他任务开始等待。
-     */
-    public void startLoop(){
-        timer = new Timer();
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                Log.d("TTTTTTDOWN","正在查询是否有新任务");
-                 if ( GlobalMsg.downQueue.size()>0){
-//                     String peek = GlobalMsg.downQueue.element();//返回第一个元素
-//                     String peek = GlobalMsg.downQueue.peek();//返回第一个元素
-                     GlobalMsg.downQueue.poll();//下载完成后删除该任务
-                     for (int i = 0; i < GlobalMsg.downQueue.size(); i++) {
-                         String peek = GlobalMsg.downQueue.peek();//返回第一个元素并在队列中删除
 
-                         DownloadUtil.get().download(i,peek, "sdcard/movie", new DownloadUtil.OnDownloadListener() {
-                             @Override
-                             public void onDownloadSuccess() {
-
-                             }
-
-                             @Override
-                             public void onDownloading(int progress) {
-
-                             }
-
-                             @Override
-                             public void onDownloadFailed() {
-
-                             }
-                         });
-                     }
-                 }else {
-                    // stopLoop();
-                 }
-            }
-        };
-        timer.schedule(task,0,2000l);
-    }
-    public void stopLoop(){
-        timer.cancel();
-        task.cancel();
-    }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
     }
+
+    public void stopTheTask(String taskid) {
+        XLTaskHelper.instance(this).stopTask(Long.parseLong(taskid));
+    }
+
+    public void reStartTheTask(String path) {
+        try {
+            ComDownloadTask task = new ComDownloadTask(this,path);
+            GlobalMsg.service.addTask(task);
+        }catch (Exception e){
+
+        }
+
+    }
+
+    public void toggleTask(String path, String taskid) {
+
+    }
+
+
     public class LocalBinder extends Binder {
         public DownloadService getService() {
             // Return this instance of LocalService so clients can call public methods
             return DownloadService.this;
         }
     }
+    public void addTask(ComDownloadTask task){
+        task.setOnAddListener(taskId -> {
+            if (listener!=null){
+                listener.onAddSuccess(taskId);
+            }
+        });
 
+        ThreadUtils.execute(task);
+    }
+    private onAddListener listener;
+    public void setAddListener(onAddListener listener){
+        this.listener = listener;
+    }
     @Override
     public void onDestroy() {
-        stopLoop();
         super.onDestroy();
     }
 }

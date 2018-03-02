@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.BtInfo;
-import dev.baofeng.com.supermovie.domain.MovieBean;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.holder.DownHolder;
 
 /**
@@ -40,7 +38,7 @@ public class BtDownAdapter extends RecyclerView.Adapter<DownHolder> {
             @Override
             public void onClick(View view) {
                 if (listener!=null){
-                    listener.onItemclicks(info.getData().get(position).getDownParam());
+                    listener.onItemclicks(position,info.getData().get(position).getDownParam());
                 }
             }
         });
@@ -52,7 +50,7 @@ public class BtDownAdapter extends RecyclerView.Adapter<DownHolder> {
     }
 
     public interface onItemClick{
-        void onItemclicks(String url);
+        void onItemclicks(int position, String url);
     }
     private onItemClick listener;
     public void setOnItemClickListener(onItemClick listener){

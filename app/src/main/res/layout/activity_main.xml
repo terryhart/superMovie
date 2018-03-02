@@ -1,54 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:openDrawer="end"
+    android:id="@+id/drawer"
     tools:context="dev.baofeng.com.supermovie.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="46dp"
+        android:gravity="bottom"
+
         android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:id="@+id/content"
+            android:layout_height="match_parent">
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:paddingTop="4dp"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/main"
+                android:drawableTop="@drawable/home_bt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:text="首页"
+                android:layout_height="50dp"
+                />
+            <TextView
+                android:id="@+id/down"
+                android:drawableTop="@drawable/bt_bt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="BT频道"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                />
+            <TextView
+                android:id="@+id/my"
+                android:drawableTop="@drawable/user_bt"
+                android:text="个人中心"
+                android:layout_width="0dp"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                />
+        </LinearLayout>
     </FrameLayout>
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      android:background="#fff"
-      android:paddingTop="4dp"
-      android:layout_height="wrap_content">
-      <TextView
-          android:id="@+id/main"
-          android:drawableTop="@drawable/home_bt"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:drawablePadding="0dp"
-          android:gravity="center"
-          android:text="首页"
-          android:layout_height="50dp"
-          />
-      <TextView
-          android:id="@+id/down"
-          android:drawableTop="@drawable/bt_bt"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:text="BT频道"
-          android:drawablePadding="0dp"
-          android:gravity="center"
-          android:layout_height="50dp"
-          />
-      <TextView
-          android:id="@+id/my"
-          android:drawableTop="@drawable/user_bt"
-          android:text="个人中心"
-          android:layout_width="0dp"
-          android:drawablePadding="0dp"
-          android:gravity="center"
-          android:layout_weight="1"
-          android:layout_height="50dp"
-          />
-  </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/down_frag_main"/>
+        </LinearLayout>
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

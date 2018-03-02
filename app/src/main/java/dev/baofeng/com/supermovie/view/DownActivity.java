@@ -23,16 +23,25 @@ import com.google.gson.Gson;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DownAdapter;
+import dev.baofeng.com.supermovie.bt.ComDownloadTask;
+import dev.baofeng.com.supermovie.bt.ThreadUtils;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieBean;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
+import dev.baofeng.com.supermovie.utils.SizeUtils;
 
 /**
  * Created by huangyong on 2018/1/29.
@@ -53,34 +62,21 @@ public class DownActivity extends AppCompatActivity implements IMoview {
     private String downUrl;
     private String postImg1;
     private String pathurl;
-    Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 0) {
-                long taskId = (long) msg.obj;
-                XLTaskInfo taskInfo = XLTaskHelper.instance(getApplicationContext()).getTaskInfo(taskId);
-                tvStatu.setText(
-                        "fileSize:" + convertFileSize(taskInfo.mFileSize)
-                                + "\n" + " downSize:" + convertFileSize(taskInfo.mDownloadSize)
-                                + "\n" + " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
-                                + "\n" + "/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                                + "\n" + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance(getApplicationContext()).getFileName(pathurl)
-                );
-                handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
-            }
-        }
-    };
+
     private String title;
     private GetRecpresenter getRecpresenter;
+    private TaskInfo info;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.down_layout);
         ButterKnife.bind(this);
-        XLTaskHelper.init(getApplicationContext());
-        iniData();
+        try {
+            iniData();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void iniData() {
@@ -102,44 +98,61 @@ public class DownActivity extends AppCompatActivity implements IMoview {
         String before = "{\"msg\":\"请求成功\",\"reg\":\"-101\",\"date\":";
         String later = "}";
         String a = before + downUrl + later;
+        Log.d("下载的地址为：",downUrl);
         MovieBean bean = gson.fromJson(a, MovieBean.class);
         String bbb = "";
         if (bean.getDate().size() >= 2) {
             for (int i = 0; i < bean.getDate().size(); i++) {
                 if (bean.getDate().get(i).contains("http://pan.baidu.com")) ;
-//                bean.getDate().remove(i+1);
+//                bean.getData().remove(i+1);
             }
             for (int i = 0; i < bean.getDate().size(); i++) {
                 bbb += bean.getDate().get(i) + "\n";
             }
         } else {
-            bbb += bean.getDate().get(0);
-            if (bbb.contains("http://pan.baidu.com") || bbb.length() < 10) ;
-            bbb += "下载地址暂无";
-            tvMvMame.setText(title + "\n" + bbb);
-            return;
+            try {
+                bbb += bean.getDate().get(0);
+                if (bbb.contains("http://pan.baidu.com") || bbb.length() < 10) ;
+                bbb += "下载地址暂无";
+                tvMvMame.setText(title + "\n" + bbb);
+                return;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
 
         DownAdapter adapter = new DownAdapter(this, bean);
-        Log.d("ZIZIZIZIIZI:", bbb);
 
         //添加下载任务，这里不下载，都转移到个人中心的下载列表开始下载
         adapter.setOnItemClickListener(new DownAdapter.onItemClick() {
             @Override
             public void onItemclicks(String url) {
-              /*  try {
-                    pathurl = url;
-                    long taskId = 0;
-                    try {
-                        taskId = XLTaskHelper.instance(getApplicationContext()).addThunderTask(url, "/sdcard/", null);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                Log.d("下载的地址",url);
+                TaskInfo info = new TaskInfo();
+                info.setProgress(0);
+                info.setAction(GlobalMsg.ACTION);
+                info.setName(title);
+                info.setDownSize("0");
+                info.setFileSize("0");
+                info.setPath(url);
+                info.setIsWaiting(1);//默认是等待状态
+                //去数据库看一下，如果没有该条，则添加任务，具体是执行还是等待，看线程池情况。
+                List<TaskInfo> infos = DataSupport.where("path=?", url + "").find(TaskInfo.class);
+                if (infos.size()>0){
+                    //任务已存在，则不保存数据库
+                    Toast.makeText(DownActivity.this, "下载任务已存在", Toast.LENGTH_SHORT).show();
+                }else {
+                    //任务不存在，添加到队列，并添加进数据库
+                    Toast.makeText(DownActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
+                    info.save();//即使添加到下载队列，也该存入数据库。
+                    if (GlobalMsg.service!=null){
+                        ComDownloadTask task = new ComDownloadTask(DownActivity.this,url);
+                        GlobalMsg.service.addTask(task);
                     }
-                    handler.sendMessage(handler.obtainMessage(0, taskId));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
-                Toast.makeText(DownActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
+//                    ComDownloadTask task = new ComDownloadTask(DownActivity.this,url);
+//                    ThreadUtils.execute(task);
+                }
 
             }
 
@@ -150,42 +163,9 @@ public class DownActivity extends AppCompatActivity implements IMoview {
         });
         rvlist.setLayoutManager(new GridLayoutManager(this, 3));
         rvlist.setAdapter(adapter);
+
+        info = new TaskInfo();
     }
-
-    /**
-     * 下载文件
-     *
-     * @param view
-     */
-    public void downLoad(View view) {
-        if (!TextUtils.isEmpty(downUrl)) {
-            long taskId = 0;
-            try {
-                taskId = XLTaskHelper.instance(getApplicationContext()).addThunderTask(downUrl, "/sdcard/", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            handler.sendMessage(handler.obtainMessage(0, taskId));
-        }
-    }
-
-    public static String convertFileSize(long size) {
-        long kb = 1024;
-        long mb = kb * 1024;
-        long gb = mb * 1024;
-
-        if (size >= gb) {
-            return String.format("%.1f GB", (float) size / gb);
-        } else if (size >= mb) {
-            float f = (float) size / mb;
-            return String.format(f > 100 ? "%.0f M" : "%.1f M", f);
-        } else if (size >= kb) {
-            float f = (float) size / kb;
-            return String.format(f > 100 ? "%.0f K" : "%.1f K", f);
-        } else
-            return String.format("%d B", size);
-    }
-
     @Override
     public void loadData(MovieInfo info) {
 

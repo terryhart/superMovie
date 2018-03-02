@@ -31,7 +31,7 @@
         <activity android:name=".view.BtDownActivity"/>
         <service android:name=".view.DownloadService"/>
         <activity android:name=".view.SearchActivity"/>
-        <activity android:name=".view.DownTaskActivity"/>
+        <activity android:name=".view.AboutUsActivity"/>
         <!-- 注册service -->
         <service android:name="com.yaoxiaowen.download.service.DownloadService"/>
     </application>

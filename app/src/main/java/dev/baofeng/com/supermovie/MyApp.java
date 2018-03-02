@@ -1,7 +1,8 @@
 package dev.baofeng.com.supermovie;
 
-import android.app.Application;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -27,11 +28,13 @@ public class MyApp extends LitePalApplication {
 
     public static MyApp instance = null;
     public SPUtils spUtils;
+    private Handler handler;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        XLTaskHelper.init(this);
         Connector.getDatabase();//创建数据库
         XLTaskHelper.init(getApplicationContext());
         spUtils = new SPUtils(this,"SuperMovie");//初始化SP
@@ -57,5 +60,13 @@ public class MyApp extends LitePalApplication {
             return new DelegateApplicationPackageManager(super.getPackageManager());
         }
         return super.getPackageManager();
+    }
+
+    public Handler getHandler() {
+        Looper.prepare();
+        if (handler==null){
+            handler = new Handler();
+        }
+        return handler;
     }
 }

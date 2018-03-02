@@ -5,5 +5,7 @@
     <version value="1" ></version>
     <list>
         <mapping class="dev.baofeng.com.supermovie.domain.TaskInfo"></mapping>
+        <mapping class="dev.baofeng.com.supermovie.domain.TaskHistory"></mapping>
+        <mapping class="dev.baofeng.com.supermovie.domain.TaskQuene"></mapping>
     </list>
 </litepal>

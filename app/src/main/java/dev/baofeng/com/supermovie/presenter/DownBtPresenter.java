@@ -41,7 +41,7 @@ public class DownBtPresenter extends BasePresenter<IBtView> {
         unSubcription();
     }
 
-    public void getFile(String id,String action,String uhash){
+    public void getFile(String id,String action,String uhash,String path){
 
         URL url = null;
         try {
@@ -88,7 +88,6 @@ public class DownBtPresenter extends BasePresenter<IBtView> {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("dddddaaaaaa",e.getMessage());
         }
     }
 
