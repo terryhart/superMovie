@@ -35,6 +35,7 @@ import dev.baofeng.com.supermovie.adapter.LAdapter;
 import dev.baofeng.com.supermovie.adapter.VPadapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
@@ -52,8 +53,8 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     RecyclerView rvlist;
     @BindView(R.id.vp)
     ViewPager vp;
-    @BindView(R.id.bga_refresh)
-    BGARefreshLayout bgaRefresh;
+    /*@BindView(R.id.bga_refresh)
+    BGARefreshLayout bgaRefresh;*/
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)
@@ -66,8 +67,11 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     ImageView downtask;
     private HomeAdapter adapter;
     private GetRecpresenter getRecpresenter;
-    private MovieInfo info;
+    private MovieInfo infos;
+    private RecentUpdate info;
     private VPadapter vPadapter;
+    private int index;
+    private HomeAdapter homeAdapter;
 
     @Nullable
     @Override
@@ -113,14 +117,16 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     }
 
     private void initData() {
+        index = 1;
+
         String[] type = {"war", "sci", "docu", "fun", "love", "scare", "act", "all"};
         getRecpresenter = new GetRecpresenter(getContext(), this);
-        bgaRefresh.setDelegate(this);
+//        bgaRefresh.setDelegate(this);
         // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
         BGARefreshViewHolder refreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
         // 设置下拉刷新和上拉加载更多的风格
-        bgaRefresh.setRefreshViewHolder(refreshViewHolder);
-        getRecpresenter.getRecommend(type[0], 1, 22);
+//        bgaRefresh.setRefreshViewHolder(refreshViewHolder);
+        getRecpresenter.getRecentUpdate( index, 22);
         getRecpresenter.getBtRecommend("2017", 3, 8);
     }
 
@@ -142,9 +148,14 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
 
     @Override
     public void loadData(MovieInfo info) {
+
+    }
+
+    @Override
+    public void loadData(RecentUpdate info) {
         this.info = info;
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        HomeAdapter homeAdapter = new HomeAdapter(getContext(), info);
+        homeAdapter = new HomeAdapter(getContext(), info);
         rvlist.setAdapter(homeAdapter);
     }
 
@@ -156,6 +167,12 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     @Override
     public void loadMore(MovieInfo result) {
 
+    }
+
+    @Override
+    public void loadMore(RecentUpdate result) {
+        info.getData().addAll(result.getData());
+        homeAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -206,18 +223,18 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
             //网络可用。异步加载后停止刷新
             // 加载完毕后在 UI 线程结束加载更多
             new Handler().postDelayed(() -> {
-                bgaRefresh.endRefreshing();
+//                bgaRefresh.endRefreshing();
             }, 2500);
         } else {
             // 网络不可用，结束下拉刷新
             Toast.makeText(getActivity(), "网络不可用", Toast.LENGTH_SHORT).show();
-            bgaRefresh.endRefreshing();
+//            bgaRefresh.endRefreshing();
         }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        new Handler().postDelayed(() -> bgaRefresh.endLoadingMore(), 2000);
+//        new Handler().postDelayed(() -> bgaRefresh.endLoadingMore(), 2000);
         return true;
     }
 }

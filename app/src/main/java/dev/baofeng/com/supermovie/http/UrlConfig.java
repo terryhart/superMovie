@@ -20,8 +20,9 @@ public class UrlConfig {
     //搜索视频标签http://zhijue.baofeng.com/text/movie_1.php
     public static final String GET_SEARCH_VIDEO = "text/select_movie.php";
 
-    //获取推荐视频
-    public static final String GETRECOMEND = "getData.php";
+    //获取最新更新的视频
+//    public static final String GETRECOMEND = "getData.php";
+    public static final String GETRECOMEND = "ygcms/getUpdate.php";
     //获取详情
     public static final String GETDETAIL = "getMore.php";
     //获取BT推荐视频

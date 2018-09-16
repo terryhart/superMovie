@@ -44,7 +44,7 @@ public class BTDownloadTask extends ThreadUtils.Task{
         //开始下载并存入本地
         try {
             long taskId = 0;
-            taskId = XLTaskHelper.instance(MyApp.appInstance()).addTorrentTask(info.getPath(), "/sdcard/", null);
+            taskId = XLTaskHelper.instance().addTorrentTask(info.getPath(), "/sdcard/", null);
             info.setTaskid(taskId+"");
             info.setIsWaiting(0);
             info.save();

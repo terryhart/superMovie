@@ -4,21 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.view.BtDownActivity;
-import dev.baofeng.com.supermovie.view.DownActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by huangyong on 2018/1/26.

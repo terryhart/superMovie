@@ -49,11 +49,11 @@ public class ComDownloadTask extends ThreadUtils.Task{
         try {
             long taskId = 0;
             if (url.startsWith("magnet:?")){
-                taskId = XLTaskHelper.instance(MyApp.appInstance()).addMagentTask(url, "/sdcard/", null);
+                taskId = XLTaskHelper.instance().addMagnetTask(url, "/sdcard/", null);
             }else if (url.endsWith(".torrent")){
-                taskId = XLTaskHelper.instance(MyApp.appInstance()).addTorrentTask(url, "/sdcard/", null);
+                taskId = XLTaskHelper.instance().addTorrentTask(url, "/sdcard/", null);
             }else {
-                taskId = XLTaskHelper.instance(MyApp.appInstance()).addThunderTask(url, "/sdcard/", null);
+                taskId = XLTaskHelper.instance().addThunderTask(url, "/sdcard/", null);
             }
             //根据url判断下载任务是否唯一，同时也根据url找到唯一的那个下载任务。
             List<TaskInfo> taskInfos = DataSupport.where("path=?", url).find(TaskInfo.class);

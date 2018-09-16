@@ -53,8 +53,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
             super.handleMessage(msg);
             if (msg.what == 0) {
                 long taskId = (long) msg.obj;
-                XLTaskInfo taskInfo = XLTaskHelper.instance(MyApp.appInstance()).getTaskInfo(taskId);
-                TorrentInfo torrentInfo = XLTaskHelper.instance(MyApp.appInstance()).getTorrentInfo(Environment.getExternalStorageDirectory() + File.separator + "d.torrent");
+                XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
+                TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(Environment.getExternalStorageDirectory() + File.separator + "d.torrent");
                /* tvstatu.setText(
                         "fileSize:" + convertFileSize(taskInfo.mFileSize)
                                 + "\n" + " downSize:" + convertFileSize(taskInfo.mDownloadSize)
@@ -133,7 +133,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         }).start();*/
         long taskId = 0;
         try {
-            taskId = XLTaskHelper.instance(MyApp.appInstance()).addTorrentTask(Environment.getExternalStorageDirectory() + File.separator + "d.torrent", "/sdcard/", null);
+            taskId = XLTaskHelper.instance().addTorrentTask(Environment.getExternalStorageDirectory() + File.separator + "d.torrent", "/sdcard/", null);
         } catch (Exception e) {
             e.printStackTrace();
         }

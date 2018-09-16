@@ -56,15 +56,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                         }else {
 
                         }*/
-                        XLTaskInfo task = XLTaskHelper.instance(MyApp.appInstance()).getTaskInfo(Long.parseLong(info.get(i).getTaskid() + ""));
+                        XLTaskInfo task = XLTaskHelper.instance().getTaskInfo(Long.parseLong(info.get(i).getTaskid() + ""));
                         if (task.mDownloadSize > 0) {
                             int progress = (int) ((task.mDownloadSize)*1.0/(task.mFileSize )*1.0 * 100);
 
                             info.get(i).setProgress(progress);
                             info.get(i).setFileSize(SizeUtils.convertFileSize(task.mFileSize)+"");
                             info.get(i).setDownSize(SizeUtils.convertFileSize(task.mDownloadSize)+"");
-                            info.get(i).setLocalpath("/sdcard/" + XLTaskHelper.instance(MyApp.appInstance()).getFileName(info.get(i).getPath()));
-                            Log.d("下载进度：","/sdcard/" + XLTaskHelper.instance(MyApp.appInstance()).getFileName(info.get(i).getPath()));
+                            info.get(i).setLocalpath("/sdcard/" + XLTaskHelper.instance().getFileName(info.get(i).getPath()));
+                            Log.d("下载进度：","/sdcard/" + XLTaskHelper.instance().getFileName(info.get(i).getPath()));
 //                            info.get(i).setName(task.mFileName);
                             if (task.mDownloadSize==task.mFileSize){
                                 //下载完成，存入已完成的表，从当前表删除

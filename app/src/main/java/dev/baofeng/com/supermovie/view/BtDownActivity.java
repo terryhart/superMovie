@@ -36,6 +36,7 @@ import dev.baofeng.com.supermovie.bt.ThreadUtils;
 import dev.baofeng.com.supermovie.domain.BTParamInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.presenter.DownBtPresenter;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
@@ -64,12 +65,12 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
             super.handleMessage(msg);
             if (msg.what == 0) {
                 long taskId = (long) msg.obj;
-                XLTaskInfo taskInfo = XLTaskHelper.instance(getApplicationContext()).getTaskInfo(taskId);
+                XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
                 String a = "fileSize:" + convertFileSize(taskInfo.mFileSize)
                         + "\n"+ " downSize:" + convertFileSize(taskInfo.mDownloadSize)
                         + "\n"+ " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
                         +  "\n"+"/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                        + "\n"+ "/s filePath:" + "/sdcard/" + XLTaskHelper.instance(getApplicationContext()).getFileName(pathurl);
+                        + "\n"+ "/s filePath:" + "/sdcard/" + XLTaskHelper.instance().getFileName(pathurl);
                 List<TaskInfo> taskInfos = DataSupport.where("action=?", taskId + "").find(TaskInfo.class);
                 TaskInfo info = taskInfos.get(0);
                 info.setProgress(Integer.parseInt(convertFileSize(taskInfo.mDownloadSize))/Integer.parseInt(convertFileSize(taskInfo.mFileSize))*100);
@@ -102,6 +103,10 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
     }
 
 
+    @Override
+    public void loadData(RecentUpdate info) {
+
+    }
 
     @Override
     public void loadData(MovieInfo info) {
@@ -115,6 +120,11 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
 
     @Override
     public void loadMore(MovieInfo result) {
+
+    }
+
+    @Override
+    public void loadMore(RecentUpdate result) {
 
     }
 

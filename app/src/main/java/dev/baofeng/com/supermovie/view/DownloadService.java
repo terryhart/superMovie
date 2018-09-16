@@ -45,7 +45,7 @@ public class DownloadService extends Service {
     }
 
     public void stopTheTask(String taskid) {
-        XLTaskHelper.instance(this).stopTask(Long.parseLong(taskid));
+        XLTaskHelper.instance().stopTask(Long.parseLong(taskid));
     }
 
     public void reStartTheTask(String path) {

@@ -2,6 +2,7 @@ package dev.baofeng.com.supermovie.http;
 
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -19,7 +20,7 @@ import rx.Observable;
 public interface ApiService {
 
   @GET(UrlConfig.GETRECOMEND)
-  Observable<MovieInfo> getRecomend(@Query("type") String type,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
+  Observable<RecentUpdate> getRecomend(@Query("page") int page, @Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GETBTRECOMEND)
   Observable<MovieInfo> getBtRecomend(@Query("type") String type,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐

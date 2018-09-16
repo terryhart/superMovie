@@ -22,7 +22,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//过滤掉不支持的平台
+    packagingOptions {
+        exclude "lib/arm64-v8a/librealm-jni.so"
+        exclude "lib/mips/librealm-jni.so"
+        exclude "lib/x86/librealm-jni.so"
+        exclude "lib/x86_64/librealm-jni.so"
+    }
 
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+        }
+    }
+    lintOptions { checkReleaseBuilds false }
 }
 
 dependencies {

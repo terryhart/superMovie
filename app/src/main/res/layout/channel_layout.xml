@@ -51,15 +51,18 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+    <!--<cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/bga_refresh"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rvlist"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingTop="20dp"
+        android:id="@+id/rvlist"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 </android.support.design.widget.CoordinatorLayout>

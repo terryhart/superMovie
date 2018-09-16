@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             if(msg.what == 0) {
                 long taskId = (long) msg.obj;
-                XLTaskInfo taskInfo = XLTaskHelper.instance(getApplicationContext()).getTaskInfo(taskId);
+                XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
                 tvstatu.setText(
                         "fileSize:" + taskInfo.mFileSize
                                 + " downSize:" + taskInfo.mDownloadSize
                                 + " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
                                 + "/s dcdnSpeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                                + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance(getApplicationContext()).getFileName("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/")
+                                + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance().getFileName("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/")
                 );
                 handler.sendMessageDelayed(handler.obtainMessage(0,taskId),1000);
             }
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 long taskId = 0;
                 try {
-                    taskId = XLTaskHelper.instance(getApplicationContext()).addThunderTask("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/","/sdcard/",null);
+                    taskId = XLTaskHelper.instance().addThunderTask("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/","/sdcard/",null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

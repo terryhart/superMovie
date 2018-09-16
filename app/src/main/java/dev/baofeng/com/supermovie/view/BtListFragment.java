@@ -21,6 +21,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.MainAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.NetworkUtils;
@@ -75,6 +76,11 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
     }
 
     @Override
+    public void loadData(RecentUpdate info) {
+
+    }
+
+    @Override
     public void loadData(MovieInfo info) {
 
 
@@ -89,6 +95,11 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
     public void loadMore(MovieInfo result) {
         infos.getData().addAll(result.getData());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadMore(RecentUpdate result) {
+
     }
 
     @Override

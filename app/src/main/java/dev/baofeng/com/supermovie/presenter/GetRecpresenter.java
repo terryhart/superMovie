@@ -5,6 +5,7 @@ import android.util.Log;
 
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import rx.Subscriber;
@@ -24,14 +25,14 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
         super(context, iview);
     }
 
-    public void getRecommend(String type ,int page,int pagesize){
+    public void getRecentUpdate(int page, int pagesize){
 
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getRecomend(type,page,pagesize)
+                .getRecomend(page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
+                .subscribe(new Subscriber<RecentUpdate>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -41,7 +42,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     }
                     @Override
-                    public void onNext(MovieInfo result) {
+                    public void onNext(RecentUpdate result) {
                         iview.loadData(result);
                     }
                 });
@@ -79,10 +80,10 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
     public void getMoreData(String type,int page,int pagesize) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getRecomend(type,page,pagesize)
+                .getRecomend(page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
+                .subscribe(new Subscriber<RecentUpdate>() {
                     @Override
                     public void onCompleted() {
 
@@ -93,7 +94,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     }
                     @Override
-                    public void onNext(MovieInfo result) {
+                    public void onNext(RecentUpdate result) {
                         iview.loadMore(result);
                     }
                 });

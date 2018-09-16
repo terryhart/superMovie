@@ -7,21 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.domain.MovieBean;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
-import dev.baofeng.com.supermovie.view.DownActivity;
+import dev.baofeng.com.supermovie.view.DetailActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 /**
@@ -30,9 +24,9 @@ import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 public class HomeAdapter extends RecyclerView.Adapter {
     private Context context;
-    private MovieInfo datas;
+    private RecentUpdate datas;
 
-    public HomeAdapter(Context context,MovieInfo datas) {
+    public HomeAdapter(Context context,RecentUpdate datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -58,17 +52,22 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }else if (holder instanceof SecondHolder){
 
         }else {
-            Uri uri = Uri.parse(datas.getData().get(position).getDownimgurl());
+            String imgUrl = datas.getData().get(position).getDownimgurl();
+            String name = datas.getData().get(position).getDownLoadName();
+            name.substring(name.indexOf("《")+1,name.indexOf("》"));
+            imgUrl= imgUrl.substring(0,imgUrl.indexOf("jpg")+3);
+            Uri uri = Uri.parse(imgUrl);
             Glide.with(context).load(uri).asBitmap().override(180,240).into(((CommonHolder)holder).itemimg);
 
-            ((CommonHolder)holder).itemtitle.setText(datas.getData().get(position).getDownLoadName());
+            ((CommonHolder)holder).itemtitle.setText(name);
 
+            String finalImgUrl = imgUrl;
             ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Intent intent = new Intent(context, DownActivity.class);
-                        intent.putExtra(GlobalMsg.KEY_POST_IMG,datas.getData().get(position).getDownimgurl());
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE,datas.getData().get(position).getDownLoadName());
                         context.startActivity(intent);
