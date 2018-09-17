@@ -36,14 +36,14 @@ public class DownAdapter extends RecyclerView.Adapter<DownHolder> {
     @Override
     public void onBindViewHolder(DownHolder holder, int position) {
 
-        if (movieBean.getDate().get(position).contains("baidu")){
-            holder.tvdown.setText("百度网盘"+(position+1));
+        if (movieBean.getDate().get(position).contains("ed2k")){
+            holder.tvdown.setText("电驴链接"+(position+1));
             holder.tvdown.setOnClickListener(view -> {
                 if (listener!=null){
-                    listener.onBaiduPanClick(movieBean.getDate().get(position));
+                    listener.onItemclicks(movieBean.getDate().get(position));
                 }
             });
-        }else if (movieBean.getDate().get(position).contains("ed2k")||movieBean.getDate().get(position).contains("magnet")){
+        }else if (movieBean.getDate().get(position).contains("thunder")||movieBean.getDate().get(position).contains("magnet")){
             holder.tvdown.setText("磁力链接"+(position+1));
             holder.tvdown.setOnClickListener(view -> {
                 if (listener!=null){

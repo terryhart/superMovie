@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -84,34 +85,17 @@ public class DetailActivity extends AppCompatActivity implements IMoview {
             }
         });
         Glide.with(this).load(postImg1).into(postImg);
-        Gson gson = new Gson();
 
-        String before = "{\"msg\":\"请求成功\",\"reg\":\"-101\",\"date\":";
-        String later = "}";
-        String a = before + downUrl + later;
-        Log.d("下载的地址为：",downUrl);
-        MovieBean bean = gson.fromJson(a, MovieBean.class);
-        String bbb = "";
-        if (bean.getDate().size() >= 2) {
-            for (int i = 0; i < bean.getDate().size(); i++) {
-                if (bean.getDate().get(i).contains("http://pan.baidu.com")) ;
-//                bean.getData().remove(i+1);
-            }
-            for (int i = 0; i < bean.getDate().size(); i++) {
-                bbb += bean.getDate().get(i) + "\n";
-            }
-        } else {
-            try {
-                bbb += bean.getDate().get(0);
-                if (bbb.contains("http://pan.baidu.com") || bbb.length() < 10) ;
-                bbb += "下载地址暂无";
-                tvMvMame.setText(title + "\n" + bbb);
-                return;
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
+        String[] split = downUrl.split(",");
+        ArrayList<String> urlList = new ArrayList<>();
+        for (int i = 0; i <split.length; i++) {
+            Log.e("下载地址为：",split[i]+"\n");
+            urlList.add(split[i]);
         }
+
+        MovieBean bean = new MovieBean();
+        bean.setDate(urlList);
+
 
         DownAdapter adapter = new DownAdapter(this, bean);
 

@@ -53,7 +53,7 @@ public class ThreadInfo {
 	 * @param finished 文件已下载的字节长度
 	 * @param md5            文件的md5值
 	 * @param over     文件是否完成下载
-	 * @param over_time文件完成下载的时间
+	 * @param -over_time文件完成下载的时间
 	 */
 	public ThreadInfo(int id, String url, int start, int end, int finished, String md5, String over,String  overtime) {
 		this.id = id;
