@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.animation.AccelerateInterpolator;
 
 import com.huangyong.downloadlib.adapter.DownTaskAdapter;
 import com.huangyong.downloadlib.adapter.TaskFragmentPagerAdapter;
 import com.huangyong.downloadlib.fragment.DownloadedTaskFragment;
 import com.huangyong.downloadlib.fragment.DownloadingTaskFragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_dowload_main);
 
         downTask = findViewById(R.id.viewpager);

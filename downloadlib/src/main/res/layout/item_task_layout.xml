@@ -15,9 +15,10 @@
        <TextView
            android:layout_width="200dp"
            android:layout_marginLeft="10dp"
-           android:layout_marginTop="10dp"
+           android:layout_marginTop="14dp"
            android:layout_height="wrap_content"
            android:lines="2"
+           android:textSize="14sp"
            android:id="@+id/task_title"
            android:text="风雨咒，国产720p.mp4"
            />
@@ -27,7 +28,15 @@
            android:layout_centerVertical="true"
            android:layout_marginRight="10dp"
            android:layout_alignParentRight="true"
-           android:background="#408bcc"
+           android:background="#742ae48b"
+           />
+       <ImageView
+           android:layout_width="40dp"
+           android:layout_height="80dp"
+           android:layout_centerVertical="true"
+           android:layout_marginRight="10dp"
+           android:layout_alignParentRight="true"
+           android:background="#40c0cc"
            />
        <ImageView
            android:layout_width="120dp"
@@ -36,7 +45,30 @@
            android:layout_marginRight="10dp"
            android:layout_alignParentRight="true"
            android:src="@drawable/audio_play_floating_play"
-           android:padding="20dp"
+           android:padding="24dp"
            />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="11sp"
+           android:id="@+id/task_msg"
+           android:text="875M   已下载412M \n正在下载2.3M/s"
+           android:layout_alignParentBottom="true"
+           android:lineSpacingExtra="4dp"
+           android:layout_marginBottom="10dp"
+           android:layout_marginLeft="10dp"
+           />
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="边下边播"
+            android:textStyle="italic"
+            android:textSize="11sp"
+            android:id="@+id/playinloading"
+            android:textColor="#0697df"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/task_msg"
+            />
    </RelativeLayout>
 </android.support.v7.widget.CardView>
