@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.ChangedPackages;
 import android.content.pm.FeatureInfo;
 import android.content.pm.InstrumentationInfo;
 import android.content.pm.PackageInfo;
@@ -16,6 +17,8 @@ import android.content.pm.PermissionInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
+import android.content.pm.SharedLibraryInfo;
+import android.content.pm.VersionedPackage;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Rect;
@@ -23,6 +26,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
@@ -48,6 +53,11 @@ public class DelegateApplicationPackageManager extends PackageManager {
         pi.applicationInfo.packageName = packageName;
         pi.packageName = packageName;
         return pi;
+    }
+
+    @Override
+    public PackageInfo getPackageInfo(VersionedPackage versionedPackage, int i) throws NameNotFoundException {
+        return null;
     }
 
     @Override
@@ -166,6 +176,18 @@ public class DelegateApplicationPackageManager extends PackageManager {
         return packageManager.getSystemSharedLibraryNames();
     }
 
+    @NonNull
+    @Override
+    public List<SharedLibraryInfo> getSharedLibraries(int i) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public ChangedPackages getChangedPackages(int i) {
+        return null;
+    }
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -249,6 +271,37 @@ public class DelegateApplicationPackageManager extends PackageManager {
     @Override
     public List<ApplicationInfo> getInstalledApplications(int flags) {
         return packageManager.getInstalledApplications(flags);
+    }
+
+    @Override
+    public boolean isInstantApp() {
+        return false;
+    }
+
+    @Override
+    public boolean isInstantApp(String s) {
+        return false;
+    }
+
+    @Override
+    public int getInstantAppCookieMaxBytes() {
+        return 0;
+    }
+
+    @NonNull
+    @Override
+    public byte[] getInstantAppCookie() {
+        return new byte[0];
+    }
+
+    @Override
+    public void clearInstantAppCookie() {
+
+    }
+
+    @Override
+    public void updateInstantAppCookie(@Nullable byte[] bytes) {
+
     }
 
     @Override
@@ -477,6 +530,11 @@ public class DelegateApplicationPackageManager extends PackageManager {
         return packageManager.isSafeMode();
     }
 
+    @Override
+    public void setApplicationCategoryHint(@NonNull String s, int i) {
+
+    }
+
 
     @Override
     public CharSequence getText(String packageName, int resid,
@@ -604,6 +662,11 @@ public class DelegateApplicationPackageManager extends PackageManager {
     public PackageInstaller getPackageInstaller() {
         Log.w(TAG, "getPackageInstaller() ");
         return packageManager.getPackageInstaller();
+    }
+
+    @Override
+    public boolean canRequestPackageInstalls() {
+        return false;
     }
 
 }

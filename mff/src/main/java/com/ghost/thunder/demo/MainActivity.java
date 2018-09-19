@@ -1,5 +1,6 @@
 package com.ghost.thunder.demo;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.huangyong.downloadlib.DownLoadDetail;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
@@ -39,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvstatu = (TextView) findViewById(R.id.tv_status);
         btdown = (Button) findViewById(R.id.btn_down);
+        Button center = (Button) findViewById(R.id.center);
+
+        center.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,DownLoadDetail.class);
+                startActivity(intent);
+            }
+        });
         btdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

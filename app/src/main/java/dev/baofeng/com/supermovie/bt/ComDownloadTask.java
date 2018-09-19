@@ -4,17 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.xunlei.downloadlib.XLTaskHelper;
 
 import org.litepal.crud.DataSupport;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import dev.baofeng.com.supermovie.MyApp;
-import dev.baofeng.com.supermovie.domain.RunTaskInfo;
 import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.onAddListener;
@@ -40,10 +37,10 @@ public class ComDownloadTask extends ThreadUtils.Task{
     @Override
     protected void work() {
         //下载任务
-        downloadApk(url);
+        addAtask(url);
     }
     //当从队列中取出一个任务开始下载时，将状态改为正在下载，这里其实肯定是正在下载
-    private void downloadApk(String url) {
+    private void addAtask(String url) {
 
         //开始下载并存入本地
         try {
@@ -55,8 +52,14 @@ public class ComDownloadTask extends ThreadUtils.Task{
             }else {
                 taskId = XLTaskHelper.instance().addThunderTask(url, "/sdcard/", null);
             }
+
             //根据url判断下载任务是否唯一，同时也根据url找到唯一的那个下载任务。
             List<TaskInfo> taskInfos = DataSupport.where("path=?", url).find(TaskInfo.class);
+            if (taskInfos.size()>0){
+                Toast.makeText(context, "任务已在下载列表中", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             //严格来说，任务仅有一个，所以taskInfos必然只有一个元素
             taskInfos.get(0).setTaskid(taskId+"");//update这条记录
             taskInfos.get(0).setIsWaiting(0);
@@ -68,7 +71,7 @@ public class ComDownloadTask extends ThreadUtils.Task{
                 listener.onAddSuccess(taskId+"");
             }
             Log.d("下载任务基数：","当前下载任务添加，总数量为"+all.size());
-            //发送广播，通知下载任务列表更新数据，注意，任务列表数据也由数据库获取，保证源唯一，避免数据不统一。
+            //发送广播，通知下载任务列表更新数据，注意，任务列表数据也由数据库获取,每2秒查询一次，保证源唯一，避免数据不统一。
             Intent intent = new Intent();
             intent.putExtra(GlobalMsg.TASKID,taskId+"");
             intent.setAction(GlobalMsg.ACTION);

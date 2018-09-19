@@ -15,6 +15,16 @@
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:text="下载" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下载中心"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/center"
+        />
 
     <TextView
         android:id="@+id/tv_status"

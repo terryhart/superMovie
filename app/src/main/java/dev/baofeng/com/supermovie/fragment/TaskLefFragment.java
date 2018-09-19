@@ -26,6 +26,7 @@ import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,8 @@ import dev.baofeng.com.supermovie.bt.ThreadUtils;
 import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.utils.SizeUtils;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import io.reactivex.Observable;
+import rx.Subscriber;
 
 /**
  * Created by huangyong on 2018/2/28.
@@ -61,11 +64,18 @@ public class TaskLefFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.task_left_list, null);
         unbinder = ButterKnife.bind(this, view);
-        initData();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
     private void initData() {
+
+
         //如果数据库没有数据，说明当前下载列表为空，那就不显示
         dataList = DataSupport.findAll(TaskInfo.class);
 
