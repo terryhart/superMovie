@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.huangyong.downloadlib.DownLoadDetail;
+import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,DownLoadDetail.class);
+                Intent intent = new Intent(MainActivity.this,DownLoadMainActivity.class);
                 startActivity(intent);
             }
         });
