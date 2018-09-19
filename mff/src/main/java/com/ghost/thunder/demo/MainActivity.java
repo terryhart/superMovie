@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                                 + " downSize:" + taskInfo.mDownloadSize
                                 + " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
                                 + "/s dcdnSpeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                                + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance().getFileName("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/")
+                                + "/s filePath:" + "/sdcard/" + XLTaskHelper.instance().getFileName("magnet:?xt=urn:btih:EXE5HEFPOVAJLNONKPQMX5HVEW7HS3KD&dn=dzd6.720p.HD%E9%9F%A9%E7%89%88%E4%B8%AD%E8%8B%B1%E5%8F%8C%E5%AD%97%5B%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv%5D.mp4&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftracker.trackerfix.com%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=udp%3A%2F%2F10.rarbg.com%2Fannounce&tr=udp%3A%2F%2F10.rarbg.me%3A80%2Fannounce&tr=udp%3A%2F%2F11.rarbg.com%3A80%2Fannounce&tr=udp%3A%2F%2F11.rarbg.me%3A80%2Fannounce&xl=1692176734")
                 );
                 handler.sendMessageDelayed(handler.obtainMessage(0,taskId),1000);
             }
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 long taskId = 0;
                 try {
-                    taskId = XLTaskHelper.instance().addThunderTask("ed2k://|file|%E7%96%AF%E7%8B%82%E7%89%B9%E8%AD%A6%E9%98%9F.720p.%E5%9B%BD%E6%B3%95%E5%8F%8C%E8%AF%AD.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mkv|1525218498|DC31D9614CDFB94677C31DF944A77AD7|h=7OKSHXYF6AMQBVVOTNRGTSTL25TMCXC5|/","/sdcard/",null);
+                    taskId = XLTaskHelper.instance().addThunderTask("magnet:?xt=urn:btih:EXE5HEFPOVAJLNONKPQMX5HVEW7HS3KD&dn=dzd6.720p.HD%E9%9F%A9%E7%89%88%E4%B8%AD%E8%8B%B1%E5%8F%8C%E5%AD%97%5B%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv%5D.mp4&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftracker.trackerfix.com%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=udp%3A%2F%2F10.rarbg.com%2Fannounce&tr=udp%3A%2F%2F10.rarbg.me%3A80%2Fannounce&tr=udp%3A%2F%2F11.rarbg.com%3A80%2Fannounce&tr=udp%3A%2F%2F11.rarbg.me%3A80%2Fannounce&xl=1692176734","/sdcard/",null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

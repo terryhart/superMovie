@@ -24,7 +24,7 @@
             app:contentScrim="#3ad0d3"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed|enterAlways"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed|enterAlways"
             >
          <!--   <ImageView
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             app:tabTextColor="#59ffffff"/>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.huangyong.downloadlib.view.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
