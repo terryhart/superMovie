@@ -3,7 +3,7 @@ package com.huangyong.downloadlib.presenter;
  * Created by HuangYong on 2018/9/20.
  */
 
-import com.huangyong.downloadlib.domain.DownTaskInfo;
+import com.huangyong.downloadlib.domain.DowningTaskInfo;
 
 /**
  * @author Huangyong
@@ -17,7 +17,7 @@ import com.huangyong.downloadlib.domain.DownTaskInfo;
  */
 public interface IPresenter {
 
-    void addTask(DownTaskInfo downTaskInfo);
+    void addTask(DowningTaskInfo downTaskInfo);
 
     void pauseTask(String url);
 

@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.huangyong.downloadlib.domain.DownTaskInfo;
+import com.huangyong.downloadlib.db.TaskDao;
+import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
@@ -20,7 +21,6 @@ import java.util.List;
 public class DownLoadPresenter implements IPresenter {
 
     private static String taskId;
-    private LinkedList<String> taskIdList ;
     private  ITask iTask;
     private Context context;
 
@@ -28,17 +28,38 @@ public class DownLoadPresenter implements IPresenter {
     public DownLoadPresenter(Context context,ITask iTask) {
         this.context = context;
         this.iTask = iTask;
-        this.taskIdList = new LinkedList();
     }
 
 
     @Override
-    public void addTask(DownTaskInfo info) {
+    public void addTask(DowningTaskInfo info) {
 
 
         //TODO 获取到taskId,localPath，存入数据库,发送广播到任务列表，查询数据库，查询并显示更新进度
         String link = info.getTaskUrl();
         String path = Params.DEFAULT_PATH;
+        //获取文件名
+        String taskName = XLTaskHelper.instance().getFileName(link);
+
+        info.setTitle(taskName);
+
+        //数据库存一份，先查询数据库是否已有记录，没有则添加，有则不添加
+        TaskDao taskDao = TaskDao.getInstance(context);
+        List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+        if (taskInfos!=null&&taskInfos.size()>0){
+            for (int i = 0; i < taskInfos.size(); i++) {
+                if (taskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
+                    //已在任务列表，不继续添加，直接返回
+                    if (iTask!=null){
+                        iTask.repeatAdd();
+                    }
+                    String taskId = taskInfos.get(i).getTaskId();
+                    XLTaskHelper.instance().startTask(Long.parseLong(taskId));
+                    return;
+                }
+            }
+
+        }
 
         if (link.contains("magnet") || XLTaskHelper.instance().getFileName(link).endsWith("torrent")) {
             if (link.startsWith("magnet")) {
@@ -49,11 +70,12 @@ public class DownLoadPresenter implements IPresenter {
         } else {
             taskId = addThunderTask(link, path, null, context);
         }
-        if (iTask!=null){
-            Log.e("kaishixiazai-----",taskId);
-            taskIdList.add(taskId);
-            iTask.TaskStart(taskIdList,link);
-        }
+
+
+        info.setTaskId(taskId);
+        //存入数据库
+        taskDao.add(info);
+
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_ID,taskId);
         BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);

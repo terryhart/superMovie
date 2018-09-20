@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.huangyong.downloadlib.domain.DownTaskInfo;
-import com.huangyong.downloadlib.model.ITask;
+import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.Params;
-import com.huangyong.downloadlib.presenter.DownLoadPresenter;
-import com.huangyong.downloadlib.presenter.IPresenter;
 import com.huangyong.downloadlib.service.DownLoadService;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
-import com.xunlei.downloadlib.XLDownloadManager;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 public class TaskLibHelper {
@@ -25,7 +21,7 @@ public class TaskLibHelper {
     }
 
 
-    public static void addNewTask(DownTaskInfo info,Context context) {
+    public static void addNewTask(DowningTaskInfo info, Context context) {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_URL_KEY,info.getTaskUrl());
         intent.putExtra(Params.POST_IMG_KEY,info.getPostImgUrl());

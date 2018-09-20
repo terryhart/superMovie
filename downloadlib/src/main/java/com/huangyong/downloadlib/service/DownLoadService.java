@@ -7,19 +7,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
+import android.widget.Toast;
 
-import com.huangyong.downloadlib.domain.DownTaskInfo;
+import com.huangyong.downloadlib.db.TaskDao;
+import com.huangyong.downloadlib.db.TaskedDao;
+import com.huangyong.downloadlib.domain.DoneTaskInfo;
+import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.presenter.DownLoadPresenter;
+import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.xunlei.downloadlib.XLTaskHelper;
-import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +30,6 @@ import rx.Subscription;
 public class DownLoadService extends Service implements ITask {
 
     private DownLoadPresenter presenter;
-    private LinkedList taskId;
     private Subscription subscribe;
 
     @Nullable
@@ -57,9 +56,6 @@ public class DownLoadService extends Service implements ITask {
      */
     private void initQuery() {
         //TODO 查询数据库，获取进度等信息
-
-
-
         Subscriber<Long> subscriber = new Subscriber<Long>() {
             @Override
             public void onCompleted() {
@@ -71,9 +67,46 @@ public class DownLoadService extends Service implements ITask {
 
             @Override
             public void onNext(Long aLong) {
-                System.out.println("Next:" + aLong.toString());
 
-                if (taskId.size()>0){
+                //查询已完成数据库，获取最新数据
+                TaskedDao taskedDao = TaskedDao.getInstance(getApplicationContext());
+                List<DoneTaskInfo> doneTaskInfos = taskedDao.queryAll();
+
+
+                //查询数据库，获取最新的数据
+                TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
+                List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+
+                if (taskInfos!=null&&taskInfos.size()>0){
+                    for (int i = 0; i < taskInfos.size(); i++) {
+                        String taskId = taskInfos.get(i).getTaskId();
+                        XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(Long.parseLong(taskId));
+                        taskInfos.get(i).setTotalSize(String.valueOf(taskInfo.mFileSize));
+                        taskInfos.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
+
+                        taskDao.update(taskInfos.get(i));
+
+                        if (taskInfo.mFileSize==taskInfo.mDownloadSize){
+
+                            //提示下载完成
+                            Intent intent = new Intent();
+                            intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
+                            BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
+
+                            //文件下载完成，此数据在下一秒移动到已完成数据库。
+                            DoneTaskInfo task = new DoneTaskInfo();
+                            task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());
+                            task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
+                            task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
+                            task.setTitle(taskInfos.get(i).getTitle());
+                            //添加到数据库
+                            taskedDao.add(task);
+                        }
+                    }
+                }
+                BroadCastUtils.sendIntentBroadCask(getApplicationContext(),new Intent(),Params.UPDATE_PROGERSS);
+
+               /* if (taskId.size()>0){
                     for (int i = 0; i < taskId.size(); i++) {
 
                         Log.e("ksdjglkdsl","查询数据库"+taskId.get(i).toString());
@@ -102,11 +135,11 @@ public class DownLoadService extends Service implements ITask {
                                     //TODO 对话框提示，下载其中哪个文件，list保存其中的index
                                     presenter.addTorrentTask(path,Params.DEFAULT_PATH,list);
 //                            XLTaskHelper.instance().addTorrentTask(path,Params.DEFAULT_PATH);
-                          /*  try {
+                          *//*  try {
                                 XLTaskHelper.instance().addTorrentTask(path,Params.DEFAULT_PATH,null);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                            }*/
+                            }*//*
                                 }
                             }
                         }
@@ -114,7 +147,7 @@ public class DownLoadService extends Service implements ITask {
 
 
                     }
-                }
+                }*/
 
 
 
@@ -135,16 +168,28 @@ public class DownLoadService extends Service implements ITask {
         intentFilter.addAction(Params.TASK_DELETE);
         intentFilter.addAction(Params.TASK_PAUSE);
         intentFilter.addAction(Params.TASK_START);
+        intentFilter.addAction(Params.TASK_COMMPLETE);
         registerReceiver(taskReceiver,intentFilter);
     }
     BroadcastReceiver taskReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             if (Params.TASK_START.equals(intent.getAction())){
-                DownTaskInfo downTaskInfo = new DownTaskInfo();
-                downTaskInfo.setLocalPath(intent.getStringExtra(Params.DEFAULT_PATH));
-                downTaskInfo.setPostImgUrl(intent.getStringExtra(Params.POST_IMG_KEY));
-                downTaskInfo.setTaskUrl(intent.getStringExtra(Params.TASK_URL_KEY));
+
+                String taskUrl = intent.getStringExtra(Params.TASK_URL_KEY);
+                String taskPath = intent.getStringExtra(Params.DEFAULT_PATH);
+                String taskPoster = intent.getStringExtra(Params.POST_IMG_KEY);
+                String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
+
+
+                DowningTaskInfo downTaskInfo = new DowningTaskInfo();
+
+                downTaskInfo.setLocalPath(taskPath);
+                downTaskInfo.setPostImgUrl(taskPoster);
+                downTaskInfo.setTaskUrl(taskUrl);
+                downTaskInfo.setUrlMd5(urlMd5);
+                downTaskInfo.setReceiveSize("0");
 
                 if (presenter!=null){
                     presenter.addTask(downTaskInfo);
@@ -152,21 +197,23 @@ public class DownLoadService extends Service implements ITask {
             }
             if (Params.TASK_PAUSE.equals(intent.getAction())){
                 if (presenter!=null){
-                    presenter.pauseTask(intent.getStringExtra(Params.TASK_URL_KEY));
+                    presenter.pauseTask("");
                 }
             }
             if (Params.TASK_DELETE.equals(intent.getAction())){
 
             }
-            if (Params.UPDATE_PROGERSS.equals(intent.getAction())){
-                initQuery();
+
+            if (Params.TASK_COMMPLETE.equals(intent.getAction())){
+                String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
+                Toast.makeText(context, title+"\n下载完成", Toast.LENGTH_SHORT).show();
             }
 
         }
     };
 
     @Override
-    public void TaskStart(LinkedList<String> taskId, String url) {
-        this.taskId = taskId;
+    public void repeatAdd() {
+        Toast.makeText(this, "任务已在下载中心列表中，请查看后确认", Toast.LENGTH_SHORT).show();
     }
 }

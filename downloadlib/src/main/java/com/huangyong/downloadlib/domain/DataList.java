@@ -17,13 +17,34 @@ import java.util.List;
  */
 public class DataList {
 
-    private List<DownTaskInfo> infoList;
+    private int id;
 
-    public List<DownTaskInfo> getInfoList() {
+    public List<DowningTaskInfo> getDoneList() {
+        return doneList;
+    }
+
+    public void setDoneList(List<DowningTaskInfo> doneList) {
+        this.doneList = doneList;
+    }
+
+    private List<DowningTaskInfo> doneList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private List<DowningTaskInfo> infoList;
+
+
+    public List<DowningTaskInfo> getInfoList() {
         return infoList;
     }
 
-    public void setInfoList(List<DownTaskInfo> infoList) {
+    public void setInfoList(List<DowningTaskInfo> infoList) {
         this.infoList = infoList;
     }
 }

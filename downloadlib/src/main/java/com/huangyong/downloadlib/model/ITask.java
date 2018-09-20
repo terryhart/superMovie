@@ -5,7 +5,8 @@ import java.util.LinkedList;
 
 public interface ITask {
 
-    void TaskStart(LinkedList<String> taskId, String url);
+
+    void repeatAdd();
 
    /* void TaskPause(String taskId);
 

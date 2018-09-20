@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.adapter.DownTaskAdapter;
-import com.huangyong.downloadlib.domain.DownTaskInfo;
+import com.huangyong.downloadlib.domain.DowningTaskInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class DownloadingTaskFragment extends Fragment {
 
 
     private RecyclerView downing;
-    private List<DownTaskInfo> infos =new ArrayList<>();
+    private List<DowningTaskInfo> infos =new ArrayList<>();
     private DownTaskAdapter adapter;
 
     @Nullable
@@ -49,7 +49,7 @@ public class DownloadingTaskFragment extends Fragment {
         return v;
     }
 
-    public void updateTaskData(List<DownTaskInfo> info) {
+    public void updateTaskData(List<DowningTaskInfo> info) {
         if (this.infos!=null){
             this.infos.clear();
             this.infos.addAll(info);
