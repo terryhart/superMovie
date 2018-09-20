@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.huangyong.downloadlib.R;
+import com.huangyong.downloadlib.domain.DownTaskInfo;
+
+import java.util.List;
 
 public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
 
@@ -21,10 +24,16 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
 //        holder.taskTitile.setText("测试下载标题");
+        holder.posterImg.setProgress(30);
+        holder.posterImg.setImageResource(R.drawable.poster);
     }
 
     @Override
     public int getItemCount() {
         return 8;
+    }
+
+    public void setTaskData(List<DownTaskInfo> info) {
+
     }
 }

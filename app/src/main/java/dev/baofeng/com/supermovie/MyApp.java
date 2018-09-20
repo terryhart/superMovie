@@ -34,7 +34,6 @@ public class MyApp extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        XLTaskHelper.init(this);
         Connector.getDatabase();//创建数据库
         XLTaskHelper.init(getApplicationContext());
         spUtils = new SPUtils(this,"SuperMovie");//初始化SP

@@ -6,8 +6,7 @@ import android.content.Intent;
 
 public class BroadCastUtils {
 
-    public static void sendIntentBroadCask(Context context, String action){
-        Intent intent = new Intent();
+    public static void sendIntentBroadCask(Context context, Intent intent, String action){
         intent.setAction(action);
         context.sendBroadcast(intent);
     }

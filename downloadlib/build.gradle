@@ -36,4 +36,5 @@ dependencies {
     implementation files('libs/ormlite-android-5.1.jar')
     implementation files('libs/ormlite-core-5.1.jar')
     implementation project(':thunder')
+    compile 'io.reactivex:rxjava:1.1.0'
 }

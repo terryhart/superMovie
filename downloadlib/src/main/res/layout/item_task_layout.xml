@@ -22,21 +22,14 @@
            android:id="@+id/task_title"
            android:text="风雨咒，国产720p.mp4"
            />
-       <ImageView
+       <com.huangyong.downloadlib.view.ProgressImageView
            android:layout_width="120dp"
            android:layout_height="80dp"
+           android:id="@+id/posterImg"
+           android:scaleType="centerCrop"
            android:layout_centerVertical="true"
            android:layout_marginRight="10dp"
            android:layout_alignParentRight="true"
-           android:background="#742ae48b"
-           />
-       <ImageView
-           android:layout_width="40dp"
-           android:layout_height="80dp"
-           android:layout_centerVertical="true"
-           android:layout_marginRight="10dp"
-           android:layout_alignParentRight="true"
-           android:background="#40c0cc"
            />
        <ImageView
            android:layout_width="120dp"
@@ -64,6 +57,7 @@
             android:text="边下边播"
             android:textStyle="italic"
             android:textSize="11sp"
+            android:visibility="invisible"
             android:id="@+id/playinloading"
             android:textColor="#0697df"
             android:layout_alignParentBottom="true"

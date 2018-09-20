@@ -1,68 +1,49 @@
 package com.huangyong.downloadlib;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.huangyong.downloadlib.domain.DownTaskInfo;
+import com.huangyong.downloadlib.model.ITask;
+import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.presenter.DownLoadPresenter;
+import com.huangyong.downloadlib.presenter.IPresenter;
+import com.huangyong.downloadlib.service.DownLoadService;
+import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.xunlei.downloadlib.XLDownloadManager;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 public class TaskLibHelper {
 
-    private static String taskId;
+
 
     public static void init(Context context){
         XLTaskHelper.init(context.getApplicationContext());
+        Intent intent = new Intent(context, DownLoadService.class);
+        context.startService(intent);
     }
+
 
     public static void addNewTask(DownTaskInfo info,Context context) {
-
-
-
-        String link = info.getTaskUrl();
-        String path = info.getLocalPath();
-
-        if (link.startsWith("magnet:?") || XLTaskHelper.instance().getFileName(link).endsWith("torrent")) {
-            if (link.startsWith("magnet:?")) {
-                taskId = addMagnetTask(link, path, null);
-            } else {
-                taskId = addMagnetTask(getRealUrl(link), path, null);
-            }
-        } else {
-            taskId = addThunderTask(link, path, null, context);
-        }
-        Log.e("kaishixiazai-----",taskId);
+        Intent intent = new Intent();
+        intent.putExtra(Params.TASK_URL_KEY,info.getTaskUrl());
+        intent.putExtra(Params.POST_IMG_KEY,info.getPostImgUrl());
+        Log.e("ksdjglkdsl","TASK_URL----"+info.getTaskUrl());
+        BroadCastUtils.sendIntentBroadCask(context,intent, Params.TASK_START);
     }
 
-    private static String addThunderTask(String url, String savePath, String fileName, Context context) {
-        try {
-            taskId = String.valueOf(XLTaskHelper.instance().addThunderTask(url, savePath, fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String localUrl = XLTaskHelper.instance().getLoclUrl(savePath +
-                XLTaskHelper.instance().getFileName(url));
-       return taskId;
+    public static void pauseTask(String url,Context context){
+        Intent intent = new Intent();
+        intent.putExtra(Params.TASK_URL_KEY,url);
+        BroadCastUtils.sendIntentBroadCask(context,intent, Params.TASK_PAUSE);
     }
 
-    private static String addMagnetTask(String url, String savePath, String fileName) {
-        try {
-            taskId = String.valueOf(XLTaskHelper.instance().addMagnetTask(url, savePath, fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return taskId;
+    public static void deleteTask(String url,Context context){
+        Intent intent = new Intent();
+        intent.putExtra(Params.TASK_URL_KEY,url);
+        BroadCastUtils.sendIntentBroadCask(context,intent, Params.TASK_DELETE);
     }
 
-    /**
-     * 迅雷thunder://地址与普通url地址转换
-     * 其实迅雷的thunder://地址就是将普通url地址加前缀‘AA’、后缀‘ZZ’，再base64编码后得到的字符串
-     *
-     * @param url
-     * @return
-     */
-    public static String getRealUrl(String url) {
-        if (url.startsWith("thunder://")) url = XLDownloadManager.getInstance().parserThunderUrl(url);
-        return url;
-    }
+
 }
