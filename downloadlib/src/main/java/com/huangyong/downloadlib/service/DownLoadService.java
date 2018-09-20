@@ -9,14 +9,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.huangyong.downloadlib.domain.DownTaskInfo;
 import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.presenter.DownLoadPresenter;
-import com.huangyong.downloadlib.presenter.IPresenter;
-import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
