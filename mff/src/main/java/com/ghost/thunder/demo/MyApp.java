@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.xunlei.downloadlib.XLTaskHelper;
+import com.huangyong.downloadlib.TaskLibHelper;
 
 /**
  * Created by oceanzhang on 2017/9/28.
@@ -18,7 +18,7 @@ public class MyApp extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
-        XLTaskHelper.init(getApplicationContext());
+        TaskLibHelper.init(getApplicationContext());
     }
 
     public static MyApp appInstance() {

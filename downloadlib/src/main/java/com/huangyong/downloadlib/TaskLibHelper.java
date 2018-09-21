@@ -2,31 +2,33 @@ package com.huangyong.downloadlib;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.service.DownLoadService;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
+import com.huangyong.downloadlib.utils.MD5Utils;
 import com.xunlei.downloadlib.XLTaskHelper;
+
+import java.io.File;
 
 public class TaskLibHelper {
 
 
-
     public static void init(Context context){
+        //初始化本地下载
         XLTaskHelper.init(context.getApplicationContext());
+
+        //创建本地下载路径
+        File basePath = new File(Params.DEFAULT_PATH);
+        if (!basePath.exists()||!basePath.isDirectory()){
+            basePath.mkdir();
+        }
         Intent intent = new Intent(context, DownLoadService.class);
         context.startService(intent);
-    }
-
-
-    public static void addNewTask(DowningTaskInfo info, Context context) {
-        Intent intent = new Intent();
-        intent.putExtra(Params.TASK_URL_KEY,info.getTaskUrl());
-        intent.putExtra(Params.POST_IMG_KEY,info.getPostImgUrl());
-        Log.e("ksdjglkdsl","TASK_URL----"+info.getTaskUrl());
-        BroadCastUtils.sendIntentBroadCask(context,intent, Params.TASK_START);
     }
 
     public static void pauseTask(String url,Context context){
@@ -42,4 +44,21 @@ public class TaskLibHelper {
     }
 
 
+    public static void addNewTask(String url, String savepath, String postImgUrl, Context applicationContext) {
+        if (TextUtils.isEmpty(url)){
+            Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
+        }
+        File file = new File(savepath);
+        if (!file.isDirectory()){
+            Toast.makeText(applicationContext, "下载目录不存在，请检查后再设置", Toast.LENGTH_SHORT).show();
+        }
+
+        String urlMd5 = MD5Utils.stringToMD5(url);
+        Intent intent = new Intent();
+        intent.putExtra(Params.TASK_URL_KEY,url);
+        intent.putExtra(Params.POST_IMG_KEY,postImgUrl);
+        intent.putExtra(Params.LOCAL_PATH_KEY,savepath);
+        intent.putExtra(Params.URL_MD5_KEY,urlMd5);
+        BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
+    }
 }

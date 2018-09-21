@@ -37,10 +37,9 @@ public class DownLoadPresenter implements IPresenter {
 
         //TODO 获取到taskId,localPath，存入数据库,发送广播到任务列表，查询数据库，查询并显示更新进度
         String link = info.getTaskUrl();
-        String path = Params.DEFAULT_PATH;
+        String path = info.getLocalPath();
         //获取文件名
         String taskName = XLTaskHelper.instance().getFileName(link);
-
         info.setTitle(taskName);
 
         //数据库存一份，先查询数据库是否已有记录，没有则添加，有则不添加
@@ -53,8 +52,6 @@ public class DownLoadPresenter implements IPresenter {
                     if (iTask!=null){
                         iTask.repeatAdd();
                     }
-                    String taskId = taskInfos.get(i).getTaskId();
-                    XLTaskHelper.instance().startTask(Long.parseLong(taskId));
                     return;
                 }
             }

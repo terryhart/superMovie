@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.db.TaskDao;
@@ -70,8 +71,6 @@ public class DownLoadService extends Service implements ITask {
 
                 //查询已完成数据库，获取最新数据
                 TaskedDao taskedDao = TaskedDao.getInstance(getApplicationContext());
-                List<DoneTaskInfo> doneTaskInfos = taskedDao.queryAll();
-
 
                 //查询数据库，获取最新的数据
                 TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
@@ -85,8 +84,8 @@ public class DownLoadService extends Service implements ITask {
                         taskInfos.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
 
                         taskDao.update(taskInfos.get(i));
-
-                        if (taskInfo.mFileSize==taskInfo.mDownloadSize){
+                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"----"+taskInfo.mDownloadSize);
+                        if (taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
 
                             //提示下载完成
                             Intent intent = new Intent();
@@ -101,6 +100,10 @@ public class DownLoadService extends Service implements ITask {
                             task.setTitle(taskInfos.get(i).getTitle());
                             //添加到数据库
                             taskedDao.add(task);
+
+                            //然后删除下载中的记录
+                            taskDao.delete(taskInfos.get(i).getId());
+
                         }
                     }
                 }
@@ -178,7 +181,7 @@ public class DownLoadService extends Service implements ITask {
             if (Params.TASK_START.equals(intent.getAction())){
 
                 String taskUrl = intent.getStringExtra(Params.TASK_URL_KEY);
-                String taskPath = intent.getStringExtra(Params.DEFAULT_PATH);
+                String taskPath = intent.getStringExtra(Params.LOCAL_PATH_KEY);
                 String taskPoster = intent.getStringExtra(Params.POST_IMG_KEY);
                 String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
 
@@ -206,7 +209,7 @@ public class DownLoadService extends Service implements ITask {
 
             if (Params.TASK_COMMPLETE.equals(intent.getAction())){
                 String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
-                Toast.makeText(context, title+"\n下载完成", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), title+"\n下载完成", Toast.LENGTH_SHORT).show();
             }
 
         }

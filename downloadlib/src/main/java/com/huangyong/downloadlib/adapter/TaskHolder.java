@@ -1,10 +1,12 @@
 package com.huangyong.downloadlib.adapter;
 
+import android.app.Dialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.huangyong.downloadlib.R;
+import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.downloadlib.view.ProgressImageView;
 
 public class TaskHolder extends RecyclerView.ViewHolder {
@@ -20,6 +22,5 @@ public class TaskHolder extends RecyclerView.ViewHolder {
         task_msg = itemView.findViewById(R.id.task_msg);
         playinloading = itemView.findViewById(R.id.playinloading);
         posterImg = itemView.findViewById(R.id.posterImg);
-
     }
 }

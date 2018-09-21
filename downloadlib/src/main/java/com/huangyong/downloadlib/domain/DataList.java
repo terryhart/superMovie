@@ -19,15 +19,15 @@ public class DataList {
 
     private int id;
 
-    public List<DowningTaskInfo> getDoneList() {
+    public List<DoneTaskInfo> getDoneList() {
         return doneList;
     }
 
-    public void setDoneList(List<DowningTaskInfo> doneList) {
+    public void setDoneList(List<DoneTaskInfo> doneList) {
         this.doneList = doneList;
     }
 
-    private List<DowningTaskInfo> doneList;
+    private List<DoneTaskInfo> doneList;
 
     public int getId() {
         return id;

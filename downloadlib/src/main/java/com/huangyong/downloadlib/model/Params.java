@@ -16,5 +16,8 @@ public class Params {
     public static String TASK_URL_KEY = "TASK_URL_KEY";
     public static String UPDATE_PROGERSS ="UPDATE_PROGERSS";
 
-    public static final String DEFAULT_PATH = "/sdcard/";
+
+
+
+    public static final String DEFAULT_PATH = "/sdcard/AMovieDownload/";
 }
