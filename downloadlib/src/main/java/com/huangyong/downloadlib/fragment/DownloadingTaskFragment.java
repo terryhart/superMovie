@@ -118,23 +118,23 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Params.UPDATE_PROGERSS)){
-                //TODO 若页面可见，更新数据，该广播每2秒一次，
-                // TODO 只有页面可见时才更新列表。但是服务中的数据封装实时进行着。除非任务列表为空。本页只初始化时从数据库获取一次
-                if (true){
-                    //查询数据库所有数据
-                    List<DowningTaskInfo> downingTaskInfos = TaskDao.getInstance(getContext()).queryAll();
-                    if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
-                        infos.clear();
-                        infos.addAll(downingTaskInfos);
-                    }
+                //查询数据库所有数据
+                List<DowningTaskInfo> downingTaskInfos = TaskDao.getInstance(getContext()).queryAll();
+                if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
+                    infos.clear();
+                    infos.addAll(downingTaskInfos);
+                    adapter.notifyDataSetChanged();
                 }
             }
             if (intent.getAction().equals(Params.TASK_COMMPLETE)){
                 List<DowningTaskInfo> taskInfos = TaskDao.getInstance(getContext()).queryAll();
                 if (taskInfos.size()>0){
-                    Log.e("downtaskinit","本地数据库有数据"+taskInfos.size());
+                    Log.e("downtaskinit","本地数据库有数据"+taskInfos.get(0).getReceiveSize());
                     infos.clear();
                     infos.addAll(taskInfos);
+                    adapter.notifyDataSetChanged();
+                }else {
+                    infos.clear();
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -170,7 +170,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 dao.delete(taskInfo.getId());
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
-                    Toast.makeText(getContext(), "已删除", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "已删除同时删除本地文件", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     infos.clear();
                 }
@@ -180,7 +180,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
             @Override
             public void onClick(View view) {
                 //删除数据库记录
-                TaskedDao dao = TaskedDao.getInstance(getContext());
+                TaskDao dao = TaskDao.getInstance(getContext());
                 dao.delete(taskInfo.getId());
 
                 //删除列表记录

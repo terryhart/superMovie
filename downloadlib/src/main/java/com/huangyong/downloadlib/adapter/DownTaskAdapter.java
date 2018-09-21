@@ -3,6 +3,7 @@ package com.huangyong.downloadlib.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,10 +48,20 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             if (taskInfo.get(position).getTotalSize()!=null &&!taskInfo.get(position).getTotalSize().equals("0")){
                 total = Long.parseLong(taskInfo.get(position).getTotalSize());
             }
-            holder.posterImg.setProgress((int) (received*1.0f/total*1.0f*100));
+            int progress = (int) (received*1.0f/total*1.0f*100);
+            holder.posterImg.setProgress(progress);
+            if (progress>5){
+                holder.playinloading.setVisibility(View.VISIBLE);
+            }
             String fileSize = FileUtils.convertFileSize(total);
             String receivedSize = FileUtils.convertFileSize(received);
-            holder.task_msg.setText(fileSize+"  已下载"+receivedSize+"\n正在下载 2.3M/s");
+            String speed;
+            if (TextUtils.isEmpty(taskInfo.get(position).getSpeed())){
+                speed= "0";
+            }else {
+                speed = taskInfo.get(position).getSpeed();
+            }
+            holder.task_msg.setText(fileSize+"  已下载"+receivedSize+"\n正在下载  "+speed+" /s");
 
             if (fileSize==receivedSize){
                 Toast.makeText(context, "下载完成", Toast.LENGTH_SHORT).show();

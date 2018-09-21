@@ -6,17 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.view.DeleteDialog;
 
-import me.shaohui.bottomdialog.BaseBottomDialog;
-import me.shaohui.bottomdialog.BottomDialog;
 
 
 public class MainActivity extends AppCompatActivity {

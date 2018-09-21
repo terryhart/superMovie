@@ -56,7 +56,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
         TaskFragmentPagerAdapter adapter=new TaskFragmentPagerAdapter(fm, listfragment);
 
         downTask.setAdapter(adapter);
-        downTask.setScanScroll(false);
+        downTask.setScanScroll(true);
         downTask.setCurrentItem(0);
 
         tabLayout.setupWithViewPager(downTask);
@@ -67,7 +67,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
     private void initData() {
         //下载中列表
         List<DowningTaskInfo> taskInfos = TaskDao.getInstance(getApplicationContext()).queryAll();
-        if (taskInfos.size()>0){
+        if (taskInfos!=null&&taskInfos.size()>0){
             Log.e("downtaskinit","本地数据库有数据"+taskInfos.size());
 
             ingList.updateTaskDatas(taskInfos,DownLoadMainActivity.this);

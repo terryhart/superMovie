@@ -54,6 +54,7 @@ public class DowningTaskInfo {
     @DatabaseField(columnName = "postImgUrl")
     private String postImgUrl;
 
+    @DatabaseField(columnName = "speed")
     private String speed;
 
 

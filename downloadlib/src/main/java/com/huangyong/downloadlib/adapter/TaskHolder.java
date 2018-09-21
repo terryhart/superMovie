@@ -22,5 +22,6 @@ public class TaskHolder extends RecyclerView.ViewHolder {
         task_msg = itemView.findViewById(R.id.task_msg);
         playinloading = itemView.findViewById(R.id.playinloading);
         posterImg = itemView.findViewById(R.id.posterImg);
+
     }
 }

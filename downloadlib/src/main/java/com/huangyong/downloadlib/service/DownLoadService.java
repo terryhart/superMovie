@@ -18,6 +18,7 @@ import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.presenter.DownLoadPresenter;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
+import com.huangyong.downloadlib.utils.FileUtils;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
@@ -82,15 +83,11 @@ public class DownLoadService extends Service implements ITask {
                         XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(Long.parseLong(taskId));
                         taskInfos.get(i).setTotalSize(String.valueOf(taskInfo.mFileSize));
                         taskInfos.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
-
+                        taskInfos.get(i).setSpeed(FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
                         taskDao.update(taskInfos.get(i));
-                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"----"+taskInfo.mDownloadSize);
-                        if (taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
+                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
+                        if (taskInfo.mDownloadSize!=0&&taskInfo.mFileSize!=0&&taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
 
-                            //提示下载完成
-                            Intent intent = new Intent();
-                            intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
-                            BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
 
                             //文件下载完成，此数据在下一秒移动到已完成数据库。
                             DoneTaskInfo task = new DoneTaskInfo();
@@ -104,6 +101,11 @@ public class DownLoadService extends Service implements ITask {
                             //然后删除下载中的记录
                             taskDao.delete(taskInfos.get(i).getId());
 
+
+                            //提示下载完成
+                            Intent intent = new Intent();
+                            intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
+                            BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
                         }
                     }
                 }
