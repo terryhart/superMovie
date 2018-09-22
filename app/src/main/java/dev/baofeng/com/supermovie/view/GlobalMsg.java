@@ -19,10 +19,9 @@ public class GlobalMsg {
     public static final int ITEM_TYPE_3 =3;
     public static final String TASKID = "TASKID";
     public static final String REFRESH = "REFRESH";
+    public static final String KEY_MOVIE_DETAIL = "KEY_MOVIE_DETAIL";
     public static boolean ISSHOW = false;
 
-    public static Queue<String> downQueue;//准备下载队列
-    public static Queue<String> doneQueue;//已下载队列
 
     public static String ACTION = "ACTION";
     public static String ACTIONWAIT = "WAITE";

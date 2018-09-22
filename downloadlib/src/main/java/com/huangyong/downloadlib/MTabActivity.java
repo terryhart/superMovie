@@ -14,18 +14,15 @@ import com.huangyong.downloadlib.fragment.DownloadingTaskFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 
 public class MTabActivity extends AppCompatActivity {
 
-    private CoordinatorTabLayout coordinatorTabLayout;
     private ViewPager viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download_layout);
-        coordinatorTabLayout = findViewById(R.id.coordinatortablayout);
         viewPager = findViewById(R.id.viewpager);
         List listfragment=new ArrayList<Fragment>();
 
@@ -40,13 +37,6 @@ public class MTabActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
-       int[] mImageArray = new int[]{
-                R.mipmap.img1,
-                R.mipmap.img2};
-
-        coordinatorTabLayout.setTitle("下载管理")
-                .setImageArray(mImageArray)
-                .setupWithViewPager(viewPager);
 
     }
 }

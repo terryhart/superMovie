@@ -17,6 +17,8 @@ import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.view.DetailActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import dev.baofeng.com.supermovie.view.NewDetailActivity;
+import dev.baofeng.com.supermovie.view.ScrollingActivity;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -54,6 +56,16 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }else {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
+            if (name.contains("片名")){
+                name=name.replace("片名","");
+            }
+            if (name.contains("：")){
+                name= name.replace("：","");
+            }
+            if (name.contains(":")){
+                name= name.replace(":","");
+                name= name.trim();
+            }
             name.substring(name.indexOf("《")+1,name.indexOf("》"));
             imgUrl= imgUrl.substring(0,imgUrl.indexOf("jpg")+3);
             Uri uri = Uri.parse(imgUrl);
@@ -62,14 +74,17 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ((CommonHolder)holder).itemtitle.setText(name);
 
             String finalImgUrl = imgUrl;
+            String finalName = name;
             ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Intent intent = new Intent(context, DetailActivity.class);
+//                        Intent intent = new Intent(context, DetailActivity.class);
+                        Intent intent = new Intent(context, ScrollingActivity.class);
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
-                        intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE,datas.getData().get(position).getDownLoadName());
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
                         context.startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();

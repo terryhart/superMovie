@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -74,13 +74,7 @@ dependencies {
     compile 'com.trello:rxlifecycle:1.0'
     compile 'com.trello:rxlifecycle-android:1.0'
     compile 'com.trello:rxlifecycle-components:1.0'
-    implementation project(':thunder')
-    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
-    compile 'cn.bingoogolapple:bga-update:1.0.2@aar'
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
-
-    //播放器 https://github.com/yangchaojiang/yjPlay
-    compile 'com.ycjiang:VideoPlayModule:2.2.19'
-
+    implementation project(':downloadlib')
 }
