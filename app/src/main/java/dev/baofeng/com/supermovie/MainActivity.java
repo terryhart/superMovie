@@ -1,32 +1,19 @@
 package dev.baofeng.com.supermovie;
 
 import android.Manifest;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dev.baofeng.com.supermovie.fragment.TaskLefFragment;
-import dev.baofeng.com.supermovie.fragment.TaskRightFragment;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
-import dev.baofeng.com.supermovie.view.DownloadService;
-import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.HomeFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,23 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView down;
     @BindView(R.id.my)
     TextView my;
-    @BindView(R.id.nav_view)
-    NavigationView navView;
-    @BindView(R.id.drawer)
-    DrawerLayout drawer;
-    @BindView(R.id.task_tab_left)
-    TextView taskTabLeft;
-    @BindView(R.id.task_tab_right)
-    TextView taskTabRight;
-    @BindView(R.id.downTaskcontent)
-    FrameLayout downcontent;
     private BTFragment downfragment;
     private HomeFragment homeFragment;
     private CenterFragment centerFragment;
-    private DownloadService downService;
-    private ServiceConnection conn;
-    private TaskLefFragment lefFragment;
-    private TaskRightFragment rightFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         initView();
         initPermission();
-        initService();
     }
     private void initPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -79,38 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                            String permissions[], int[] grantResults) {
 
     }
-    /**
-     * 初始化下载线程
-     */
-    private void initService() {
-        conn = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                downService = ((DownloadService.LocalBinder)service).getService();
-                GlobalMsg.service = downService;
-                Log.d("服务开启成功","服务开了");
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-            }
-        };
-        Intent intent = new Intent(getApplicationContext(),DownloadService.class);
-        bindService(intent, conn, Context.BIND_AUTO_CREATE);
-    }
 
     private void initView() {
         main.setOnClickListener(this);
         down.setOnClickListener(this);
         my.setOnClickListener(this);
-        taskTabLeft.setOnClickListener(this);
-        taskTabRight.setOnClickListener(this);
         main.setSelected(true);
         downfragment = BTFragment.getInstance();
         homeFragment = HomeFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
-        lefFragment = TaskLefFragment.getInstance();
-        rightFragment = TaskRightFragment.getInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content, downfragment);
         fragmentTransaction.add(R.id.content, homeFragment);
@@ -119,22 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.hide(centerFragment);
         fragmentTransaction.show(homeFragment);
         //下载中心的fragment
-        fragmentTransaction.add(R.id.downTaskcontent, lefFragment);
-        fragmentTransaction.add(R.id.downTaskcontent, rightFragment);
-        fragmentTransaction.hide(rightFragment);
 
         fragmentTransaction.commitAllowingStateLoss();
 
 
-        centerFragment.setOnDownPageListener(() -> {
-            drawer.openDrawer(GravityCompat.END);
-            toggle();
-
-        });
-        homeFragment.setOnDownPageListener(() -> {
-            drawer.openDrawer(GravityCompat.END);
-            toggle();
-        });
     }
 
     @Override
@@ -162,19 +99,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void toggle() {
         if (TABLEFTSELECTED) {
-            taskTabLeft.setSelected(true);
-            taskTabRight.setSelected(false);
             FragmentTransaction fragmentTran = getSupportFragmentManager().beginTransaction();
-            fragmentTran.hide(rightFragment);
-            fragmentTran.show(lefFragment);
             fragmentTran.commit();
 
         } else {
-            taskTabLeft.setSelected(false);
-            taskTabRight.setSelected(true);
             FragmentTransaction fragmentTran = getSupportFragmentManager().beginTransaction();
-            fragmentTran.hide(lefFragment);
-            fragmentTran.show(rightFragment);
             fragmentTran.commit();
         }
 

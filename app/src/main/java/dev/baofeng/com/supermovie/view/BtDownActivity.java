@@ -20,27 +20,19 @@ import com.google.gson.Gson;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
-import org.litepal.crud.DataSupport;
 
 import java.io.File;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.BtDownAdapter;
-import dev.baofeng.com.supermovie.bt.BTDownloadTask;
-import dev.baofeng.com.supermovie.bt.ComDownloadTask;
-import dev.baofeng.com.supermovie.bt.ThreadUtils;
 import dev.baofeng.com.supermovie.domain.BTParamInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
-import dev.baofeng.com.supermovie.domain.TaskInfo;
 import dev.baofeng.com.supermovie.presenter.DownBtPresenter;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
-import dev.baofeng.com.supermovie.presenter.iview.IBtView;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
 
@@ -48,7 +40,7 @@ import dev.baofeng.com.supermovie.utils.BlurUtil;
  * Created by huangyong on 2018/2/12.
  */
 
-public class BtDownActivity extends AppCompatActivity implements IMoview, IBtView {
+public class BtDownActivity extends AppCompatActivity implements IMoview{
 
     @BindView(R.id.poster)
     ImageView poster;
@@ -58,35 +50,12 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
     RecyclerView btdownrv;
     @BindView(R.id.detail_img_bg)
     ImageView detailImgBg;
-    private String pathurl;
-    Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 0) {
-                long taskId = (long) msg.obj;
-                XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
-                String a = "fileSize:" + convertFileSize(taskInfo.mFileSize)
-                        + "\n"+ " downSize:" + convertFileSize(taskInfo.mDownloadSize)
-                        + "\n"+ " speed:" + convertFileSize(taskInfo.mDownloadSpeed)
-                        +  "\n"+"/s dcdnSoeed:" + convertFileSize(taskInfo.mAdditionalResDCDNSpeed)
-                        + "\n"+ "/s filePath:" + "/sdcard/" + XLTaskHelper.instance().getFileName(pathurl);
-                List<TaskInfo> taskInfos = DataSupport.where("action=?", taskId + "").find(TaskInfo.class);
-                TaskInfo info = taskInfos.get(0);
-                info.setProgress(Integer.parseInt(convertFileSize(taskInfo.mDownloadSize))/Integer.parseInt(convertFileSize(taskInfo.mFileSize))*100);
-                info.save();
-                handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
-            }
-        }
-    };
-    private DownBtPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_downlayout);
         ButterKnife.bind(this);
-        presenter = new DownBtPresenter(this,this);
         GetRecpresenter getRecpresenter = new GetRecpresenter(this, this);
         String title = getIntent().getStringExtra(GlobalMsg.KEY_MOVIE_TITLE);
         String posterurl = getIntent().getStringExtra(GlobalMsg.KEY_POST_IMG);
@@ -136,36 +105,6 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
     @Override
     public void loadDetail(BtInfo result) {
         BtDownAdapter adapter = new BtDownAdapter(this,result);
-        adapter.setOnItemClickListener(new BtDownAdapter.onItemClick() {
-            @Override
-            public void onItemclicks(int position, String url) {
-                try {
-                   /* pathurl = url;
-                    long taskId = 0;
-                    try {
-                        taskId = XLTaskHelper.instance(getApplicationContext()).addThunderTask(url, "/sdcard/", null);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    handler.sendMessage(handler.obtainMessage(0, taskId));*/
-                    BTParamInfo btParamInfo = getParams(url);
-                    String id = btParamInfo.getData().get(1);
-                    String action = btParamInfo.getData().get(0);
-                    String uhash = btParamInfo.getData().get(2);
-                    String path = btParamInfo.getData().get(3);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            presenter.getFile(id,action,uhash,path);
-                        }
-                    }).start();
-                    Toast.makeText(BtDownActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        });
         btdownrv.setLayoutManager(new LinearLayoutManager(this));
         btdownrv.setAdapter(adapter);
     }
@@ -205,19 +144,4 @@ public class BtDownActivity extends AppCompatActivity implements IMoview, IBtVie
             return String.format("%d B", size);
     }
 
-    @Override
-    public void onDownSuccess(String path) {
-        File file = new File(path);
-        if (file.exists()){
-            TaskInfo info = new TaskInfo();
-            info.setProgress(0);
-            info.setAction(GlobalMsg.ACTION);
-            info.setDownSize("0");
-            info.setFileSize("0");
-            info.setPath(path);
-            ComDownloadTask task = new ComDownloadTask(BtDownActivity.this,info.getPath());
-            ThreadUtils.execute(task);
-        }
-
-    }
 }

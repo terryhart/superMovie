@@ -1,12 +1,9 @@
 package com.huangyong.downloadlib.model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public interface ITask {
 
 
-    void repeatAdd();
+    void repeatAdd(String s);
 
    /* void TaskPause(String taskId);
 

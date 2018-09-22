@@ -4,6 +4,10 @@ package com.huangyong.downloadlib.domain;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * 下载数据封装的数据库文件
+ */
+
 @DatabaseTable(tableName = DowningTaskInfo.TABLE_NAME)
 public class DowningTaskInfo {
 
@@ -56,6 +60,42 @@ public class DowningTaskInfo {
 
     @DatabaseField(columnName = "speed")
     private String speed;
+
+    @DatabaseField(columnName = "proxyPlayUrl")
+    private String proxyPlayUrl;
+
+
+    //由于重启的任务走的是添加新任务的流程，这个用来区分来自哪里的添加动作，是否新添加，默认true,不需要数据库存储
+    public boolean getTaskFrom() {
+        return taskFrom;
+    }
+    public void setTaskFrom(boolean taskFrom) {
+        this.taskFrom = taskFrom;
+    }
+
+
+    @DatabaseField(columnName = "taskFrom")
+    private boolean taskFrom;
+
+    public String getProxyPlayUrl() {
+        return proxyPlayUrl;
+    }
+
+    public void setProxyPlayUrl(String proxyPlayUrl) {
+        this.proxyPlayUrl = proxyPlayUrl;
+    }
+
+
+    public int getStatu() {
+        return statu;
+    }
+
+    public void setStatu(int statu) {
+        this.statu = statu;
+    }
+
+    @DatabaseField(columnName = "statu")
+    private int statu;
 
 
     public String getSpeed() {

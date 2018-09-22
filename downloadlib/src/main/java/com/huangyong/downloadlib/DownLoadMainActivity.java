@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.huangyong.downloadlib.adapter.TaskFragmentPagerAdapter;
 import com.huangyong.downloadlib.db.TaskDao;
@@ -19,6 +20,8 @@ import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.fragment.DownloadedTaskFragment;
 import com.huangyong.downloadlib.fragment.DownloadingTaskFragment;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.utils.FileUtils;
+import com.huangyong.downloadlib.utils.NetSpeedUtil;
 import com.huangyong.downloadlib.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ public class DownLoadMainActivity extends AppCompatActivity {
     private boolean viewVisible =false;
     private DownloadingTaskFragment ingList;
     private DownloadedTaskFragment doneList;
+    private TextView speedTitle;
+    private TextView memerysize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class DownLoadMainActivity extends AppCompatActivity {
 
         downTask = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
+        speedTitle = findViewById(R.id.speedTitle);
+        memerysize = findViewById(R.id.tv_memerysize);
 
 
         List listfragment=new ArrayList<Fragment>();
@@ -62,25 +69,26 @@ public class DownLoadMainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(downTask);
 
         initData();
+        initReceiver();
     }
-
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Params.UPDATE_PROGERSS);
+        intentFilter.addAction(Params.TASK_COMMPLETE);
+        registerReceiver(taskReceiver,intentFilter);
+    }
     private void initData() {
+        memerysize.setText("已下载文件"+FileUtils.getCacheSize()+"，机身剩余可用"+ FileUtils.getSpaceSize()[0]);
+
         //下载中列表
         List<DowningTaskInfo> taskInfos = TaskDao.getInstance(getApplicationContext()).queryAll();
         if (taskInfos!=null&&taskInfos.size()>0){
-            Log.e("downtaskinit","本地数据库有数据"+taskInfos.size());
-
             ingList.updateTaskDatas(taskInfos,DownLoadMainActivity.this);
-        }else {
-            Log.e("downtaskinit","本地数据库为空");
         }
         //下载完成任务列表
         List<DoneTaskInfo> doneTaskInfos = TaskedDao.getInstance(getApplicationContext()).queryAll();
         if (doneTaskInfos.size()>0){
-            Log.e("downtaskinit","本地数据库有数据"+doneTaskInfos.size());
             doneList.updateTaskData(doneTaskInfos);
-        }else {
-            Log.e("downtaskinit","本地数据库为空");
         }
     }
 
@@ -93,6 +101,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         this.viewVisible = false;
+        unregisterReceiver(taskReceiver);
         super.onDestroy();
     }
 
@@ -101,5 +110,26 @@ public class DownLoadMainActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    /**
+     * 下载中的任务完成后，会从下载中移除，并添加到已完成的列表，已完成因为没有下载进度，所以不会实时更新，只
+     */
+    BroadcastReceiver taskReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Params.UPDATE_PROGERSS)){
+                TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
+                List<DowningTaskInfo> downingTaskInfos = taskDao.queryAll();
+                if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
+                    NetSpeedUtil speedUtil = new NetSpeedUtil();
+                    String speed = speedUtil.updateViewData(getApplicationContext());
+                    speedTitle.setText("正在下载"+downingTaskInfos.size()+"个文件");
+                }else {
+                    speedTitle.setText("暂无下载任务");
+                }
+            }
+            if (intent.getAction().equals(Params.TASK_COMMPLETE)){
 
+            }
+        }
+    };
 }

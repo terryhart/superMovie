@@ -53,8 +53,6 @@ public class HomeFragment extends Fragment implements IMoview, BGARefreshLayout.
     RecyclerView rvlist;
     @BindView(R.id.vp)
     ViewPager vp;
-    /*@BindView(R.id.bga_refresh)
-    BGARefreshLayout bgaRefresh;*/
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)

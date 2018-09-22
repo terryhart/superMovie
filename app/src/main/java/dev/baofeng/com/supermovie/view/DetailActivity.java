@@ -14,9 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.gson.Gson;
 
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DownAdapter;
-import dev.baofeng.com.supermovie.bt.ComDownloadTask;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieBean;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
@@ -112,22 +109,6 @@ public class DetailActivity extends AppCompatActivity implements IMoview {
                 info.setFileSize("0");
                 info.setPath(url);
                 info.setIsWaiting(1);//默认是等待状态
-                //去数据库看一下，如果没有该条，则添加任务，具体是执行还是等待，看线程池情况。
-                List<TaskInfo> infos = DataSupport.where("path=?", url + "").find(TaskInfo.class);
-                if (infos.size()>0){
-                    //任务已存在，则不保存数据库
-                    Toast.makeText(DetailActivity.this, "下载任务已存在", Toast.LENGTH_SHORT).show();
-                }else {
-                    //任务不存在，添加到队列，并添加进数据库
-                    Toast.makeText(DetailActivity.this, "已添加到下载队列", Toast.LENGTH_SHORT).show();
-                    info.save();//即使添加到下载队列，也该存入数据库。
-                    if (GlobalMsg.service!=null){
-                        ComDownloadTask task = new ComDownloadTask(DetailActivity.this,url);
-                        GlobalMsg.service.addTask(task);
-                    }
-//                    ComDownloadTask task = new ComDownloadTask(DetailActivity.this,url);
-//                    ThreadUtils.execute(task);
-                }
 
             }
 

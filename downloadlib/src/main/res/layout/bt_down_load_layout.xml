@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:layout_height="300dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="选择文件下载"
+        android:layout_marginTop="30dp"
+        android:textSize="14sp"
+        />
+    <ListView
+        android:layout_width="200dp"
+        android:id="@+id/listview"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_height="150dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:id="@+id/cancel"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/confirm"
+            />
+    </LinearLayout>
+</LinearLayout>

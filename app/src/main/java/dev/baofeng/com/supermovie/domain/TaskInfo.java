@@ -1,12 +1,11 @@
 package dev.baofeng.com.supermovie.domain;
 
-import org.litepal.crud.DataSupport;
 
 /**
  * Created by huangyong on 2018/2/24.
  */
 
-public class TaskInfo extends DataSupport {
+public class TaskInfo {
     private int isWaiting;
 
     public int getIsWaiting() {

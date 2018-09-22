@@ -50,6 +50,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }
             int progress = (int) (received*1.0f/total*1.0f*100);
             holder.posterImg.setProgress(progress);
+
             if (progress>5){
                 holder.playinloading.setVisibility(View.VISIBLE);
             }
@@ -61,13 +62,48 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }else {
                 speed = taskInfo.get(position).getSpeed();
             }
-            holder.task_msg.setText(fileSize+"  已下载"+receivedSize+"\n正在下载  "+speed+" /s");
-
-            if (fileSize==receivedSize){
-                Toast.makeText(context, "下载完成", Toast.LENGTH_SHORT).show();
-                taskInfo.remove(position);
+            if (taskInfo.get(position).getTitle().endsWith(".torrent")){
+                holder.playinloading.setText("BT种子");
+            }else {
+                holder.playinloading.setText("边下边播");
             }
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            //边下边播点击事件
+            holder.playinloading.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener!=null&&taskInfo.get(position).getStatu()==1){
+                        listener.clicktoplay(taskInfo.get(position));
+                    }
+                }
+            });
+
+
+            if (taskInfo.get(position).getStatu()==1){
+                holder.finish_icon.setImageResource(R.drawable.download_item_resume_icon);
+                holder.task_size.setText(fileSize+"  已下载"+receivedSize);
+                holder.task_msg.setText("\n正在下载  "+speed+" /s");
+                holder.posterImg.setTaskStatu(false);
+                holder.playinloading.setVisibility(View.VISIBLE);
+            }else if (taskInfo.get(position).getStatu()==0||taskInfo.get(position).getStatu()==4){
+                holder.finish_icon.setImageResource(R.drawable.download_item_pause_icon);
+                holder.task_msg.setText("\n已暂停 ");
+                holder.task_size.setText("");
+                holder.posterImg.setTaskStatu(true);
+                holder.playinloading.setVisibility(View.INVISIBLE);
+            }else if (taskInfo.get(position).getStatu()==2){
+                holder.finish_icon.setImageResource(R.drawable.ic_detail_download_finish);
+                holder.task_msg.setText("\n下载完成  ");
+                holder.task_size.setText("");
+                holder.playinloading.setVisibility(View.INVISIBLE);
+            }else if (taskInfo.get(position).getStatu()==3){
+                holder.finish_icon.setImageResource(R.drawable.ic_detail_download_error);
+                holder.task_msg.setText("\n下载失败  ");
+                holder.task_size.setText("");
+                holder.posterImg.setTaskStatu(true);
+                holder.playinloading.setVisibility(View.INVISIBLE);
+            }
+            holder.posterImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener!=null){
@@ -116,5 +152,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
         void clicked(DowningTaskInfo info);
 
         void longclicked(DowningTaskInfo info);
+
+        void clicktoplay(DowningTaskInfo taskInfo);
     }
 }

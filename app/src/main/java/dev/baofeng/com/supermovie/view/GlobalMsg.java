@@ -1,10 +1,7 @@
 package dev.baofeng.com.supermovie.view;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 
-import dev.baofeng.com.supermovie.domain.RunTaskInfo;
 
 /**
  * Created by huangyong on 2018/1/29.
@@ -29,7 +26,4 @@ public class GlobalMsg {
 
     public static String ACTION = "ACTION";
     public static String ACTIONWAIT = "WAITE";
-    public static DownloadService service =null;
-
-    public static ArrayList<RunTaskInfo> runInfos = new ArrayList<>();//正在下载的队列，关联了线程池
 }

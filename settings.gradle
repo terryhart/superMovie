@@ -1,1 +1,1 @@
-include ':app', ':mff', ':thunder', ':downloadlib'
+include ':app', ':mff', ':thunder', ':downloadlib', ':playerlib'

@@ -82,30 +82,35 @@ public class DownLoadService extends Service implements ITask {
                         String taskId = taskInfos.get(i).getTaskId();
                         XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(Long.parseLong(taskId));
                         taskInfos.get(i).setTotalSize(String.valueOf(taskInfo.mFileSize));
+                        taskInfos.get(i).setStatu(taskInfo.mTaskStatus);
                         taskInfos.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
                         taskInfos.get(i).setSpeed(FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
-                        taskDao.update(taskInfos.get(i));
-                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
+
+                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+taskInfo.mTaskStatus);
                         if (taskInfo.mDownloadSize!=0&&taskInfo.mFileSize!=0&&taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
-
-
                             //文件下载完成，此数据在下一秒移动到已完成数据库。
                             DoneTaskInfo task = new DoneTaskInfo();
                             task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());
                             task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
                             task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
+                            task.setLocalPath(taskInfos.get(i).getLocalPath());
                             task.setTitle(taskInfos.get(i).getTitle());
+                            task.setTaskId(taskInfos.get(i).getTaskId());
+                            task.setUrlMd5(taskInfos.get(i).getUrlMd5());
+
                             //添加到数据库
                             taskedDao.add(task);
 
                             //然后删除下载中的记录
-                            taskDao.delete(taskInfos.get(i).getId());
-
+                             taskDao.delete(taskInfos.get(i).getId());
 
                             //提示下载完成
                             Intent intent = new Intent();
+                            intent.putExtra(Params.TASK_ID_KEY,taskInfos.get(i).getId());
                             intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
                             BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
+                        }else {
+                            taskDao.update(taskInfos.get(i));
                         }
                     }
                 }
@@ -158,7 +163,7 @@ public class DownLoadService extends Service implements ITask {
 
             }
         };
-        subscribe = Observable.interval(0, 2, TimeUnit.SECONDS).subscribe(subscriber);
+        subscribe = Observable.interval(0, 1, TimeUnit.SECONDS).subscribe(subscriber);
     }
 
     @Override
@@ -186,7 +191,7 @@ public class DownLoadService extends Service implements ITask {
                 String taskPath = intent.getStringExtra(Params.LOCAL_PATH_KEY);
                 String taskPoster = intent.getStringExtra(Params.POST_IMG_KEY);
                 String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
-
+                Boolean taskFrom = intent.getBooleanExtra(Params.IS_TASK_NEW,true);
 
                 DowningTaskInfo downTaskInfo = new DowningTaskInfo();
 
@@ -195,7 +200,7 @@ public class DownLoadService extends Service implements ITask {
                 downTaskInfo.setTaskUrl(taskUrl);
                 downTaskInfo.setUrlMd5(urlMd5);
                 downTaskInfo.setReceiveSize("0");
-
+                downTaskInfo.setTaskFrom(taskFrom);
                 if (presenter!=null){
                     presenter.addTask(downTaskInfo);
                 }
@@ -218,7 +223,7 @@ public class DownLoadService extends Service implements ITask {
     };
 
     @Override
-    public void repeatAdd() {
-        Toast.makeText(this, "任务已在下载中心列表中，请查看后确认", Toast.LENGTH_SHORT).show();
+    public void repeatAdd(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

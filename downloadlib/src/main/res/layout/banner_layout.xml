@@ -5,8 +5,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="下载速率 2M/s"
+        android:textSize="22sp"
+        android:text="暂无下载任务"
         android:textColor="#fff"
         android:id="@+id/speedTitle"
         android:layout_centerInParent="true"
@@ -18,6 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/speedTitle"
         android:textSize="12sp"
+        android:id="@+id/tv_memerysize"
         android:textColor="#a1fcfcfc"
         android:layout_marginTop="16dp"
         />

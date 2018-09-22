@@ -59,6 +59,25 @@ public class TaskLibHelper {
         intent.putExtra(Params.POST_IMG_KEY,postImgUrl);
         intent.putExtra(Params.LOCAL_PATH_KEY,savepath);
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);
+        intent.putExtra(Params.IS_TASK_NEW,true);
+        BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
+    }
+    public static void reStartTask(String url, String savepath, String postImgUrl, Context applicationContext) {
+        if (TextUtils.isEmpty(url)){
+            Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
+        }
+        File file = new File(savepath);
+        if (!file.isDirectory()){
+            Toast.makeText(applicationContext, "下载目录不存在，请检查后再设置", Toast.LENGTH_SHORT).show();
+        }
+
+        String urlMd5 = MD5Utils.stringToMD5(url);
+        Intent intent = new Intent();
+        intent.putExtra(Params.TASK_URL_KEY,url);
+        intent.putExtra(Params.POST_IMG_KEY,postImgUrl);
+        intent.putExtra(Params.LOCAL_PATH_KEY,savepath);
+        intent.putExtra(Params.URL_MD5_KEY,urlMd5);
+        intent.putExtra(Params.IS_TASK_NEW,false);
         BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
     }
 }

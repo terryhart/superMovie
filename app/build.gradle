@@ -67,7 +67,6 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     //网页加载
     compile 'com.just.agentweb:agentweb:4.0.0-alpha-3'
-    compile 'com.just.agentweb:download:4.0.0-alpha-3'
     //RxCache缓存依赖
     compile 'com.zchu:rxcache:1.2.6'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
@@ -79,7 +78,6 @@ dependencies {
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     compile 'cn.bingoogolapple:bga-update:1.0.2@aar'
     compile 'com.youth.banner:banner:1.4.10'
-    compile 'org.litepal.android:core:1.3.2'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
 
     //播放器 https://github.com/yangchaojiang/yjPlay

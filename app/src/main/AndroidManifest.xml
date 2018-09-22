@@ -29,13 +29,9 @@
         <activity
             android:name=".view.DetailActivity"/>
         <activity android:name=".view.BtDownActivity"/>
-        <service android:name=".view.DownloadService"/>
         <activity android:name=".view.SearchActivity"/>
         <activity android:name=".view.AboutUsActivity"/>
         <!-- 注册service -->
-        <activity android:name=".view.VideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            />
 
     </application>
 

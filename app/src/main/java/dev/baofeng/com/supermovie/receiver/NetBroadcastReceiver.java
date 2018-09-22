@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import dev.baofeng.com.supermovie.bt.DownloadManager;
 import dev.baofeng.com.supermovie.utils.NetUtil;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ToastUtil;
@@ -33,12 +32,6 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
                     ToastUtil.showMessage("当前网络为移动网络，请注意您的流量");
                     //不允许4G时下载
                     boolean isAllow4G = false;
-                    if(!isAllow4G && DownloadManager.xLTaskInfos != null && DownloadManager.xLTaskInfos.size() > 0){
-                        for (int i = 0; i < DownloadManager.xLTaskInfos.size(); i++){
-                            if(DownloadManager.xLTaskInfos.get(i).mTaskStatus == 1)
-                                DownloadManager.stopTask(DownloadManager.xLTaskInfos.get(i).mTaskId);
-                        }
-                    }
                     break;
                 case NetUtil.NETWORK_WIFI:
                     break;

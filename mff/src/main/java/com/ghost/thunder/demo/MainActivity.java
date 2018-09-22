@@ -1,9 +1,12 @@
 package com.ghost.thunder.demo;
 
-import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,14 +14,12 @@ import android.widget.TextView;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
-import com.huangyong.downloadlib.view.DeleteDialog;
-
+import com.huangyong.downloadlib.utils.FileUtils;
 
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvstatu;
     private Button btdown;
-    private Dialog dialog;
 
     /* Handler handler = new Handler(Looper.getMainLooper()){
          @Override
@@ -42,17 +43,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvstatu = (TextView) findViewById(R.id.tv_status);
-        btdown = (Button) findViewById(R.id.btn_down);
-        dialog = DeleteDialog.getInstance(this, com.huangyong.downloadlib.R.layout.delete_alert_layout);
-
-        Button center = (Button) findViewById(R.id.center);
+        tvstatu =  findViewById(R.id.tv_status);
+        btdown =  findViewById(R.id.btn_down);
+        initReceiver();
+        Button center =findViewById(R.id.center);
 
         center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,DownLoadMainActivity.class);
                 startActivity(intent);
+
+                Log.e("kddkkddk",FileUtils.getCacheSize());
+                Log.e("kddkkddk",FileUtils.getSpaceSize()[0]+"---"+FileUtils.getSpaceSize()[1]);
             }
         });
         btdown.setOnClickListener(new View.OnClickListener() {
@@ -65,13 +68,31 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 handler.sendMessage(handler.obtainMessage(0,taskId));*/
-                String url = "ed2k://|file|%E5%B9%BF%E4%B8%9C%E5%8D%81%E8%99%8E%E9%93%81%E6%A1%A5%E4%B8%89.1080p%E6%97%A0%E6%B0%B4%E5%8D%B0[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|789446317|CE0F8BE773EBC39CA4FE5836EA3E7D67|h=JLS2U53HMR6NYF77SFZQAPCDWSMZPHDQ|/";
-                String savepath = Params.DEFAULT_PATH;
-                String postImgUrl = "https://tu.66vod.net/2018/3469.jpg";
-                TaskLibHelper.addNewTask(url,savepath,postImgUrl,getApplicationContext());
+//                String url = "magnet:?xt=urn:btih:7HB6WIZ5PEBUTSOFSREGXQUUNQXNE6RC&dn=%e5%8a%9e%e5%85%ac%e5%ae%a4%e5%83%b5%e5%b0%b8%e8%b5%b7%e4%b9%89%2e720p%2eBD%e4%b8%ad%e8%8b%b1%e5%8f%8c%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337";
+//                String url = "ed2k://|file|%E5%8A%9E%E5%85%AC%E5%AE%A4%E5%83%B5%E5%B0%B8%E8%B5%B7%E4%B9%89.720p.BD%E4%B8%AD%E8%8B%B1%E5%8F%8C%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|1056302592|E2A1F1EF5D1FF132A5D1B7C483AF1248|h=3C5BBNH52KOB7GQXOOBVNIBH3CAGWEDO|/";
+//                String savepath = Params.DEFAULT_PATH;
+//                String postImgUrl = "https://tu.66vod.net/2018/3469.jpg";
+//                TaskLibHelper.addNewTask(url,savepath,postImgUrl,getApplicationContext());
             }
         });
     }
+
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Params.ACTION_PLAY_URL);
+        registerReceiver(playerRecevier,intentFilter);
+    }
+    BroadcastReceiver playerRecevier = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Params.ACTION_PLAY_URL)){
+               /* String url = intent.getStringExtra(Params.PROXY_PALY_URL);
+                Intent ints = new Intent(MainActivity.this, PlayerActivity.class);
+                ints.putExtra(Params.PROXY_PALY_URL,url);
+                startActivity(ints);*/
+            }
+        }
+    };
     public static String convertFileSize(long size) {
         long kb = 1024;
         long mb = kb * 1024;
@@ -89,15 +110,18 @@ public class MainActivity extends AppCompatActivity {
             return String.format("%d B", size);
     }
 
-    public void deleteTask(View view) {
-        dialog.show();
-        Button cancel = dialog.findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
 
+    public void downTorrent(View view) {
+        String url = "magnet:?xt=urn:btih:7HB6WIZ5PEBUTSOFSREGXQUUNQXNE6RC&dn=%e5%8a%9e%e5%85%ac%e5%ae%a4%e5%83%b5%e5%b0%b8%e8%b5%b7%e4%b9%89%2e720p%2eBD%e4%b8%ad%e8%8b%b1%e5%8f%8c%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337";
+        String savepath = Params.DEFAULT_PATH;
+        String postImgUrl = "https://tu.66vod.net/2018/3469.jpg";
+        TaskLibHelper.addNewTask(url,savepath,postImgUrl,getApplicationContext());
+    }
+
+    public void downed2k(View view) {
+        String url = "ed2k://|file|%E6%97%85%E8%A1%8C%E5%90%A7%EF%BC%81%E4%BA%95%E5%BA%95%E4%B9%8B%E8%9B%99.1080P%E6%97%A0%E6%B0%B4%E5%8D%B0[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|1275738885|BB50DFAD60BCDBB26C4C8388E285AD86|h=I35SOTM7GPD4JOF7W2KO45E62GQV3RS7|/";
+        String savepath = Params.DEFAULT_PATH;
+        String postImgUrl = "https://tu.66vod.net/2018/3561.jpg";
+        TaskLibHelper.addNewTask(url,savepath,postImgUrl,getApplicationContext());
     }
 }

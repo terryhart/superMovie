@@ -32,7 +32,6 @@ public class CustomViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return isCanScroll && super.onTouchEvent(ev);
-
     }
 
 }
