@@ -8,14 +8,17 @@
     tools:context=".view.ScrollingActivity"
     tools:showIn="@layout/activity_scrolling">
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:lineSpacingExtra="10dp"
         android:id="@+id/mvdesc"
-        />
-   <!-- <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_downUrl"
+        />-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_detail"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="match_parent"/>
 </android.support.v4.widget.NestedScrollView>

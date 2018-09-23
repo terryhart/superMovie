@@ -193,6 +193,7 @@ public class DownLoadService extends Service implements ITask {
                 String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
                 Boolean taskFrom = intent.getBooleanExtra(Params.IS_TASK_NEW,true);
 
+                Log.e("dlslsls",taskPoster);
                 DowningTaskInfo downTaskInfo = new DowningTaskInfo();
 
                 downTaskInfo.setLocalPath(taskPath);

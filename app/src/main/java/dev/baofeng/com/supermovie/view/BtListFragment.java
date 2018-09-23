@@ -39,8 +39,7 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
     private MainAdapter adapter;
     private static BtListFragment btlistFragment;
     private Unbinder bind;
-    private String type;
-    private MovieInfo infos;
+    private RecentUpdate infos;
     private int index;
 
     @Nullable
@@ -70,9 +69,7 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
         bgaRefresh.setRefreshViewHolder(refreshViewHolder);
 
         Bundle bundle = getArguments();
-        type = bundle.getString("Type");
         index = 1;
-        recpresenter.getBtRecommend(type, index, 18);
     }
 
     @Override
@@ -80,11 +77,7 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
 
     }
 
-    @Override
-    public void loadData(MovieInfo info) {
 
-
-    }
 
     @Override
     public void loadError(String msg) {
@@ -92,23 +85,19 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
     }
 
     @Override
-    public void loadMore(MovieInfo result) {
-        infos.getData().addAll(result.getData());
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void loadMore(RecentUpdate result) {
-
+   /*     infos.getData().addAll(result.getData());
+        adapter.notifyDataSetChanged();*/
     }
 
+
     @Override
-    public void loadBtData(MovieInfo result) {
-        infos = result;
+    public void loadBtData(RecentUpdate result) {
+      /*  infos = result;
         adapter = new MainAdapter(getContext(), infos);
 
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
+        rvlist.setAdapter(adapter);*/
     }
 
     @Override
@@ -137,10 +126,10 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
         if (NetworkUtils.isNetAvailable(getContext())) {
             //网络可用。异步加载后停止刷新
             // 加载完毕后在 UI 线程结束加载更多
-            new Handler().postDelayed(()->  {
+         /*   new Handler().postDelayed(()->  {
                     recpresenter.getBtRecommend(type, index, 18);
                     bgaRefresh.endRefreshing();
-            }, 2500);
+            }, 2500);*/
         } else {
             // 网络不可用，结束下拉刷新
             Toast.makeText(getActivity(), "网络不可用", Toast.LENGTH_SHORT).show();
@@ -156,10 +145,10 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
      */
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        new Handler().postDelayed(()-> {
+      /*  new Handler().postDelayed(()-> {
             bgaRefresh.endLoadingMore();
             recpresenter.getBtMoreData(type, ++index, 18);
-        }, 2000);
+        }, 2000);*/
         return true;
     }
 

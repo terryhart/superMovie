@@ -58,7 +58,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'io.reactivex:rxjava:1.3.2'
@@ -77,4 +76,7 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':downloadlib')
+
+
+    compile 'com.xiaosu:pullLayout:3.0.4'
 }

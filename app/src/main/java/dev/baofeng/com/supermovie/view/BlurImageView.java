@@ -3,14 +3,22 @@ package dev.baofeng.com.supermovie.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.huangyong.downloadlib.utils.BlurUtil;
+
+import java.util.ArrayList;
 
 import static android.graphics.Paint.FILTER_BITMAP_FLAG;
 
@@ -22,6 +30,10 @@ public class BlurImageView extends View {
     private Bitmap forgroundBitmap;
     private Bitmap blurBitmap;
     private RectF forRectF;
+    private TextPaint textPaint;
+    private String shortDescStr;
+    private int baseLine;
+    private RectF destRectF;
 
     public BlurImageView(Context context) {
         this(context,null);
@@ -36,7 +48,13 @@ public class BlurImageView extends View {
 
         bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapPaint.setFlags(FILTER_BITMAP_FLAG);
+        textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,12,context.getResources().getDisplayMetrics()));
+
+        baseLine = 320;
         forRectF = new RectF(0,0,0,0);
+        destRectF = new RectF(0,0,0,0);
     }
 
 
@@ -56,13 +74,17 @@ public class BlurImageView extends View {
             forRectF.bottom = getMeasuredHeight();
             canvas.drawBitmap(blurBitmap,null,forRectF,bitmapPaint);
         }
-
+        canvas.scale(1.2f,1.2f,0,0);
         if (forgroundBitmap!=null){
-            Log.e("bitmaparams",forgroundBitmap.getWidth()+"---"+forgroundBitmap.getHeight());
-            Log.e("bitmaparams",getMeasuredWidth()+"---"+getMeasuredHeight());
-            canvas.scale(1.2f,1.2f,0,getMeasuredHeight());
-            canvas.drawBitmap(forgroundBitmap,100,
-                    getMeasuredHeight()-forgroundBitmap.getHeight()-150,bitmapPaint);
+            destRectF.right =320;
+            destRectF.bottom=460;
+
+            canvas.translate(40,140);
+            canvas.drawBitmap(forgroundBitmap,null,destRectF,bitmapPaint);
+
         }
+
     }
+
+
 }

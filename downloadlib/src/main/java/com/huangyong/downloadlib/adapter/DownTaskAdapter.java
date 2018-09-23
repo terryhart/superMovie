@@ -41,6 +41,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
         if (taskInfo.size()>0){
             holder.taskTitile.setText(taskInfo.get(position).getTitle());
             Glide.with(context).load(taskInfo.get(position).getPostImgUrl()).into(holder.posterImg);
+            Log.e("dddddldlld",taskInfo.get(position).getPostImgUrl());
             long received=0,total=0;
             if (!taskInfo.get(position).getReceiveSize().equals("0")){
                received = Long.parseLong(taskInfo.get(position).getReceiveSize());
@@ -98,7 +99,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.playinloading.setVisibility(View.INVISIBLE);
             }else if (taskInfo.get(position).getStatu()==3){
                 holder.finish_icon.setImageResource(R.drawable.ic_detail_download_error);
-                holder.task_msg.setText("\n下载失败  ");
+                holder.task_msg.setText("\n版权受限，下载失败  ");
                 holder.task_size.setText("");
                 holder.posterImg.setTaskStatu(true);
                 holder.playinloading.setVisibility(View.INVISIBLE);

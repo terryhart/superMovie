@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.view.BtDownActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
@@ -22,9 +23,9 @@ import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 public class MainAdapter extends RecyclerView.Adapter {
     private Context context;
-    private MovieInfo info;
+    private RecentUpdate info;
 
-    public MainAdapter(Context context, MovieInfo info) {
+    public MainAdapter(Context context, RecentUpdate info) {
         this.context = context;
         this.info = info;
     }

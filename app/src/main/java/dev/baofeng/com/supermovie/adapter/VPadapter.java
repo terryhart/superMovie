@@ -29,6 +29,7 @@ import java.util.List;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
 
 /**
@@ -36,10 +37,10 @@ import dev.baofeng.com.supermovie.utils.BlurUtil;
  */
 
 public class VPadapter extends android.support.v4.view.PagerAdapter {
-    private MovieInfo list;
+    private RecentUpdate list;
     private Context context;
 
-    public VPadapter(MovieInfo list, Context context) {
+    public VPadapter(RecentUpdate list, Context context) {
         this.list = list;
         this.context = context;
     }

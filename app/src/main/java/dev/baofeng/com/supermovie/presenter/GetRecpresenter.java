@@ -55,7 +55,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 .getBtRecomend(type,page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
+                .subscribe(new Subscriber<RecentUpdate>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -65,7 +65,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     }
                     @Override
-                    public void onNext(MovieInfo result) {
+                    public void onNext(RecentUpdate result) {
                         iview.loadBtData(result);
                     }
                 });
@@ -77,7 +77,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
         unSubcription();
     }
 
-    public void getMoreData(String type,int page,int pagesize) {
+    public void getMoreData(int page,int pagesize) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
                 .getRecomend(page,pagesize)
@@ -106,7 +106,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 .getBtRecomend(type,page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
+                .subscribe(new Subscriber<RecentUpdate>() {
                     @Override
                     public void onCompleted() {
 
@@ -117,7 +117,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     }
                     @Override
-                    public void onNext(MovieInfo result) {
+                    public void onNext(RecentUpdate result) {
                         iview.loadMore(result);
                     }
                 });

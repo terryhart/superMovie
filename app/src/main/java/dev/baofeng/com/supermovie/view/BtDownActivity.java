@@ -74,17 +74,7 @@ public class BtDownActivity extends AppCompatActivity implements IMoview{
     }
 
     @Override
-    public void loadData(MovieInfo info) {
-
-    }
-
-    @Override
     public void loadError(String msg) {
-
-    }
-
-    @Override
-    public void loadMore(MovieInfo result) {
 
     }
 
@@ -94,7 +84,7 @@ public class BtDownActivity extends AppCompatActivity implements IMoview{
     }
 
     @Override
-    public void loadBtData(MovieInfo result) {
+    public void loadBtData(RecentUpdate result) {
 
     }
 

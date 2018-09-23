@@ -10,13 +10,11 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 
 public interface IMoview {
     void loadData(RecentUpdate info);
-    void loadData(MovieInfo info);
     void loadError(String msg);
 
-    void loadMore(MovieInfo result);
     void loadMore(RecentUpdate result);
 
-    void loadBtData(MovieInfo result);
+    void loadBtData(RecentUpdate result);
 
     void loadDetail(BtInfo result);
 }
