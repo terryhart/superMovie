@@ -14,9 +14,6 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.MainAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
@@ -30,11 +27,9 @@ import dev.baofeng.com.supermovie.utils.NetworkUtils;
  * Created by huangyong on 2018/1/31.
  */
 
-public class BtListFragment extends Fragment implements IMoview, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class BtListFragment extends Fragment implements IMoview {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.bga_refresh)
-    BGARefreshLayout bgaRefresh;
     private GetRecpresenter recpresenter;
     private MainAdapter adapter;
     private static BtListFragment btlistFragment;
@@ -62,11 +57,6 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
 
     private void initView() {
         recpresenter = new GetRecpresenter(getContext(), this);
-        bgaRefresh.setDelegate(this);
-        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
-        BGARefreshViewHolder refreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
-        // 设置下拉刷新和上拉加载更多的风格
-        bgaRefresh.setRefreshViewHolder(refreshViewHolder);
 
         Bundle bundle = getArguments();
         index = 1;
@@ -115,41 +105,6 @@ public class BtListFragment extends Fragment implements IMoview, BGARefreshLayou
     public void onDestroyView() {
         super.onDestroyView();
 
-    }
-
-    /**
-     * 下拉刷新,网络异常时重新加载数据
-     * @param refreshLayout
-     */
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        if (NetworkUtils.isNetAvailable(getContext())) {
-            //网络可用。异步加载后停止刷新
-            // 加载完毕后在 UI 线程结束加载更多
-         /*   new Handler().postDelayed(()->  {
-                    recpresenter.getBtRecommend(type, index, 18);
-                    bgaRefresh.endRefreshing();
-            }, 2500);*/
-        } else {
-            // 网络不可用，结束下拉刷新
-            Toast.makeText(getActivity(), "网络不可用", Toast.LENGTH_SHORT).show();
-            bgaRefresh.endRefreshing();
-
-        }
-    }
-
-    /**
-     * 上拉加载更多
-     * @param refreshLayout
-     * @return
-     */
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-      /*  new Handler().postDelayed(()-> {
-            bgaRefresh.endLoadingMore();
-            recpresenter.getBtMoreData(type, ++index, 18);
-        }, 2000);*/
-        return true;
     }
 
     @Override

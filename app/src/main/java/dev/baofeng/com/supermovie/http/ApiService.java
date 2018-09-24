@@ -23,7 +23,7 @@ public interface ApiService {
   Observable<RecentUpdate> getRecomend(@Query("page") int page, @Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GETBTRECOMEND)
-  Observable<RecentUpdate> getBtRecomend(@Query("type") String type,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
+  Observable<RecentUpdate> getBtRecomend(@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GETSEARCH)
   Observable<MovieInfo> getSearch(@Query("key") String key);//获取搜索

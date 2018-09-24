@@ -58,8 +58,11 @@ public class VPadapter extends android.support.v4.view.PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.vp_item,null);
+        String imgUrl = list.getData().get(position).getDownimgurl();
+        String[] imgArr = imgUrl.split(",");
+
         ImageView vpImg = (ImageView) view.findViewById(R.id.vp_img);
-        Glide.with(context).load(list.getData().get(position).getDownimgurl()).into(vpImg);
+        Glide.with(context).load(imgArr[0]).into(vpImg);
         container.addView(view);
         return view;
     }

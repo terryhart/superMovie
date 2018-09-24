@@ -1,10 +1,8 @@
 package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import dev.baofeng.com.supermovie.domain.BtInfo;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
@@ -48,11 +46,11 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 });
         addSubscription(subscription);
     }
-    public void getBtRecommend(String type ,int page,int pagesize){
+    public void getBtRecommend(int page,int pagesize){
 
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getBtRecomend(type,page,pagesize)
+                .getBtRecomend(page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RecentUpdate>() {
@@ -100,10 +98,10 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 });
         addSubscription(subscription);
     }
-    public void getBtMoreData(String type,int page,int pagesize) {
+    public void getBtMoreData(int page,int pagesize) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getBtRecomend(type,page,pagesize)
+                .getBtRecomend(page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RecentUpdate>() {
@@ -118,7 +116,6 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
-                        iview.loadMore(result);
                     }
                 });
         addSubscription(subscription);

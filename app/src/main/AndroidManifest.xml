@@ -26,15 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.DetailActivity" />
         <activity android:name=".view.BtDownActivity" />
         <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.AboutUsActivity" />
-        <activity android:name=".view.NewDetailActivity" />
         <!-- 注册service -->
 
         <activity
-            android:name=".view.ScrollingActivity"
+            android:name=".view.MovieDetailActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme"></activity>
     </application>

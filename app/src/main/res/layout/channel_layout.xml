@@ -22,16 +22,12 @@
                 android:layout_height="match_parent"
                 android:id="@+id/img_bg"
                 />
-            <android.support.v4.view.ViewPager
+            <com.crazysunj.cardslideview.CardViewPager
                 android:layout_width="match_parent"
                 android:layout_height="290dp"
                 android:id="@+id/vp"
                 android:clipToPadding="false"
                 android:paddingBottom="20dp"
-                android:paddingLeft="68dp"
-                android:paddingStart="100dp"
-                android:paddingEnd="100dp"
-                android:paddingRight="68dp"
                 android:paddingTop="80dp"
                 app:layout_collapseMode="parallax"
                 android:background="@android:color/transparent"

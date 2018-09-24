@@ -15,10 +15,8 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
-import dev.baofeng.com.supermovie.view.DetailActivity;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.NewDetailActivity;
-import dev.baofeng.com.supermovie.view.ScrollingActivity;
+import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -80,7 +78,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     try {
 //                        Intent intent = new Intent(context, DetailActivity.class);
-                        Intent intent = new Intent(context, ScrollingActivity.class);
+                        Intent intent = new Intent(context, MovieDetailActivity.class);
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
