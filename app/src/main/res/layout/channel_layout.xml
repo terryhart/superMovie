@@ -17,21 +17,29 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
             app:contentScrim="@color/colorPrimary"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/img_bg"
-                />
-            <com.crazysunj.cardslideview.CardViewPager
-                android:layout_width="match_parent"
-                android:layout_height="290dp"
-                android:id="@+id/vp"
-                android:clipToPadding="false"
-                android:paddingBottom="20dp"
-                android:paddingTop="80dp"
-                app:layout_collapseMode="parallax"
-                android:background="@android:color/transparent"
-                />
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:clipChildren="false"
+              android:layout_height="match_parent">
+              <ImageView
+                  android:layout_width="match_parent"
+                  android:scaleType="centerCrop"
+                  android:layout_height="match_parent"
+                  android:id="@+id/img_bg"
+                  />
+              <android.support.v4.view.ViewPager
+                  android:layout_width="match_parent"
+                  android:layout_height="290dp"
+                  android:id="@+id/vp"
+                  android:clipToPadding="false"
+                  android:clipChildren="false"
+                  android:paddingBottom="20dp"
+                  android:paddingTop="80dp"
+                  android:layout_centerInParent="true"
+                  app:layout_collapseMode="parallax"
+                  android:background="@android:color/transparent"
+                  />
+          </RelativeLayout>
             <android.support.v7.widget.Toolbar
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"

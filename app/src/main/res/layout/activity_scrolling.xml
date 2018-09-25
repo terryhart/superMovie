@@ -53,7 +53,30 @@
                 app:titleTextAppearance="@style/ToolbarTitle"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:gravity="center_vertical"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="30dp"
+                        android:id="@+id/toolbarTitle"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_exo_back"
+                        android:id="@+id/backup"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

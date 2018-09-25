@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private RecyclerView recyclerView;
     private String posterImagUrl;
     private String imgScreenShot;
+    private Toolbar toolbar;
+    private AppBarLayout detail_app_bar;
+    private ImageView backup;
+    private TextView titleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +78,21 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
     private void initView() {
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        detail_app_bar = findViewById(R.id.app_bar);
+        backup = findViewById(R.id.backup);
+        detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
+        backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         poster = findViewById(R.id.poster);
 //        mvdesc = findViewById(R.id.mvdesc);
         recyclerView = findViewById(R.id.rv_detail);
-
+        titleView = findViewById(R.id.toolbarTitle);
+        titleView.setText(title);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -149,6 +165,24 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             }
         });
 
+    }
+
+
+    private class MyOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
+
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            float progress = Math.abs(verticalOffset) * 1.0f / appBarLayout.getTotalScrollRange();
+            if (progress >= 0.8) {
+                toolbar.setVisibility(View.VISIBLE);
+                titleView.setAlpha(progress);
+                backup.setAlpha(progress);
+            } else {
+                toolbar.setVisibility(View.VISIBLE);
+                titleView.setAlpha(0.0f);
+                backup.setAlpha(0.4f);
+            }
+        }
     }
 
     @Override

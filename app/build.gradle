@@ -74,9 +74,7 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':downloadlib')
-
     implementation 'com.crazysunj:cardslideview:1.4.2'
-
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
 }

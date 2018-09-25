@@ -31,6 +31,8 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.utils.BlurUtil;
+import dev.baofeng.com.supermovie.utils.ImgUtils;
+import dev.baofeng.com.supermovie.view.PosterItemView;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -60,8 +62,16 @@ public class VPadapter extends android.support.v4.view.PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.vp_item,null);
         String imgUrl = list.getData().get(position).getDownimgurl();
         String[] imgArr = imgUrl.split(",");
+        PosterItemView vpImg = view.findViewById(R.id.vp_img);
+        Glide.with(context).load(imgArr[0]).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Bitmap reverseBitmapById = ImgUtils.getReverseBitmapById(resource, context);
+                vpImg.setReverseImageBitmap(reverseBitmapById);
+            }
+        });
 
-        ImageView vpImg = (ImageView) view.findViewById(R.id.vp_img);
+
         Glide.with(context).load(imgArr[0]).into(vpImg);
         container.addView(view);
         return view;

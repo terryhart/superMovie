@@ -44,38 +44,31 @@ public class BTFragment extends Fragment {
 
     /**
      * $type=array(
-     * "war"=>"战争",
-     * "sci"=>"科幻",
-     * "2017"=>"2017",
-     * "2016"=>"2016",
-     * "hk"=>"香港",
-     * "america"=>"美国",
-     * "scare"=>"惊悚",
-     * "motion"=>"剧情",
-     * "crim"=>"犯罪",
-     * "confuse"=>"悬疑",
-     * "fun"=>"喜剧",
-     * "love"=>"爱情",
-     * "horri"=>"恐怖",
-     * "carton"=>"动画",
-     * "fam"=>"家庭",
-     * "riben"=>"日本",
-     * "risk"=>"冒险",
-     * "act"=>"动作");
+     * "latest"=>"最新电影",
+     * "highdpi"=>"经典高清",
+     * "cznmv"=>"国配电影",
+     * "hungkong"=>"经典港片",
+     * "native"=>"国剧",
+     * "koria"=>"日韩剧",
+     * "america"=>"美剧",
+     * "complex"=>"综艺",
+     * "curtoon"=>"动漫",
+     * "document"=>"纪录片",
+     * "k720p"=>"720P+1080P",
+     * "k4mv"=>"4K高清区",
+     */
+    /**
+     * '首页', '最新电影', '经典高清', '国配电影', '经典港片', '国剧', '日韩剧', '美剧', '综艺', '动漫', '纪录片', '720P+1080P', '4K高清区', '3D电影']
      */
     private void initView() {
-        String[] arr = { "战争","科幻","2017",
-                "2016","香港","美国",
-                "惊悚","剧情","犯罪",
-                "悬疑","喜剧" ,"爱情",
-                "恐怖","动画","家庭",
-                "日本","冒险" ,"动作"};
-        String[] type = {"war","sci","2017",
-                "2016","hk","america",
-                "scare","motion","crim",
-                "confuse","fun","love",
-                "horri","carton","fam",
-                "riben","risk","act"};
+        String[] arr = { "最新电影","经典高清","国配电影",
+                "经典港片","国剧","日韩剧",
+                "美剧","综艺","动漫",
+                "纪录片","720P/1080P" ,"4K高清区"};
+        String[] type = {"latest","highdpi","cznmv",
+                "hungkong","native","koria",
+                "america","complex","curtoon",
+                "document","k720p","k4mv"};
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             list.add(BtListFragment.newInstance(type[i]));

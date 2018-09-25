@@ -157,6 +157,8 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
 
         }else {
             String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+taskInfo.getTitle());
+            String loacalURL = taskInfo.getLocalPath()+taskInfo.getTitle();
+            Log.e("localpath",loacalURL);
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
             intent.putExtra(Params.PROXY_PALY_URL,proxPlayUlr);
             startActivity(intent);

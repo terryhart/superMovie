@@ -17,18 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.crazysunj.cardslideview.CardHandler;
-import com.crazysunj.cardslideview.CardViewPager;
+import com.huangyong.downloadlib.utils.BlurUtil;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,25 +34,25 @@ import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.HomeAdapter;
 import dev.baofeng.com.supermovie.adapter.LAdapter;
-import dev.baofeng.com.supermovie.adapter.VPadapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
-import dev.baofeng.com.supermovie.utils.BlurUtil;
+import dev.baofeng.com.supermovie.utils.ImgUtils;
+import dev.baofeng.com.supermovie.utils.MyTransformation;
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.OnPullCallBackListener {
+public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.OnPullCallBackListener, ViewPager.OnPageChangeListener {
 
     Unbinder unbinder;
     private static HomeFragment homeFragment;
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
     @BindView(R.id.vp)
-    CardViewPager vp;
+    ViewPager vp;
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)
@@ -69,9 +67,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     SimplePullLayout pulllayout;
     private GetRecpresenter getRecpresenter;
     private RecentUpdate info;
-    private VPadapter vPadapter;
     private int index;
     private HomeAdapter homeAdapter;
+    private RecentUpdate bannerInfo;
 
     @Nullable
     @Override
@@ -123,6 +121,45 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        if (bannerInfo!=null&&bannerInfo.getData().size()>0){
+            int currentItem = i;
+            String poster = bannerInfo.getData().get(currentItem).getDownimgurl().split(",")[0];
+            Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    Bitmap reverseBitmapById = BlurUtil.getBlurBitmap(4,4,resource);
+                    imgBg.setImageBitmap(reverseBitmapById);
+                }
+            });
+        }
+
+        int pageIndex = i;
+
+        if (i == 0) {
+            // 当视图在第一个时，将页面号设置为图片的最后一张。
+            pageIndex = 10;
+        } else if (i == 10 + 1) {
+            // 当视图在最后一个是,将页面号设置为图片的第一张。
+            pageIndex = 1;
+        }
+        if (i != pageIndex) {
+            vp.setCurrentItem(pageIndex, false);
+            return;
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
     }
 
 
@@ -188,53 +225,27 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         info.getData().addAll(result.getData());
         homeAdapter.notifyDataSetChanged();
     }
-    public class MyCardHandler implements CardHandler<String> {
-
-        @Override
-        public View onBind(Context context, String data, int position, int mode) {
-            View view = View.inflate(context, R.layout.first_item, null);
-            ImageView imageView = (ImageView) view.findViewById(R.id.gallery_img);
-            Glide.with(context).load(data).into(imageView);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "data:" + data + "position:" + position, Toast.LENGTH_SHORT).show();
-                }
-            });
-            return view;
-        }
-    }
     @Override
     public void loadBtData(RecentUpdate result) {
-        vPadapter = new VPadapter(result, getContext());
-        String[] imageArray = {
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537805483795&di=e484bce1fdb0ed04c3c455da2bf5cea7&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F8cb1cb1349540923705db16a9f58d109b3de49ea.jpg"
-        };
-        vp.bind(getChildFragmentManager(), new MyCardHandler(), Arrays.asList(imageArray));
+        this.bannerInfo = result;
 
-//        vp.setPageTransformer(false, new CustPagerTransformer(getContext()));
-        switchNormal();
+        ArrayList<RecentUpdate.DataBean> resultData = (ArrayList<RecentUpdate.DataBean>) result.getData();
+        LAdapter lAdapter = new LAdapter(getContext(),resultData,vp);
 
-    }
-    //正常与卡片效果切换切换，请设置合理的值
-    private void switchNormal() {
-
-        vp.setCardTransformer(360,0.8f);
-        vp.setCardPadding(60);
-        vp.setCardMargin(40);
-        vp.setOffscreenPageLimit(20);
-        vp.notifyUI(CardViewPager.MODE_CARD);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.0f / 5.0f);
+        ViewGroup.LayoutParams lp=vp.getLayoutParams();
+        if (lp==null){
+            lp=new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        }else {
+            lp.width= pagerWidth;
+        }
+        vp.setLayoutParams(lp);
+        vp.setPageTransformer(true,new MyTransformation());
+        vp.setOffscreenPageLimit(3);
+        vp.setPageMargin(-250);
+        vp.setOnPageChangeListener(this);
+        vp.setAdapter(lAdapter);
+        vp.setCurrentItem(5);
 
     }
     @Override

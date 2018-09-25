@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
+import dev.baofeng.com.supermovie.adapter.HomeAdapter;
 import dev.baofeng.com.supermovie.adapter.MainAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
@@ -31,7 +32,7 @@ public class BtListFragment extends Fragment implements IMoview {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
     private GetRecpresenter recpresenter;
-    private MainAdapter adapter;
+    HomeAdapter adapter;
     private static BtListFragment btlistFragment;
     private Unbinder bind;
     private RecentUpdate infos;
@@ -58,6 +59,7 @@ public class BtListFragment extends Fragment implements IMoview {
     private void initView() {
         recpresenter = new GetRecpresenter(getContext(), this);
 
+
         Bundle bundle = getArguments();
         index = 1;
     }
@@ -76,18 +78,13 @@ public class BtListFragment extends Fragment implements IMoview {
 
     @Override
     public void loadMore(RecentUpdate result) {
-   /*     infos.getData().addAll(result.getData());
-        adapter.notifyDataSetChanged();*/
+
     }
 
 
     @Override
     public void loadBtData(RecentUpdate result) {
-      /*  infos = result;
-        adapter = new MainAdapter(getContext(), infos);
 
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);*/
     }
 
     @Override
