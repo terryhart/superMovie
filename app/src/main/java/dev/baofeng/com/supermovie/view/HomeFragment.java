@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
@@ -91,9 +92,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             getContext().startActivity(intent);
         });
         downtask.setOnClickListener(v -> {
-           if (listener!=null){
-               listener.toggle();
-           }
+           Intent intent =new Intent(getContext(), DownLoadMainActivity.class);
+           startActivity(intent);
         });
     }
     private OnDownPageListener listener;

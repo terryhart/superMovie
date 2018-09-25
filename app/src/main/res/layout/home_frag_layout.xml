@@ -4,19 +4,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/bga_refresh"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
+        android:id="@+id/rvlist"
+        android:nestedScrollingEnabled="true"
         android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rvlist"
-            android:nestedScrollingEnabled="true"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:overScrollMode="never"/>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"/>
 </RelativeLayout>

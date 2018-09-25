@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/square"
         android:layout_marginLeft="10dp"
-        android:text=" 电影 / 分类 / 影星"
+        android:text=" 电影名称 / 关键词"
         android:layout_centerVertical="true"
         />
     <ImageView

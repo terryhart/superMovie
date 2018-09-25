@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
-import dev.baofeng.com.supermovie.utils.NetUtil;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 import dev.baofeng.com.supermovie.view.OnItemClickListenr;
