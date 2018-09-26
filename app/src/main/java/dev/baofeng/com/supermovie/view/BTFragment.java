@@ -62,13 +62,13 @@ public class BTFragment extends Fragment {
      */
     private void initView() {
         String[] arr = { "最新电影","经典高清","国配电影",
-                "经典港片","国剧","日韩剧",
+                "经典港片","国产剧","日韩剧",
                 "美剧","综艺","动漫",
-                "纪录片","720P/1080P" ,"4K高清区"};
+                "纪录片","4K高清区"};
         String[] type = {"latest","highdpi","cznmv",
                 "hungkong","native","koria",
                 "america","complex","curtoon",
-                "document","k720p","k4mv"};
+                "document","k4mv"};
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             list.add(BtListFragment.newInstance(type[i]));

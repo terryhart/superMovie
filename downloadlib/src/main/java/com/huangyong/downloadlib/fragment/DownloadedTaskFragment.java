@@ -30,6 +30,7 @@ import com.huangyong.downloadlib.view.BtDownloadDialog;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
+import com.xunlei.downloadlib.parameter.TorrentInfo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -152,15 +153,15 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
             /*final Dialog dialog = BtDownloadDialog.getInstance(getContext(), R.layout.bt_down_load_layout);
             dialog.show();*/
             Toast.makeText(getContext(), "功能正在完成", Toast.LENGTH_SHORT).show();
-
-
+            TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(taskInfo.getLocalPath()+taskInfo.getTitle());
+            Log.e("torrentinfo",torrentInfo.mFileCount+"");
 
         }else {
             String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+taskInfo.getTitle());
             String loacalURL = taskInfo.getLocalPath()+taskInfo.getTitle();
             Log.e("localpath",loacalURL);
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
-            intent.putExtra(Params.PROXY_PALY_URL,proxPlayUlr);
+            intent.putExtra(Params.PROXY_PALY_URL,taskInfo.getLocalPath()+taskInfo.getTitle());
             startActivity(intent);
         }
     }

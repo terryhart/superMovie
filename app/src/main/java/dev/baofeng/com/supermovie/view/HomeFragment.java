@@ -1,7 +1,9 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.huangyong.downloadlib.DownLoadMainActivity;
+import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;

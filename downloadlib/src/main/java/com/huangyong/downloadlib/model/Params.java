@@ -9,6 +9,7 @@ public class Params {
     public static final String IS_TASK_NEW = "IS_TASK_NEW";
     public static final String PROXY_PALY_URL = "PROXY_PALY_URL";
     public static final String ACTION_PLAY_URL = "action_play_video";
+    public static final String ACTION_UPDATE_PAGER_POSTER = "com_update_viewpager_poster";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
     public static String TASK_PAUSE ="downlib.pause.task";

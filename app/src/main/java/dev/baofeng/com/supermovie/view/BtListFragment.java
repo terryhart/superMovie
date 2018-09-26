@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.huangyong.downloadlib.TaskLibHelper;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
@@ -63,7 +64,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     private void initData() {
         recpresenter = new CenterPresenter(getContext(), this);
         index = 1;
-        recpresenter.getLibraryDdata(type,index,16);
+        recpresenter.getLibraryDdata(type,index,18);
     }
 
     public static BtListFragment newInstance(String type) {
@@ -122,7 +123,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                recpresenter.getLibraryDdata(type,1,20);
+                recpresenter.getLibraryDdata(type,1,18);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);
@@ -133,9 +134,10 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                recpresenter.getLibraryMoreDdata(type,++index,20);
+                recpresenter.getLibraryMoreDdata(type,++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);
+
     }
 }

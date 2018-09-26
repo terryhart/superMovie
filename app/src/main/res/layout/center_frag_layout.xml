@@ -11,12 +11,20 @@
         android:layout_height="270dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/live_voice_pw_bg_one"
+                app:layout_collapseMode="parallax"
                 android:id="@+id/user_bg"
+                />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/login_icon"
                 />
             <!--<android.support.v7.widget.Toolbar
                 app:layout_collapseMode="pin"
@@ -58,10 +66,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="关于"
+                android:text="观看记录"
                 android:layout_marginTop="1px"
                 android:clickable="true"
-                android:drawableLeft="@drawable/icon_tab_item_dongtai"
+                android:drawableLeft="@drawable/ic_user_center_play_history"
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:drawablePadding="10dp"
@@ -79,13 +87,30 @@
                 android:focusable="true"
                 android:layout_marginTop="1px"
                 android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_tab_item_shezhi"
+                android:drawableLeft="@drawable/ic_user_center_my_favor"
                 android:drawablePadding="10dp"
-                android:text="设置"
+                android:text="收藏"
                 android:background="@drawable/item_pressed"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/tv_setting"
                 android:layout_below="@+id/tv_about"
+                android:paddingLeft="30dp"
+                android:paddingTop="4dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="1px"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_user_center_lixian_space"
+                android:drawablePadding="10dp"
+                android:text="版本更新"
+                android:background="@drawable/item_pressed"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_update"
+                android:layout_below="@+id/tv_setting"
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />

@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="timeBar_buffered_color">#1effe9</color>
+    <!--已经播放过视频的颜色-->
+    <color name="timeBar_played_color">#1effe9</color>
+    <!--没有加载过进度的颜色-->
+    <color name="timeBar_unplayed_color">#8f8f8f</color>
+    <!--视频进度圆点的颜色-->
+    <color name="timeBar_scrubber_color">#1effe9</color>
+
 </resources>
