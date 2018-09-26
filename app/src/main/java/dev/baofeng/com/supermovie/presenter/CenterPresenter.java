@@ -44,7 +44,6 @@ public class CenterPresenter extends BasePresenter<IAllView> {
                     @Override
                     public void onNext(RecentUpdate result) {
                         iview.loadSuccess(result);
-                        Log.e("dloadsuceess","loadresult");
                     }
                 });
         addSubscription(subscription);
@@ -67,8 +66,7 @@ public class CenterPresenter extends BasePresenter<IAllView> {
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
-                        iview.loadSuccess(result);
-                        Log.e("dloadsuceess","loadresult");
+                        iview.loadMore(result);
                     }
                 });
         addSubscription(subscription);

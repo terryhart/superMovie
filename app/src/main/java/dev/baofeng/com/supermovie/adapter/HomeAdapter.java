@@ -64,13 +64,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 name= name.replace(":","");
                 name= name.trim();
             }
-            name.substring(name.indexOf("《")+1,name.indexOf("》"));
+           String titleContent =  name.substring(name.indexOf("《")+1,name.indexOf("》"));
 
            String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).asBitmap().override(180,240).into(((CommonHolder)holder).itemimg);
+            Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
 
-            ((CommonHolder)holder).itemtitle.setText(name);
+            ((CommonHolder)holder).itemtitle.setText(titleContent);
 
             String finalImgUrl = imgUrl;
             String finalName = name;

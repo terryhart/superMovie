@@ -39,11 +39,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="7.9分"
         app:layout_constraintRight_toRightOf="@+id/post_img"
         android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/post_img"
         android:layout_marginBottom="6dp"
-        android:textColor="@color/gradecor"
         />
 </android.support.constraint.ConstraintLayout>

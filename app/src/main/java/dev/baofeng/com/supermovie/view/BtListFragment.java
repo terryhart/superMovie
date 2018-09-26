@@ -56,7 +56,14 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         View view = inflater.inflate(R.layout.home_frag_layout, null);
         bind = ButterKnife.bind(this, view);
         initView();
+        initData();
         return view;
+    }
+
+    private void initData() {
+        recpresenter = new CenterPresenter(getContext(), this);
+        index = 1;
+        recpresenter.getLibraryDdata(type,index,16);
     }
 
     public static BtListFragment newInstance(String type) {
@@ -70,12 +77,9 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
 
     private void initView() {
         pulllayout.setOnPullListener(this);
-        recpresenter = new CenterPresenter(getContext(), this);
         Bundle bundle = getArguments();
-        index = 1;
-        type = bundle.getString("Type");
+        this.type = bundle.getString("Type");
         Log.e("tytpetype", type);
-        recpresenter.getLibraryDdata(type,index,14);
     }
 
 
@@ -109,7 +113,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
 
     @Override
     public void loadMore(RecentUpdate movieBean) {
-        movieInfo.getData().addAll(movieBean.getData());
+        this.movieInfo.getData().addAll(movieBean.getData());
         adapter.notifyDataSetChanged();
     }
 
@@ -118,7 +122,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                recpresenter.getLibraryMoreDdata(type,1,20);
+                recpresenter.getLibraryDdata(type,1,20);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);
@@ -129,7 +133,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                recpresenter.getLibraryMoreDdata(type,index++,20);
+                recpresenter.getLibraryMoreDdata(type,++index,20);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);

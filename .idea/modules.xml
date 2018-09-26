@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/downloadlib/downloadlib.iml" filepath="$PROJECT_DIR$/downloadlib/downloadlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/mff/mff.iml" filepath="$PROJECT_DIR$/mff/mff.iml" />
       <module fileurl="file://$PROJECT_DIR$/playerlib/playerlib.iml" filepath="$PROJECT_DIR$/playerlib/playerlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/superMovie.iml" filepath="$PROJECT_DIR$/superMovie.iml" />

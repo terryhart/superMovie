@@ -50,6 +50,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private AppBarLayout detail_app_bar;
     private ImageView backup;
     private TextView titleView;
+    private DetailAdapter detailAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +170,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         info.setImgUrl(posterImagUrl);
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
-        DetailAdapter detailAdapter = new DetailAdapter(list,this);
+        detailAdapter = new DetailAdapter(list,this);
         recyclerView.setAdapter(detailAdapter);
 
 

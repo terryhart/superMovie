@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getRecpresenter.getMoreData(index++,20);
+                getRecpresenter.getMoreData(++index,20);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);

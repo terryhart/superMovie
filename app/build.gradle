@@ -78,4 +78,10 @@ dependencies {
 
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
+
+    //app-updater
+    compile 'com.king.app:app-updater:1.0'
+
+    //app-dialog
+    compile 'com.king.app:app-dialog:1.0'
 }
