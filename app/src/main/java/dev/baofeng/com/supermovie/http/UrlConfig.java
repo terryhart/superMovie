@@ -25,7 +25,7 @@ public class UrlConfig {
     //获取详情
     public static final String GETDETAIL = "getMore.php";
     //获取轮播推荐视频
-    public static final String GETBTRECOMEND = "ygcms/getRecmmond.php";
+    public static final String GETBTRECOMEND = "ygcms/getClassVideo.php";
 
     //获取搜索结果
     public static final String GETSEARCH = "ygcms/getSearch.php";

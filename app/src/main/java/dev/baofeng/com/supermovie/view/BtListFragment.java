@@ -5,11 +5,16 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.xiaosu.pulllayout.SimplePullLayout;
+import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +25,9 @@ import dev.baofeng.com.supermovie.adapter.MainAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.NetworkUtils;
 
@@ -28,15 +35,20 @@ import dev.baofeng.com.supermovie.utils.NetworkUtils;
  * Created by huangyong on 2018/1/31.
  */
 
-public class BtListFragment extends Fragment implements IMoview {
+public class BtListFragment extends Fragment implements IAllView, BasePullLayout.OnPullCallBackListener {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    private GetRecpresenter recpresenter;
+    @BindView(R.id.pull_layout)
+    SimplePullLayout pulllayout;
+
+    private CenterPresenter recpresenter;
     HomeAdapter adapter;
     private static BtListFragment btlistFragment;
     private Unbinder bind;
     private RecentUpdate infos;
     private int index;
+    private RecentUpdate movieInfo;
+    private String type;
 
     @Nullable
     @Override
@@ -57,40 +69,17 @@ public class BtListFragment extends Fragment implements IMoview {
     }
 
     private void initView() {
-        recpresenter = new GetRecpresenter(getContext(), this);
-
-
+        pulllayout.setOnPullListener(this);
+        recpresenter = new CenterPresenter(getContext(), this);
         Bundle bundle = getArguments();
         index = 1;
-    }
-
-    @Override
-    public void loadData(RecentUpdate info) {
-
-    }
-
-
-
-    @Override
-    public void loadError(String msg) {
-
-    }
-
-    @Override
-    public void loadMore(RecentUpdate result) {
-
+        type = bundle.getString("Type");
+        Log.e("tytpetype", type);
+        recpresenter.getLibraryDdata(type,index,14);
     }
 
 
-    @Override
-    public void loadBtData(RecentUpdate result) {
 
-    }
-
-    @Override
-    public void loadDetail(BtInfo result) {
-
-    }
 
     @Override
     public void onDestroy() {
@@ -107,5 +96,42 @@ public class BtListFragment extends Fragment implements IMoview {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void loadSuccess(RecentUpdate movieBean) {
+        this.movieInfo = movieBean;
+        Log.e("movieInfo",movieBean.getData().size()+"");
+        adapter =new HomeAdapter(getContext(),movieBean);
+        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvlist.setAdapter(adapter);
+    }
+
+    @Override
+    public void loadMore(RecentUpdate movieBean) {
+        movieInfo.getData().addAll(movieBean.getData());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recpresenter.getLibraryMoreDdata(type,1,20);
+                pulllayout.finishPull("加载完成",true);
+            }
+        },2000);
+    }
+
+    @Override
+    public void onLoad() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recpresenter.getLibraryMoreDdata(type,index++,20);
+                pulllayout.finishPull("加载完成",true);
+            }
+        },2000);
     }
 }

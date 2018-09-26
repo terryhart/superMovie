@@ -112,25 +112,41 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         String[] splitArr = mvdescTx.split("◎");
         StringBuffer buffer = new StringBuffer();
         ArrayList<String> listDesc=new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
-                continue;
+        DetailInfo info = new DetailInfo();
+
+
+        if (splitArr.length>5){
+            for (int i = 1; i < 5; i++) {
+                if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
+                    continue;
+                }
+                buffer.append(splitArr[i]);
+                listDesc.add(splitArr[i]);
             }
-            buffer.append(splitArr[i]);
-            listDesc.add(splitArr[i]);
+
+            StringBuffer descBuffer =new StringBuffer();
+            for (int i = 5; i <splitArr.length ; i++) {
+                if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
+                    continue;
+                }
+                if (splitArr[i].contains("简")){
+                    descBuffer.append("\n◎"+splitArr[i]);
+                }else {
+                    descBuffer.append("◎"+splitArr[i]);
+                }
+            }
+            //详情介绍
+            info.setMvDesc(descBuffer.toString());
+        }else {
+            //详情介绍
+            StringBuffer shortDesc = new StringBuffer();
+            for (int i = 0; i < splitArr.length; i++) {
+
+                shortDesc.append(splitArr[i]);
+            }
+            info.setMvDesc(shortDesc.toString());
         }
 
-        StringBuffer descBuffer =new StringBuffer();
-        for (int i = 5; i <splitArr.length ; i++) {
-            if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
-                continue;
-            }
-            if (splitArr[i].contains("简")){
-                descBuffer.append("\n◎"+splitArr[i]);
-            }else {
-                descBuffer.append("◎"+splitArr[i]);
-            }
-        }
 
         //海报右边的短简介
         sdesc.setText(buffer.toString());
@@ -139,7 +155,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         //
         String[] downUrl = this.downUrl.split(",");
 
-        DetailInfo info = new DetailInfo();
+
         ArrayList url = new ArrayList();
         for (int i = 0; i < downUrl.length; i++) {
             url.add(downUrl[i]);
@@ -148,8 +164,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         info.setImgScreenShot(imgScreenShot);
         //下载地址
         info.setDownUrl(url);
-        //详情介绍
-        info.setMvDesc(descBuffer.toString());
+
         //下载页显示的海报
         info.setImgUrl(posterImagUrl);
         ArrayList<DetailInfo> list = new ArrayList<>();

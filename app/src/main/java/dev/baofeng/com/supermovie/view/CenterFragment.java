@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.huangyong.downloadlib.DownLoadMainActivity;
 
 import java.io.File;
 
@@ -18,7 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
+import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.DownBtPresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IBtView;
 import dev.baofeng.com.supermovie.utils.BDecoder;
 
@@ -26,7 +31,7 @@ import dev.baofeng.com.supermovie.utils.BDecoder;
  * Created by huangyong on 2018/1/26.
  */
 
-public class CenterFragment extends Fragment implements View.OnClickListener, IBtView {
+public class CenterFragment extends Fragment implements View.OnClickListener, IAllView {
     Unbinder unbinder;
     private static CenterFragment homeFragment;
     @BindView(R.id.tv_downing)
@@ -35,7 +40,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     TextView tvAbout;
     @BindView(R.id.tv_setting)
     TextView tvSetting;
-    private DownBtPresenter presenter;
+    private CenterPresenter presenter;
 
     @Nullable
     @Override
@@ -57,7 +62,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     }
 
     private void initView() {
-        presenter = new DownBtPresenter(getContext(), this);
+        presenter = new CenterPresenter(getContext(), this);
         //初始化数据
         initData();
     }
@@ -67,7 +72,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
      */
     private void initData() {
         tvDowning.setOnClickListener(v -> {
-            toggle();
+            Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
+            startActivity(intent);
         });
         tvSetting.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), AboutUsActivity.class);
@@ -81,11 +87,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         });
     }
 
-    private void toggle() {
-        if (listener!=null){
-            listener.toggle();
-        }
-    }
 
 
     @Override
@@ -99,10 +100,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
     public void onClick(View v) {
     }
 
-    @Override
-    public void onDownSuccess(String path) {
-
-    }
 
     @Override
     public void onDestroy() {
@@ -120,4 +117,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IB
         this.listener = onDownPageListener;
     }
 
+    @Override
+    public void loadSuccess(RecentUpdate movieBean) {
+
+    }
+
+    @Override
+    public void loadMore(RecentUpdate movieBean) {
+
+    }
 }

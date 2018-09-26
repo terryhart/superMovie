@@ -65,7 +65,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 name= name.trim();
             }
             name.substring(name.indexOf("《")+1,name.indexOf("》"));
-           String posterImgUrl= imgUrl.substring(0,imgUrl.indexOf("jpg")+3);
+
+           String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
             Glide.with(context).load(uri).asBitmap().override(180,240).into(((CommonHolder)holder).itemimg);
 

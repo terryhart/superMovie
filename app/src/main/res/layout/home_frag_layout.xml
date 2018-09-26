@@ -4,13 +4,28 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/rvlist"
         android:nestedScrollingEnabled="true"
         android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:overScrollMode="never"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>-->
+
+
+    <com.xiaosu.pulllayout.SimplePullLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:id="@+id/pull_layout"
+        android:layout_marginBottom="40dp"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/rvlist"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+        </android.support.v7.widget.RecyclerView>
+    </com.xiaosu.pulllayout.SimplePullLayout>
 </RelativeLayout>

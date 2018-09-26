@@ -31,6 +31,7 @@ import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.view.DeleteDialog;
+import com.huangyong.playerlib.PlayerActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 import java.io.File;
@@ -222,7 +223,10 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
 
     @Override
     public void clicktoplay(DowningTaskInfo taskInfo) {
-
+        String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+taskInfo.getTitle());
+        Intent intent = new Intent(getActivity(), PlayerActivity.class);
+        intent.putExtra(Params.PROXY_PALY_URL,proxPlayUlr);
+        startActivity(intent);
     }
 
     @Override
