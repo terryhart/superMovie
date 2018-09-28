@@ -9,7 +9,7 @@ public class UrlConfig {
     public static String UUIDA = null;
     public static String BASE_URL = "http://dy.songore.cn/";
     //版本更新
-    public static final String CHECK_UPDATE  = "ygcms/update.php" ;
+    public static final String CHECK_UPDATE  = "ygcms/app/update.json" ;
 
     public static final String DOWNLOADBASEURL  = "https://www.bttt.la/" ;
 //    public static final String CHECK_UPDATE  = "update.json" ;

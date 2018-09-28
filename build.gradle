@@ -29,6 +29,18 @@ allprojects {
     }
 }
 
+
+
+ext{
+    compileSdkVersion = 27
+    minSdkVersion = 21
+    targetSdkVersion = 27
+    versionCode = 1
+    versionName = "1.0"
+    javaVersion = JavaVersion.VERSION_1_8
+    aptCompilerVersion = "1.1.7"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

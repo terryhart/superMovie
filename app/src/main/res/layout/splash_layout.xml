@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/splash_poster"
+        android:background="@drawable/splash_ad_bg_blue_leaf"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="看你喜欢的电影"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/icon_img"
+        android:layout_centerHorizontal="true"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/icon_img"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        />
+</RelativeLayout>

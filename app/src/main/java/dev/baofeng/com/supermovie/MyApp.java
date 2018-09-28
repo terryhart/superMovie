@@ -25,7 +25,6 @@ public class MyApp extends Application{
 
     public static MyApp instance = null;
     public SPUtils spUtils;
-    private Handler handler;
 
     @Override
     public void onCreate() {
@@ -47,13 +46,6 @@ public class MyApp extends Application{
         return instance;
     }
 
-    public Handler getHandler() {
-        Looper.prepare();
-        if (handler==null){
-            handler = new Handler();
-        }
-        return handler;
-    }
 
     public static Context getContext() {
         return appInstance();

@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.http;
 
+import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
@@ -34,6 +35,10 @@ public interface ApiService {
   //获取详情
   @GET(UrlConfig.GETDETAIL)
   Observable<BtInfo> getBtDetail(@Query("title") String title);
+
+
+  @GET(UrlConfig.CHECK_UPDATE)
+  Observable<AppUpdateInfo> getAppUpdate();
 
   @FormUrlEncoded
   @POST(UrlConfig.DOWNLOADBASEURL+"download3.php")

@@ -6,7 +6,7 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
+        versionCode 102
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -19,6 +19,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        jumboMode true
     }
     compileOptions {
         targetCompatibility 1.8
@@ -47,8 +50,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //recyclerview
     compile 'jp.wasabeef:glide-transformations:2.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -79,9 +80,6 @@ dependencies {
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
 
-    //app-updater
-    compile 'com.king.app:app-updater:1.0'
-
-    //app-dialog
-    compile 'com.king.app:app-dialog:1.0'
+    //版本更新
+    compile 'com.qianwen:update-app:3.5.2'
 }

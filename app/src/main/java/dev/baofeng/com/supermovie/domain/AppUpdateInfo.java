@@ -15,9 +15,10 @@ package dev.baofeng.com.supermovie.domain;
  */
 public class AppUpdateInfo {
 
+
     /**
      * code : 200
-     * data : {"version":"1.0.2","versionCode":"255","isForce":false,"downloadUrl":"http://192.168.10.143/new.apk","updateMsg":"1.修改了部分样式\n 2.修改了排序模式 \n 3.界面改版"}
+     * data : {"version":"1.0.2","versionCode":103,"isForce":false,"downloadUrl":"http://dy.songore.cn/ygcms/app/app-release.apk","updateMsg":"1.修改了部分样式\n 2.修改了排序模式 \n 3.界面改版"}
      * msg :
      */
 
@@ -52,16 +53,16 @@ public class AppUpdateInfo {
     public static class DataBean {
         /**
          * version : 1.0.2
-         * versionCode : 255
+         * versionCode : 103
          * isForce : false
-         * downloadUrl : http://192.168.10.143/new.apk
+         * downloadUrl : http://dy.songore.cn/ygcms/app/app-release.apk
          * updateMsg : 1.修改了部分样式
          2.修改了排序模式
          3.界面改版
          */
 
         private String version;
-        private String versionCode;
+        private int versionCode;
         private boolean isForce;
         private String downloadUrl;
         private String updateMsg;
@@ -74,11 +75,11 @@ public class AppUpdateInfo {
             this.version = version;
         }
 
-        public String getVersionCode() {
+        public int getVersionCode() {
             return versionCode;
         }
 
-        public void setVersionCode(String versionCode) {
+        public void setVersionCode(int versionCode) {
             this.versionCode = versionCode;
         }
 

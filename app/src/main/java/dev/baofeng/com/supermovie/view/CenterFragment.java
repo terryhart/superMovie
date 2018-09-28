@@ -2,29 +2,24 @@ package dev.baofeng.com.supermovie.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.huangyong.downloadlib.DownLoadMainActivity;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
-import dev.baofeng.com.supermovie.presenter.DownBtPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
-import dev.baofeng.com.supermovie.presenter.iview.IBtView;
 import dev.baofeng.com.supermovie.utils.BDecoder;
 
 /**
@@ -35,11 +30,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     Unbinder unbinder;
     private static CenterFragment homeFragment;
     @BindView(R.id.tv_downing)
-    TextView tvDowning;
+    TextView tvList;
     @BindView(R.id.tv_about)
-    TextView tvAbout;
+    TextView tvhistory;
     @BindView(R.id.tv_setting)
-    TextView tvSetting;
+    TextView tvFavor;
+    @BindView(R.id.tv_update)
+    TextView tvUpdate;
     private CenterPresenter presenter;
 
     @Nullable
@@ -71,18 +68,27 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
      * 以数据库的为准
      */
     private void initData() {
-        tvDowning.setOnClickListener(v -> {
+        //任务列表
+        tvList.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
             startActivity(intent);
         });
-        tvSetting.setOnClickListener(v -> {
+        //收藏
+        tvFavor.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), AboutUsActivity.class);
             startActivity(intent);
         });
-        tvAbout.setOnClickListener(new View.OnClickListener() {
+        //观看记录
+        tvhistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BDecoder.down();
+            }
+        });
+        tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
             }
         });
     }
