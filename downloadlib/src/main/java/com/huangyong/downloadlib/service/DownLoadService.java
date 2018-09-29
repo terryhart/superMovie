@@ -222,11 +222,6 @@ public class DownLoadService extends Service implements ITask {
                 String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
                 Toast.makeText(getApplicationContext(), title+"\n下载完成", Toast.LENGTH_SHORT).show();
             }
-            if (Params.HISTORY_SAVE.equals(intent.getAction())){
-
-
-
-            }
 
         }
     };

@@ -80,4 +80,5 @@ dependencies {
     //版本更新
     compile 'com.qianwen:update-app:3.5.2'
     implementation project(':playerlib')
+    implementation project(':vivideo')
 }

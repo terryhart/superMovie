@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <!-- 用于存储选中的内容的-->
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textColor="#2198f3"
+        android:background="@drawable/shape_button_pure_white30px_normal"
+        />
+    <View
+        android:id="@+id/view_empty"
+        android:layout_width="8px"
+        android:layout_height="match_parent"/>
+
+    <!--可以在文字左侧添加图片（可选）-->
+    <ImageView
+        android:id="@+id/iv_leftImage"
+        android:layout_toRightOf="@+id/view_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        />
+
+    <!--随着下拉打开和关闭会有一个旋转动画-->
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

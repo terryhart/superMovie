@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PopSpinnerView">
+        <!--默认显示的文字-->
+        <attr name="textName" format="string" />
+
+        <!--弹窗的宽度-->
+        <attr name="popWidth" format="integer" />
+
+        <!--左边绘图-->
+        <attr name="LeftImageDrawable" format="reference" />
+
+        <!--右边绘图-->
+        <attr name="RightImageDrawable" format="reference" />
+    </declare-styleable>
+</resources>

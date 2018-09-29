@@ -33,29 +33,16 @@ public class LocalDataReceiver extends BroadcastReceiver {
             String path = intent.getStringExtra(Params.LOCAL_PATH_KEY);
             String progress = intent.getStringExtra(Params.MOVIE_PROGRESS);
             String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
-            Log.e("baocunjilu","baocunjilu"+progress);
+            Log.e("baocunjilu","baocunjilu"+urlMd5);
             String posterUrl = intent.getStringExtra(Params.POST_IMG_KEY);
             HistoryDao dao = HistoryDao.getInstance(context);
-            List<HistoryInfo> historyInfos = dao.queryAll();
-            if (historyInfos!=null&&historyInfos.size()>0){
-                //更新本地数据
-                List<HistoryInfo> urlMd5Info = dao.queryForFeilds("urlMd5", urlMd5);
-                if (urlMd5Info!=null&&urlMd5Info.size()>0){
-                    //更新数据
-                    urlMd5Info.get(0).setProgress(progress);
-                    dao.updata(urlMd5Info.get(0));
-                    Log.e("baocunjilu","更新数据baocunjilu");
-                }else {
-                    //插入新数据
-                    HistoryInfo info = new HistoryInfo();
-                    info.setUrlMd5(urlMd5);
-                    info.setTitle(title);
-                    info.setPostImgUrl(posterUrl);
-                    info.setProgress(progress);
-                    info.setLocalPath(path);
-                    dao.add(info);
-                    Log.e("baocunjilu","插入新电影数据baocunjilu");
-                }
+            //更新本地数据
+            List<HistoryInfo> urlMd5Info = dao.queryForFeilds("urlMd5", urlMd5);
+            if (urlMd5Info!=null&&urlMd5Info.size()>0){
+                //更新数据
+                urlMd5Info.get(0).setProgress(progress);
+                dao.updata(urlMd5Info.get(0));
+                Log.e("baocunjilu","更新数据baocunjilu");
             }else {
                 //插入新数据
                 HistoryInfo info = new HistoryInfo();
@@ -65,7 +52,7 @@ public class LocalDataReceiver extends BroadcastReceiver {
                 info.setProgress(progress);
                 info.setLocalPath(path);
                 dao.add(info);
-                Log.e("baocunjilu","baocunjil插入新数据u");
+                Log.e("baocunjilu","插入新电影数据baocunjilu");
             }
 
         }

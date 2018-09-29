@@ -12,10 +12,14 @@ import com.bumptech.glide.Glide;
 import com.huangyong.playerlib.Params;
 import com.huangyong.playerlib.PlayerActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.holder.HistoryHolder;
 import dev.baofeng.com.supermovie.holder.SearchHolder;
+import dev.baofeng.com.supermovie.utils.DateTools;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
@@ -46,23 +50,24 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         String name = info.getData().get(position).getDownLoadName();
 
         Glide.with(context).load(URLImg).into(((HistoryHolder)holder).itemimg);
-
         ((HistoryHolder)holder).itemtitle.setText(name);
-
+        String progress = info.getData().get(position).getProgress();
         ((HistoryHolder) holder).root.setOnClickListener(view -> {
            try {
                Intent intent = new Intent(context, PlayerActivity.class);
                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
-               intent.putExtra(Params.MOVIE_PROGRESS,info.getData().get(position).getProgress());
+               intent.putExtra(Params.MOVIE_PROGRESS, progress);
                intent.putExtra(Params.PROXY_PALY_URL,info.getData().get(position).getDownLoadUrl());
+               intent.putExtra(Params.URL_MD5_KEY,info.getData().get(position).getUrlMd5());
                context.startActivity(intent);
 
            }catch (Exception e){
                e.printStackTrace();
            }
         });
-        ((HistoryHolder) holder).desc.setText("观看记录不需要简介");
+        String formatDuring = DateTools.formatDuring(Long.parseLong(progress));
+        ((HistoryHolder) holder).timeProgress.setText("已观看"+formatDuring);
     }
 
     @Override

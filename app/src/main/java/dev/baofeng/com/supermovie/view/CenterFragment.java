@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bftv.myapplication.view.IndexActivity;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 
 import butterknife.BindView;
@@ -75,7 +76,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         });
         //收藏
         tvFavor.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), AboutUsActivity.class);
+            Intent intent = new Intent(getContext(), IndexActivity.class);
             startActivity(intent);
         });
         //观看记录

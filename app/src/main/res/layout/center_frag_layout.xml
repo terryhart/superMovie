@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         app:elevation="0dp"
         android:gravity="bottom"
-        android:layout_height="270dp">
+        android:layout_height="210dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
@@ -21,10 +21,20 @@
                 android:id="@+id/user_bg"
                 />
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:background="@drawable/login_icon"
+                android:background="@mipmap/icon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本号 v1.0"
+                android:focusable="true"
+                android:textColor="#fff"
+                android:id="@+id/pay"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
                 />
             <!--<android.support.v7.widget.Toolbar
                 app:layout_collapseMode="pin"

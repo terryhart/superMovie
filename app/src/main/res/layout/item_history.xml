@@ -13,8 +13,8 @@
         android:id="@+id/root"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="110dp"
-            android:layout_height="160dp"
+            android:layout_width="70dp"
+            android:layout_height="90dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="10dp"
@@ -50,25 +50,11 @@
             app:layout_constraintLeft_toRightOf="@+id/sc_post_img"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="10dp"
-            android:textSize="14sp"
-            android:id="@+id/sc_desc"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.4"
-            android:text="简介："
-            android:maxEms="13"
-            android:layout_marginTop="10dp"
-            android:maxLines="6"
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/sc_post_img"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="10dp"
+            android:id="@+id/time_progress"
+            android:textColor="#474747"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.9"
-            android:text="已观看70%"
             />
     </android.support.constraint.ConstraintLayout>
 

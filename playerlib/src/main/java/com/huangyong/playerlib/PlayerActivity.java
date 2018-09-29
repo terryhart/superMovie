@@ -43,12 +43,12 @@ public class PlayerActivity extends AppCompatActivity implements AnimUtils.Updat
         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         if (!TextUtils.isEmpty(url)){
-            if (TextUtils.isEmpty(movieProgress)){
+            if (Integer.parseInt(movieProgress)==0){
                 exoPlayerManager.setPlayUri(Uri.parse(url));
             }else {
-                Toast.makeText(this, "继续上次观看", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "继续上次观看", Toast.LENGTH_SHORT).show();
                 exoPlayerManager.setPlayUri(Uri.parse(url));
-                exoPlayerManager.seekTo(Long.parseLong(movieProgress));
+                exoPlayerManager.setPosition(Long.parseLong(movieProgress));
             }
 
             exoPlayerManager.startPlayer();

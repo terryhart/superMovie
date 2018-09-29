@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.db.HistoryDao;
-import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 
 import java.util.ArrayList;
@@ -19,17 +20,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.HistoryAdapter;
-import dev.baofeng.com.supermovie.adapter.HomeAdapter;
-import dev.baofeng.com.supermovie.adapter.SearchAdapter;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
-import dev.baofeng.com.supermovie.domain.RecentUpdate;
 
-import static dev.baofeng.com.supermovie.MyApp.getContext;
-
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.rv_his_list)
     RecyclerView rvHisList;
+    @BindView(R.id.clear)
+    Button clear;
+    private HistoryAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,11 +40,13 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        clear.setOnClickListener(this);
+
         HistoryDao dao = HistoryDao.getInstance(getApplicationContext());
         List<HistoryInfo> historyInfos = dao.queryAll();
 
-        if (historyInfos!=null&&historyInfos.size()>0){
-            Log.e("daohistory",historyInfos.size()+"");
+        if (historyInfos != null && historyInfos.size() > 0) {
+            Log.e("daohistory", historyInfos.size() + "");
             MovieInfo info = new MovieInfo();
             List<MovieInfo.DataBean> dataBeans = new ArrayList<>();
             for (int i = 0; i < historyInfos.size(); i++) {
@@ -59,9 +60,20 @@ public class HistoryActivity extends AppCompatActivity {
             }
             info.setData(dataBeans);
             rvHisList.setLayoutManager(new LinearLayoutManager(HistoryActivity.this));
-            rvHisList.setAdapter(new HistoryAdapter(HistoryActivity.this,info));
-        }else {
+            adapter = new HistoryAdapter(HistoryActivity.this, info);
+            rvHisList.setAdapter(adapter);
+        } else {
             Toast.makeText(this, "暂无观看记录哦", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        HistoryDao dao = HistoryDao.getInstance(getApplicationContext());
+        dao.deleteAll();
+        if (adapter!=null){
+            adapter.clear();
+            adapter.notifyDataSetChanged();
         }
     }
 }
