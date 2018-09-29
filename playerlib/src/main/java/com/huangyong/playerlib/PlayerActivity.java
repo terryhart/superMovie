@@ -42,6 +42,7 @@ public class PlayerActivity extends AppCompatActivity implements AnimUtils.Updat
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
+        play_view.setTitle(title);
         if (!TextUtils.isEmpty(url)){
             if (Integer.parseInt(movieProgress)==0){
                 exoPlayerManager.setPlayUri(Uri.parse(url));

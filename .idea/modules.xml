@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/adblockwebview/adblockwebview.iml" filepath="$PROJECT_DIR$/adblockwebview/adblockwebview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/downloadlib/downloadlib.iml" filepath="$PROJECT_DIR$/downloadlib/downloadlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
@@ -10,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/superMovie.iml" filepath="$PROJECT_DIR$/superMovie.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/superMovie2.iml" filepath="$PROJECT_DIR$/.idea/superMovie2.iml" />
       <module fileurl="file://$PROJECT_DIR$/thunder/thunder.iml" filepath="$PROJECT_DIR$/thunder/thunder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vivideo/vivideo.iml" filepath="$PROJECT_DIR$/vivideo/vivideo.iml" />
     </modules>
   </component>
 </project>

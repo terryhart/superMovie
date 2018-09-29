@@ -8,6 +8,7 @@
     <chuangyuan.ycj.videolibrary.widget.VideoPlayerView
         android:id="@+id/exo_play_view"
         android:layout_width="match_parent"
+        app:fastforward_increment="2000"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         />

@@ -21,8 +21,8 @@
                 android:id="@+id/user_bg"
                 />
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:background="@mipmap/icon"
                 />
@@ -97,9 +97,9 @@
                 android:focusable="true"
                 android:layout_marginTop="1px"
                 android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_user_center_my_favor"
+                android:drawableLeft="@drawable/ic_user_live_welfare"
                 android:drawablePadding="10dp"
-                android:text="收藏"
+                android:text="追剧神器"
                 android:background="@drawable/item_pressed"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/tv_setting"

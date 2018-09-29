@@ -137,6 +137,10 @@ public class WebCrossActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        web.goBack();
+        if (web.canGoBack()){
+            web.goBack();
+        }else {
+            super.onBackPressed();
+        }
     }
 }

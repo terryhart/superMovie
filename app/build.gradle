@@ -9,7 +9,7 @@ android {
         versionCode 102
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
         packagingOptions {
             exclude 'META-INF/rxjava.properties'
         }
