@@ -75,11 +75,9 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':downloadlib')
-
-
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
-
     //版本更新
     compile 'com.qianwen:update-app:3.5.2'
+    implementation project(':playerlib')
 }

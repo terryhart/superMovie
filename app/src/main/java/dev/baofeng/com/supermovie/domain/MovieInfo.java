@@ -78,6 +78,25 @@ public class MovieInfo {
         private String mv_update_time;
         private String downdtitle;
         private String id;
+        private String progress;
+        private String urlMd5;
+
+        public String getUrlMd5() {
+            return urlMd5;
+        }
+
+        public void setUrlMd5(String urlMd5) {
+            this.urlMd5 = urlMd5;
+        }
+
+        public String getProgress() {
+            return progress;
+        }
+
+
+        public void setProgress(String progress) {
+            this.progress = progress;
+        }
 
         public String getMovClass() {
             return movClass;

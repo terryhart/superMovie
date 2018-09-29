@@ -226,6 +226,8 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
         String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+taskInfo.getTitle());
         Intent intent = new Intent(getActivity(), PlayerActivity.class);
         intent.putExtra(Params.PROXY_PALY_URL,proxPlayUlr);
+        intent.putExtra(Params.URL_MD5_KEY,taskInfo.getUrlMd5());
+        intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
         startActivity(intent);
     }
 

@@ -60,6 +60,16 @@
             android:maxLines="6"
 
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/sc_post_img"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            android:text="已观看70%"
+            />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

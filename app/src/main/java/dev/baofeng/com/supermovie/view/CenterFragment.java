@@ -82,7 +82,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         tvhistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BDecoder.down();
+                Intent intent = new Intent(getContext(), HistoryActivity.class);
+                startActivity(intent);
             }
         });
         tvUpdate.setOnClickListener(new View.OnClickListener() {

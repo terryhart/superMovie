@@ -7,7 +7,7 @@ package dev.baofeng.com.supermovie.http;
 
 public class UrlConfig {
     public static String UUIDA = null;
-    public static String BASE_URL = "http://dy.songore.cn/";
+    public static String BASE_URL = "http://123.207.150.253/";
     //版本更新
     public static final String CHECK_UPDATE  = "ygcms/app/update.json" ;
 

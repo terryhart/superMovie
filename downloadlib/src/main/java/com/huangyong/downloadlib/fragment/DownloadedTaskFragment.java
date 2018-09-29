@@ -26,6 +26,7 @@ import com.huangyong.downloadlib.db.TaskedDao;
 import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
+import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.downloadlib.view.BtDownloadDialog;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
@@ -162,6 +163,10 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
             Log.e("localpath",loacalURL);
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
             intent.putExtra(Params.PROXY_PALY_URL,taskInfo.getLocalPath()+taskInfo.getTitle());
+            intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(taskInfo.getLocalPath()+taskInfo.getTitle()));
+            intent.putExtra(Params.POST_IMG_KEY,taskInfo.getPostImgUrl());
+            intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
+            intent.putExtra(Params.MOVIE_PROGRESS,"0");
             startActivity(intent);
         }
     }

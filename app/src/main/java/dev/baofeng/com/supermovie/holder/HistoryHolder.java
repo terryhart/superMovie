@@ -12,7 +12,7 @@ import dev.baofeng.com.supermovie.R;
  * Created by huangyong on 2018/1/26.
  */
 
-public class SearchHolder extends RecyclerView.ViewHolder {
+public class HistoryHolder extends RecyclerView.ViewHolder {
 
 
     public ImageView itemimg;
@@ -20,7 +20,7 @@ public class SearchHolder extends RecyclerView.ViewHolder {
     public TextView desc;
     public ConstraintLayout root;
 
-    public SearchHolder(View itemView) {
+    public HistoryHolder(View itemView) {
         super(itemView);
         itemimg = (ImageView) itemView.findViewById(R.id.sc_post_img);
         root = (ConstraintLayout) itemView.findViewById(R.id.root);

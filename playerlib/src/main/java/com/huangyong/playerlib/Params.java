@@ -1,4 +1,4 @@
-package com.huangyong.downloadlib.model;
+package com.huangyong.playerlib;
 
 public class Params {
     public static final String DOWING_DATA_KEY = "DOWING_DATA_KEY";
