@@ -6,19 +6,26 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.ui.AnimUtils;
+
+import chuangyuan.ycj.videolibrary.listener.OnGestureProgressListener;
+import chuangyuan.ycj.videolibrary.listener.VideoInfoListener;
+import chuangyuan.ycj.videolibrary.listener.VideoWindowListener;
 import chuangyuan.ycj.videolibrary.video.ManualPlayer;
 import chuangyuan.ycj.videolibrary.video.VideoPlayerManager;
 import chuangyuan.ycj.videolibrary.widget.VideoPlayerView;
 
-public class PlayerActivity extends AppCompatActivity {
+public class PlayerActivity extends AppCompatActivity implements AnimUtils.UpdateProgressListener {
 
     private ManualPlayer exoPlayerManager;
     private String title;
     private String urlMd5;
     private String movieProgress;
+    private String progress="";
     private String url;
     private String poster;
 
@@ -28,15 +35,13 @@ public class PlayerActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);
         setContentView(R.layout.activity_player_main);
         VideoPlayerView play_view = findViewById(R.id.exo_play_view);
-
-        exoPlayerManager = new VideoPlayerManager.Builder(VideoPlayerManager.TYPE_PLAY_MANUAL, play_view).create();
+        exoPlayerManager = new VideoPlayerManager.Builder(VideoPlayerManager.TYPE_PLAY_MANUAL, play_view).addUpdateProgressListener(this).create();
         //四个参数，地址，海报，电影名称，需要到达的进度（第一次为0）
         url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
-
         if (!TextUtils.isEmpty(url)){
             if (TextUtils.isEmpty(movieProgress)){
                 exoPlayerManager.setPlayUri(Uri.parse(url));
@@ -48,6 +53,7 @@ public class PlayerActivity extends AppCompatActivity {
 
             exoPlayerManager.startPlayer();
         }
+
     }
 
     @Override
@@ -68,7 +74,8 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_TITLE_KEY,title);
         intent.putExtra(Params.LOCAL_PATH_KEY,url);
-        intent.putExtra(Params.MOVIE_PROGRESS,exoPlayerManager.getCurrentPosition());
+        Log.e("movieprogress",progress);
+        intent.putExtra(Params.MOVIE_PROGRESS,progress);
 
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);
         intent.putExtra(Params.POST_IMG_KEY,poster);
@@ -84,5 +91,13 @@ public class PlayerActivity extends AppCompatActivity {
         if(!exoPlayerManager.onBackPressed()){
             finish();
         }
+    }
+
+
+
+    @Override
+    public void updateProgress(long position, long bufferedPosition, long duration) {
+        Log.e("movieprogress",String.valueOf(position));
+        this.progress = String.valueOf(position);
     }
 }

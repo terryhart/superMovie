@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +47,7 @@ public class HistoryActivity extends AppCompatActivity {
         if (historyInfos!=null&&historyInfos.size()>0){
             Log.e("daohistory",historyInfos.size()+"");
             MovieInfo info = new MovieInfo();
+            List<MovieInfo.DataBean> dataBeans = new ArrayList<>();
             for (int i = 0; i < historyInfos.size(); i++) {
                 MovieInfo.DataBean dataBean = new MovieInfo.DataBean();
                 dataBean.setDownimgurl(historyInfos.get(i).getPostImgUrl());
@@ -52,8 +55,10 @@ public class HistoryActivity extends AppCompatActivity {
                 dataBean.setDownLoadUrl(historyInfos.get(i).getLocalPath());
                 dataBean.setProgress(historyInfos.get(i).getProgress());
                 dataBean.setUrlMd5(historyInfos.get(i).getUrlMd5());
-                info.getData().add(dataBean);
+                dataBeans.add(dataBean);
             }
+            info.setData(dataBeans);
+            rvHisList.setLayoutManager(new LinearLayoutManager(HistoryActivity.this));
             rvHisList.setAdapter(new HistoryAdapter(HistoryActivity.this,info));
         }else {
             Toast.makeText(this, "暂无观看记录哦", Toast.LENGTH_SHORT).show();

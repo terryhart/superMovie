@@ -45,7 +45,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         String URLImg= info.getData().get(position).getDownimgurl();
         String name = info.getData().get(position).getDownLoadName();
 
-        Glide.with(context).load(URLImg).into(((SearchHolder)holder).itemimg);
+        Glide.with(context).load(URLImg).into(((HistoryHolder)holder).itemimg);
 
         ((HistoryHolder)holder).itemtitle.setText(name);
 

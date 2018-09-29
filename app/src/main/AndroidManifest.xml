@@ -39,6 +39,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.HistoryActivity"/>
+        <receiver android:name=".receiver.LocalDataReceiver">
+            <intent-filter>
+                <action android:name="com.movie.history"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
