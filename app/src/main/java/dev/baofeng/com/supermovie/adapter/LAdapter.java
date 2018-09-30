@@ -39,8 +39,8 @@ public class LAdapter extends LoopVPAdapter<RecentUpdate.DataBean> {
         PosterItemView imageView = new PosterItemView(mContext);
         imageView.setLayoutParams(layoutParams);
         String name = data.getDownLoadName();
-       String title= name.substring(name.indexOf("《")+1,name.indexOf("》"));
-        imageView.setTitleText(title);
+        String downItemTitle = data.getDowndtitle();
+        imageView.setTitleText(name);
         String[] urlarr = data.getDownimgurl().split(",");
         Glide.with(mContext).load(urlarr[0]).into(imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,8 @@ public class LAdapter extends LoopVPAdapter<RecentUpdate.DataBean> {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
                 intent.putExtra(GlobalMsg.KEY_POST_IMG, urlarr[0]);
                 intent.putExtra(GlobalMsg.KEY_DOWN_URL,data.getDownLoadUrl());
-                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, title);
+                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
+                intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                 intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,data.getMvdesc());
                 context.startActivity(intent);
             }

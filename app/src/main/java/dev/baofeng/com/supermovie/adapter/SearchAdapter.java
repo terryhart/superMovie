@@ -49,7 +49,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         String URLImg= info.getData().get(position).getDownimgurl().split(",")[0];
         Log.e("slldldldld",URLImg);
         String name = info.getData().get(position).getDownLoadName();
-
+        String downItemTitle = info.getData().get(position).getDowndtitle();
         Glide.with(context).load(URLImg).into(((SearchHolder)holder).itemimg);
 
         ((SearchHolder)holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
@@ -60,6 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
+               intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.getData().get(position).getMvdesc());
                context.startActivity(intent);
 

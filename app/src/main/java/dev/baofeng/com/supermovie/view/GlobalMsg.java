@@ -20,6 +20,7 @@ public class GlobalMsg {
     public static final String TASKID = "TASKID";
     public static final String REFRESH = "REFRESH";
     public static final String KEY_MOVIE_DETAIL = "KEY_MOVIE_DETAIL";
+    public static final String KEY_MOVIE_DOWN_ITEM_TITLE = "KEY_MOVIE_DOWN_ITEM_TITLE";
     public static boolean ISSHOW = false;
 
 

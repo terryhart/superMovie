@@ -54,19 +54,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }else {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
-           /* if (name.contains("片名")){
-                name=name.replace("片名","");
-            }
-            if (name.contains("：")){
-                name= name.replace("：","");
-            }
-            if (name.contains(":")){
-                name= name.replace(":","");
-                name= name.trim();
-            }*/
+            String downItemTitle = datas.getData().get(position).getDowndtitle();
 
-
-           String posterImgUrl= imgUrl.split(",")[0];
+            String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
             Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
 
@@ -83,6 +73,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
                         context.startActivity(intent);
                     }catch (Exception e){

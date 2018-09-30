@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="#1ca7e3"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
            <RelativeLayout
                android:layout_width="match_parent"

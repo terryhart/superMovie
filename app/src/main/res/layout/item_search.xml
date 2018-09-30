@@ -8,13 +8,13 @@
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/root"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="110dp"
-            android:layout_height="160dp"
+            android:layout_height="140dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="10dp"
@@ -30,36 +30,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sc_post_title"
-            android:layout_marginTop="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/sc_post_img"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.1"
             android:text="电影名字"
             android:maxEms="13"
+            android:layout_toRightOf="@+id/sc_post_img"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/titlecor"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_marginBottom="2dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/sc_post_img"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="10dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
+            android:layout_toRightOf="@+id/sc_post_img"
+            android:layout_below="@+id/sc_post_title"
             android:id="@+id/sc_desc"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.4"
             android:text="简介："
             android:maxEms="13"
-            android:layout_marginTop="10dp"
-            android:maxLines="6"
-
+            android:lineSpacingExtra="3dp"
+            android:maxLines="7"
             />
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

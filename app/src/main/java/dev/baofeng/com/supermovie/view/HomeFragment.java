@@ -108,6 +108,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         if (pulllayout!=null){
             pulllayout.postRefresh();
         }
+        if (getRecpresenter!=null){
+            getRecpresenter.getBtRecommend(1,10);
+        }
     }
 
     @Override

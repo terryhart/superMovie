@@ -51,6 +51,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private ImageView backup;
     private TextView titleView;
     private DetailAdapter detailAdapter;
+    private String downItemTitle;
+    private String[] downItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private void initData() {
         Intent intent = getIntent();
         posterUrl = intent.getStringExtra(GlobalMsg.KEY_POST_IMG);
+        downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
+        downItemList = downItemTitle.split(",");
+
+
         if (posterUrl.contains(",")){
            String[] imgArr =  posterUrl.split(",");
             imgScreenShot = imgArr[1];
@@ -170,7 +176,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         info.setImgUrl(posterImagUrl);
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
-        detailAdapter = new DetailAdapter(list,this);
+        detailAdapter = new DetailAdapter(downItemList,list,this);
         recyclerView.setAdapter(detailAdapter);
 
 

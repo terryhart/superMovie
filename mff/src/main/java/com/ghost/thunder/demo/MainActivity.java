@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.se_bastiaan.torrentstream.TorrentOptions;
+import com.github.se_bastiaan.torrentstream.TorrentStream;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
@@ -51,11 +54,16 @@ public class MainActivity extends AppCompatActivity {
         center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,DownLoadMainActivity.class);
-                startActivity(intent);
 
-                Log.e("kddkkddk",FileUtils.getCacheSize());
-                Log.e("kddkkddk",FileUtils.getSpaceSize()[0]+"---"+FileUtils.getSpaceSize()[1]);
+
+                TorrentOptions torrentOptions = new TorrentOptions.Builder()
+                        .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
+                        .removeFilesAfterStop(true)
+                        .build();
+
+                TorrentStream torrentStream = TorrentStream.init(torrentOptions);
+                torrentStream.startStream("http://192.168.8.208/test.torrent");
+
             }
         });
         btdown.setOnClickListener(new View.OnClickListener() {
@@ -123,5 +131,11 @@ public class MainActivity extends AppCompatActivity {
         String savepath = Params.DEFAULT_PATH;
         String postImgUrl = "https://tu.66vod.net/2018/3561.jpg";
         TaskLibHelper.addNewTask(url,savepath,postImgUrl,getApplicationContext());
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(playerRecevier);
+        super.onDestroy();
     }
 }

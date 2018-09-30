@@ -41,6 +41,7 @@ public class LocalDataReceiver extends BroadcastReceiver {
             if (urlMd5Info!=null&&urlMd5Info.size()>0){
                 //更新数据
                 urlMd5Info.get(0).setProgress(progress);
+                urlMd5Info.get(0).setLocalPath(path);
                 dao.updata(urlMd5Info.get(0));
                 Log.e("baocunjilu","更新数据baocunjilu");
             }else {

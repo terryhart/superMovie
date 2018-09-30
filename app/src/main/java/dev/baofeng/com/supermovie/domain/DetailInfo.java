@@ -29,6 +29,16 @@ public class DetailInfo {
 
     private ArrayList<String> downUrl;
 
+    private ArrayList<String> downUrlName;
+
+    public ArrayList<String> getDownUrlName() {
+        return downUrlName;
+    }
+
+    public void setDownUrlName(ArrayList<String> downUrlName) {
+        this.downUrlName = downUrlName;
+    }
+
     public String getMvDesc() {
         return mvDesc;
     }

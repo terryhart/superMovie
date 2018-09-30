@@ -25,9 +25,11 @@ public class DetailAdapter extends RecyclerView.Adapter {
     private OnItemClickListenr listenr;
     private ArrayList<DetailInfo> infos;
     private Context context;
-    public DetailAdapter(ArrayList<DetailInfo> infos,OnItemClickListenr listener) {
+    private String[] downItemList;
+    public DetailAdapter(String[] downItemList, ArrayList<DetailInfo> infos, OnItemClickListenr listener) {
         this.infos = infos;
         this.listenr = listener;
+        this.downItemList = downItemList;
     }
 
     @NonNull
@@ -61,11 +63,11 @@ public class DetailAdapter extends RecyclerView.Adapter {
             if (holder instanceof DownHolder){
                 String downUrl = infos.get(0).getDownUrl().get(position-1);
                 if (downUrl.contains("ed2k")){
-                    ((DownHolder) holder).tvdown.setText("电驴下载"+position+"\n"+downUrl);
+                    ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position-1]);
                 }else if (downUrl.contains("magnet")){
-                    ((DownHolder) holder).tvdown.setText("磁力下载"+position+"\n"+downUrl);
+                    ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position-1]);
                 }else if (downUrl.contains("thunder")){
-                    ((DownHolder) holder).tvdown.setText("迅雷下载"+position+"\n"+downUrl);
+                    ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position-1]);
                 }
 
                 ((DownHolder) holder).downIcon.setOnClickListener(new View.OnClickListener() {

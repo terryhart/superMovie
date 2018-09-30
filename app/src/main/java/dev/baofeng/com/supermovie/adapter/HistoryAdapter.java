@@ -59,6 +59,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
                intent.putExtra(Params.MOVIE_PROGRESS, progress);
                intent.putExtra(Params.PROXY_PALY_URL,info.getData().get(position).getDownLoadUrl());
+               Log.e("proxyurl:",info.getData().get(position).getDownLoadUrl());
                intent.putExtra(Params.URL_MD5_KEY,info.getData().get(position).getUrlMd5());
                context.startActivity(intent);
 
