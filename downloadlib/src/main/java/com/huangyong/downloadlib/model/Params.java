@@ -26,5 +26,5 @@ public class Params {
 
 
 
-    public static final String DEFAULT_PATH = "/sdcard/AMovieDownload/";
+    public static final String DEFAULT_PATH = "MovieDownload";
 }

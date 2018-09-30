@@ -7,6 +7,7 @@ import com.huangyong.downloadlib.model.Params;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 public class FileUtils {
     public static String convertFileSize(long size) {
@@ -76,5 +77,19 @@ public class FileUtils {
         }
         return size;
     }
-
+    /**
+     * @param saveDir
+     * @return
+     * @throws IOException
+     * 判断下载目录是否存在，不存在就创建
+     */
+    public static String isExistDir(String saveDir) throws IOException {
+        // 下载位置
+        File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
+        if (!downloadFile.mkdirs()) {
+            downloadFile.createNewFile();
+        }
+        String savePath = downloadFile.getAbsolutePath();
+        return savePath;
+    }
 }
