@@ -30,6 +30,7 @@ import com.huangyong.downloadlib.db.TaskedDao;
 import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
@@ -190,7 +191,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
 
-                    File file = new File(taskInfo.getLocalPath()+taskInfo.getTitle());
+                    File file = new File(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
                     if (file.exists()){
                         file.delete();
                     }
@@ -223,11 +224,13 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
 
     @Override
     public void clicktoplay(DowningTaskInfo taskInfo) {
-        String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+taskInfo.getTitle());
+        String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
         Intent intent = new Intent(getActivity(), PlayerActivity.class);
         intent.putExtra(Params.PROXY_PALY_URL,proxPlayUlr);
-        intent.putExtra(Params.URL_MD5_KEY,taskInfo.getUrlMd5());
+        intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(taskInfo.getLocalPath()+"/"+taskInfo.getTitle()));
+        intent.putExtra(Params.POST_IMG_KEY,taskInfo.getPostImgUrl());
         intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
+        intent.putExtra(Params.MOVIE_PROGRESS,"0");
         startActivity(intent);
     }
 

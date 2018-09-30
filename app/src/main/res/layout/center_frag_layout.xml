@@ -36,6 +36,15 @@
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center"
                 />
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|top"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/share_app"
+                android:background="@drawable/share_select_bg"
+                />
             <!--<android.support.v7.widget.Toolbar
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"

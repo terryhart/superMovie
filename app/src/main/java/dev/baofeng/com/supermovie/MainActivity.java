@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.main:
                 toggleFrag(1);
+                homeFragment.autoRefresh();
                 break;
             case R.id.down:
                 toggleFrag(2);

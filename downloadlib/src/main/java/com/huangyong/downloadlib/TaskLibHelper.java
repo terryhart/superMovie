@@ -76,9 +76,16 @@ public class TaskLibHelper {
         if (TextUtils.isEmpty(url)){
             Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
         }
-        File file = new File(savepath);
-        if (!file.isDirectory()){
-            Toast.makeText(applicationContext, "下载目录不存在，请检查后再设置", Toast.LENGTH_SHORT).show();
+        String savePath = null;
+        try {
+            savePath = FileUtils.isExistDir(savepath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (savePath==null){
+            Toast.makeText(applicationContext, "文件目录创建失败，检查是否具有文件读写权限", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         String urlMd5 = MD5Utils.stringToMD5(url);

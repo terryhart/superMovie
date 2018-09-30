@@ -104,6 +104,12 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         this.listener = onDownPageListener;
     }
 
+    public void autoRefresh(){
+        if (pulllayout!=null){
+            pulllayout.postRefresh();
+        }
+    }
+
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {

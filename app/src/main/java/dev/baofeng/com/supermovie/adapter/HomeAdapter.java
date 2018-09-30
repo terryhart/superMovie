@@ -54,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }else {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
-            if (name.contains("片名")){
+           /* if (name.contains("片名")){
                 name=name.replace("片名","");
             }
             if (name.contains("：")){
@@ -63,14 +63,14 @@ public class HomeAdapter extends RecyclerView.Adapter {
             if (name.contains(":")){
                 name= name.replace(":","");
                 name= name.trim();
-            }
-           String titleContent =  name.substring(name.indexOf("《")+1,name.indexOf("》"));
+            }*/
+
 
            String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
             Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
 
-            ((CommonHolder)holder).itemtitle.setText(titleContent);
+            ((CommonHolder)holder).itemtitle.setText(name);
 
             String finalImgUrl = imgUrl;
             String finalName = name;

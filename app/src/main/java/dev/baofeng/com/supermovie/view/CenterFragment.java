@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.utils.BDecoder;
+import dev.baofeng.com.supermovie.utils.ShareUtil;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -38,6 +40,9 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     TextView tvFavor;
     @BindView(R.id.tv_update)
     TextView tvUpdate;
+    @BindView(R.id.share_app)
+    Button shareApp;
+
     private CenterPresenter presenter;
 
     @Nullable
@@ -91,6 +96,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.share(getContext(),R.string.string_share_text);
             }
         });
     }

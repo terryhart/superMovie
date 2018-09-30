@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">爱看电影</string>
+    <string name="app_name">桔子影院</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_share">分享</string>
+    <string name="string_share_text">发现了一个看电影神器，每天更新多种大片，美剧，追剧超方便，点我下载吧~：https://github.com/hiliving/superMovie/blob/master/app/release/app-1.0.apk?raw=true[分享自桔子影院]</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

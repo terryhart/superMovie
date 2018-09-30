@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ui.AnimUtils;
+import com.google.android.exoplayer2.ui.PlayerControlView;
 
 import chuangyuan.ycj.videolibrary.listener.OnGestureProgressListener;
 import chuangyuan.ycj.videolibrary.listener.VideoInfoListener;
@@ -43,18 +46,33 @@ public class PlayerActivity extends AppCompatActivity implements AnimUtils.Updat
         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         play_view.setTitle(title);
-        if (!TextUtils.isEmpty(url)){
+        Log.e("exoplaypath--",url);
+        if (!TextUtils.isEmpty(movieProgress)&&!TextUtils.isEmpty(url)){
             if (Integer.parseInt(movieProgress)==0){
                 exoPlayerManager.setPlayUri(Uri.parse(url));
             }else {
-                //Toast.makeText(this, "继续上次观看", Toast.LENGTH_SHORT).show();
                 exoPlayerManager.setPlayUri(Uri.parse(url));
                 exoPlayerManager.setPosition(Long.parseLong(movieProgress));
             }
-
             exoPlayerManager.startPlayer();
+        }else {
+            movieProgress ="0";
+            exoPlayerManager.setPlayUri(Uri.parse(url));
+            exoPlayerManager.setPosition(Long.parseLong(movieProgress));
         }
+        exoPlayerManager.startPlayer();
 
+//        exoPlayerManager.setPlaybackParameters(1f, 1f);
+        play_view.getPlaybackControlView().setVisibilityListener(new PlayerControlView.VisibilityListener() {
+            @Override
+            public void onVisibilityChange(int visibility) {
+                if (visibility==View.VISIBLE){
+                    Log.e("contorller","控制条显示了");
+                }else {
+                    Log.e("contorller","控制条隐藏了");
+                }
+            }
+        });
     }
 
     @Override

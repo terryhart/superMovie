@@ -8,8 +8,11 @@
     <chuangyuan.ycj.videolibrary.widget.VideoPlayerView
         android:id="@+id/exo_play_view"
         android:layout_width="match_parent"
+        app:controller_layout_id="@layout/my_controlview"
         app:fastforward_increment="2000"
+        app:default_artwork="@drawable/preview_bg"
         android:layout_height="match_parent"
+        app:surface_type="texture_view"
         android:background="@android:color/transparent"
         />
 </FrameLayout>

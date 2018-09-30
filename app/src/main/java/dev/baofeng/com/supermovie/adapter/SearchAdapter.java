@@ -49,17 +49,6 @@ public class SearchAdapter extends RecyclerView.Adapter {
         String URLImg= info.getData().get(position).getDownimgurl().split(",")[0];
         Log.e("slldldldld",URLImg);
         String name = info.getData().get(position).getDownLoadName();
-        if (name.contains("片名")){
-            name=name.replace("片名","");
-        }
-        if (name.contains("：")){
-            name= name.replace("：","");
-        }
-        if (name.contains(":")){
-            name= name.replace(":","");
-            name= name.trim();
-        }
-       String names=  name.substring(name.indexOf("《")+1,name.indexOf("》"));
 
         Glide.with(context).load(URLImg).into(((SearchHolder)holder).itemimg);
 
@@ -70,7 +59,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                Intent intent = new Intent(context, MovieDetailActivity.class);
                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
-               intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, names);
+               intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
                intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.getData().get(position).getMvdesc());
                context.startActivity(intent);
 
