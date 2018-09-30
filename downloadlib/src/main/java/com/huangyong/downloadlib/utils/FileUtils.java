@@ -45,9 +45,17 @@ public class FileUtils {
      * @return
      */
     public static String getCacheSize(){
-        File sdcard_filedir = new File(Params.DEFAULT_PATH);//得到sdcard的目录作为一个文件对象
         try {
-            return convertFileSize(getFileSizes(sdcard_filedir));
+           String path = isExistDir(Params.DEFAULT_PATH);
+           File file = new File(path);
+            return convertFileSize(getFileSizes(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+
         } catch (Exception e) {
             e.printStackTrace();
         }
