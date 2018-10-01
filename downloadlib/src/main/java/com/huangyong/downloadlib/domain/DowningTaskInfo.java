@@ -4,6 +4,8 @@ package com.huangyong.downloadlib.domain;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 /**
  * 下载数据封装的数据库文件
  */
@@ -64,6 +66,38 @@ public class DowningTaskInfo {
     @DatabaseField(columnName = "proxyPlayUrl")
     private String proxyPlayUrl;
 
+    @DatabaseField(columnName = "index")
+    private String index;
+
+    public String getTorrentPath() {
+        return torrentPath;
+    }
+
+    public void setTorrentPath(String torrentPath) {
+        this.torrentPath = torrentPath;
+    }
+
+    @DatabaseField(columnName = "torrentPath")
+    private String torrentPath;
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @DatabaseField(columnName = "filePath")
+    private String filePath ;
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
 
     //由于重启的任务走的是添加新任务的流程，这个用来区分来自哪里的添加动作，是否新添加，默认true,不需要数据库存储
     public boolean getTaskFrom() {

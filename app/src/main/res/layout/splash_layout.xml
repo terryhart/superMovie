@@ -6,26 +6,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/splash_poster"
-        android:background="@drawable/splash_ad_bg_blue_leaf"
+        android:background="@drawable/splash3"
         />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="看你喜欢的电影"
-        android:textColor="#fff"
-        android:textSize="14sp"
-        android:layout_margin="15dp"
-        android:layout_below="@+id/icon_img"
         android:layout_centerHorizontal="true"
+        android:text="热门电影，美剧，每日更新"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="66dp"
+        android:textSize="14sp"
+        android:textColor="#fff"
         />
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:id="@+id/icon_img"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="6dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="106dp"
+        android:layout_marginBottom="90dp"
         android:background="@mipmap/icon"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="190dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="极光影院"
+        android:textColor="#e8e8e8"
+        android:id="@+id/icon_title"
+        android:textSize="24sp"
+        android:layout_toRightOf="@+id/icon_img"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="90dp"
         />
 </RelativeLayout>

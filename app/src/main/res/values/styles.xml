@@ -9,6 +9,15 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+
+        <item name="android:windowBackground">@drawable/splash3</item>
+
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar"/>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

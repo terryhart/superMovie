@@ -93,9 +93,11 @@ public class DownLoadService extends Service implements ITask {
                             //文件下载完成，此数据在下一秒移动到已完成数据库。
                             DoneTaskInfo task = new DoneTaskInfo();
                             task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());
+                            task.setTaskUrl(taskInfos.get(i).getTaskUrl());
                             task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
                             task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
                             task.setLocalPath(taskInfos.get(i).getLocalPath());
+                            task.setFilePath(taskInfos.get(i).getLocalPath()+"/"+taskInfos.get(i).getTitle());
                             task.setTitle(taskInfos.get(i).getTitle());
                             task.setTaskId(taskInfos.get(i).getTaskId());
                             task.setUrlMd5(taskInfos.get(i).getUrlMd5());

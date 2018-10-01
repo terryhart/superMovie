@@ -29,8 +29,12 @@ import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.db.TaskedDao;
 import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
+import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.presenter.DownLoadPresenter;
+import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.huangyong.downloadlib.utils.MD5Utils;
+import com.huangyong.downloadlib.utils.Utils;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
@@ -49,7 +53,7 @@ import java.util.List;
  * @changeRecord [修改记录] <br/>
  * 2018/9/19 ：created
  */
-public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter.OnItemClickListener {
+public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter.OnItemClickListener, ITask {
 
 
     private RecyclerView downing;
@@ -57,6 +61,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     private DownTaskAdapter adapter;
 
     private static DownloadingTaskFragment fragment;
+    private DownLoadPresenter presenter;
 
     public static DownloadingTaskFragment getInstance(){
         if (fragment==null){
@@ -90,7 +95,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     }
 
     private void initData() {
-
+        presenter = new DownLoadPresenter(getContext(),this);
         //下载中列表
         List<DowningTaskInfo> taskInfos = TaskDao.getInstance(getContext()).queryAll();
         if (taskInfos!=null&&taskInfos.size()>0){
@@ -153,10 +158,19 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
         //已暂停，点击重新开始下载
         if (info.getStatu()==0||info.getStatu()==4&&!TextUtils.isEmpty(info.getTaskId())){
             Toast.makeText(getContext(), "下载已开始", Toast.LENGTH_SHORT).show();
-            XLTaskHelper.instance().startTask(Long.parseLong(info.getTaskId()));
+
             //由于本身的重新启动下载有点问题，无法重启下载，折衷的策略就是删除任务，重新添加，幸好支持续传
             XLTaskHelper.instance().removeTask(Long.parseLong(info.getTaskId()));
-            TaskLibHelper.reStartTask(info.getTaskUrl(),info.getLocalPath(),info.getPostImgUrl(),getActivity());
+            if (info.getTitle().contains("共")){
+                //种子的重启任务
+                Log.e("torrentRestart",info.getTaskId()+"正在重启");
+                if (presenter!=null){
+                    presenter.restartTorrent(info);
+                }
+            }else {
+//                XLTaskHelper.instance().startTask(Long.parseLong(info.getTaskId()));
+                TaskLibHelper.reStartTask(info.getTaskUrl(),info.getLocalPath(),info.getPostImgUrl(),getActivity());
+            }
 
 
         }else {
@@ -177,8 +191,10 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
             }
         });
         dialog.findViewById(R.id.copyLink).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                Utils.copyToClipboard(getContext(),taskInfo.getTaskUrl());
                 Toast.makeText(getContext(), "链接已拷贝", Toast.LENGTH_SHORT).show();
             }
         });
@@ -191,12 +207,13 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
 
-                    File file = new File(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
+                    XLTaskHelper.instance().removeTask(Long.parseLong(taskInfo.getTaskId()));
+
+                    File file = new File(taskInfo.getFilePath());
                     if (file.exists()){
                         file.delete();
                     }
-                    XLTaskHelper.instance().removeTask(Long.parseLong(taskInfo.getTaskId()));
-
+                    BroadCastUtils.sendIntentBroadCask(getContext(),new Intent(),Params.UPDATE_MEMERY_SIZE);
                     Toast.makeText(getContext(), "已删除同时删除本地文件", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
 
@@ -213,6 +230,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 XLTaskHelper.instance().removeTask(Long.parseLong(taskInfo.getTaskId()));
                 //删除列表记录
                 Toast.makeText(getContext(), "已删除", Toast.LENGTH_SHORT).show();
+                BroadCastUtils.sendIntentBroadCask(getContext(),new Intent(),Params.UPDATE_MEMERY_SIZE);
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
                     dialog.dismiss();
@@ -238,5 +256,10 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     public void onDestroyView() {
         super.onDestroyView();
         getContext().unregisterReceiver(taskReceiver);
+    }
+
+    @Override
+    public void repeatAdd(String s) {
+
     }
 }

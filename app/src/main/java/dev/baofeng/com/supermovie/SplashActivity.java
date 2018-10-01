@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
                 startActivity(intent);
                 finish();
             }
-        },3000);
+        },5000);
     }
 
     @Override

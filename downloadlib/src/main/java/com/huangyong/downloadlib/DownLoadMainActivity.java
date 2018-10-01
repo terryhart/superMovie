@@ -75,6 +75,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Params.UPDATE_PROGERSS);
         intentFilter.addAction(Params.TASK_COMMPLETE);
+        intentFilter.addAction(Params.UPDATE_MEMERY_SIZE);
         registerReceiver(taskReceiver,intentFilter);
     }
     private void initData() {
@@ -120,15 +121,16 @@ public class DownLoadMainActivity extends AppCompatActivity {
                 TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
                 List<DowningTaskInfo> downingTaskInfos = taskDao.queryAll();
                 if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
-                    NetSpeedUtil speedUtil = new NetSpeedUtil();
-                    String speed = speedUtil.updateViewData(getApplicationContext());
                     speedTitle.setText("正在下载"+downingTaskInfos.size()+"个文件");
                 }else {
                     speedTitle.setText("暂无下载任务");
                 }
             }
             if (intent.getAction().equals(Params.TASK_COMMPLETE)){
-
+                initData();
+            }
+            if (intent.getAction().equals(Params.UPDATE_MEMERY_SIZE)){
+                initData();
             }
         }
     };

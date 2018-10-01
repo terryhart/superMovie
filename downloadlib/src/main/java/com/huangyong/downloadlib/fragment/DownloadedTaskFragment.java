@@ -24,16 +24,20 @@ import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.adapter.DownedTaskAdapter;
 import com.huangyong.downloadlib.db.TaskedDao;
 import com.huangyong.downloadlib.domain.DoneTaskInfo;
+import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.presenter.DownLoadPresenter;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
+import com.huangyong.downloadlib.utils.FileUtils;
 import com.huangyong.downloadlib.utils.MD5Utils;
-import com.huangyong.downloadlib.view.BtDownloadDialog;
+import com.huangyong.downloadlib.utils.Utils;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +51,7 @@ import java.util.List;
  * @changeRecord [修改记录] <br/>
  * 2018/9/19 ：created
  */
-public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapter.OnPressListener {
+public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapter.OnPressListener, ITask {
 
     private List<DoneTaskInfo> taskInfos = new ArrayList<>();
     private RecyclerView downed;
@@ -55,6 +59,7 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
 
 
     private static DownloadedTaskFragment fragment;
+    private DownLoadPresenter presenter;
 
     public static DownloadedTaskFragment getInstance(){
         if (fragment==null){
@@ -78,6 +83,7 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         adapter = new DownedTaskAdapter(taskInfos);
         adapter.setOnLongPressListener(this);
         downed.setAdapter(adapter);
+        presenter = new DownLoadPresenter(getContext(),this);
         initReceiver();
 
     }
@@ -109,7 +115,9 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         dialog.findViewById(R.id.copyLink).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "链接已拷贝", Toast.LENGTH_SHORT).show();
+
+                Utils.copyToClipboard(getContext(),taskInfo.getTaskUrl());
+                Toast.makeText(getContext(), "链接已拷贝"+taskInfo.getTaskUrl(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,13 +130,13 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
 
                     adapter.deleteItem(taskInfo.getId());
 
-                    File file = new File(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
+                    File file = new File(taskInfo.getFilePath());
                     if (file.exists()){
                         file.delete();
                     }
 
                     Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
-
+                    BroadCastUtils.sendIntentBroadCask(getContext(),new Intent(),Params.UPDATE_MEMERY_SIZE);
                     dialog.dismiss();
                 }
             }
@@ -139,30 +147,43 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
                 TaskedDao dao = TaskedDao.getInstance(getContext());
                 dao.delete(taskInfo.getId());
                 adapter.deleteItem(taskInfo.getId());
+                BroadCastUtils.sendIntentBroadCask(getContext(),new Intent(),Params.UPDATE_MEMERY_SIZE);
                 Toast.makeText(getContext(), "已删除", Toast.LENGTH_SHORT).show();
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
                     dialog.dismiss();
                 }
+
             }
         });
     }
 
     @Override
-    public void clicked(DoneTaskInfo taskInfo) {
+    public void clicked(final DoneTaskInfo taskInfo) {
         if (taskInfo.getTitle().endsWith(".torrent")){
             /*final Dialog dialog = BtDownloadDialog.getInstance(getContext(), R.layout.bt_down_load_layout);
             dialog.show();*/
-            Toast.makeText(getContext(), "功能正在完成", Toast.LENGTH_SHORT).show();
-            TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
+            final TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
             Log.e("torrentinfo",torrentInfo.mFileCount+"");
-
+            CheckBoxDialog.showCheckBoxDialog(getContext(), torrentInfo, taskInfo.getLocalPath() + "/" + taskInfo.getTitle(), new CheckBoxDialog.OnChoseFileListener() {
+                @Override
+                public void onDownLoadTask(List<Integer> index, List<String> choseName) {
+                    if (presenter!=null){
+                        String torrentPath = taskInfo.getLocalPath()+"/"+taskInfo.getTitle();
+                        try {
+                            String savePath = FileUtils.isExistDir(Params.DEFAULT_PATH);
+                            presenter.addTorrentTask(taskInfo,torrentPath,savePath,index,torrentInfo,true);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         }else {
-            String proxPlayUlr = XLTaskHelper.instance().getLoclUrl(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
             String loacalURL = taskInfo.getLocalPath()+"/"+taskInfo.getTitle();
             Log.e("localpath",loacalURL);
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
-            intent.putExtra(Params.PROXY_PALY_URL,taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
+            intent.putExtra(Params.PROXY_PALY_URL,taskInfo.getFilePath());
             intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(taskInfo.getLocalPath()+"/"+taskInfo.getTitle()));
             intent.putExtra(Params.POST_IMG_KEY,taskInfo.getPostImgUrl());
             intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
@@ -181,15 +202,6 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
             if (intent.getAction().equals(Params.UPDATE_PROGERSS)){
                 //TODO 若页面可见，更新数据，该广播每2秒一次，
                 // TODO 只有页面可见时才更新列表。但是服务中的数据封装实时进行着。除非任务列表为空。本页只初始化时从数据库获取一次
-                if (true){
-
-                    //TODO 已完成列表数据
-                    List<DoneTaskInfo> doneTaskInfos = TaskedDao.getInstance(getContext()).queryAll();
-                    if (doneTaskInfos!=null&&doneTaskInfos.size()>0){
-
-                    }
-
-                }
             }
             if (intent.getAction().equals(Params.TASK_COMMPLETE)){
                 TaskedDao dao = TaskedDao.getInstance(getContext());
@@ -207,5 +219,10 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
     public void onDestroyView() {
         super.onDestroyView();
         getContext().unregisterReceiver(taskReceiver);
+    }
+
+    @Override
+    public void repeatAdd(String s) {
+
     }
 }
