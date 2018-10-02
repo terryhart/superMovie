@@ -97,7 +97,7 @@ public class DownLoadService extends Service implements ITask {
                             task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
                             task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
                             task.setLocalPath(taskInfos.get(i).getLocalPath());
-                            task.setFilePath(taskInfos.get(i).getLocalPath()+"/"+taskInfos.get(i).getTitle());
+                            task.setFilePath(taskInfos.get(i).getFilePath());
                             task.setTitle(taskInfos.get(i).getTitle());
                             task.setTaskId(taskInfos.get(i).getTaskId());
                             task.setUrlMd5(taskInfos.get(i).getUrlMd5());

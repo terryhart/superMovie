@@ -35,6 +35,11 @@
 
         </activity>
         <activity android:name=".view.HistoryActivity"/>
+        <receiver android:name=".receiver.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receiver.LocalDataReceiver">
             <intent-filter>
                 <action android:name="com.movie.history"/>

@@ -14,11 +14,13 @@ import dev.baofeng.com.supermovie.R;
 public class DownHolder extends RecyclerView.ViewHolder {
 
     public ImageView downIcon;
+    public ImageView donwIconPic;
     public TextView tvdown;
 
     public DownHolder(View itemView) {
         super(itemView);
         tvdown =  itemView.findViewById(R.id.tv_down);
         downIcon = itemView.findViewById(R.id.down_icon);
+        donwIconPic = itemView.findViewById(R.id.donwIconPic);
     }
 }

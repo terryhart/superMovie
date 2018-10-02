@@ -81,4 +81,7 @@ dependencies {
     compile 'com.qianwen:update-app:3.5.2'
     implementation project(':playerlib')
     implementation project(':vivideo')
+    //展开text
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
+
 }

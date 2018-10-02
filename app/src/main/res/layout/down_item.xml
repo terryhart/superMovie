@@ -15,9 +15,9 @@
            android:visibility="invisible"
            android:layout_height="1px"/>
        <ImageView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@drawable/share_ic_task_file_mp4"
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:id="@+id/donwIconPic"
            android:padding="6dp"
            />
        <TextView

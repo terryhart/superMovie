@@ -17,6 +17,7 @@ public class TaskHolder extends RecyclerView.ViewHolder {
     public TextView playinloading;
     public ProgressImageView posterImg;
     public ImageView finish_icon;
+    public TextView playinloadingBg;
     public TextView task_size;
 
     public TaskHolder(View itemView) {
@@ -27,5 +28,6 @@ public class TaskHolder extends RecyclerView.ViewHolder {
         posterImg = itemView.findViewById(R.id.posterImg);
         finish_icon = itemView.findViewById(R.id.task_msg_icon);
         task_size = itemView.findViewById(R.id.task_size_msg);
+        playinloadingBg = itemView.findViewById(R.id.playinloadingBg);
     }
 }

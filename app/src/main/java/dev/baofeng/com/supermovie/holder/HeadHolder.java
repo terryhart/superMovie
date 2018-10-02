@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
+
 import dev.baofeng.com.supermovie.R;
 
 /**
@@ -14,7 +16,7 @@ import dev.baofeng.com.supermovie.R;
 
 public class HeadHolder extends ViewHolder {
 
-    public TextView mvdesc;
+    public ExpandableTextView mvdesc;
     public ImageView screenShot;
 
     public HeadHolder(View itemView) {

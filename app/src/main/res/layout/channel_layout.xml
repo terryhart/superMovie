@@ -4,6 +4,7 @@
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/content_main"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -55,13 +56,6 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <!--<cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:layout_width="match_parent"
-        android:id="@+id/bga_refresh"
-
-        android:layout_height="match_parent">
-
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>-->
     <com.xiaosu.pulllayout.SimplePullLayout
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"

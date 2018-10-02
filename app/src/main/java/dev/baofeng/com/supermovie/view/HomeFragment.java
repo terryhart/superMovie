@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     ImageView square;
     @BindView(R.id.downtask)
     ImageView downtask;
+    @BindView(R.id.content_main)
+    CoordinatorLayout contentMain;
     @BindView(R.id.pulllayout)
     SimplePullLayout pulllayout;
     private GetRecpresenter getRecpresenter;
@@ -81,6 +85,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
 
         View view = inflater.inflate(R.layout.channel_layout, null);
         unbinder = ButterKnife.bind(this, view);
+
         initData();
         initEvent();
         return view;
@@ -119,7 +124,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             @Override
             public void run() {
                 getRecpresenter.getRecentUpdate(1,20);
-                pulllayout.finishPull("加载完成",true);
+                if (pulllayout!=null){
+                    pulllayout.finishPull("加载完成",true);
+                }
             }
         },2000);
     }
@@ -258,6 +265,12 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         vp.setOnPageChangeListener(this);
         vp.setAdapter(lAdapter);
         vp.setCurrentItem(5);
+        contentMain.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return vp.dispatchTouchEvent(motionEvent);
+            }
+        });
 
     }
     @Override

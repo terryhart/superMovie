@@ -40,4 +40,15 @@
             <item name="android:windowExitAnimation">@anim/input_method_exit</item>
     </style>
 
+    <style name="Dialog_Fullscreen" parent="Animation.AppCompat.Dialog" >
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/AlertDialog.AppCompat</item>
+    </style>
+    <style name="CheckBoxTintTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+
+        <item name="colorAccent">#128e9c</item>
+
+    </style>
 </resources>

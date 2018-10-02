@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,9 @@ public class DetailAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         if (infos!=null&&infos.size()>0){
+            Log.e("dkkddkdk",infos.size()+"");
             if (holder instanceof HeadHolder){
-                ((HeadHolder) holder).mvdesc.setText(infos.get(0).getMvDesc());
+                ((HeadHolder) holder).mvdesc.setContent(infos.get(0).getMvDesc());
                 String screenShotImagUrl = infos.get(0).getImgScreenShot();
                 if (!TextUtils.isEmpty(screenShotImagUrl)){
                     ((HeadHolder) holder).screenShot.setVisibility(View.VISIBLE);
@@ -64,10 +66,13 @@ public class DetailAdapter extends RecyclerView.Adapter {
                 String downUrl = infos.get(0).getDownUrl().get(position-1);
                 if (downUrl.contains("ed2k")){
                     ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position-1]);
+                    Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
                 }else if (downUrl.contains("magnet")){
                     ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position-1]);
+                    Glide.with(context).load(R.drawable.ic_dl_torrent).into(((DownHolder) holder).donwIconPic);
                 }else if (downUrl.contains("thunder")){
                     ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position-1]);
+                    Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
                 }
 
                 ((DownHolder) holder).downIcon.setOnClickListener(new View.OnClickListener() {

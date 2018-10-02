@@ -1,7 +1,9 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -9,8 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +29,11 @@ import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
+import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
 
 /**
@@ -53,6 +61,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private DetailAdapter detailAdapter;
     private String downItemTitle;
     private String[] downItemList;
+    private LinearLayoutManager layoutManager;
+    private String[] items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +75,12 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     }
 
     private void initData() {
+        layoutManager = new LinearLayoutManager(this);
+
         Intent intent = getIntent();
         posterUrl = intent.getStringExtra(GlobalMsg.KEY_POST_IMG);
         downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
+        Log.e("kdkdkdd",downItemTitle);
         downItemList = downItemTitle.split(",");
 
 
@@ -100,19 +113,13 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         recyclerView = findViewById(R.id.rv_detail);
         titleView = findViewById(R.id.toolbarTitle);
         titleView.setText(title);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
 
 
         sdesc = findViewById(R.id.sdesc);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intents = new Intent(MovieDetailActivity.this, DownLoadMainActivity.class);
-                startActivity(intents);
-            }
-        });
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle(title);
 
@@ -171,15 +178,25 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         info.setImgScreenShot(imgScreenShot);
         //下载地址
         info.setDownUrl(url);
-
         //下载页显示的海报
         info.setImgUrl(posterImagUrl);
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
         detailAdapter = new DetailAdapter(downItemList,list,this);
+        DownListAdapter dialogAdapter = new DownListAdapter(downItemList,list,this);
         recyclerView.setAdapter(detailAdapter);
 
+        DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intents = new Intent(MovieDetailActivity.this, DownLoadMainActivity.class);
+//                startActivity(intents);
+
+                downLoadListDialog.show();
+            }
+        });
         Glide.with(this).load(posterImagUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -187,6 +204,31 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             }
         });
 
+    }
+    public class Myadapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return items.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return items[i];
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View views = LayoutInflater.from(MovieDetailActivity.this).inflate(R.layout.down_item,viewGroup,false);
+            TextView tidown = views.findViewById(R.id.tv_down);
+            tidown.setText(items[i]);
+            return views;
+        }
     }
 
 
