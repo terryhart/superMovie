@@ -200,7 +200,6 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Params.UPDATE_PROGERSS)){
-                //TODO 若页面可见，更新数据，该广播每2秒一次，
                 // TODO 只有页面可见时才更新列表。但是服务中的数据封装实时进行着。除非任务列表为空。本页只初始化时从数据库获取一次
             }
             if (intent.getAction().equals(Params.TASK_COMMPLETE)){

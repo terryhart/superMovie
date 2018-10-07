@@ -59,8 +59,7 @@ class CheckBoxDialog {
             }
         }
 
-        final String items[] = {"我是Item一", "我是Item二", "我是Item三", "我是Item四"};
-        final boolean checkedItems[] = {true, false, false, false};
+        final boolean checkedItems[] = {true, false, false, false, false, false, false, false, false, false};
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setTitle("选择要下载的文件")//设置对话框的标题
                 .setMultiChoiceItems(name, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
