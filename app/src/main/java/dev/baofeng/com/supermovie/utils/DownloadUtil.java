@@ -110,6 +110,11 @@ public class DownloadUtil {
         File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
+        }else {
+            File[] files = downloadFile.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                files[i].delete();
+            }
         }
         String savePath = downloadFile.getAbsolutePath();
         return savePath;

@@ -31,7 +31,7 @@
                 android:text="版本号 v1.0"
                 android:focusable="true"
                 android:textColor="#fff"
-                android:id="@+id/pay"
+                android:id="@+id/versionName"
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center"
                 />

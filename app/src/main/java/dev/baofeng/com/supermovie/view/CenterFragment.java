@@ -1,6 +1,10 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,10 +22,15 @@ import com.huangyong.downloadlib.DownLoadMainActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
+import dev.baofeng.com.supermovie.SplashActivity;
+import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
+import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
+import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.utils.BDecoder;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
 
@@ -29,7 +38,7 @@ import dev.baofeng.com.supermovie.utils.ShareUtil;
  * Created by huangyong on 2018/1/26.
  */
 
-public class CenterFragment extends Fragment implements View.OnClickListener, IAllView {
+public class CenterFragment extends Fragment implements View.OnClickListener, IAllView, IupdateView {
     Unbinder unbinder;
     private static CenterFragment homeFragment;
     @BindView(R.id.tv_downing)
@@ -40,10 +49,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     TextView tvFavor;
     @BindView(R.id.tv_update)
     TextView tvUpdate;
+    @BindView(R.id.versionName)
+    TextView versionName;
     @BindView(R.id.share_app)
     Button shareApp;
 
     private CenterPresenter presenter;
+    private UpdateAppPresenter updatePresenter;
 
     @Nullable
     @Override
@@ -74,6 +86,9 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
      * 以数据库的为准
      */
     private void initData() {
+        updatePresenter = new UpdateAppPresenter(getContext(),this);
+
+        versionName.setText("版本号："+getVersionName(getContext(),"dev.baofeng.com.supermovie"));
         //任务列表
         tvList.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
@@ -95,7 +110,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
+                updatePresenter.getAppUpdate(getContext());
             }
         });
 
@@ -145,5 +160,29 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     @Override
     public void loadMore(RecentUpdate movieBean) {
 
+    }
+
+    @Override
+    public void noUpdate() {
+        Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateYes(AppUpdateInfo result) {
+        UpdateDialog dialog = new UpdateDialog(getContext(),result);
+        dialog.show();
+    }
+
+
+    public static String getVersionName(Context context, String packageName){
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(packageName, 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
