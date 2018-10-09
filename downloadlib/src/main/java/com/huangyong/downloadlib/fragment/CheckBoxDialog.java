@@ -44,20 +44,6 @@ class CheckBoxDialog {
         }
 
 
-        ArrayList<String> info = new ArrayList();
-        if (list.mFileCount>0){
-            String baseFolder = list.mMultiFileBaseFolder;
-            TorrentFileInfo[] fileInfo = list.mSubFileInfo;
-            if (fileInfo.length>0){
-                for (int i = 0; i < fileInfo.length; i++) {
-                    Log.e("ldldldldl-1",fileInfo[i].mFileSize+"");
-                    Log.e("ldldldldl-2",fileInfo[i].mFileName+"");
-                    Log.e("ldldldldl-3",fileInfo[i].mSubPath+"");
-                    Log.e("ldldldldl-4",fileInfo[i].mFileIndex+"");
-                    Log.e("ldldldldl-5",fileInfo[i].mRealIndex+"");
-                }
-            }
-        }
 
         final boolean checkedItems[] = {true, false, false, false, false, false, false, false, false, false};
         AlertDialog dialog = new AlertDialog.Builder(context)
