@@ -49,6 +49,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     TextView tvFavor;
     @BindView(R.id.tv_update)
     TextView tvUpdate;
+    @BindView(R.id.tv_collect)
+    TextView tvCollect;
     @BindView(R.id.versionName)
     TextView versionName;
     @BindView(R.id.share_app)
@@ -118,6 +120,14 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             @Override
             public void onClick(View v) {
                 ShareUtil.share(getContext(),R.string.string_share_text);
+            }
+        });
+
+        tvCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FavorActivity.class);
+                startActivity(intent);
             }
         });
     }

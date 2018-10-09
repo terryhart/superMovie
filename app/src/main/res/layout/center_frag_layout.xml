@@ -60,8 +60,8 @@
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent">
-        <RelativeLayout
-
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -69,11 +69,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                android:text="任务列表"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:text="下载中心"
                 android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/icon_tab_item_qianbao"
+                android:drawableLeft="@drawable/ic_user_live_welfare"
                 android:background="@drawable/item_pressed"
                 android:clickable="true"
                 android:focusable="true"
@@ -84,7 +82,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="观看记录"
+                android:text="观看历史"
                 android:layout_marginTop="1px"
                 android:clickable="true"
                 android:drawableLeft="@drawable/ic_user_center_play_history"
@@ -92,9 +90,7 @@
                 android:gravity="center_vertical"
                 android:drawablePadding="10dp"
                 android:background="@drawable/item_pressed"
-                android:layout_alignParentLeft="true"
                 android:id="@+id/tv_about"
-                android:layout_below="@+id/tv_downing"
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />
@@ -105,16 +101,30 @@
                 android:focusable="true"
                 android:layout_marginTop="1px"
                 android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_user_live_welfare"
+                android:drawableLeft="@drawable/ic_user_center_my_favor"
                 android:drawablePadding="10dp"
-                android:text="追剧神器"
+                android:text="收藏记录"
                 android:background="@drawable/item_pressed"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/tv_setting"
-                android:layout_below="@+id/tv_about"
+                android:id="@+id/tv_collect"
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="1px"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_user_center_member"
+                android:drawablePadding="10dp"
+                android:text="追剧神器"
+                android:background="@drawable/item_pressed"
+                android:id="@+id/tv_setting"
+                android:paddingLeft="30dp"
+                android:paddingTop="4dp"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -126,12 +136,10 @@
                 android:drawablePadding="10dp"
                 android:text="版本更新"
                 android:background="@drawable/item_pressed"
-                android:layout_alignParentLeft="true"
                 android:id="@+id/tv_update"
-                android:layout_below="@+id/tv_setting"
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
