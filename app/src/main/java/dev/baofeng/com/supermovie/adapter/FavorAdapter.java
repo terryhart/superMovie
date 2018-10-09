@@ -13,9 +13,11 @@ import com.huangyong.playerlib.PlayerActivity;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.holder.FavorHolder;
 import dev.baofeng.com.supermovie.holder.HistoryHolder;
 import dev.baofeng.com.supermovie.utils.DateTools;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
 /**
  * 观看历史，点击是继续观看，不用进详情页
@@ -33,8 +35,8 @@ public class FavorAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_history,parent,false);
-        return new HistoryHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_favor,parent,false);
+        return new FavorHolder(view);
     }
 
     @Override
@@ -43,11 +45,29 @@ public class FavorAdapter extends RecyclerView.Adapter {
         String URLImg= info.getData().get(position).getDownimgurl();
         String name = info.getData().get(position).getDownLoadName();
 
-        Glide.with(context).load(URLImg).into(((HistoryHolder)holder).itemimg);
-        ((HistoryHolder)holder).itemtitle.setText(name);
+        Glide.with(context).load(URLImg).into(((FavorHolder)holder).itemimg);
+        ((FavorHolder)holder).itemtitle.setText(name);
         String progress = info.getData().get(position).getProgress();
-        ((HistoryHolder) holder).root.setOnClickListener(view -> {
+        ((FavorHolder) holder).root.setOnClickListener(view -> {
+            try {
+//                        Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(context, MovieDetailActivity.class);
+                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
+                intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
+                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
+                intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, info.getData().get(position).getDowndtitle());
+                intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.getData().get(position).getMvdesc());
+                context.startActivity(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
            try {
+
+
+
+
+
                Intent intent = new Intent(context, PlayerActivity.class);
                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
@@ -60,8 +80,6 @@ public class FavorAdapter extends RecyclerView.Adapter {
                e.printStackTrace();
            }
         });
-        String formatDuring = DateTools.formatDuring(Long.parseLong(progress));
-        ((HistoryHolder) holder).timeProgress.setText("已观看"+formatDuring);
     }
 
     @Override

@@ -6,8 +6,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 102
-        versionName "1.0"
+        versionCode 105
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -77,10 +77,13 @@ dependencies {
     implementation project(':downloadlib')
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
-    //版本更新
-    compile 'com.qianwen:update-app:3.5.2'
+
     implementation project(':playerlib')
     implementation project(':vivideo')
+
+    //友盟统计
+    compile 'com.umeng.sdk:common:1.5.0'
+    compile 'com.umeng.sdk:analytics:7.5.0'
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
 

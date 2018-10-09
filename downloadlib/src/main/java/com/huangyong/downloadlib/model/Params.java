@@ -13,6 +13,7 @@ public class Params {
     public static final String HISTORY_SAVE = "com.movie.history";
     public static final String MOVIE_PROGRESS = "MOVIE_PROGRESS";
     public static final String UPDATE_MEMERY_SIZE = "UPDATE_MEMERY_SIZE";
+    public static final String UMENG_KEY = "5bbab8d1b465f5d1e8000186";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
     public static String TASK_PAUSE ="downlib.pause.task";

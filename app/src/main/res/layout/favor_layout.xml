@@ -4,27 +4,30 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content">
+        android:paddingTop="40dp"
+        android:background="#1ca7e3"
+        android:layout_height="76dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已收藏影片"
+            android:text="收藏"
+            android:textColor="#fff"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
             android:textSize="16sp"
             />
         <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_marginLeft="240dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:backgroundTint="#fff"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
             android:background="@drawable/clear_shap"
-            android:id="@+id/favor_clear"
+            android:id="@+id/clearFavor"
             />
-    </LinearLayout>
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"

@@ -10,6 +10,8 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.huangyong.downloadlib.TaskLibHelper;
+import com.huangyong.downloadlib.model.Params;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.io.InputStream;
 
@@ -30,12 +32,16 @@ public class MyApp extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
-        spUtils = new SPUtils(this,"SuperMovie");//初始化SP
+        //初始化SP
+        spUtils = new SPUtils(this,"SuperMovie");
 
         initDownloadLib();
 
         //让Glide能用HTTPS
         Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(ApiManager.getClientInstance()));
+
+        //初始化友盟统计
+        UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
     private void initDownloadLib() {
