@@ -21,6 +21,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -51,7 +53,7 @@ import dev.baofeng.com.supermovie.utils.MyTransformation;
  * Created by huangyong on 2018/1/26.
  */
 
-public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.OnPullCallBackListener, ViewPager.OnPageChangeListener {
+public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.OnPullCallBackListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
     Unbinder unbinder;
     private static HomeFragment homeFragment;
@@ -73,6 +75,28 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     CoordinatorLayout contentMain;
     @BindView(R.id.pulllayout)
     SimplePullLayout pulllayout;
+    /**
+     * 磁力搜索
+     */
+    @BindView(R.id.reclist)
+    TextView recList;
+    /**
+     * 下载中心
+     */
+    @BindView(R.id.bangdan)
+    TextView bangdan;
+    /**
+     * 高分整理
+     */
+    @BindView(R.id.douban)
+    TextView douban;
+    /**
+     * 分类频道
+     */
+    @BindView(R.id.catfrag)
+    TextView catfrag;
+
+
     private GetRecpresenter getRecpresenter;
     private RecentUpdate info;
     private int index;
@@ -103,6 +127,13 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
            Intent intent =new Intent(getContext(), DownLoadMainActivity.class);
            startActivity(intent);
         });
+
+
+        recList.setOnClickListener(this);
+        bangdan.setOnClickListener(this);
+        douban.setOnClickListener(this);
+        catfrag.setOnClickListener(this);
+
     }
     private OnDownPageListener listener;
     public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
@@ -179,6 +210,26 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.catfrag:
+                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bangdan:
+                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.douban:
+                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.reclist:
+                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                break;
+                default:
+                    break;
+        }
     }
 
 

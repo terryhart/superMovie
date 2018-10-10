@@ -9,7 +9,6 @@
         android:background="#1ca7e3"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
         android:id="@+id/lineview"
         />
     <TextView
