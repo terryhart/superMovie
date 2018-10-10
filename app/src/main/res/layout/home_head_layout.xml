@@ -2,13 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="40dp">
     <View
         android:layout_width="2dp"
-        android:layout_height="16dp"
+        android:layout_height="20dp"
         android:background="#1ca7e3"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
         android:id="@+id/lineview"
         />
     <TextView
