@@ -4,6 +4,7 @@
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#f5f5f5"
     android:id="@+id/content_main"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.AppBarLayout
@@ -12,7 +13,7 @@
         android:id="@+id/appbar"
         app:contentScrim="@color/colorPrimary"
         android:gravity="bottom"
-        android:layout_height="290dp">
+        android:layout_height="360dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
@@ -30,16 +31,94 @@
                   />
               <android.support.v4.view.ViewPager
                   android:layout_width="match_parent"
-                  android:layout_height="290dp"
+                  android:layout_height="270dp"
                   android:id="@+id/vp"
                   android:clipToPadding="false"
                   android:clipChildren="false"
                   android:paddingBottom="20dp"
                   android:paddingTop="80dp"
-                  android:layout_centerInParent="true"
+                  android:layout_centerHorizontal="true"
+                  android:layout_alignParentTop="true"
                   app:layout_collapseMode="parallax"
                   android:background="@android:color/transparent"
                   />
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_alignParentBottom="true"
+                  android:gravity="bottom|center_horizontal"
+                  android:background="#fff"
+                  android:paddingLeft="10dp"
+                  android:paddingBottom="8dp"
+                  android:paddingRight="10dp"
+                  android:layout_height="80dp">
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:layout_height="wrap_content"
+                      android:drawableTop="@drawable/cat"
+                      android:text="分类频道"
+                      android:drawablePadding="6dp"
+                      android:id="@+id/catfrag"
+                      android:focusable="true"
+                      android:textSize="12sp"
+                      android:textColor="#222222"
+                      />
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:drawableTop="@drawable/top"
+                      android:text="经典榜单"
+                      android:id="@+id/douban"
+                      android:focusable="true"
+                      android:gravity="center"
+                      android:drawablePadding="6dp"
+                      android:textSize="12sp"
+                      android:textColor="#222222"
+                      />
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:drawableTop="@drawable/have"
+                      android:text="电影专题"
+                      android:id="@+id/reclist"
+                      android:gravity="center"
+                      android:drawablePadding="6dp"
+                      android:focusable="true"
+                      android:textSize="12sp"
+                      android:textColor="#222222"
+                      />
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:drawableTop="@drawable/list"
+                      android:text="热门排行"
+                      android:gravity="center"
+                      android:focusable="true"
+                      android:id="@+id/bangdan"
+                      android:drawablePadding="6dp"
+                      android:textSize="12sp"
+                      android:textColor="#222222"
+                      />
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:drawableTop="@drawable/honor"
+                      android:text="下载中心"
+                      android:gravity="center"
+                      android:focusable="true"
+                      android:id="@+id/bangdans"
+                      android:drawablePadding="6dp"
+                      android:textSize="12sp"
+                      android:textColor="#222222"
+                      />
+
+              </LinearLayout>
           </RelativeLayout>
             <android.support.v7.widget.Toolbar
                 app:layout_collapseMode="pin"
@@ -60,12 +139,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:id="@+id/pulllayout"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="40dp"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:paddingTop="10dp"
             android:id="@+id/rvlist"
+            android:background="#ffffff"
             android:layout_weight="1"
             android:layout_height="0dp">
         </android.support.v7.widget.RecyclerView>

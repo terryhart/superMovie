@@ -63,6 +63,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String[] downItemList;
     private LinearLayoutManager layoutManager;
     private String[] items;
+    private ImageView favor;
+    private boolean hasFavor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +102,19 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         detail_app_bar = findViewById(R.id.app_bar);
+        favor = findViewById(R.id.favor);
         backup = findViewById(R.id.backup);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
         backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        favor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFavor();
             }
         });
         poster = findViewById(R.id.poster);
@@ -205,6 +214,21 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         });
 
     }
+
+    /**
+     * 添加或取消收藏
+     */
+    private void toggleFavor() {
+        if (hasFavor){
+            favor.setBackgroundResource(R.drawable.fullscreen_favority_normal);
+            Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+        }else {
+            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
+            Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();
+        }
+        hasFavor=!hasFavor;
+    }
+
     public class Myadapter extends BaseAdapter{
 
         @Override

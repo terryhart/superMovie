@@ -47,10 +47,8 @@ public class FavorAdapter extends RecyclerView.Adapter {
 
         Glide.with(context).load(URLImg).into(((FavorHolder)holder).itemimg);
         ((FavorHolder)holder).itemtitle.setText(name);
-        String progress = info.getData().get(position).getProgress();
         ((FavorHolder) holder).root.setOnClickListener(view -> {
             try {
-//                        Intent intent = new Intent(context, DetailActivity.class);
                 Intent intent = new Intent(context, MovieDetailActivity.class);
                 intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                 intent.putExtra(GlobalMsg.KEY_DOWN_URL,info.getData().get(position).getDownLoadUrl());
@@ -62,23 +60,6 @@ public class FavorAdapter extends RecyclerView.Adapter {
                 e.printStackTrace();
             }
 
-           try {
-
-
-
-
-
-               Intent intent = new Intent(context, PlayerActivity.class);
-               intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
-               intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
-               intent.putExtra(Params.MOVIE_PROGRESS, progress);
-               intent.putExtra(Params.PROXY_PALY_URL,info.getData().get(position).getDownLoadUrl());
-               intent.putExtra(Params.URL_MD5_KEY,info.getData().get(position).getUrlMd5());
-               context.startActivity(intent);
-
-           }catch (Exception e){
-               e.printStackTrace();
-           }
         });
     }
 
