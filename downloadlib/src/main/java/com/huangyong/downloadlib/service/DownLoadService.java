@@ -119,52 +119,6 @@ public class DownLoadService extends Service implements ITask {
                     }
                 }
                 BroadCastUtils.sendIntentBroadCask(getApplicationContext(),new Intent(),Params.UPDATE_PROGERSS);
-
-               /* if (taskId.size()>0){
-                    for (int i = 0; i < taskId.size(); i++) {
-
-                        Log.e("ksdjglkdsl","查询数据库"+taskId.get(i).toString());
-
-                        String tastid = taskId.get(i).toString();
-                        //TODO 查询数据库，获取进度等信息
-                        if (!TextUtils.isEmpty(taskId.get(i).toString())) {
-                            XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(Long.parseLong(tastid));
-                            Log.e("正在下载", taskInfo.mFileSize + "--" + taskInfo.mDownloadSize);
-
-                            if (taskInfo.mFileSize==taskInfo.mDownloadSize){
-                                String name = XLTaskHelper.instance().getFileName("magnet:?xt=urn:btih:4KTOIW3OPAH4BLJ6COVWNFMVCLMWK6HU&dn=%e7%9b%ae%e5%87%bb%e8%80%85%2e720p%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337");
-                                if (name.endsWith("torrent")){
-                                    String path = "/sdcard/"+name;
-                                    TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(path);
-                                    Log.e("torrentInfo",torrentInfo.mIsMultiFiles+"--"+torrentInfo.mFileCount+"--"+torrentInfo.mSubFileInfo.length);
-                                    List list = new ArrayList();
-                                    list.add(torrentInfo.mSubFileInfo.length);
-
-                                    for (int j = 0; i <torrentInfo.mSubFileInfo.length ; j++) {
-                                        Log.e("torrentInfo--",torrentInfo.mSubFileInfo[j].mFileName);
-                                        Log.e("torrentInfo--",torrentInfo.mSubFileInfo[j].mFileSize+"");
-                                        Log.e("torrentInfo--",torrentInfo.mSubFileInfo[j].mFileIndex+"");
-//                                list.add(torrentInfo.mSubFileInfo[i].mFileIndex);
-                                    }
-                                    //TODO 对话框提示，下载其中哪个文件，list保存其中的index
-                                    presenter.addTorrentTask(path,Params.DEFAULT_PATH,list);
-//                            XLTaskHelper.instance().addTorrentTask(path,Params.DEFAULT_PATH);
-                          *//*  try {
-                                XLTaskHelper.instance().addTorrentTask(path,Params.DEFAULT_PATH,null);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }*//*
-                                }
-                            }
-                        }
-
-
-
-                    }
-                }*/
-
-
-
             }
         };
         subscribe = Observable.interval(0, 1, TimeUnit.SECONDS).subscribe(subscriber);
