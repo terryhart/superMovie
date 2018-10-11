@@ -87,4 +87,6 @@ dependencies {
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
 
+    //https://github.com/youth5201314/banner
+    compile 'com.youth.banner:banner:1.4.10'
 }
