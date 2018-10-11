@@ -89,4 +89,7 @@ dependencies {
 
     //https://github.com/youth5201314/banner
     compile 'com.youth.banner:banner:1.4.10'
+
+    //https://github.com/cpacm/SimpleSlider
+    implementation 'com.cpacm.simpleslider:library:2.2.1'
 }
