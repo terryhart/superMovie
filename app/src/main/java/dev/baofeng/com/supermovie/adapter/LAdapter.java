@@ -37,6 +37,7 @@ public class LAdapter extends LoopVPAdapter<RecentUpdate.DataBean> {
             layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         PosterItemView imageView = new PosterItemView(mContext);
+        layoutParams.width = 300;
         imageView.setLayoutParams(layoutParams);
         String name = data.getDownLoadName();
         String downItemTitle = data.getDowndtitle();
