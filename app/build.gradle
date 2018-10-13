@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "dev.baofeng.com.supermovie"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 106
         versionName "1.0.6"
@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -77,19 +77,18 @@ dependencies {
     implementation project(':downloadlib')
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
-
     implementation project(':playerlib')
     implementation project(':vivideo')
-
     //友盟统计
     compile 'com.umeng.sdk:common:1.5.0'
     compile 'com.umeng.sdk:analytics:7.5.0'
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
-
     //https://github.com/youth5201314/banner
     compile 'com.youth.banner:banner:1.4.10'
-
     //https://github.com/cpacm/SimpleSlider
-    implementation 'com.cpacm.simpleslider:library:2.2.1'
+//    implementation project(':library')
+    implementation ('com.cpacm.simpleslider:library:2.2.1'){
+        exclude module: 'appcompat-v7'
+    }
 }

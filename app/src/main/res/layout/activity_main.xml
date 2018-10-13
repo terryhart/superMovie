@@ -45,6 +45,16 @@
                 android:layout_height="50dp"
                 />
             <TextView
+                android:id="@+id/bt_subject"
+                android:drawableTop="@drawable/bt_bt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="专题"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                />
+            <TextView
                 android:id="@+id/my"
                 android:drawableTop="@drawable/user_bt"
                 android:text="我的"

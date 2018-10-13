@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -31,6 +32,8 @@ public class PosterItemView extends AppCompatImageView {
     private Paint bitmapPaint;
     private TextPaint textPaint;
     private String mTitle;
+    private Bitmap bitmap;
+    private Rect rect;
 
     public PosterItemView(Context context) {
         this(context,null);
@@ -49,6 +52,7 @@ public class PosterItemView extends AppCompatImageView {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setTextSize(30);
 
+        rect = new Rect(0,0,360,500);
     }
 
     public void setReverseImageBitmap(Bitmap bitmap){
@@ -56,15 +60,17 @@ public class PosterItemView extends AppCompatImageView {
         invalidate();
     }
 
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (reverseBitmap!=null){
-            canvas.drawBitmap(reverseBitmap,0,getMeasuredHeight(),bitmapPaint);
+        if (bitmap!=null){
+            canvas.drawBitmap(bitmap,null,rect,bitmapPaint);
         }
         if (!TextUtils.isEmpty(mTitle)){
             canvas.drawText(mTitle,getMeasuredWidth()/2,getMeasuredHeight()+30,textPaint);
         }
+
     }
 
     @Override
@@ -74,6 +80,11 @@ public class PosterItemView extends AppCompatImageView {
 
     public void setTitleText(String downdtitle) {
         this.mTitle = downdtitle;
+        invalidate();
+    }
+
+    public void setImageBackGround(Bitmap resource) {
+        this.bitmap = resource;
         invalidate();
     }
 }

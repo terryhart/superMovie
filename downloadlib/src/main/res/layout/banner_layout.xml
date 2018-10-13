@@ -2,6 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_exo_back"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:focusable="true"
+        android:id="@+id/exit"
+        />
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/clearSpace"
+        android:background="@drawable/photo_title_more_normal"
+        android:backgroundTint="#fff"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -16,10 +16,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.cpacm.library.SimpleViewPager;
+import com.cpacm.library.transformers.CyclePageTransformer;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
@@ -35,13 +39,14 @@ import com.xiaosu.pulllayout.base.BasePullLayout;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
+import dev.baofeng.com.supermovie.adapter.BasicPagerAdapter;
 import dev.baofeng.com.supermovie.adapter.CategoryAdapter;
-import dev.baofeng.com.supermovie.adapter.LAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
@@ -59,8 +64,6 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     private static HomeFragment homeFragment;
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.vp)
-    ViewPager vp;
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)
@@ -96,25 +99,47 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     @BindView(R.id.catfrag)
     TextView catfrag;
 
+    @BindView(R.id.downCenter)
+    TextView downCenter;
+
 
     private GetRecpresenter getRecpresenter;
     private RecentUpdate info;
     private int index;
     private CategoryAdapter homeAdapter;
     private RecentUpdate bannerInfo;
-
+    private RecentUpdate update = new RecentUpdate();
+    private SimpleViewPager viewPager;
+    private BasicPagerAdapter adapter;
+    private ArrayList<RecentUpdate.DataBean> dataBeans = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.channel_layout, null);
         unbinder = ButterKnife.bind(this, view);
-
+        viewPager = view.findViewById(R.id.vp);
+        adapter = new BasicPagerAdapter(dataBeans,getContext());
+        viewPager.setAdapter(adapter);
+        viewPager.startAutoScroll(true);
+        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOnPageChangeListener(this);
+        viewPager.setSliderDuration(3000);
+        viewPager.setPageTransformer(new MyTransformation());
         initData();
         initEvent();
         return view;
     }
+    private final class SpringInterpolator implements Interpolator {
 
+        private final static float FACTOR = 0.5F;
+
+        @Override
+        public float getInterpolation(final float input) {
+            return (float) (Math.pow(2.0F, -10.0F * input) *
+                    Math.sin((input - FACTOR / 4.0F) * (2.0F * Math.PI) / FACTOR) + 1.0F);
+        }
+    }
     private void initEvent() {
         pulllayout.postRefresh();
 
@@ -133,6 +158,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         bangdan.setOnClickListener(this);
         douban.setOnClickListener(this);
         catfrag.setOnClickListener(this);
+        downCenter.setOnClickListener(this);
+
 
     }
     private OnDownPageListener listener;
@@ -154,7 +181,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getRecpresenter.getRecentUpdate(1,20);
+                getRecpresenter.getRecentUpdate(1,18);
                 if (pulllayout!=null){
                     pulllayout.finishPull("加载完成",true);
                 }
@@ -167,7 +194,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getRecpresenter.getMoreData(++index,20);
+                getRecpresenter.getMoreData(++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
         },2000);
@@ -182,7 +209,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     public void onPageSelected(int i) {
         if (bannerInfo!=null&&bannerInfo.getData().size()>0){
             int currentItem = i;
-            String poster = bannerInfo.getData().get(currentItem).getDownimgurl().split(",")[0];
+            Log.e("currentItem",i+"");
+            String poster = bannerInfo.getData().get(currentItem%10).getDownimgurl().split(",")[0];
             Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -190,20 +218,6 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                     imgBg.setImageBitmap(reverseBitmapById);
                 }
             });
-        }
-
-        int pageIndex = i;
-
-        if (i == 0) {
-            // 当视图在第一个时，将页面号设置为图片的最后一张。
-            pageIndex = 10;
-        } else if (i == 10 + 1) {
-            // 当视图在最后一个是,将页面号设置为图片的第一张。
-            pageIndex = 1;
-        }
-        if (i != pageIndex) {
-            vp.setCurrentItem(pageIndex, false);
-            return;
         }
 
     }
@@ -226,6 +240,10 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                 break;
             case R.id.reclist:
                 Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.downCenter:
+                Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
+                startActivity(intent);
                 break;
                 default:
                     break;
@@ -252,7 +270,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         pulllayout.setOnPullListener(this);
         index = 1;
         getRecpresenter = new GetRecpresenter(getContext(), this);
-        getRecpresenter.getRecentUpdate( index, 22);
+        getRecpresenter.getRecentUpdate( index,18);
         getRecpresenter.getBtRecommend(1,10);
     }
 
@@ -314,31 +332,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     @Override
     public void loadBtData(RecentUpdate result) {
         this.bannerInfo = result;
-
-        ArrayList<RecentUpdate.DataBean> resultData = (ArrayList<RecentUpdate.DataBean>) result.getData();
-        LAdapter lAdapter = new LAdapter(getContext(),resultData,vp);
-
-        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.0f / 5.0f);
-        ViewGroup.LayoutParams lp=vp.getLayoutParams();
-        if (lp==null){
-            lp=new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-        }else {
-            lp.width= pagerWidth;
-        }
-        vp.setLayoutParams(lp);
-        vp.setPageTransformer(true,new MyTransformation());
-        vp.setOffscreenPageLimit(3);
-        vp.setPageMargin(-250);
-        vp.setOnPageChangeListener(this);
-        vp.setAdapter(lAdapter);
-        vp.setCurrentItem(5);
-        contentMain.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return vp.dispatchTouchEvent(motionEvent);
-            }
-        });
-
+        this.dataBeans.addAll(result.getData()) ;
+        adapter.notifyDataSetChanged();
+        viewPager.notifyDataSetChanged();
     }
     @Override
     public void loadDetail(BtInfo result) {

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.HomeFragment;
+import dev.baofeng.com.supermovie.view.SubjectFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FrameLayout content;
     @BindView(R.id.main)
     TextView main;
+    @BindView(R.id.bt_subject)
+    TextView subject;
     @BindView(R.id.down)
     TextView down;
     @BindView(R.id.my)
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BTFragment downfragment;
     private HomeFragment homeFragment;
     private CenterFragment centerFragment;
+    private SubjectFragment subjectFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +62,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main.setOnClickListener(this);
         down.setOnClickListener(this);
         my.setOnClickListener(this);
+        subject.setOnClickListener(this);
         main.setSelected(true);
         downfragment = BTFragment.getInstance();
         homeFragment = HomeFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
+        subjectFragment = SubjectFragment.getInstance();
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content, downfragment);
         fragmentTransaction.add(R.id.content, homeFragment);
         fragmentTransaction.add(R.id.content, centerFragment);
+        fragmentTransaction.add(R.id.content, subjectFragment);
         fragmentTransaction.hide(downfragment);
         fragmentTransaction.hide(centerFragment);
+        fragmentTransaction.hide(subjectFragment);
         fragmentTransaction.show(homeFragment);
         //下载中心的fragment
 
@@ -81,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.main:
                 toggleFrag(1);
-                homeFragment.autoRefresh();
                 break;
             case R.id.down:
                 toggleFrag(2);
@@ -89,28 +97,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.my:
                 toggleFrag(3);
                 break;
-            case R.id.task_tab_left:
-                TABLEFTSELECTED = true;
-                toggle();
-                break;
-            case R.id.task_tab_right:
-                TABLEFTSELECTED = false;
-                toggle();
+            case R.id.bt_subject:
+                toggleFrag(4);
                 break;
         }
     }
 
-    private void toggle() {
-        if (TABLEFTSELECTED) {
-            FragmentTransaction fragmentTran = getSupportFragmentManager().beginTransaction();
-            fragmentTran.commit();
-
-        } else {
-            FragmentTransaction fragmentTran = getSupportFragmentManager().beginTransaction();
-            fragmentTran.commit();
-        }
-
-    }
 
     private void toggleFrag(int i) {
         switch (i) {
@@ -119,30 +111,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.show(homeFragment);
                 fragmentTransaction.hide(centerFragment);
                 fragmentTransaction.hide(downfragment);
+                fragmentTransaction.hide(subjectFragment);
                 fragmentTransaction.commit();
                 main.setSelected(true);
                 down.setSelected(false);
                 my.setSelected(false);
+                subject.setSelected(false);
                 break;
             case 2:
                 FragmentTransaction fragmentTran2 = getSupportFragmentManager().beginTransaction();
                 fragmentTran2.show(downfragment);
                 fragmentTran2.hide(centerFragment);
                 fragmentTran2.hide(homeFragment);
+                fragmentTran2.hide(subjectFragment);
                 fragmentTran2.commit();
                 main.setSelected(false);
                 down.setSelected(true);
                 my.setSelected(false);
+                subject.setSelected(false);
                 break;
             case 3:
                 FragmentTransaction fragmentTran3 = getSupportFragmentManager().beginTransaction();
                 fragmentTran3.show(centerFragment);
                 fragmentTran3.hide(homeFragment);
                 fragmentTran3.hide(downfragment);
+                fragmentTran3.hide(subjectFragment);
                 fragmentTran3.commit();
                 main.setSelected(false);
                 down.setSelected(false);
+                subject.setSelected(false);
                 my.setSelected(true);
+                break;
+            case 4:
+                FragmentTransaction fragmentTran4 = getSupportFragmentManager().beginTransaction();
+                fragmentTran4.show(subjectFragment);
+                fragmentTran4.hide(downfragment);
+                fragmentTran4.hide(centerFragment);
+                fragmentTran4.hide(homeFragment);
+                fragmentTran4.commit();
+                main.setSelected(false);
+                down.setSelected(false);
+                my.setSelected(false);
+                subject.setSelected(true);
                 break;
         }
     }

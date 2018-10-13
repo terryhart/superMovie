@@ -121,6 +121,7 @@ public class DownLoadService extends Service implements ITask {
                 BroadCastUtils.sendIntentBroadCask(getApplicationContext(),new Intent(),Params.UPDATE_PROGERSS);
             }
         };
+
         subscribe = Observable.interval(0, 1, TimeUnit.SECONDS).subscribe(subscriber);
     }
 

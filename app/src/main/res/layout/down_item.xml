@@ -47,7 +47,7 @@
            android:clickable="true"
            android:focusable="true"
            android:layout_marginRight="20dp"
-           android:background="@drawable/download_entrance_home"
+           android:background="@drawable/ic_user_center_download_manage"
            android:layout_height="30dp" />
    </FrameLayout>
 </android.support.v7.widget.CardView>

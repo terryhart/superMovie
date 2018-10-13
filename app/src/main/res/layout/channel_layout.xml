@@ -16,7 +16,7 @@
         android:layout_height="360dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlwaysCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
             app:contentScrim="@color/colorPrimary"
             android:layout_height="wrap_content">
           <RelativeLayout
@@ -29,17 +29,17 @@
                   android:layout_height="match_parent"
                   android:id="@+id/img_bg"
                   />
-              <android.support.v4.view.ViewPager
-                  android:layout_width="match_parent"
-                  android:layout_height="270dp"
+
+              <com.cpacm.library.SimpleViewPager
+                  android:layout_width="160dp"
+                  android:layout_height="190dp"
                   android:id="@+id/vp"
-                  android:clipToPadding="false"
                   android:clipChildren="false"
-                  android:paddingBottom="20dp"
-                  android:paddingTop="80dp"
+                  android:clipToPadding="false"
                   android:layout_centerHorizontal="true"
-                  android:layout_alignParentTop="true"
                   app:layout_collapseMode="parallax"
+                  android:layout_alignParentBottom="true"
+                  android:layout_marginBottom="100dp"
                   android:background="@android:color/transparent"
                   />
               <LinearLayout
@@ -112,7 +112,7 @@
                       android:text="下载中心"
                       android:gravity="center"
                       android:focusable="true"
-                      android:id="@+id/bangdans"
+                      android:id="@+id/downCenter"
                       android:drawablePadding="6dp"
                       android:textSize="12sp"
                       android:textColor="#222222"

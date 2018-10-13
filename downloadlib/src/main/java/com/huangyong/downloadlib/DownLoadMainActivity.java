@@ -10,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huangyong.downloadlib.adapter.TaskFragmentPagerAdapter;
@@ -27,7 +30,7 @@ import com.huangyong.downloadlib.view.CustomViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownLoadMainActivity extends AppCompatActivity {
+public class DownLoadMainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private CustomViewPager downTask;
@@ -37,6 +40,7 @@ public class DownLoadMainActivity extends AppCompatActivity {
     private DownloadedTaskFragment doneList;
     private TextView speedTitle;
     private TextView memerysize;
+    private ImageView exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,8 @@ public class DownLoadMainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         speedTitle = findViewById(R.id.speedTitle);
         memerysize = findViewById(R.id.tv_memerysize);
-
+        exit = findViewById(R.id.exit);
+        exit.setOnClickListener(this);
 
         List listfragment=new ArrayList<Fragment>();
 
@@ -134,4 +139,11 @@ public class DownLoadMainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId()==R.id.exit){
+            finish();
+        }
+    }
 }

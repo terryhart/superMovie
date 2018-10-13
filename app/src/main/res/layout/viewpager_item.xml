@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <dev.baofeng.com.supermovie.view.PosterItemView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:id="@+id/movtitle"
+        android:textColor="#fff"
+        android:background="#af202020"
+        android:text="电影名称"
+        />
+</FrameLayout>
