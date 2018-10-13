@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                            String permissions[], int[] grantResults) {
 
     }
-
+    public interface OnPageChanged{
+        void clicked();
+    }
     private void initView() {
         main.setOnClickListener(this);
         down.setOnClickListener(this);
@@ -68,7 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         homeFragment = HomeFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
         subjectFragment = SubjectFragment.getInstance();
-
+        homeFragment.setOnPageChangeListener(new OnPageChanged() {
+            @Override
+            public void clicked() {
+                toggleFrag(4);
+            }
+        });
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content, downfragment);
         fragmentTransaction.add(R.id.content, homeFragment);

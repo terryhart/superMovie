@@ -11,6 +11,9 @@ public class UrlConfig {
     //版本更新
     public static final String CHECK_UPDATE  = "ygcms/app/update.json" ;
 
+
+    public static final String SUBJECT_TYPE  = "ygcms/app/suject.json" ;
+
     public static final String DOWNLOADBASEURL  = "https://www.bttt.la/" ;
 //    public static final String CHECK_UPDATE  = "update.json" ;
 

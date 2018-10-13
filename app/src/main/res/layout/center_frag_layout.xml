@@ -124,6 +124,22 @@
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="1px"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_user_center_help"
+                android:drawablePadding="10dp"
+                android:text="帮助/反馈"
+                android:background="@drawable/item_pressed"
+                android:id="@+id/tv_help"
+                android:visibility="gone"
+                android:paddingLeft="30dp"
+                android:paddingTop="4dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"

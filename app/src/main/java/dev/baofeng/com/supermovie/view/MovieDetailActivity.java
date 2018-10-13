@@ -189,6 +189,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         info.setDownUrl(url);
         //下载页显示的海报
         info.setImgUrl(posterImagUrl);
+        //在线播放地址，如果有，就添加
+
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
         detailAdapter = new DetailAdapter(downItemList,list,this);

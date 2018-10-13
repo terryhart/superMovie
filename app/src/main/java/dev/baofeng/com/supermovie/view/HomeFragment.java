@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bftv.myapplication.view.IndexActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -44,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.BasicPagerAdapter;
 import dev.baofeng.com.supermovie.adapter.CategoryAdapter;
@@ -130,6 +132,12 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         initEvent();
         return view;
     }
+
+    private MainActivity.OnPageChanged lisener;
+    public void setOnPageChangeListener(MainActivity.OnPageChanged onPageChanged) {
+        this.lisener = onPageChanged;
+    }
+
     private final class SpringInterpolator implements Interpolator {
 
         private final static float FACTOR = 0.5F;
@@ -186,7 +194,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                     pulllayout.finishPull("加载完成",true);
                 }
             }
-        },2000);
+        },1000);
     }
 
     @Override
@@ -197,7 +205,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                 getRecpresenter.getMoreData(++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },2000);
+        },1000);
     }
 
     @Override
@@ -233,13 +241,16 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
                 Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bangdan:
-                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                Intent intents = new Intent(getContext(), IndexActivity.class);
+                startActivity(intents);
                 break;
             case R.id.douban:
                 Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.reclist:
-                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                if (lisener!=null){
+                    lisener.clicked();
+                }
                 break;
             case R.id.downCenter:
                 Intent intent = new Intent(getContext(), DownLoadMainActivity.class);

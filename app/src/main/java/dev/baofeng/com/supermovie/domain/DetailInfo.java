@@ -8,6 +8,16 @@ public class DetailInfo {
 
     private String imgUrl;
 
+    private ArrayList<MovieInfo> movieInfos;
+
+    public ArrayList<MovieInfo> getMovieInfos() {
+        return movieInfos;
+    }
+
+    public void setMovieInfos(ArrayList<MovieInfo> movieInfos) {
+        this.movieInfos = movieInfos;
+    }
+
     public String getImgScreenShot() {
         return imgScreenShot;
     }
