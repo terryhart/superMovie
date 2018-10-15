@@ -238,14 +238,16 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.catfrag:
-                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                Intent intentOnline = new Intent(getContext(),OnlineActivity.class);
+                startActivity(intentOnline);
                 break;
             case R.id.bangdan:
                 Intent intents = new Intent(getContext(), IndexActivity.class);
                 startActivity(intents);
                 break;
             case R.id.douban:
-                Toast.makeText(getContext(), "功能正在添加", Toast.LENGTH_SHORT).show();
+                Intent intentHistory = new Intent(getContext(), HistoryActivity.class);
+                startActivity(intentHistory);
                 break;
             case R.id.reclist:
                 if (lisener!=null){

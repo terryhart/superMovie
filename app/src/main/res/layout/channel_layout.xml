@@ -70,7 +70,7 @@
                       android:layout_weight="1"
                       android:layout_height="wrap_content"
                       android:drawableTop="@drawable/top"
-                      android:text="卫视频道"
+                      android:text="观看历史"
                       android:id="@+id/douban"
                       android:focusable="true"
                       android:gravity="center"

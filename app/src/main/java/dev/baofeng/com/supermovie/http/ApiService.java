@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.http;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.OnlineInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
@@ -27,6 +28,9 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_SUBJECT)
   Observable<SubjectInfo> getSubject(@Query("type") String typeKey,@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
+
+  @GET(UrlConfig.GET_ONLINE)
+  Observable<OnlineInfo> getOnlineMovie(@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
 
   @GET(UrlConfig.GET_SUBJECT_TITLE)
   Observable<SubjectTitleInfo> getSubjectTitle(@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表

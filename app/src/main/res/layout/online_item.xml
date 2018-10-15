@@ -7,11 +7,14 @@
         android:layout_height="wrap_content"
         android:text="在线观看"
         android:layout_marginLeft="20dp"
+        android:id="@+id/onLineTitle"
         android:layout_marginTop="20dp"
         />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/rvOnline"
+        android:layout_below="@+id/onLineTitle"
+        android:layout_marginTop="8dp"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

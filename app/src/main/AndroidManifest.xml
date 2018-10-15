@@ -58,6 +58,7 @@
 
         <activity android:name=".view.FavorActivity"/>
         <activity android:name=".view.SubjectListActivity"/>
+        <activity android:name=".view.OnlineActivity"/>
     </application>
 
 </manifest>

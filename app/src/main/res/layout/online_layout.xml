@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="40dp"
+        android:id="@+id/bar"
+        android:background="#1ca7e3"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="在线资源"
+            android:textColor="#fff"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+    <com.xiaosu.pulllayout.SimplePullLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/bar"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:id="@+id/onlineRefresh"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rvOnline"
+            android:layout_height="match_parent"/>
+    </com.xiaosu.pulllayout.SimplePullLayout>
+</RelativeLayout>

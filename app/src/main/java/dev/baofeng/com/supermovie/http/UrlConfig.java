@@ -16,6 +16,9 @@ public class UrlConfig {
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
 
     //获取专题
+    public static final String GET_ONLINE  = "ygcms/getOnline.php" ;
+
+    //获取专题
     public static final String GET_SUBJECT_TITLE  = "ygcms/getSubjectTitle.php" ;
 
     public static final String DOWNLOADBASEURL  = "https://www.bttt.la/" ;
