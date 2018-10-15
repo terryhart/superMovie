@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support:cardview-v7:27.1.0'
     compile 'com.android.support:design:27.1.0'
     implementation files('libs/ormlite-android-5.1.jar')

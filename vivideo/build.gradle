@@ -29,7 +29,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     //完整版
     compile 'com.ycjiang:VideoPlayModule:2.1.85'
     implementation files('libs/jsoup-1.8.1.jar')
