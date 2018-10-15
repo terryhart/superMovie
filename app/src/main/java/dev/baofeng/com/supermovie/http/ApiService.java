@@ -4,6 +4,8 @@ import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.domain.SubjectInfo;
+import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,6 +24,12 @@ public interface ApiService {
 
   @GET(UrlConfig.GETRECOMEND)
   Observable<RecentUpdate> getRecomend(@Query("page") int page, @Query("pagesize") int pagesize);//获取推荐
+
+  @GET(UrlConfig.GET_SUBJECT)
+  Observable<SubjectInfo> getSubject(@Query("type") String typeKey,@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
+
+  @GET(UrlConfig.GET_SUBJECT_TITLE)
+  Observable<SubjectTitleInfo> getSubjectTitle(@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
 
   @GET(UrlConfig.GETBTRECOMEND)
   Observable<RecentUpdate> getBtRecomend(@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐

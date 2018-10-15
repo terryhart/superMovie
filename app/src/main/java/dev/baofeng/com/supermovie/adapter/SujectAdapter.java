@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
-import dev.baofeng.com.supermovie.holder.FavorHolder;
+import dev.baofeng.com.supermovie.domain.SubjectInfo;
+import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
+import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.SubjectHolder;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
@@ -22,30 +23,33 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
 public class SujectAdapter extends RecyclerView.Adapter {
     private Context context;
-    private MovieInfo info;
+    private SubjectInfo info;
 
-    public SujectAdapter(Context context, MovieInfo info) {
+    private String[] imgArr = {
+
+    };
+
+    public SujectAdapter(Context context, SubjectInfo info) {
         this.context = context;
         this.info = info;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_suject,parent,false);
-        return new SubjectHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_main,parent,false);
+        return new CommonHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Glide.with(context).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539401332876&di=efa79d6f4894a6a033a35864ee00ed2d&imgtype=0&src=http%3A%2F%2Fpic36.photophoto.cn%2F20150729%2F0008020929291143_b.jpg").into(((SubjectHolder)holder).itemimg);
-        ((SubjectHolder) holder).itemtitle.setText("奥斯卡获奖电影合集");
-       /* String URLImg= info.getData().get(position).getDownimgurl();
+        ((CommonHolder) holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
+        String URLImg= info.getData().get(position).getDownimgurl();
         String name = info.getData().get(position).getDownLoadName();
+        Glide.with(context).load(URLImg.split(",")[0]).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
 
-
-        ((FavorHolder)holder).itemtitle.setText(name);
-        ((FavorHolder) holder).root.setOnClickListener(view -> {
+        ((CommonHolder)holder).itemtitle.setText(name);
+        ((CommonHolder) holder).itemView.setOnClickListener(view -> {
             try {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
                 intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
@@ -58,12 +62,13 @@ public class SujectAdapter extends RecyclerView.Adapter {
                 e.printStackTrace();
             }
 
-        });*/
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return info.getData().size();
     }
 
 

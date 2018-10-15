@@ -57,6 +57,7 @@
         </activity>
 
         <activity android:name=".view.FavorActivity"/>
+        <activity android:name=".view.SubjectListActivity"/>
     </application>
 
 </manifest>

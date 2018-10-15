@@ -1,9 +1,7 @@
 package dev.baofeng.com.supermovie.view;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,29 +10,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xiaosu.pulllayout.SimplePullLayout;
+import com.xiaosu.pulllayout.base.BasePullLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.SujectAdapter;
+import dev.baofeng.com.supermovie.adapter.SujectTitleAdapter;
+import dev.baofeng.com.supermovie.domain.SubjectInfo;
+import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
+import dev.baofeng.com.supermovie.presenter.GetSujectPresenter;
+import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class SubjectFragment extends Fragment implements View.OnClickListener {
+public class SubjectFragment extends Fragment implements View.OnClickListener, ISubjectView, BasePullLayout.OnPullCallBackListener {
 
     private static SubjectFragment subjectFragment;
     @BindView(R.id.rv_suject_list)
     RecyclerView rvSujectList;
     Unbinder unbinder;
-    private CenterPresenter presenter;
+    @BindView(R.id.refreshMore)
+    SimplePullLayout refreshMore;
+    private GetSujectPresenter getSujectPresenter;
+    private int index = 1;
+    private SubjectTitleInfo infoList;
+    private SujectTitleAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.suject_layout, null);
         unbinder = ButterKnife.bind(this, view);
         initView();
@@ -55,13 +64,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener {
         initData();
     }
 
-    /**
-     * 以数据库的为准
-     */
     private void initData() {
-        SujectAdapter adapter = new SujectAdapter(getContext(),null);
-        rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvSujectList.setAdapter(adapter);
+        getSujectPresenter = new GetSujectPresenter(getContext(), this);
+
+        getSujectPresenter.getSubjectTitle(index, 12);
+
+        refreshMore.setOnPullListener(this);
     }
 
 
@@ -88,22 +96,55 @@ public class SubjectFragment extends Fragment implements View.OnClickListener {
         super.onResume();
     }
 
-    private OnDownPageListener listener;
-
-    public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
-        this.listener = onDownPageListener;
+    @Override
+    public void loadData(SubjectInfo info) {
     }
 
+    @Override
+    public void loadData(SubjectTitleInfo info) {
+        this.infoList = info;
+        adapter = new SujectTitleAdapter(getContext(), infoList);
+        rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvSujectList.setAdapter(adapter);
+    }
 
-    public static String getVersionName(Context context, String packageName) {
-        try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(packageName, 0);
-            String version = info.versionName;
-            return version;
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public void loadError(String msg) {
+    }
+
+    @Override
+    public void loadMore(SubjectInfo result) {
+    }
+
+    @Override
+    public void loadMore(SubjectTitleInfo result) {
+        infoList.getData().addAll(result.getData());
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
         }
-        return "";
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getSujectPresenter.getSubjectTitle(1, 12);
+                if (refreshMore!=null){
+                    refreshMore.finishPull("加载完成",true);
+                }
+            }
+        },1000);
+    }
+
+    @Override
+    public void onLoad() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getSujectPresenter.getMoreTitleData(++index,12);
+                refreshMore.finishPull("加载完成",true);
+            }
+        },1000);
     }
 }

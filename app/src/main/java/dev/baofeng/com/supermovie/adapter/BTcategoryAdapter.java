@@ -22,11 +22,11 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
  * Created by huangyong on 2018/2/11.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter {
+public class BTcategoryAdapter extends RecyclerView.Adapter {
     private Context context;
     private RecentUpdate datas;
 
-    public HomeAdapter(Context context,RecentUpdate datas) {
+    public BTcategoryAdapter(Context context, RecentUpdate datas) {
         this.context = context;
         this.datas = datas;
     }

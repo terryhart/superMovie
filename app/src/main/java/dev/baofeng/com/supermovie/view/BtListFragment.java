@@ -5,15 +5,12 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.huangyong.downloadlib.TaskLibHelper;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
@@ -21,16 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.HomeAdapter;
-import dev.baofeng.com.supermovie.adapter.MainAdapter;
-import dev.baofeng.com.supermovie.domain.BtInfo;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
-import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
-import dev.baofeng.com.supermovie.presenter.iview.IMoview;
-import dev.baofeng.com.supermovie.utils.NetworkUtils;
 
 /**
  * Created by huangyong on 2018/1/31.
@@ -43,7 +34,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     SimplePullLayout pulllayout;
 
     private CenterPresenter recpresenter;
-    HomeAdapter adapter;
+    BTcategoryAdapter adapter;
     private static BtListFragment btlistFragment;
     private Unbinder bind;
     private RecentUpdate infos;
@@ -107,7 +98,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     public void loadSuccess(RecentUpdate movieBean) {
         this.movieInfo = movieBean;
         Log.e("movieInfo",movieBean.getData().size()+"");
-        adapter =new HomeAdapter(getContext(),movieBean);
+        adapter =new BTcategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
     }

@@ -12,7 +12,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="电影专题"
+            android:text="专题标题"
+            android:id="@+id/subTitle"
             android:textColor="#fff"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
@@ -21,13 +22,13 @@
     </RelativeLayout>
     <com.xiaosu.pulllayout.SimplePullLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="2dp"
-        android:id="@+id/refreshMore"
-        android:layout_marginBottom="60dp"
+        android:id="@+id/refreshLoadMore"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:id="@+id/rv_suject_list"
+            android:id="@+id/rv_subcat_list"
             android:layout_height="match_parent"/>
     </com.xiaosu.pulllayout.SimplePullLayout>
 

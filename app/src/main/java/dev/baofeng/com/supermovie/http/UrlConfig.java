@@ -12,7 +12,11 @@ public class UrlConfig {
     public static final String CHECK_UPDATE  = "ygcms/app/update.json" ;
 
 
-    public static final String SUBJECT_TYPE  = "ygcms/app/suject.json" ;
+    //获取专题
+    public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
+
+    //获取专题
+    public static final String GET_SUBJECT_TITLE  = "ygcms/getSubjectTitle.php" ;
 
     public static final String DOWNLOADBASEURL  = "https://www.bttt.la/" ;
 //    public static final String CHECK_UPDATE  = "update.json" ;

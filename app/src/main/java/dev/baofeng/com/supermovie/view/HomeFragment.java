@@ -346,6 +346,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         this.dataBeans.addAll(result.getData()) ;
         adapter.notifyDataSetChanged();
         viewPager.notifyDataSetChanged();
+        viewPager.setCurrentItem(4);
         contentMain.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
