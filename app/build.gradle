@@ -44,21 +44,20 @@ android {
     }
     lintOptions { checkReleaseBuilds false }
 
-   /* applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
+    applicationVariants.all { variant ->
+        variant.outputs.all {
             def fileName
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name.equals('release')) {
-                    fileName = "ONLINE_${getTime()}.apk"
-                } else if (variant.buildType.name.equals('debug')) {
-                    fileName = "TEST_${getTime()}.apk"
-                }
-                output.outputFile = new File(outputFile.parent, fileName)
+            def type = variant.buildType.name
+            def dateTime = new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
+            if (variant.buildType.name.equals('release')) {
+                fileName = String.format("BTMovie_%s_%s.apk", defaultConfig.versionName, type)
+            } else if (variant.buildType.name.equals('debug')) {
+                fileName = "${ defaultConfig.versionName}_debug_${dateTime}.apk"
             }
-
+            outputFileName = fileName;
         }
-    }*/
+    }
+
 }
 
 def getTime() {
