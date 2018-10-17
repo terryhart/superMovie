@@ -1,9 +1,7 @@
 package dev.baofeng.com.supermovie.utils;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -159,7 +157,7 @@ public class DownloadUtil {
     private void showRemoteView(Context context) {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                R.layout.layout_custom_notifycation);
+                R.layout.notification_upgrade);
         remoteViews.setImageViewResource(R.id.icon_noti, R.mipmap.icon);
         remoteViews.setTextViewText(R.id.progress, 20+"");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
