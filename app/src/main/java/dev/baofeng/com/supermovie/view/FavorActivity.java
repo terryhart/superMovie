@@ -70,8 +70,8 @@ public class FavorActivity extends AppCompatActivity {
                 dataBean.setDownimgurl(favorInfos.get(i).getPostImgUrl());
                 dataBean.setDownLoadName(favorInfos.get(i).getTitle());
                 dataBean.setDownLoadUrl(favorInfos.get(i).getTaskUrl());
+                dataBean.setDowndtitle(favorInfos.get(i).getDownItemTitle());
                 dataBean.setMvdesc(favorInfos.get(i).getMovieDesc());
-                dataBean.setUrlMd5(favorInfos.get(i).getUrlMd5());
                 dataBeans.add(dataBean);
             }
             info.setData(dataBeans);

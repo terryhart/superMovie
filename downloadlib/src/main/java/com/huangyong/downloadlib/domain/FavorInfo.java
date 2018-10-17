@@ -47,6 +47,16 @@ public class FavorInfo {
     @DatabaseField(columnName = "postImgUrl")
     private String postImgUrl;
 
+    @DatabaseField(columnName = "downItemTitle")
+    private String downItemTitle;
+
+    public String getDownItemTitle() {
+        return downItemTitle;
+    }
+
+    public void setDownItemTitle(String downItemTitle) {
+        this.downItemTitle = downItemTitle;
+    }
 
     @DatabaseField(columnName = "movieDesc")
     private String movieDesc;

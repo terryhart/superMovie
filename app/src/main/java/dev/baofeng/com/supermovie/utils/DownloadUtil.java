@@ -1,7 +1,14 @@
 package dev.baofeng.com.supermovie.utils;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 
 import java.io.File;
@@ -9,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import dev.baofeng.com.supermovie.R;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -148,5 +156,21 @@ public class DownloadUtil {
          */
         void onDownloadFailed();
     }
+    private void showRemoteView(Context context) {
 
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+                R.layout.layout_custom_notifycation);
+        remoteViews.setImageViewResource(R.id.icon_noti, R.mipmap.icon);
+        remoteViews.setTextViewText(R.id.progress, 20+"");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setContent(remoteViews);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            builder.setCustomBigContentView(remoteViews);
+        }
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(111, builder.build());
+    }
 }

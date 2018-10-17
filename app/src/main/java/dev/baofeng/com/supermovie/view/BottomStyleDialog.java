@@ -77,4 +77,5 @@ public class BottomStyleDialog extends Dialog implements View.OnClickListener {
         });
         dismiss();
     }
+
 }

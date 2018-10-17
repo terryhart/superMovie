@@ -26,7 +26,10 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.TaskLibHelper;
+import com.huangyong.downloadlib.db.FavorDao;
+import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.utils.MD5Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
+import dev.baofeng.com.supermovie.utils.MD5Util;
 
 /**
  *  intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
@@ -64,7 +68,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private LinearLayoutManager layoutManager;
     private String[] items;
     private ImageView favor;
-    private boolean hasFavor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         Intent intent = getIntent();
         posterUrl = intent.getStringExtra(GlobalMsg.KEY_POST_IMG);
         downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
-        Log.e("kdkdkdd",downItemTitle);
         downItemList = downItemTitle.split(",");
 
 
@@ -93,7 +95,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         posterImagUrl = posterUrl.substring(0,posterUrl.indexOf("jpg")+3);
         downUrl = intent.getStringExtra(GlobalMsg.KEY_DOWN_URL);
-        Log.e("downurllist",posterUrl);
         title = intent.getStringExtra(GlobalMsg.KEY_MOVIE_TITLE);
         mvdescTx = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DETAIL);
     }
@@ -111,12 +112,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 finish();
             }
         });
-        favor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleFavor();
-            }
-        });
+
         poster = findViewById(R.id.poster);
 //        mvdesc = findViewById(R.id.mvdesc);
         recyclerView = findViewById(R.id.rv_detail);
@@ -214,21 +210,51 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 poster.setImageBitmap(resource);
             }
         });
+        initFavorTag();
+        favor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFavor();
+            }
+        });
 
+    }
+
+    private void initFavorTag() {
+        FavorDao dao = FavorDao.getInstance(getApplicationContext());
+        String md5 = MD5Utils.stringToMD5(title);
+        List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+        if (favorInfos!=null&&favorInfos.size()>0){
+            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
+        }else {
+            favor.setBackgroundResource(R.drawable.fullscreen_favority_normal);
+        }
     }
 
     /**
      * 添加或取消收藏
      */
     private void toggleFavor() {
-        if (hasFavor){
+
+        FavorDao dao = FavorDao.getInstance(getApplicationContext());
+        String md5 = MD5Utils.stringToMD5(title);
+        List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+        if (favorInfos!=null&&favorInfos.size()>0){
+            dao.delete(favorInfos.get(0).getId());
             favor.setBackgroundResource(R.drawable.fullscreen_favority_normal);
             Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
         }else {
-            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
+            FavorInfo info = new FavorInfo();
+            info.setMovieDesc(mvdescTx);
+            info.setPostImgUrl(posterUrl);
+            info.setTitle(title);
+            info.setTaskUrl(downUrl);
+            info.setDownItemTitle(downItemTitle);
+            dao.add(info);
             Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();
+            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
         }
-        hasFavor=!hasFavor;
+
     }
 
     public class Myadapter extends BaseAdapter{
