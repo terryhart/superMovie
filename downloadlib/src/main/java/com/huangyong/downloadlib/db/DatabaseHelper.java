@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
+import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DB_NAME = "db_task";
-    private static final int DB_VERSION =19;
+    private static final int DB_VERSION =20;
 
     private static DatabaseHelper instance;
 
@@ -42,6 +43,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, DowningTaskInfo.class);
             TableUtils.createTable(connectionSource, DoneTaskInfo.class);
             TableUtils.createTable(connectionSource, HistoryInfo.class);
+            TableUtils.createTable(connectionSource, FavorInfo.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,6 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource,DowningTaskInfo.class,true);
             TableUtils.dropTable(connectionSource,DoneTaskInfo.class,true);
             TableUtils.dropTable(connectionSource,HistoryInfo.class,true);
+            TableUtils.dropTable(connectionSource,FavorInfo.class,true);
             onCreate(sqLiteDatabase,connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
