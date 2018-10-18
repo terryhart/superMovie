@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -56,12 +57,14 @@ public class DownLoadService extends IntentService {
                 //下载完成，静默安装，完成后会发广播
                 showToastByRunnable(DownLoadService.this,"下载完成,准备安装",Toast.LENGTH_SHORT);
                 installApp(downPath);
-                showRemoteView(getApplicationContext(),100);
             }
             @Override
             public void onDownloading(int progress) {
                 Log.e("下载中",progress+"");
-                showRemoteView(getApplicationContext(),progress);
+                Intent intents = new Intent();
+                intents.setAction(Params.ACTION_UPDATE_PROGERSS);
+                intents.putExtra(Params.UPDATE_PROGERSS,progress);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intents);
             }
 
             @Override
@@ -91,7 +94,7 @@ public class DownLoadService extends IntentService {
     }
 
 
-    private void showRemoteView(Context context,int progress) {
+   /* private void showRemoteView(Context context,int progress) {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.notification_upgrade);
@@ -108,5 +111,5 @@ public class DownLoadService extends IntentService {
         notificationManager = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         notificationManager.notify(111, build);
-    }
+    }*/
 }
