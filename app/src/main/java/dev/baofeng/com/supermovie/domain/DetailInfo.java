@@ -8,6 +8,16 @@ public class DetailInfo {
 
     private String imgUrl;
 
+    public String getPlayUrl() {
+        return playUrl;
+    }
+
+    public void setPlayUrl(String playUrl) {
+        this.playUrl = playUrl;
+    }
+
+    private String playUrl;
+
     private ArrayList<MovieInfo> movieInfos;
 
     public ArrayList<MovieInfo> getMovieInfos() {

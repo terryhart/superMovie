@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.huangyong.downloadlib.model.Params;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.OnlineInfo;
@@ -76,6 +77,9 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
+
+                        intent.putExtra(GlobalMsg.KEY_PLAY_TITLE,datas.getData().get(position).getPlayName());
+                        intent.putExtra(GlobalMsg.KEY_PLAY_URL,datas.getData().get(position).getPlayUrl());
                         context.startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();

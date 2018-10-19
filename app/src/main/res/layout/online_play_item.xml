@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true"
 
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="70dp"
+        android:layout_height="40dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:src="@drawable/ic_dl_mp4"
+            android:id="@+id/playIcon"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/playIcon"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:gravity="center_vertical"
+            android:id="@+id/btPlayText"
+            android:text="高清"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

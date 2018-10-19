@@ -81,6 +81,16 @@ public class MovieInfo {
         private String progress;
         private String urlMd5;
 
+        public String getPlayUrl() {
+            return playUrl;
+        }
+
+        public void setPlayUrl(String playUrl) {
+            this.playUrl = playUrl;
+        }
+
+        private String playUrl;
+
         public String getUrlMd5() {
             return urlMd5;
         }

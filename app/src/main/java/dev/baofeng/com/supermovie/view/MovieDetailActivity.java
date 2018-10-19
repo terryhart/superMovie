@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,9 @@ import java.util.List;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
+import dev.baofeng.com.supermovie.adapter.HeaderAndFooterWrapper;
+import dev.baofeng.com.supermovie.adapter.OnlinePlayAdapter;
+import dev.baofeng.com.supermovie.domain.BtPlayInfo;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
 import dev.baofeng.com.supermovie.utils.MD5Util;
 
@@ -68,6 +72,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private LinearLayoutManager layoutManager;
     private String[] items;
     private ImageView favor;
+    private String playUrl;
+    private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
+    private String playTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         Intent intent = getIntent();
         posterUrl = intent.getStringExtra(GlobalMsg.KEY_POST_IMG);
+        playUrl = intent.getStringExtra(GlobalMsg.KEY_PLAY_URL);
+        playTitle = intent.getStringExtra(GlobalMsg.KEY_PLAY_TITLE);
         downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
         downItemList = downItemTitle.split(",");
 
@@ -93,7 +102,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             imgScreenShot = imgArr[1];
         }
 
-        posterImagUrl = posterUrl.substring(0,posterUrl.indexOf("jpg")+3);
+        posterImagUrl = posterUrl.split(",")[0];
         downUrl = intent.getStringExtra(GlobalMsg.KEY_DOWN_URL);
         title = intent.getStringExtra(GlobalMsg.KEY_MOVIE_TITLE);
         mvdescTx = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DETAIL);
@@ -169,23 +178,21 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         //海报右边的短简介
         sdesc.setText(buffer.toString());
-        //详情里的长简介
 
-        //
+
         String[] downUrl = this.downUrl.split(",");
-
-
         ArrayList url = new ArrayList();
         for (int i = 0; i < downUrl.length; i++) {
             url.add(downUrl[i]);
         }
+
         //截屏
         info.setImgScreenShot(imgScreenShot);
         //下载地址
         info.setDownUrl(url);
         //下载页显示的海报
         info.setImgUrl(posterImagUrl);
-        //在线播放地址，如果有，就添加
+
 
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
@@ -193,14 +200,44 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList,list,this);
         recyclerView.setAdapter(detailAdapter);
 
+        //添加点播按钮布局到底部
+        /**
+         *  url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
+         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
+         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
+         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
+         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
+         */
+        if (!TextUtils.isEmpty(playUrl)){
+            View playView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.online_item,null);
+            RecyclerView onlineBt = playView.findViewById(R.id.rvOnline);
+            String[] playUri = playUrl.split(",");
+            String[] playTitles = playTitle.split(",");
+            ArrayList<BtPlayInfo> infos = new ArrayList<>();
+            for (int i = 0; i < playUri.length; i++) {
+                BtPlayInfo info1 = new BtPlayInfo();
+                info1.setMovPoster(posterImagUrl);
+                info1.setMovTitle(title);
+                info1.setProgress("0");
+                info1.setMovName(playTitles[i]);
+                info1.setMovPlayUrl(playUri[i]);
+                infos.add(info1);
+            }
+            OnlinePlayAdapter playAdapter = new OnlinePlayAdapter(infos);
+            onlineBt.setLayoutManager(new GridLayoutManager(getApplicationContext(),4));
+            onlineBt.setAdapter(playAdapter);
+            mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(detailAdapter);
+            mHeaderAndFooterWrapper.addHeaderView(playView);
+            recyclerView.setAdapter(mHeaderAndFooterWrapper);
+            mHeaderAndFooterWrapper.notifyDataSetChanged();
+        }
+
+
         DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intents = new Intent(MovieDetailActivity.this, DownLoadMainActivity.class);
-//                startActivity(intents);
-
                 downLoadListDialog.show();
             }
         });
@@ -210,6 +247,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 poster.setImageBitmap(resource);
             }
         });
+        //初始化收藏状态
         initFavorTag();
         favor.setOnClickListener(new View.OnClickListener() {
             @Override
