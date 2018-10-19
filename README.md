@@ -30,9 +30,14 @@ Tips:
     文件读写权限。虽然thunder内申明了，但是还是需要APP里再次声明。注意！
 
 
+
+#### 扫码下载预览版
 <div>
-    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_10_19_1400335931.png" width="140" height="140" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_10_19_1400335931.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
 </div>
+
+
+
 2018/9/23更新：
 
   1.新版下载中心，多任务，重启，暂停，删除，边下边看，清爽实用
