@@ -122,12 +122,12 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         unbinder = ButterKnife.bind(this, view);
         viewPager = view.findViewById(R.id.vp);
         adapter = new BasicPagerAdapter(dataBeans,getContext());
-        viewPager.setAdapter(adapter);
+        viewPager.setPageTransformer(new MyTransformation());
         viewPager.startAutoScroll(true);
         viewPager.setOffscreenPageLimit(4);
         viewPager.setOnPageChangeListener(this);
         viewPager.setSliderDuration(3000);
-        viewPager.setPageTransformer(new MyTransformation());
+        viewPager.setAdapter(adapter);
         initData();
         initEvent();
         return view;
