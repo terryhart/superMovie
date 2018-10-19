@@ -4,7 +4,7 @@
 <table style="border-width: 0px ;">
 			<tr>
 				<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-12-21-55.jpg" width = "240" height = "400" alt="图片名称" align=center />
-				</td><td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-10-27-16.jpg"  height = "400" alt="图片名称" align=center />
+				</td><td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-13-30-07.jpg"  height = "400" alt="图片名称" align=center />
 				</td><td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-10-27-37.jpg" width = "240" height = "400" alt="图片名称" align=center />
 				</td>
 			</tr>
@@ -16,7 +16,7 @@
 			</tr>
 			<tr>
             	<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-10-27-09.jpg" width = "240" height = "400" alt="图片名称" align=center /></td>
-            	<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-13-30-07.jpg" width = "240" height = "400" alt="图片名称" align=center /></td>
+            	<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-10-27-16.jpg" width = "240" height = "400" alt="图片名称" align=center /></td>
             	<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-13-32-45.jpg" width = "240" height = "400" alt="图片名称" align=center /></td>
             </tr>
 </table>
