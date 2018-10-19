@@ -12,7 +12,10 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.umeng.commonsdk.UMConfigure;
+import com.zchu.rxcache.RxCache;
+import com.zchu.rxcache.diskconverter.SerializableDiskConverter;
 
+import java.io.File;
 import java.io.InputStream;
 
 import dev.baofeng.com.supermovie.http.ApiManager;
@@ -27,6 +30,7 @@ public class MyApp extends Application{
 
     public static MyApp instance = null;
     public SPUtils spUtils;
+    private static RxCache rxCache;
 
     @Override
     public void onCreate() {
@@ -37,11 +41,24 @@ public class MyApp extends Application{
 
         initDownloadLib();
 
+        //初始化缓存管理
+        initCache();
         //让Glide能用HTTPS
         Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(ApiManager.getClientInstance()));
 
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
+    }
+
+    private void initCache() {
+        //支持Serializable、Json(GsonDiskConverter)
+        rxCache = new RxCache.Builder()
+                .appVersion(1)
+                .diskDir(new File(getCacheDir().getPath() + File.separator + "data-cache"))
+                .diskConverter(new SerializableDiskConverter())//支持Serializable、Json(GsonDiskConverter)
+                .memoryMax(2 * 1024 * 1024)
+                .diskMax(20 * 1024 * 1024)
+                .build();
     }
 
     private void initDownloadLib() {
@@ -50,6 +67,9 @@ public class MyApp extends Application{
 
     public static MyApp appInstance() {
         return instance;
+    }
+    public static RxCache getCacheInstance() {
+        return rxCache;
     }
 
 
