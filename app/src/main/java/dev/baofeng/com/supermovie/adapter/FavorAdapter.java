@@ -27,10 +27,12 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 public class FavorAdapter extends RecyclerView.Adapter {
     private Context context;
     private MovieInfo info;
+    private onLongClickedListener listener;
 
-    public FavorAdapter(Context context, MovieInfo info) {
+    public FavorAdapter(Context context, MovieInfo info,onLongClickedListener listener) {
         this.context = context;
         this.info = info;
+        this.listener = listener;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class FavorAdapter extends RecyclerView.Adapter {
 
         Glide.with(context).load(URLImg).into(((FavorHolder)holder).itemimg);
         ((FavorHolder)holder).itemtitle.setText(name);
-        ((FavorHolder) holder).root.setOnClickListener(view -> {
+        ((FavorHolder) holder).itemView.setOnClickListener(view -> {
             try {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
                 intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
@@ -61,8 +63,20 @@ public class FavorAdapter extends RecyclerView.Adapter {
             }
 
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (listener!=null){
+                    listener.onLongClick(info.getData().get(position).getId());
+                }
+                return false;
+            }
+        });
     }
 
+    public interface onLongClickedListener{
+        void onLongClick(String id);
+    }
     @Override
     public int getItemCount() {
         return info.getData().size();

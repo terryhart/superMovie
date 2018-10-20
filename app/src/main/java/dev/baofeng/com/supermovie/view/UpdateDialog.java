@@ -8,17 +8,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.huangyong.downloadlib.model.Params;
+
 import java.io.File;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
+import dev.baofeng.com.supermovie.services.DownLoadService;
 import dev.baofeng.com.supermovie.utils.DownloadUtil;
 
 public class UpdateDialog extends Dialog {
@@ -42,27 +46,13 @@ public class UpdateDialog extends Dialog {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadUtil.get().download(info.getData().getDownloadUrl(), "app_update", new DownloadUtil.OnDownloadListener() {
-                    @Override
-                    public void onDownloadSuccess(String savePath) {
-                       // Toast.makeText(getContext(), "下载完成", Toast.LENGTH_SHORT).show();
-                        Log.e("dkkdkdk","下载完成");
-
-                        installApp(savePath);
-                    }
-
-                    @Override
-                    public void onDownloading(int progress) {
-                        Log.e("dkkdkdk","下载---"+progress);
-                    }
-
-                    @Override
-                    public void onDownloadFailed() {
-                        //Toast.makeText(getContext(), "下载错误", Toast.LENGTH_SHORT).show();
-                        Log.e("dkkdkdk","下载错误");
-                    }
-                });
-                Toast.makeText(getContext(), "后台下载中", Toast.LENGTH_SHORT).show();
+                String downloadUrl = info.getData().getDownloadUrl();
+                if (TextUtils.isEmpty(downloadUrl)){
+                    return;
+                }
+                Intent intent = new Intent(getContext(), DownLoadService.class);
+                intent.putExtra(Params.DURL,downloadUrl);
+                getContext().startService(intent);
                 dismiss();
             }
         });

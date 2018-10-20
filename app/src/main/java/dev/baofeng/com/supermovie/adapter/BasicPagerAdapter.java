@@ -52,13 +52,12 @@ public class BasicPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 try {
-//                        Intent intent = new Intent(context, DetailActivity.class);
                     Intent intent = new Intent(container.getContext(), MovieDetailActivity.class);
                     intent.putExtra(GlobalMsg.KEY_POST_IMG, url);
-                    intent.putExtra(GlobalMsg.KEY_DOWN_URL,dataBeans.get(position-1).getDownLoadUrl());
+                    intent.putExtra(GlobalMsg.KEY_DOWN_URL,dataBeans.get(position).getDownLoadUrl());
                     intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, dataBeans.get(position).getDownLoadName());
                     intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, dataBeans.get(position).getDowndtitle());
-                    intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,dataBeans.get(position-1).getMvdesc());
+                    intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,dataBeans.get(position).getMvdesc());
                     container.getContext().startActivity(intent);
                 }catch (Exception e){
                     e.printStackTrace();

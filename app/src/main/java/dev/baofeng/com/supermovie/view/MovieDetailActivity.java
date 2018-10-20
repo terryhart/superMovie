@@ -260,7 +260,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     private void initFavorTag() {
         FavorDao dao = FavorDao.getInstance(getApplicationContext());
-        String md5 = MD5Utils.stringToMD5(title);
+        String md5 = MD5Utils.stringToMD5(downUrl);
         List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
         if (favorInfos!=null&&favorInfos.size()>0){
             favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
@@ -275,7 +275,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private void toggleFavor() {
 
         FavorDao dao = FavorDao.getInstance(getApplicationContext());
-        String md5 = MD5Utils.stringToMD5(title);
+        String md5 = MD5Utils.stringToMD5(downUrl);
         List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
         if (favorInfos!=null&&favorInfos.size()>0){
             dao.delete(favorInfos.get(0).getId());
@@ -287,6 +287,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             info.setPostImgUrl(posterUrl);
             info.setTitle(title);
             info.setTaskUrl(downUrl);
+            info.setUrlMd5(md5);
             info.setDownItemTitle(downItemTitle);
             dao.add(info);
             Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();

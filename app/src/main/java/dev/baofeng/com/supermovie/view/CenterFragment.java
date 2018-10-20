@@ -1,13 +1,17 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import com.bftv.myapplication.view.IndexActivity;
 import com.huangyong.downloadlib.DownLoadMainActivity;
+import com.huangyong.downloadlib.model.Params;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +36,7 @@ import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
+import dev.baofeng.com.supermovie.receiver.LocalDataReceiver;
 import dev.baofeng.com.supermovie.utils.BDecoder;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
 
@@ -80,10 +86,28 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     private void initView() {
         presenter = new CenterPresenter(getContext(), this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Params.ACTION_UPDATE_PROGERSS);
+
+        LocalBroadcastManager  mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        mLocalBroadcastManager.registerReceiver(mReceiver,filter);
         //初始化数据
         initData();
     }
-
+    BroadcastReceiver mReceiver  = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Params.ACTION_UPDATE_PROGERSS)){
+                int extra = intent.getIntExtra(Params.UPDATE_PROGERSS, 0);
+                Log.e("extraprogress",extra+"");
+                if (tvUpdate!=null&&extra<100){
+                    tvUpdate.setText("正在更新 "+extra+"%");
+                }else {
+                    tvUpdate.setText("版本更新 ");
+                }
+            }
+        }
+    };
     /**
      * 以数据库的为准
      */

@@ -103,7 +103,7 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                presenter.getMoreData(1, 18,titleType);
+                presenter.getSubject(1, 18,titleType);
                 if (refreshLoadMore!=null){
                     refreshLoadMore.finishPull("加载完成",true);
                 }

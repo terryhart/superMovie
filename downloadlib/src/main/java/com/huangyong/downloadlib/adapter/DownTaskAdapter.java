@@ -100,7 +100,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.playinloading.setVisibility(View.INVISIBLE);
             }else if (taskInfo.get(position).getStatu()==3){
                 holder.finish_icon.setImageResource(R.drawable.ic_detail_download_error);
-                holder.task_msg.setText("\n版权受限，下载失败  ");
+                holder.task_msg.setText("！版权受限，下载失败\n请长按复制链接到百度网盘离线下载  ");
                 holder.task_size.setText("");
                 holder.posterImg.setTaskStatu(true);
                 holder.playinloading.setVisibility(View.INVISIBLE);
