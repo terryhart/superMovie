@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.BATTERY_STATS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -20,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
+            >
 
         </activity>
         <activity android:name=".view.BtDownActivity" />
@@ -48,6 +51,7 @@
         </receiver>
         <activity android:name=".PreActivity"
             android:theme="@style/SplashTheme"
+            android:launchMode="singleTask"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +66,16 @@
         <service android:name=".services.DownLoadService"
             >
         </service>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="dev.baofeng.com.supermovie.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

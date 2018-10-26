@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bftv.myapplication.config.KeyParam;
+import com.bftv.myapplication.view.WebviewPlayer;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.playerlib.PlayerActivity;
@@ -48,15 +51,17 @@ public class OnlinePlayAdapter extends RecyclerView.Adapter<PlayListHolder> {
 //                Intent intent = new Intent();
                 Toast.makeText(context, "即将跳转", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(context, PlayerActivity.class);
+                Log.e("onlineplayer",""+playList.get(position).getMovPlayUrl());
+               /* Intent intent = new Intent(context, PlayerActivity.class);
                 intent.putExtra(Params.PROXY_PALY_URL,playList.get(position).getMovPlayUrl());
                 intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(playList.get(position).getMovPlayUrl()));
                 intent.putExtra(Params.POST_IMG_KEY,playList.get(position).getMovPoster());
                 intent.putExtra(Params.TASK_TITLE_KEY,playList.get(position).getMovTitle());
                 intent.putExtra(Params.MOVIE_PROGRESS,"0");
+                context.startActivity(intent);*/
+                Intent intent = new Intent(context, WebviewPlayer.class);
+                intent.putExtra(KeyParam.PLAYURL,playList.get(position).getMovPlayUrl());
                 context.startActivity(intent);
-
-
             }
         });
     }

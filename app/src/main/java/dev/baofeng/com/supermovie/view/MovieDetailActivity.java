@@ -201,13 +201,13 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         recyclerView.setAdapter(detailAdapter);
 
         //添加点播按钮布局到底部
-        /**
+       /* *//**
          *  url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
          title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
          urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
          movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
          poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
-         */
+         *//*
         if (!TextUtils.isEmpty(playUrl)){
             View playView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.online_item,null);
             RecyclerView onlineBt = playView.findViewById(R.id.rvOnline);
@@ -230,7 +230,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             mHeaderAndFooterWrapper.addHeaderView(playView);
             recyclerView.setAdapter(mHeaderAndFooterWrapper);
             mHeaderAndFooterWrapper.notifyDataSetChanged();
-        }
+        }*/
 
 
         DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);

@@ -38,6 +38,7 @@ import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.receiver.LocalDataReceiver;
 import dev.baofeng.com.supermovie.utils.BDecoder;
+import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
 
 /**
@@ -54,7 +55,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     @BindView(R.id.tv_setting)
     TextView tvFavor;
     @BindView(R.id.tv_update)
-    TextView tvUpdate;
+    UpdateTextView tvUpdate;
     @BindView(R.id.tv_collect)
     TextView tvCollect;
     @BindView(R.id.versionName)
@@ -112,6 +113,14 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
      * 以数据库的为准
      */
     private void initData() {
+
+        int haveUpate = SharePreferencesUtil.getIntSharePreferences(getContext(), Params.HAVE_UPDATE, 0);
+        if (haveUpate==1){
+            tvUpdate.setHasUpdate(true);
+        }else {
+            tvUpdate.setHasUpdate(false);
+        }
+
         updatePresenter = new UpdateAppPresenter(getContext(),this);
 
         versionName.setText("版本号："+getVersionName(getContext(),"dev.baofeng.com.supermovie"));

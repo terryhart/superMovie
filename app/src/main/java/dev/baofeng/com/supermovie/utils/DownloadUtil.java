@@ -82,7 +82,7 @@ public class DownloadUtil {
                     fos.flush();
                     // 下载完成
                     isDownloading=false;
-                    listener.onDownloadSuccess(file.getPath());
+                    listener.onDownloadSuccess(file);
                 } catch (Exception e) {
                     isDownloading=false;
                     listener.onDownloadFailed();
@@ -140,9 +140,9 @@ public class DownloadUtil {
     public interface OnDownloadListener {
         /**
          * 下载成功
-         * @param savePath
+         * @param file
          */
-        void onDownloadSuccess(String savePath);
+        void onDownloadSuccess(File file);
 
         /**
          * @param progress

@@ -58,8 +58,8 @@ public class DownedTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.posterImg.setImageResource(R.drawable.ic_dl_torrent_bt);
                 holder.posterImg.setPlayIconHide(true);
             }else {
-                Glide.with(context).load(taskInfo.get(position).getPostImgUrl()).into(holder.posterImg);
-                holder.playinloading.setText("播放");
+                Glide.with(context).load(taskInfo.get(position).getPostImgUrl()).placeholder(R.drawable.ic_dl_magnet_place_holder).into(holder.posterImg);
+                holder.playinloading.setVisibility(View.INVISIBLE);
             }
 
             holder.posterImg.setOnClickListener(new View.OnClickListener() {

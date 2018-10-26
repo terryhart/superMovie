@@ -55,6 +55,9 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             if (progress>5){
                 holder.playinloading.setVisibility(View.VISIBLE);
                 holder.playinloadingBg.setVisibility(View.VISIBLE);
+            }else {
+                holder.playinloading.setVisibility(View.INVISIBLE);
+                holder.playinloadingBg.setVisibility(View.INVISIBLE);
             }
             String fileSize = FileUtils.convertFileSize(total);
             String receivedSize = FileUtils.convertFileSize(received);

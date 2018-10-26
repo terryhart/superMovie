@@ -1,5 +1,7 @@
 package com.huangyong.downloadlib.model;
 
+import android.content.Context;
+
 public class Params {
     public static final String DOWING_DATA_KEY = "DOWING_DATA_KEY";
     public static final String URL_MD5_KEY = "URL_MD5_KEY";
@@ -16,6 +18,7 @@ public class Params {
     public static final String UMENG_KEY = "5bbab8d1b465f5d1e8000186";
     public static final String DURL = "DURL";
     public static final String ACTION_UPDATE_PROGERSS = "action.update.progress";
+    public static final String HAVE_UPDATE = "HAVE_UPDATE";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
     public static String TASK_PAUSE ="downlib.pause.task";

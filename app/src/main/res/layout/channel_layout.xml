@@ -58,7 +58,7 @@
                       android:gravity="center"
                       android:layout_height="wrap_content"
                       android:drawableTop="@drawable/cat"
-                      android:text="在线资源"
+                      android:text="热门资源"
                       android:drawablePadding="6dp"
                       android:id="@+id/catfrag"
                       android:focusable="true"

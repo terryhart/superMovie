@@ -19,7 +19,7 @@
         <activity android:name=".view.WebCrossActivity">
 
         </activity>
-        <activity android:name=".view.LoadHtmlWebview"
+        <activity android:name=".view.WebviewPlayer"
             android:hardwareAccelerated="true"
             android:configChanges="orientation|screenSize"
             android:anyDensity="true"

@@ -5,6 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -113,6 +116,11 @@ public class DownLoadService extends Service implements ITask {
                             intent.putExtra(Params.TASK_ID_KEY,taskInfos.get(i).getId());
                             intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
                             BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
+
+                            //提示下载完成
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
                         }else {
                             taskDao.update(taskInfos.get(i));
                         }
@@ -122,7 +130,7 @@ public class DownLoadService extends Service implements ITask {
             }
         };
 
-        subscribe = Observable.interval(0, 1, TimeUnit.SECONDS).subscribe(subscriber);
+        subscribe = Observable.interval(0, 2, TimeUnit.SECONDS).subscribe(subscriber);
     }
 
     @Override

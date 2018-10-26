@@ -105,7 +105,7 @@ public class WebCrossActivity extends AppCompatActivity {
                     Toast.makeText(WebCrossActivity.this, "请选择线路", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                /*Intent intent = new Intent(WebCrossActivity.this, LoadHtmlWebview.class);
+                /*Intent intent = new Intent(WebCrossActivity.this, WebviewPlayer.class);
                 String url = web.getUrl();
                 intent.putExtra(KeyParam.PLAYURL,headUrl[listView.getSelectIndex()]+url.replace("m.",""));
                 startActivity(intent);

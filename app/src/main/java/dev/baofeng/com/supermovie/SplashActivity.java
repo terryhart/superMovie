@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +17,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+
+import com.huangyong.downloadlib.model.Params;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -24,6 +28,7 @@ import java.lang.reflect.Method;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
+import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.UpdateDialog;
 
 
@@ -48,11 +53,6 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
 
         presenter = new UpdateAppPresenter(this,this);
         presenter.getAppUpdate(this);
-
-    }
-
-    @Override
-    public void noUpdate() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -64,52 +64,14 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
     }
 
     @Override
-    public void updateYes(AppUpdateInfo result) {
-        UpdateDialog dialog = new UpdateDialog(SplashActivity.this,result);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        dialog.show();
+    public void noUpdate() {
+        SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,0);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static boolean isNotificationEnabled(Context context) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //8.0手机以上
-            if (((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).getImportance() == NotificationManager.IMPORTANCE_NONE) {
-                return false;
-            }
-        }
-
-        String CHECK_OP_NO_THROW = "checkOpNoThrow";
-        String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
-
-        AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-        ApplicationInfo appInfo = context.getApplicationInfo();
-        String pkg = context.getApplicationContext().getPackageName();
-        int uid = appInfo.uid;
-
-        Class appOpsClass = null;
-
-        try {
-            appOpsClass = Class.forName(AppOpsManager.class.getName());
-            Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
-                    String.class);
-            Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
-
-            int value = (Integer) opPostNotificationValue.get(Integer.class);
-            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+    @Override
+    public void updateYes(AppUpdateInfo result) {
+        Toast.makeText(this, "发现新版本，请到“我的”页面手动下载", Toast.LENGTH_SHORT).show();
+        SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,1);
     }
 
 }

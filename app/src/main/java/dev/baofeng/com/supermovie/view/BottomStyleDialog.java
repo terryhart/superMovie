@@ -7,13 +7,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
@@ -61,7 +60,7 @@ public class BottomStyleDialog extends Dialog implements View.OnClickListener {
 
         DownloadUtil.get().download(result.getData().getDownloadUrl(), "app_upgrade", new DownloadUtil.OnDownloadListener() {
             @Override
-            public void onDownloadSuccess(String savePath) {
+            public void onDownloadSuccess(File savePath) {
                 Toast.makeText(getContext(), "下载完成", Toast.LENGTH_SHORT).show();
             }
 
