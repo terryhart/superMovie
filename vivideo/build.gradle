@@ -36,7 +36,6 @@ dependencies {
     // (可选)
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    implementation project(':adblockwebview')
 }
 repositories {
     mavenCentral()

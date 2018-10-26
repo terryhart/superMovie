@@ -2,23 +2,15 @@ package com.bftv.myapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
 import com.bftv.myapplication.ParseWebUrlHelper;
 import com.bftv.myapplication.PlayActivity;
 import com.bftv.myapplication.R;
@@ -26,7 +18,6 @@ import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.util.DensityUtil;
 import com.bftv.myapplication.webview.X5WebView;
 
-import org.jsoup.Jsoup;
 
 /**
  * Created by Helloworld on 2018/7/20.
@@ -37,7 +28,6 @@ public class WebCrossActivity extends AppCompatActivity {
     private X5WebView web;
     private Intent intent;
     private Button geturl;
-    private ParseWebUrlHelper parseWebUrlHelper;
 
     private String[] headUrl = {
             "http://yun.baiyug.cn/vip/index.php?url=",//默认线路1
@@ -105,13 +95,11 @@ public class WebCrossActivity extends AppCompatActivity {
                     Toast.makeText(WebCrossActivity.this, "请选择线路", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                /*Intent intent = new Intent(WebCrossActivity.this, WebviewPlayer.class);
+                Intent intent = new Intent(WebCrossActivity.this, WebviewPlayer.class);
                 String url = web.getUrl();
                 intent.putExtra(KeyParam.PLAYURL,headUrl[listView.getSelectIndex()]+url.replace("m.",""));
                 startActivity(intent);
-                Log.e("获取地址2",url.replace("m.",""));*/
-                String url = web.getUrl();
-                AdBlocksWebViewActivity.startWebView(WebCrossActivity.this,headUrl[listView.getSelectIndex()]+url.replace("m.",""),getResources().getColor(R.color.colorPrimary));
+                Log.e("获取地址2",url.replace("m.",""));
             }
         });
         web.setOnKeyListener(new View.OnKeyListener() {
