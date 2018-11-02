@@ -33,7 +33,7 @@ Tips:
 
 #### 扫码下载预览版
 <div>
-    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_10_19_1400335931.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_11_02_1236194782.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
 </div>
 
 
