@@ -31,7 +31,7 @@ Tips:
 
 
 
-#### 扫码下载预览版
+#### 扫码下载体验版（release-1.0.10）
 <div>
     <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_11_02_1236194782.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
 </div>
@@ -50,9 +50,12 @@ Tips:
 
   1.增加专题分类，内容更优质
 
+  2.修改版本更新逻辑，改为手动下载更新新版本
+
 >TODO LIST：
 
     1.完善专题内容，增加可在线观看功能。
+
     2.开发TV版本
 
 

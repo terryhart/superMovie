@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.widget.Toast;
 
 import com.huangyong.downloadlib.utils.NetUtil;
 
@@ -25,9 +26,11 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
             // 接口回调传过去状态的类型
             switch (netWorkState){
                 case NetUtil.NETWORK_NONE:
+                    Toast.makeText(context, "当前网络连接异常，可能无法下载影片", Toast.LENGTH_SHORT).show();
                     break;
                 case NetUtil.NETWORK_MOBILE:
 //                    ToastUtil.showMessage("当前网络为移动网络，请注意您的流量");
+                    Toast.makeText(context, "当前网络为移动网络，请注意您的流量", Toast.LENGTH_SHORT).show();
                     //不允许4G时下载
                     boolean isAllow4G = false;
                     /*if(!isAllow4G && DownloadManager.xLTaskInfos != null && DownloadManager.xLTaskInfos.size() > 0){
