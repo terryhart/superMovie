@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         adapter = new BasicPagerAdapter(dataBeans,getContext());
         viewPager.setPageTransformer(new MyTransformation());
         viewPager.startAutoScroll(true);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(10);
         viewPager.setOnPageChangeListener(this);
         viewPager.setSliderDuration(3000);
         viewPager.setAdapter(adapter);
@@ -348,7 +348,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         this.dataBeans.addAll(result.getData()) ;
         adapter.notifyDataSetChanged();
         viewPager.notifyDataSetChanged();
-        viewPager.setCurrentItem(4);
+        viewPager.setOffscreenPageLimit(10);
+        viewPager.setCurrentItem(2);
         contentMain.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
