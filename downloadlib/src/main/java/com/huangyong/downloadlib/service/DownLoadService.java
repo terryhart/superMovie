@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.offline.DownloadService;
 import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.db.TaskedDao;
@@ -81,6 +82,7 @@ public class DownLoadService extends Service implements ITask {
 
                 //查询数据库，获取最新的数据
                 TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
+
                 List<DowningTaskInfo> taskInfos = taskDao.queryAll();
 
                 if (taskInfos!=null&&taskInfos.size()>0){
@@ -94,34 +96,35 @@ public class DownLoadService extends Service implements ITask {
 
                         Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+taskInfo.mTaskStatus);
                         if (taskInfo.mDownloadSize!=0&&taskInfo.mFileSize!=0&&taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
-                            //文件下载完成，此数据在下一秒移动到已完成数据库。
-                            DoneTaskInfo task = new DoneTaskInfo();
-                            task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());
-                            task.setTaskUrl(taskInfos.get(i).getTaskUrl());
-                            task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
-                            task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
-                            task.setLocalPath(taskInfos.get(i).getLocalPath());
-                            task.setFilePath(taskInfos.get(i).getFilePath());
-                            task.setTitle(taskInfos.get(i).getTitle());
-                            task.setTaskId(taskInfos.get(i).getTaskId());
-                            task.setUrlMd5(taskInfos.get(i).getUrlMd5());
-
                             //添加到数据库
-                            taskedDao.add(task);
+                            synchronized (DownloadService.class){
+                                //文件下载完成，此数据在下一秒移动到已完成数据库。
+                                DoneTaskInfo task = new DoneTaskInfo();
+                                task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());
+                                task.setTaskUrl(taskInfos.get(i).getTaskUrl());
+                                task.setReceiveSize(String.valueOf(taskInfo.mFileSize));
+                                task.setTotalSize(String.valueOf(taskInfo.mDownloadSize));
+                                task.setLocalPath(taskInfos.get(i).getLocalPath());
+                                task.setFilePath(taskInfos.get(i).getFilePath());
+                                task.setTitle(taskInfos.get(i).getTitle());
+                                task.setTaskId(taskInfos.get(i).getTaskId());
+                                task.setUrlMd5(taskInfos.get(i).getUrlMd5());
+                                taskedDao.add(task);
 
-                            //然后删除下载中的记录
-                             taskDao.delete(taskInfos.get(i).getId());
+                                //然后删除下载中的记录
+                                taskDao.delete(taskInfos.get(i).getId());
 
-                            //提示下载完成
-                            Intent intent = new Intent();
-                            intent.putExtra(Params.TASK_ID_KEY,taskInfos.get(i).getId());
-                            intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
-                            BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
+                                //提示下载完成
+                                Intent intent = new Intent();
+                                intent.putExtra(Params.TASK_ID_KEY,taskInfos.get(i).getId());
+                                intent.putExtra(Params.TASK_TITLE_KEY,taskInfos.get(i).getTitle());
+                                BroadCastUtils.sendIntentBroadCask(getApplicationContext(),intent,Params.TASK_COMMPLETE);
 
-                            //提示下载完成
-                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                            r.play();
+                                //提示下载完成
+                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                r.play();
+                            }
                         }else {
                             taskDao.update(taskInfos.get(i));
                         }

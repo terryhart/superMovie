@@ -51,7 +51,11 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }
             int progress = (int) (received*1.0f/total*1.0f*100);
             holder.posterImg.setProgress(progress);
-
+            if (taskInfo.get(position).getTitle().endsWith(".torrent")){
+                holder.playinloading.setText("BT种子");
+            }else {
+                holder.playinloading.setText("边下边播");
+            }
             if (progress>5){
                 holder.playinloading.setVisibility(View.VISIBLE);
                 holder.playinloadingBg.setVisibility(View.VISIBLE);
@@ -67,11 +71,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }else {
                 speed = taskInfo.get(position).getSpeed();
             }
-            if (taskInfo.get(position).getTitle().endsWith(".torrent")){
-                holder.playinloading.setText("BT种子");
-            }else {
-                holder.playinloading.setText("边下边播");
-            }
+
 
             //边下边播点击事件
             holder.playinloading.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.playinloading.setVisibility(View.INVISIBLE);
             }else if (taskInfo.get(position).getStatu()==3){
                 holder.finish_icon.setImageResource(R.drawable.ic_detail_download_error);
-                holder.task_msg.setText("！版权受限，下载失败\n请长按复制链接到百度网盘离线下载  ");
+                holder.task_msg.setText("!版权受限,下载失败\n请长按复制链接到百度网盘离线下载  ");
                 holder.task_size.setText("");
                 holder.posterImg.setTaskStatu(true);
                 holder.playinloading.setVisibility(View.INVISIBLE);
