@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.growingio.android'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -13,6 +13,9 @@ android {
         packagingOptions {
             exclude 'META-INF/rxjava.properties'
         }
+
+        resValue("string", "growingio_project_id", "82fb627e58d937a3")
+        resValue("string", "growingio_url_scheme", "growing.6858aa81da64ed76")
     }
     buildTypes {
         release {
@@ -109,4 +112,7 @@ dependencies {
     implementation ('com.cpacm.simpleslider:library:2.2.1'){
         exclude module: 'appcompat-v7'
     }
+
+
+    compile 'com.growingio.android:vds-android-agent:2.4.5@aar'
 }
