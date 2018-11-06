@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.umeng.commonsdk.UMConfigure;
@@ -48,6 +50,13 @@ public class MyApp extends Application{
 
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
+
+        GrowingIO.startWithConfiguration(this, new Configuration()
+                .trackAllFragments()
+                .setChannel("默认应用商店")
+        );
+
+
     }
 
     private void initCache() {
