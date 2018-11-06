@@ -39,7 +39,7 @@ public class UrlConfig {
     public static final String GETBTRECOMEND = "ygcms/getClassVideo.php";
 
     //获取搜索结果
-    public static final String GETSEARCH = "ygcms/getSearch.php";
+     public static final String GETSEARCH = "ygcms/getSearch.php";
 //    public static final String GET_VIDEO_THREE = "home.json";
 
 
