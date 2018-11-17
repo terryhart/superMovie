@@ -1,1 +1,1 @@
-include ':app', ':mff', ':thunder', ':downloadlib', ':playerlib',':vivideo'
+include ':app', ':mff', ':thunder', ':downloadlib', ':playerlib', ':vivideo', ':AopLib'

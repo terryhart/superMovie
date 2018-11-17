@@ -2,7 +2,9 @@ package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
 
-import dev.baofeng.com.supermovie.domain.BtInfo;
+import com.example.aop.Function;
+import com.example.aop.Statistics;
+
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
@@ -26,7 +28,10 @@ public class SearchPresenter extends BasePresenter<ISview> {
     public void release() {
         unSubcription();
     }
-
+    /**
+     * 打点，搜索计数
+     */
+    @Statistics(function = Function.SEARCH)
     public void search(String keywords){
         Subscription subscription = ApiManager
                 .getRetrofitInstance()

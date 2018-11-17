@@ -37,6 +37,7 @@ import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     Unbinder unbinder;
     private static HomeFragment homeFragment;
     @BindView(R.id.rvlist)
-    RecyclerView rvlist;
+    SwipeMenuRecyclerView rvlist;
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)
@@ -78,8 +79,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     ImageView downtask;
     @BindView(R.id.content_main)
     CoordinatorLayout contentMain;
-    @BindView(R.id.pulllayout)
-    SimplePullLayout pulllayout;
+    /*@BindView(R.id.pulllayout)
+    SimplePullLayout pulllayout;*/
     /**
      * 磁力搜索
      */
@@ -149,7 +150,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         }
     }
     private void initEvent() {
-        pulllayout.postRefresh();
+       // pulllayout.postRefresh();
 
         appbar.addOnOffsetChangedListener(new MyOffsetChangedListener());
         toobar.setOnClickListener(v -> {
@@ -168,17 +169,44 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         catfrag.setOnClickListener(this);
         downCenter.setOnClickListener(this);
 
-
+        rvlist.useDefaultLoadMore(); // 使用默认的加载更多的View。
+        rvlist.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
     }
+
+    SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+        @Override
+        public void onLoadMore() {
+            // 该加载更多啦。
+            // 数据完更多数据，一定要调用这个方法。
+            // 第一个参数：表示此次数据是否为空。
+            // 第二个参数：表示是否还有更多数据。
+            getRecpresenter.getMoreData(++index,18);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    //  pulllayout.finishPull("加载完成",true);
+                    rvlist.loadMoreFinish(false, true);
+                    adapter.notifyDataSetChanged();
+                }
+            },1000);
+            // 如果加载失败调用下面的方法，传入errorCode和errorMessage。
+            // errorCode随便传，你自定义LoadMoreView时可以根据errorCode判断错误类型。
+            // errorMessage是会显示到loadMoreView上的，用户可以看到。
+            // mRecyclerView.loadMoreError(0, "请求网络失败");
+        }
+    };
+
+
     private OnDownPageListener listener;
     public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
         this.listener = onDownPageListener;
     }
 
     public void autoRefresh(){
-        if (pulllayout!=null){
-            pulllayout.postRefresh();
-        }
+//        if (pulllayout!=null){
+//            pulllayout.postRefresh();
+//        }
         if (getRecpresenter!=null){
             getRecpresenter.getBtRecommend(1,10);
         }
@@ -190,9 +218,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             @Override
             public void run() {
                 getRecpresenter.getRecentUpdate(1,18);
-                if (pulllayout!=null){
-                    pulllayout.finishPull("加载完成",true);
-                }
+//                if (pulllayout!=null){
+//                    pulllayout.finishPull("加载完成",true);
+//                }
             }
         },1000);
     }
@@ -203,7 +231,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             @Override
             public void run() {
                 getRecpresenter.getMoreData(++index,18);
-                pulllayout.finishPull("加载完成",true);
+              //  pulllayout.finishPull("加载完成",true);
             }
         },1000);
     }
@@ -280,7 +308,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     }
 
     private void initData() {
-        pulllayout.setOnPullListener(this);
+       // pulllayout.setOnPullListener(this);
         index = 1;
         getRecpresenter = new GetRecpresenter(getContext(), this);
         getRecpresenter.getRecentUpdate( index,18);
@@ -312,7 +340,6 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         this.info = info;
        GridLayoutManager manager =  new GridLayoutManager(getContext(), 3);
         rvlist.setLayoutManager(manager);
-
         homeAdapter = new CategoryAdapter(getContext(), info);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -329,6 +356,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             }
         });
         rvlist.setAdapter(homeAdapter);
+        rvlist.loadMoreFinish(false, true);
     }
 
     @Override

@@ -135,20 +135,22 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <com.xiaosu.pulllayout.SimplePullLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    <!--<com.xiaosu.pulllayout.SimplePullLayout
+
         android:layout_width="match_parent"
         android:id="@+id/pulllayout"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="40dp"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rvlist"
-            android:background="#ffffff"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-        </android.support.v7.widget.RecyclerView>
-    </com.xiaosu.pulllayout.SimplePullLayout>
 
+    </com.xiaosu.pulllayout.SimplePullLayout>-->
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/rvlist"
+        android:background="#ffffff"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="40dp"
+        android:layout_height="match_parent">
+    </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
 </android.support.design.widget.CoordinatorLayout>

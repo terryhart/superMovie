@@ -3,12 +3,12 @@ package dev.baofeng.com.supermovie;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Handler;
-import android.os.Looper;
+
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.umeng.commonsdk.UMConfigure;
