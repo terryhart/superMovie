@@ -28,6 +28,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:27.1.0'
-    //播放器 https://github.com/yangchaojiang/yjPlay
-    compile 'com.ycjiang:VideoPlayModule:2.2.19'
+   /* //播放器 https://github.com/yangchaojiang/yjPlay
+    compile 'com.ycjiang:VideoPlayModule:2.2.19'*/
+
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:2.5.3'
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-armv7a:2.5.3'
+
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:2.5.3'
 }

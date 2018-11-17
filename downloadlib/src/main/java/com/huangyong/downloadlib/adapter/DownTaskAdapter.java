@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
+import com.j256.ormlite.stmt.query.In;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }
             int progress = (int) (received*1.0f/total*1.0f*100);
             holder.posterImg.setProgress(progress);
-            if (taskInfo.get(position).getTitle().endsWith(".torrent")){
-                holder.playinloading.setText("BT种子");
-            }else {
-                holder.playinloading.setText("边下边播");
-            }
+
             if (progress>5){
                 holder.playinloading.setVisibility(View.VISIBLE);
                 holder.playinloadingBg.setVisibility(View.VISIBLE);
@@ -71,7 +68,11 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
             }else {
                 speed = taskInfo.get(position).getSpeed();
             }
-
+            if (taskInfo.get(position).getTitle().endsWith(".torrent")){
+                holder.playinloading.setText("BT种子");
+            }else {
+                holder.playinloading.setText("边下边播");
+            }
 
             //边下边播点击事件
             holder.playinloading.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +96,7 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.task_msg.setText("\n已暂停 ");
                 holder.task_size.setText("");
                 holder.posterImg.setTaskStatu(true);
+                holder.playinloadingBg.setVisibility(View.INVISIBLE);
                 holder.playinloading.setVisibility(View.INVISIBLE);
             }else if (taskInfo.get(position).getStatu()==2){
                 holder.finish_icon.setImageResource(R.drawable.ic_detail_download_finish);

@@ -31,7 +31,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.0'
     //完整版
-    compile 'com.ycjiang:VideoPlayModule:2.1.85'
     implementation files('libs/jsoup-1.8.1.jar')
     // (可选)
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')

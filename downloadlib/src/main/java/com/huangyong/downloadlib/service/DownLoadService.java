@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.exoplayer2.offline.DownloadService;
 import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.db.TaskedDao;
@@ -97,7 +96,7 @@ public class DownLoadService extends Service implements ITask {
                         Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+taskInfo.mTaskStatus);
                         if (taskInfo.mDownloadSize!=0&&taskInfo.mFileSize!=0&&taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
                             //添加到数据库
-                            synchronized (DownloadService.class){
+                            synchronized (DownLoadService.class){
                                 //文件下载完成，此数据在下一秒移动到已完成数据库。
                                 DoneTaskInfo task = new DoneTaskInfo();
                                 task.setPostImgUrl(taskInfos.get(i).getPostImgUrl());

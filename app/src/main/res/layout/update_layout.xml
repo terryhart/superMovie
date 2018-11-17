@@ -54,7 +54,7 @@
             android:layout_height="wrap_content">
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp30"
+                android:layout_height="30dp"
                 android:text="立即更新"
                 android:textColor="#ffffff"
                 android:background="@drawable/guide_follow_tag"

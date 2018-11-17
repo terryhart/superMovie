@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bftv.myapplication.ParseWebUrlHelper;
-import com.bftv.myapplication.PlayActivity;
 import com.bftv.myapplication.R;
 import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.util.DensityUtil;
@@ -26,7 +24,6 @@ import com.bftv.myapplication.webview.X5WebView;
 public class WebCrossActivity extends AppCompatActivity {
 
     private X5WebView web;
-    private Intent intent;
     private Button geturl;
 
     private String[] headUrl = {
@@ -78,7 +75,6 @@ public class WebCrossActivity extends AppCompatActivity {
 
         });
         web.loadUrl(getIntent().getStringExtra(KeyParam.BASEURL));
-        intent = new Intent(WebCrossActivity.this,PlayActivity.class);
 
         listView.init(headUrl.length, DensityUtil.dip2px(this, 180), new PopSpinnerView.NameFilter() {
             @Override

@@ -47,7 +47,6 @@ public class ProgressImageView extends AppCompatImageView {
     private boolean FINISHED = false;
     private float start =0;
     private RectF test;
-    private Bitmap finishBitmap;
 
     public void setTaskStatu(boolean pause) {
         this.PAUSE = pause;
@@ -89,7 +88,6 @@ public class ProgressImageView extends AppCompatImageView {
 
         pauseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.download_item_pause_icon_press_style2);
         startBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.download_item_resume_icon_press_style2);
-        finishBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.item_finish_flag);
 //        pauseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.download_item_retry_icon_press_style2);
         playBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.download_item_play_icon_press_style2);
         dstRect = new RectF(0,0,0,0);
@@ -131,7 +129,6 @@ public class ProgressImageView extends AppCompatImageView {
         canvas.drawRoundRect(rectF,0,0,paint);
 
         if (FINISHED&&!playIconHide){
-            canvas.drawBitmap(finishBitmap,getMeasuredWidth()-finishBitmap.getWidth(),getMeasuredHeight()-finishBitmap.getHeight(),bitmapPaint);
             canvas.drawBitmap(playBitmap,getMeasuredWidth()/2-playBitmap.getWidth()/2,
                     getMeasuredHeight()/2-playBitmap.getHeight()/2,bitmapPaint);
         }else {

@@ -9,13 +9,4 @@
     </style>
 
 
-    <style name="ExoMediaControllerBottomme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">55dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:background">@drawable/exo_bg_video_bottom</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:visibility">visible</item>
-    </style>
 </resources>

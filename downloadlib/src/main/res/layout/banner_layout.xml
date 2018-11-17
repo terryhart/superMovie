@@ -5,7 +5,6 @@
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:background="@drawable/ic_exo_back"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:focusable="true"

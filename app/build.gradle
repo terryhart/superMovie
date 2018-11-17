@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.growingio.android'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -60,7 +59,9 @@ android {
             outputFileName = fileName;
         }
     }
-
+    dataBinding{
+        enabled true
+    }
 }
 
 def getTime() {
@@ -114,5 +115,4 @@ dependencies {
     }
 
 
-    compile 'com.growingio.android:vds-android-agent:2.4.5@aar'
 }
