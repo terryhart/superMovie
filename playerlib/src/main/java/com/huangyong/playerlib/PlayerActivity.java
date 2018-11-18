@@ -11,11 +11,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
+import com.dueeeke.videoplayer.util.ProgressUtil;
 
 import java.io.File;
 
@@ -30,6 +32,7 @@ public class PlayerActivity extends AppCompatActivity {
     private String poster;
     private IjkVideoView ijkVideoView;
     private String path;
+    private StandardVideoControllers controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,8 @@ public class PlayerActivity extends AppCompatActivity {
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         ijkVideoView.setTitle(title);
 
-        StandardVideoController controller = new StandardVideoController(this);
+        controller = new StandardVideoControllers(this);
+        controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
 
 
@@ -62,29 +66,59 @@ public class PlayerActivity extends AppCompatActivity {
         Log.e("exoplaypath--",url);
 
         if (url.startsWith("/storage")){
-
-        }
-       /* if (!TextUtils.isEmpty(movieProgress)&&!TextUtils.isEmpty(url)){
-            if (Integer.parseInt(movieProgress)==0){
-                ijkVideoView.setUrl(url);
-            }else {
-                ijkVideoView.setUrl(url);
+            File file = new File(url);
+            if(file.exists()){
+                path = Uri.parse("file://"+file.getAbsolutePath()).toString();
             }
-            ijkVideoView.startFullScreen();
         }else {
-            movieProgress ="0";
-        }*/
-
-        File file = new File(url);
-        if(file.exists()){
-            path = Uri.parse("file://"+file.getAbsolutePath()).toString();
+            path=url;
         }
+
+
         ijkVideoView.setUrl(path);
         ijkVideoView.startFullScreen();
         ijkVideoView.start();
 //        exoPlayerManager.setPlaybackParameters(1f, 1f);
     }
+     OncheckListener listener = new OncheckListener() {
+        @Override
+        public void onChecked(int index) {
 
+            if (ijkVideoView!=null&&controller!=null){
+
+                switch (index){
+                    case 0:
+                        ijkVideoView.setSpeed(1.0f);
+                        controller.setCheckUpdate("正常");
+                        break;
+                    case 1:
+                        ijkVideoView.setSpeed(1.25f);
+                        controller.setCheckUpdate("1.25x");
+                        break;
+                    case 2:
+                        ijkVideoView.setSpeed(1.5f);
+                        controller.setCheckUpdate("1.5x");
+                        break;
+                    case 3:
+                        ijkVideoView.setSpeed(1.75f);
+                        controller.setCheckUpdate("1.75x");
+                        break;
+                    case 4:
+                        ijkVideoView.setSpeed(2.0f);
+                        controller.setCheckUpdate("2.0x");
+                        break;
+                        default:
+                            ijkVideoView.setSpeed(1.0f);
+                            controller.setCheckUpdate("1.0x");
+                            break;
+                }
+
+            }
+        }
+    };
+    interface OncheckListener{
+        void onChecked(int index);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -103,8 +137,8 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_TITLE_KEY,title);
         intent.putExtra(Params.LOCAL_PATH_KEY,url);
-        Log.e("movieprogress", ijkVideoView.getCurrentPosition()+"");
-        intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition());
+        Log.e("movieprogress", ProgressUtil.getSavedProgress(this.path)+"");
+        intent.putExtra(Params.MOVIE_PROGRESS, ProgressUtil.getSavedProgress(this.path)+"");
 
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);
         intent.putExtra(Params.POST_IMG_KEY,poster);
@@ -116,9 +150,8 @@ public class PlayerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!ijkVideoView.onBackPressed()) {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+
     }
 
 

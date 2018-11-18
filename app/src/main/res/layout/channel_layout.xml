@@ -150,7 +150,6 @@
         android:id="@+id/rvlist"
         android:background="#ffffff"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="40dp"
         android:layout_height="match_parent">
     </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
 </android.support.design.widget.CoordinatorLayout>

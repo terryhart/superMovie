@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="170dp"
+    android:background="@drawable/list_bg_shape"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/check5"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@android:color/transparent"
+        android:text="2.0x"
+        android:textColor="@color/text_select"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/check4"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/text_select"
+        android:text="1.75x"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/check3"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/text_select"
+         android:text="1.5x"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/check2"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="1.25x"
+        android:background="@android:color/transparent"
+        android:textColor="@color/text_select"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/check1"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="1.0x"
+        android:background="@android:color/transparent"
+        android:textColor="@color/text_select"
+        android:textSize="10sp" />
+
+</LinearLayout>

@@ -28,6 +28,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:cardview-v7:27.1.0'
+    compile 'com.android.support:design:27.1.0'
    /* //播放器 https://github.com/yangchaojiang/yjPlay
     compile 'com.ycjiang:VideoPlayModule:2.2.19'*/
 

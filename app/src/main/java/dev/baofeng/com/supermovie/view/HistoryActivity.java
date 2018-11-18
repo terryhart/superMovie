@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.domain.HistoryInfo;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import dev.baofeng.com.supermovie.domain.MovieInfo;
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.rv_his_list)
-    RecyclerView rvHisList;
+    SwipeMenuRecyclerView rvHisList;
     @BindView(R.id.clear)
     Button clear;
     private HistoryAdapter adapter;

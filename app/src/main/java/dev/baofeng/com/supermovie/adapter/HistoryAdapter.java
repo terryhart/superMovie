@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,8 +68,11 @@ public class HistoryAdapter extends RecyclerView.Adapter {
                e.printStackTrace();
            }
         });
-        String formatDuring = DateTools.formatDuring(Long.parseLong(progress));
-        ((HistoryHolder) holder).timeProgress.setText("已观看"+formatDuring);
+        if (!TextUtils.isEmpty(progress)){
+            String formatDuring = DateTools.formatDuring(Long.parseLong(progress));
+            ((HistoryHolder) holder).timeProgress.setText("已观看"+formatDuring);
+        }
+
     }
 
     @Override

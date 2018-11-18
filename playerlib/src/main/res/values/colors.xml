@@ -12,4 +12,9 @@
     <!--视频进度圆点的颜色-->
     <color name="timeBar_scrubber_color">#1effe9</color>
 
+
+    <color name="text_selected">#1effe9</color>
+     <color name="text_un_selected">#f9f9f9</color>
+
+
 </resources>

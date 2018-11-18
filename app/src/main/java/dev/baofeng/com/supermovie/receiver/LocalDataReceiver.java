@@ -33,7 +33,7 @@ public class LocalDataReceiver extends BroadcastReceiver {
             String path = intent.getStringExtra(Params.LOCAL_PATH_KEY);
             String progress = intent.getStringExtra(Params.MOVIE_PROGRESS);
             String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
-            Log.e("baocunjilu","baocunjilu"+urlMd5);
+            Log.e("baocunjilu","progress"+progress);
             String posterUrl = intent.getStringExtra(Params.POST_IMG_KEY);
             HistoryDao dao = HistoryDao.getInstance(context);
             //更新本地数据

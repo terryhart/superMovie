@@ -8,7 +8,7 @@ public class Params {
     public static final String TASK_ID_KEY = "TASK_ID_KEY";
     public static final String IS_TASK_NEW = "IS_TASK_NEW";
     public static final String PROXY_PALY_URL = "PROXY_PALY_URL";
-    public static final String ACTION_PLAY_URL = "action_play_video";
+     public static final String ACTION_PLAY_URL = "action_play_video";
     public static final String ACTION_UPDATE_PAGER_POSTER = "com_update_viewpager_poster";
     public static final String HISTORY_SAVE = "com.movie.history";
     public static final String MOVIE_PROGRESS = "MOVIE_PROGRESS";
