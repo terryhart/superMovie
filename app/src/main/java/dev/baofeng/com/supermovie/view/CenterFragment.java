@@ -7,9 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +28,9 @@ import android.widget.Toast;
 import com.bftv.myapplication.view.IndexActivity;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.model.Params;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +110,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
                 int extra = intent.getIntExtra(Params.UPDATE_PROGERSS, 0);
                 Log.e("extraprogress",extra+"");
                 if (tvUpdate!=null&&extra<100){
-                    tvUpdate.setText("正在更新 "+extra+"%");
+                    tvUpdate.setText("正在更新      "+extra+"%");
                 }else {
                     tvUpdate.setText("版本更新 ");
                 }
@@ -212,11 +220,39 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     @Override
     public void updateYes(AppUpdateInfo result) {
+        String downloadUrl = result.getData().getDownloadUrl();
+        String savePath = null;
+        try {
+            savePath = isExistDir("app_update");
+            File file = new File(savePath, getNameFromUrl(downloadUrl));
+            if (file.exists()){
+                installApp(file);
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         UpdateDialog dialog = new UpdateDialog(getContext(),result);
         dialog.show();
     }
 
-
+    private void installApp(File apkFile) {
+        if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
+            Uri apkUri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
+            Intent install = new Intent();
+            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            startActivity(install);
+        } else{
+            Intent install = new Intent();
+            install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(install);
+        }
+    }
     public static String getVersionName(Context context, String packageName){
         try {
             PackageManager manager = context.getPackageManager();
@@ -227,5 +263,34 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             e.printStackTrace();
         }
         return "";
+    }
+    /**
+     * @param url
+     * @return
+     * 从下载连接中解析出文件名
+     */
+    @NonNull
+    private String getNameFromUrl(String url) {
+        return url.substring(url.lastIndexOf("/") + 1);
+    }
+    /**
+     * @param saveDir
+     * @return
+     * @throws IOException
+     * 判断下载目录是否存在
+     */
+    private String isExistDir(String saveDir) throws IOException {
+        // 下载位置
+        File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
+        if (!downloadFile.mkdirs()) {
+            downloadFile.createNewFile();
+        }else {
+            File[] files = downloadFile.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                files[i].delete();
+            }
+        }
+        String savePath = downloadFile.getAbsolutePath();
+        return savePath;
     }
 }

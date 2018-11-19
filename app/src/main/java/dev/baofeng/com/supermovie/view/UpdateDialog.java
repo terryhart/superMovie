@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.huangyong.downloadlib.model.Params;
 
 import java.io.File;
+import java.io.IOException;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
@@ -46,6 +48,7 @@ public class UpdateDialog extends Dialog {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String downloadUrl = info.getData().getDownloadUrl();
                 if (TextUtils.isEmpty(downloadUrl)){
                     return;
@@ -70,6 +73,7 @@ public class UpdateDialog extends Dialog {
 
 
     }
+
 
     private void installApp(String savePath) {
 

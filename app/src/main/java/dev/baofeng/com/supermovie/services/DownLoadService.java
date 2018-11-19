@@ -29,6 +29,7 @@ public class DownLoadService extends IntentService {
 
     private NotificationManager notificationManager;
 
+    private boolean isDownloading = false;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -44,12 +45,16 @@ public class DownLoadService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
+
+
         String url = intent.getStringExtra(Params.DURL);
         //未安装或者版本低，开始下载,如果已开始下载，吐司进度
         showToastByRunnable(this,"开始下载",Toast.LENGTH_SHORT);
         DownloadUtil.get().download(url, "app_update", new DownloadUtil.OnDownloadListener() {
             @Override
             public void onDownloadSuccess(File downPath) {
+                isDownloading = false;
                 //下载完成，静默安装，完成后会发广播
                 showToastByRunnable(DownLoadService.this,"下载完成,准备安装",Toast.LENGTH_SHORT);
                 installApp(downPath);
@@ -61,20 +66,19 @@ public class DownLoadService extends IntentService {
                 intents.setAction(Params.ACTION_UPDATE_PROGERSS);
                 intents.putExtra(Params.UPDATE_PROGERSS,progress);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intents);
+
+                isDownloading = true;
             }
 
             @Override
             public void onDownloadFailed() {
                 Log.e("下载中","下载失败");
-
+                isDownloading = false;
             }
         });
     }
     private void installApp(File apkFile) {
-
-
-
-        if(Build.VERSION.SDK_INT>=24) {//判读版本是否在7.0以上
+        if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
             Uri apkUri = FileProvider.getUriForFile(this, "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
             Intent install = new Intent();
             install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -87,20 +91,6 @@ public class DownLoadService extends IntentService {
             install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(install);
         }
-
-
-
-
-
-
-
-
-       /* Uri uri = Uri.fromFile(new File(savePath));
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(uri,"application/vnd.android.package-archive");
-        getApplicationContext().startActivity(intent);*/
     }
     private void showToastByRunnable(final IntentService context, final CharSequence text, final int duration) {
         Handler handler = new Handler(Looper.getMainLooper());
