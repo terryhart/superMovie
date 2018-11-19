@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.db.TaskDao;
 import com.huangyong.downloadlib.db.TaskedDao;
@@ -24,6 +26,7 @@ import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.presenter.DownLoadPresenter;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.huangyong.downloadlib.utils.FileUtils;
+import com.huangyong.downloadlib.utils.NetUtil;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
@@ -148,6 +151,7 @@ public class DownLoadService extends Service implements ITask {
         intentFilter.addAction(Params.TASK_DELETE);
         intentFilter.addAction(Params.TASK_PAUSE);
         intentFilter.addAction(Params.TASK_START);
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(Params.TASK_COMMPLETE);
         intentFilter.addAction(Params.HISTORY_SAVE);
         registerReceiver(taskReceiver,intentFilter);
@@ -190,7 +194,31 @@ public class DownLoadService extends Service implements ITask {
                 String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
                 Toast.makeText(getApplicationContext(), title+"\n下载完成", Toast.LENGTH_SHORT).show();
             }
-
+            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                int netWorkState = NetUtil.getNetWorkState(context);
+                // 接口回调传过去状态的类型
+                switch (netWorkState){
+                    case NetUtil.NETWORK_NONE:
+                        Toast.makeText(context, "当前网络连接异常，可能无法下载影片", Toast.LENGTH_LONG).show();
+                        break;
+                    case NetUtil.NETWORK_MOBILE:
+                        Toast.makeText(context, "当前网络为移动网络，已停止所有下载任务\n如仍然需下载,可手动启动任务", Toast.LENGTH_LONG).show();
+                        //不允许4G时下载
+                        //获取下载列表，遍历并停止下载任务
+                        TaskDao taskDao = TaskDao.getInstance(getApplicationContext());
+                        List<DowningTaskInfo> downingTaskInfos = taskDao.queryAll();
+                        if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
+                            for (int i = 0; i < downingTaskInfos.size(); i++) {
+                                XLTaskHelper.instance().stopTask(Long.parseLong(downingTaskInfos.get(i).getTaskId()));
+                            }
+                        }
+                        break;
+                    case NetUtil.NETWORK_WIFI:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     };
 
