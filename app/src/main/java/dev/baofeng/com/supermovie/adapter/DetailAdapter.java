@@ -62,28 +62,36 @@ public class DetailAdapter extends RecyclerView.Adapter {
                 }
 
             }
-            if (holder instanceof DownHolder){
-                String downUrl = infos.get(0).getDownUrl().get(position-1);
-                if (downUrl.contains("ed2k")){
-                    ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position-1]);
-                    Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
-                }else if (downUrl.contains("magnet")){
-                    ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position-1]);
-                    Glide.with(context).load(R.drawable.ic_dl_torrent).into(((DownHolder) holder).donwIconPic);
-                }else if (downUrl.contains("thunder")){
-                    ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position-1]);
-                    Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
-                }
+            if (position>1){
+                if (holder instanceof DownHolder){
+                    String downUrl = infos.get(0).getDownUrl().get(position-1);
 
-                ((DownHolder) holder).downIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (listenr !=null){
-                            listenr.clicked(infos.get(0).getDownUrl().get(position-1),infos.get(0).getImgUrl());
-                        }
+                    if (downItemList.length<position-1){
+                        return;
                     }
-                });
+
+                    if (downUrl.contains("ed2k")){
+                        ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position-2]);
+                        Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
+                    }else if (downUrl.contains("magnet")){
+                        ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position-1]);
+                        Glide.with(context).load(R.drawable.ic_dl_torrent).into(((DownHolder) holder).donwIconPic);
+                    }else if (downUrl.contains("thunder")){
+                        ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position-1]);
+                        Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
+                    }
+
+                    ((DownHolder) holder).downIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (listenr !=null){
+                                listenr.clicked(infos.get(0).getDownUrl().get(position-1),infos.get(0).getImgUrl());
+                            }
+                        }
+                    });
+                }
             }
+
         }
     }
 

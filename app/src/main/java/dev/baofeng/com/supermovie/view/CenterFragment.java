@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
@@ -54,6 +56,7 @@ import dev.baofeng.com.supermovie.utils.ShareUtil;
  */
 
 public class CenterFragment extends Fragment implements View.OnClickListener, IAllView, IupdateView {
+    private static final int INSTALL_APK_REQUESTCODE = 100;
     Unbinder unbinder;
     private static CenterFragment homeFragment;
     @BindView(R.id.tv_downing)
@@ -238,8 +241,28 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         dialog.show();
     }
 
+    /**
+     * https://blog.csdn.net/qq_17470165/article/details/80574195
+     * @param apkFile
+     */
     private void installApp(File apkFile) {
-        if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            //来判断应用是否有权限安装apk
+            boolean installAllowed= getContext().getPackageManager().canRequestPackageInstalls();
+            //有权限
+            if (installAllowed) {
+                //安装apk
+                install(apkFile.getPath());
+            } else {
+                //无权限 申请权限
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+            }
+        } else {
+            install(apkFile.getPath());
+        }
+
+       /* if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
             Uri apkUri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
             Intent install = new Intent();
             install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -251,7 +274,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
             install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(install);
-        }
+        }*/
     }
     public static String getVersionName(Context context, String packageName){
         try {
@@ -292,5 +315,21 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         }
         String savePath = downloadFile.getAbsolutePath();
         return savePath;
+    }
+
+    private void install(String apkPath) {
+        //7.0以上通过FileProvider
+        if (Build.VERSION.SDK_INT >= 24) {
+            Uri uri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", new File(apkPath));
+            Intent intent = new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            getContext().startActivity(intent);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.parse("file://" + apkPath), "application/vnd.android.package-archive");
+            getContext().startActivity(intent);
+        }
     }
 }

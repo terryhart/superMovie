@@ -121,8 +121,12 @@ dependencies {
 
     //https://github.com/cpacm/SimpleSlider
 
-    //
+    //https://github.com/yanzhenjie/SwipeRecyclerView
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+
+
+    //https://github.com/jdsjlzx/LRecyclerView  下拉刷新上拉加载
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
 
     //    implementation project(':library')
     implementation('com.cpacm.simpleslider:library:2.2.1') {
