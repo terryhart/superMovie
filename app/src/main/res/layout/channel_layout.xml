@@ -24,7 +24,7 @@
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="360dp"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
                 app:contentScrim="@color/colorPrimary"
                 app:elevation="0dp">
@@ -54,6 +54,7 @@
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="100dp"
+                            android:layout_marginTop="80dp"
                             android:background="@android:color/transparent"
                             android:clipChildren="false"
                             android:clipToPadding="false"
@@ -156,25 +157,19 @@
                 </android.support.design.widget.CollapsingToolbarLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
-                    <LinearLayout
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <View
-                            android:layout_width="2dp"
-                            android:layout_height="18dp"
-                            android:background="@color/colorPrimary"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/colorPrimary"
-                            android:text="最近更新"/>
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="#fff"
+                        android:gravity="center"
+                        android:textColor="#272727"
+                        android:text="最近更新"/>
                 </LinearLayout>
             </android.support.design.widget.AppBarLayout>
             <!--<com.xiaosu.pulllayout.SimplePullLayout

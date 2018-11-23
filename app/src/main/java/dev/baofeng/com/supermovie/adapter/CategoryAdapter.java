@@ -53,9 +53,9 @@ public class CategoryAdapter extends RecyclerView.Adapter {
         }
         if (holder instanceof CommonHolder){
 
-            String imgUrl = datas.getData().get(position-1).getDownimgurl();
-            String name = datas.getData().get(position-1).getDownLoadName();
-            String downItemTitle = datas.getData().get(position-1).getDowndtitle();
+            String imgUrl = datas.getData().get(position).getDownimgurl();
+            String name = datas.getData().get(position).getDownLoadName();
+            String downItemTitle = datas.getData().get(position).getDowndtitle();
 
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
@@ -72,10 +72,10 @@ public class CategoryAdapter extends RecyclerView.Adapter {
 //                        Intent intent = new Intent(context, DetailActivity.class);
                         Intent intent = new Intent(context, MovieDetailActivity.class);
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
-                        intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position-1).getDownLoadUrl());
+                        intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
-                        intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position-1).getMvdesc());
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
                         context.startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();
@@ -88,15 +88,11 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
 
-        if (position==0){
-            return GlobalMsg.ITEM_TYPE_1;
-        }else {
-            return GlobalMsg.ITEM_TYPE_3;
-        }
+        return GlobalMsg.ITEM_TYPE_3;
     }
 
     @Override
     public int getItemCount() {
-        return datas.getData().size()+1;
+        return datas.getData().size();
     }
 }
