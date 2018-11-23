@@ -13,6 +13,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,10 @@ import com.cpacm.library.transformers.CyclePageTransformer;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -56,17 +63,19 @@ import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.MyTransformation;
 
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.OnPullCallBackListener, ViewPager.OnPageChangeListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageChangeListener, View.OnClickListener {
 
     Unbinder unbinder;
     private static HomeFragment homeFragment;
     @BindView(R.id.rvlist)
-    SwipeMenuRecyclerView rvlist;
+    RecyclerView rvlist;
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.appbar)
@@ -78,9 +87,9 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
     @BindView(R.id.downtask)
     ImageView downtask;
     @BindView(R.id.content_main)
-    CoordinatorLayout contentMain;
-    /*@BindView(R.id.pulllayout)
-    SimplePullLayout pulllayout;*/
+    LinearLayout contentMain;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     /**
      * 磁力搜索
      */
@@ -169,33 +178,23 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         catfrag.setOnClickListener(this);
         downCenter.setOnClickListener(this);
 
-        rvlist.useDefaultLoadMore(); // 使用默认的加载更多的View。
-        rvlist.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+        rvlist.setItemAnimator(new DefaultItemAnimator());
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getRecpresenter.getRecentUpdate(1,18);
+                refreshlayout.finishRefresh(2000);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                getRecpresenter.getMoreData(++index,18);
+                refreshlayout.finishLoadMore(10);//传入false表示加载失败
+            }
+        });
     }
 
-    SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
-        @Override
-        public void onLoadMore() {
-            // 该加载更多啦。
-            // 数据完更多数据，一定要调用这个方法。
-            // 第一个参数：表示此次数据是否为空。
-            // 第二个参数：表示是否还有更多数据。
-            getRecpresenter.getMoreData(++index,18);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    //  pulllayout.finishPull("加载完成",true);
-                    rvlist.loadMoreFinish(false, true);
-                    adapter.notifyDataSetChanged();
-                }
-            },1000);
-            // 如果加载失败调用下面的方法，传入errorCode和errorMessage。
-            // errorCode随便传，你自定义LoadMoreView时可以根据errorCode判断错误类型。
-            // errorMessage是会显示到loadMoreView上的，用户可以看到。
-            // mRecyclerView.loadMoreError(0, "请求网络失败");
-        }
-    };
 
 
     private OnDownPageListener listener;
@@ -212,29 +211,8 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
         }
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getRecpresenter.getRecentUpdate(1,18);
-//                if (pulllayout!=null){
-//                    pulllayout.finishPull("加载完成",true);
-//                }
-            }
-        },1000);
-    }
 
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getRecpresenter.getMoreData(++index,18);
-              //  pulllayout.finishPull("加载完成",true);
-            }
-        },1000);
-    }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -356,7 +334,7 @@ public class HomeFragment extends Fragment implements IMoview,  BasePullLayout.O
             }
         });
         rvlist.setAdapter(homeAdapter);
-        rvlist.loadMoreFinish(false, true);
+//        rvlist.loadMoreFinish(false, true);
     }
 
     @Override

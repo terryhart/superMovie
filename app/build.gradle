@@ -128,6 +128,10 @@ dependencies {
     //https://github.com/jdsjlzx/LRecyclerView  下拉刷新上拉加载
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
 
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
+
+
     //    implementation project(':library')
     implementation('com.cpacm.simpleslider:library:2.2.1') {
         exclude module: 'appcompat-v7'
