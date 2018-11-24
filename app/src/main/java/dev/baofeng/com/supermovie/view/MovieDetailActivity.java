@@ -113,7 +113,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         detail_app_bar = findViewById(R.id.app_bar);
         favor = findViewById(R.id.favor);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

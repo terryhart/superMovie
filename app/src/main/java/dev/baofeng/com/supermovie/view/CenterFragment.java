@@ -71,6 +71,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     TextView tvCollect;
     @BindView(R.id.versionName)
     TextView versionName;
+    @BindView(R.id.tv_help)
+    TextView tvHelp;
     @BindView(R.id.share_app)
     Button shareApp;
 
@@ -171,6 +173,14 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FavorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AboutUsActivity.class);
                 startActivity(intent);
             }
         });

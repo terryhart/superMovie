@@ -3,20 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="关于我们"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/tasktitle"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:titleTextAppearance="@style/ToolbarTitle"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:layout_height="?attr/actionBarSize"
         />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginBottom="@dimen/dp_60"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关于/反馈"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:id="@+id/content_title"
+                />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/content_title"
+                android:layout_margin="@dimen/dp_10"
+                android:layout_height="match_parent">
+                <WebView
+                    android:layout_width="match_parent"
+                    android:id="@+id/about_content"
+                    android:layout_height="match_parent"/>
+            </ScrollView>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>
