@@ -90,7 +90,6 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.task_size.setText(fileSize+"  已下载"+receivedSize);
                 holder.task_msg.setText("\n正在下载  "+speed+" /s");
                 holder.posterImg.setTaskStatu(false);
-                holder.playinloading.setVisibility(View.VISIBLE);
             }else if (taskInfo.get(position).getStatu()==0||taskInfo.get(position).getStatu()==4){
                 holder.finish_icon.setImageResource(R.drawable.download_item_pause_icon);
                 holder.task_msg.setText("\n已暂停 ");

@@ -131,7 +131,7 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
 
-
+    compile "com.github.yjfnypeu:UpdatePlugin:3.1.2"
     //    implementation project(':library')
     implementation('com.cpacm.simpleslider:library:2.2.1') {
         exclude module: 'appcompat-v7'
