@@ -319,22 +319,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
        GridLayoutManager manager =  new GridLayoutManager(getContext(), 3);
         rvlist.setLayoutManager(manager);
         homeAdapter = new CategoryAdapter(getContext(), info);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int spanSize;
-                if (homeAdapter.getItemViewType(position) == GlobalMsg.ITEM_TYPE_1) {
-                    spanSize =3;
-                    //跨2列
-                } else   {
-                    spanSize = 1;
-                    //跨1列
-                }
-                return spanSize;
-            }
-        });
         rvlist.setAdapter(homeAdapter);
-//        rvlist.loadMoreFinish(false, true);
     }
 
     @Override
