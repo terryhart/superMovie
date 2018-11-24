@@ -51,17 +51,19 @@ public class DownLoadService extends IntentService {
         String url = intent.getStringExtra(Params.DURL);
         //未安装或者版本低，开始下载,如果已开始下载，吐司进度
         showToastByRunnable(this,"开始下载",Toast.LENGTH_SHORT);
+
+        downLoadFile(url);
         DownloadUtil.get().download(url, "app_update", new DownloadUtil.OnDownloadListener() {
             @Override
-            public void onDownloadSuccess(File downPath) {
+            public void onDownloadSuccess(File apkFile) {
                 isDownloading = false;
                 //下载完成，静默安装，完成后会发广播
                 showToastByRunnable(DownLoadService.this,"下载完成,准备安装",Toast.LENGTH_SHORT);
-                installApp(downPath);
+                installApp(apkFile);
             }
             @Override
             public void onDownloading(int progress) {
-                Log.e("下载中",progress+"");
+
                 Intent intents = new Intent();
                 intents.setAction(Params.ACTION_UPDATE_PROGERSS);
                 intents.putExtra(Params.UPDATE_PROGERSS,progress);
@@ -77,7 +79,13 @@ public class DownLoadService extends IntentService {
             }
         });
     }
+
+    private void downLoadFile(String url) {
+
+    }
+
     private void installApp(File apkFile) {
+        Log.e("downloadname","---"+apkFile.getName());
         if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
             Uri apkUri = FileProvider.getUriForFile(this, "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
             Intent install = new Intent();

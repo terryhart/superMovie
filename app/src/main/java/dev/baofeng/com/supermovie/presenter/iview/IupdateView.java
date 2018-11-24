@@ -15,7 +15,7 @@ import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
  * 2018/9/27 ：created
  */
 public interface IupdateView {
-    void  noUpdate();
+    void  noUpdate(String url);
 
     void updateYes(AppUpdateInfo result);
 }

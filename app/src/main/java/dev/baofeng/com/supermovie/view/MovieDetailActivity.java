@@ -64,7 +64,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String imgScreenShot;
     private Toolbar toolbar;
     private AppBarLayout detail_app_bar;
-    private ImageView backup;
     private TextView titleView;
     private DetailAdapter detailAdapter;
     private String downItemTitle;
@@ -113,9 +112,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         toolbar = findViewById(R.id.toolbar);
         detail_app_bar = findViewById(R.id.app_bar);
         favor = findViewById(R.id.favor);
-        backup = findViewById(R.id.backup);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-        backup.setOnClickListener(new View.OnClickListener() {
+        toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -331,11 +329,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             if (progress >= 0.8) {
                 toolbar.setVisibility(View.VISIBLE);
                 titleView.setAlpha(progress);
-                backup.setAlpha(progress);
             } else {
                 toolbar.setVisibility(View.VISIBLE);
                 titleView.setAlpha(0.0f);
-                backup.setAlpha(0.4f);
             }
         }
     }

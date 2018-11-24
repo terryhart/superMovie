@@ -141,12 +141,17 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 TaskDao dao = TaskDao.getInstance(getContext());
                 List<DowningTaskInfo> taskInfos =dao.queryAll();
                 if (taskInfos.size()>0){
-                    infos.clear();
-                    infos.addAll(taskInfos);
-                    adapter.notifyDataSetChanged();
+                    synchronized (DownloadingTaskFragment.class){
+                        infos.clear();
+                        infos.addAll(taskInfos);
+                        adapter.notifyDataSetChanged();
+                    }
                 }else {
-                    infos.clear();
-                    adapter.notifyDataSetChanged();
+                    synchronized (DownloadingTaskFragment.class){
+                        infos.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
             }
         }
@@ -171,7 +176,6 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
 //                XLTaskHelper.instance().startTask(Long.parseLong(info.getTaskId()));
                 TaskLibHelper.reStartTask(info.getTaskUrl(),info.getLocalPath(),info.getPostImgUrl(),getActivity());
             }
-
 
         }else {
             //正在下载，点击停止

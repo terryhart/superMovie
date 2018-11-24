@@ -217,7 +217,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     }
 
     @Override
-    public void noUpdate() {
+    public void noUpdate(String url) {
         Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
     }
 
@@ -319,7 +319,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     private void install(String apkPath) {
         //7.0以上通过FileProvider
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT > 25) {
             Uri uri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", new File(apkPath));
             Intent intent = new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

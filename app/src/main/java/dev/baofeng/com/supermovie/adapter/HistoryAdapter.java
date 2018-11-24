@@ -2,17 +2,20 @@ package dev.baofeng.com.supermovie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.huangyong.playerlib.Params;
 import com.huangyong.playerlib.PlayerActivity;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,6 +58,11 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         String progress = info.getData().get(position).getProgress();
         ((HistoryHolder) holder).root.setOnClickListener(view -> {
            try {
+               File file = new File(info.getData().get(position).getDownLoadUrl());
+               if(!file.exists()){
+                   Toast.makeText(context, "本地文件不存在，可能已删除", Toast.LENGTH_SHORT).show();
+                   return;
+               }
                Intent intent = new Intent(context, PlayerActivity.class);
                intent.putExtra(GlobalMsg.KEY_POST_IMG, URLImg);
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);

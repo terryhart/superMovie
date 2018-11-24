@@ -163,6 +163,12 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         if (taskInfo.getTitle().endsWith(".torrent")){
             /*final Dialog dialog = BtDownloadDialog.getInstance(getContext(), R.layout.bt_down_load_layout);
             dialog.show();*/
+            File file = new File(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
+            if (!file.exists()){
+                Toast.makeText(getContext(), "本地文件不存在，可能已被删除", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             final TorrentInfo torrentInfo = XLTaskHelper.instance().getTorrentInfo(taskInfo.getLocalPath()+"/"+taskInfo.getTitle());
             Log.e("torrentinfo",torrentInfo.mFileCount+"");
             CheckBoxDialog.showCheckBoxDialog(getContext(), torrentInfo, taskInfo.getLocalPath() + "/" + taskInfo.getTitle(), new CheckBoxDialog.OnChoseFileListener() {
@@ -182,9 +188,15 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         }else {
             String loacalURL = taskInfo.getLocalPath()+"/"+taskInfo.getTitle();
             Log.e("localpath",loacalURL);
+            File file = new File(loacalURL);
+            if (!file.exists()){
+                Toast.makeText(getContext(), "本地文件不存在，可能已被删除", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
             intent.putExtra(Params.PROXY_PALY_URL,taskInfo.getFilePath());
-            intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(taskInfo.getLocalPath()+"/"+taskInfo.getTitle()));
+            intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(loacalURL));
             intent.putExtra(Params.POST_IMG_KEY,taskInfo.getPostImgUrl());
             intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
             intent.putExtra(Params.MOVIE_PROGRESS,"0");

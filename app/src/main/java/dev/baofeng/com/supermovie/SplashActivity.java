@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
     }
 
     @Override
-    public void noUpdate() {
+    public void noUpdate(String url) {
         SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,0);
     }
 

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.MovieDetailActivity">
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="#1ca7e3"
+            app:contentScrim="@color/theme_blue"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
            <RelativeLayout
@@ -51,6 +50,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 app:titleTextAppearance="@style/ToolbarTitle"
+                app:navigationIcon="?attr/homeAsUpIndicator"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" >
@@ -64,16 +64,9 @@
                         android:textSize="16sp"
                         android:gravity="center_vertical"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="30dp"
                         android:id="@+id/toolbarTitle"
                         />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/backup"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

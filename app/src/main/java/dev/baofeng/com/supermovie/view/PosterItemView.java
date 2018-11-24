@@ -53,6 +53,7 @@ public class PosterItemView extends AppCompatImageView {
         textPaint.setTextSize(30);
 
         rect = new Rect(0,0,360,500);
+
     }
 
     public void setReverseImageBitmap(Bitmap bitmap){

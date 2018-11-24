@@ -70,7 +70,7 @@ public class BasicPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         if (dataBeans==null){
-            return 0;
+            return 6;
         }else return dataBeans.size();
     }
 

@@ -90,6 +90,7 @@
            android:visibility="invisible"
        android:focusable="true"
        android:paddingLeft="10dp"
+
        android:id="@+id/playinloading"
        android:textColor="#0697df"
        android:layout_alignParentBottom="true"
