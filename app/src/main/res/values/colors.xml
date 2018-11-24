@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3eb6cf</color>
+    <color name="colorPrimary">#249bb3</color>
     <color name="colorPrimaryDark">#249bb3</color>
     <color name="colorAccent">#249bb3</color>
 
@@ -19,7 +19,7 @@
     <color name="gm_minor">#ff8a00</color>
     <color name="gm_divider_line">#d8d8d8</color>
     <color name="gm_text_silver">#aaaaaa</color>
-    <color name="gm_major_hl_alpha">#cc06a7c4</color>
+    <color name="gm_major_hl_alpha">#249bb3</color>
     <color name="homepage_item_normal">#ffffff</color>
     <color name="homepage_item_press">#00bf77</color>
     <color name="text_hint">#9e9e9e</color>
@@ -45,7 +45,7 @@
     <!-- 有内容区域背景色 -->
     <color name="theme_bottom_text">#9b9b9b</color>
     <!-- 底部按钮的文字及图标颜色 -->
-    <color name="theme_blue">#2bbefe</color>
+    <color name="theme_blue">#249bb3</color>
     <!-- 地图页面的定位图标颜色，以及蓝色字的颜色 -->
     <color name="theme_gray">#f4f3f3</color>
     <!-- 底部按钮的背景色 -->

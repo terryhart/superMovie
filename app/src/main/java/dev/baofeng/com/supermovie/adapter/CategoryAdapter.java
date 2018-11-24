@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.adapter;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import com.bumptech.glide.Glide;
 
@@ -16,8 +19,10 @@ import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.HomeHeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
+import dev.baofeng.com.supermovie.view.BaseAnimation;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
+import dev.baofeng.com.supermovie.view.widget.SlideInRightAnimation;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -26,6 +31,16 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 public class CategoryAdapter extends RecyclerView.Adapter {
     private Context context;
     private RecentUpdate datas;
+
+    private int mLastPosition = -1;
+    private int mPosition = 0;
+    private Interpolator mInterpolator = new LinearInterpolator();
+    private int mDuration = 500;
+    private BaseAnimation mSelectAnimation = new SlideInRightAnimation();
+    private boolean mOpenAnimationEnable = true;
+
+
+
 
     public CategoryAdapter(Context context, RecentUpdate datas) {
         this.context = context;
@@ -82,6 +97,8 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+
+
         }
     }
 
@@ -95,4 +112,46 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return datas.getData().size();
     }
+
+
+    /**
+     * 开启动画
+     * @param animator
+     */
+    private void startAnim(Animator animator) {
+        animator.setDuration(mDuration).start();
+        animator.setInterpolator(mInterpolator);
+    }
+
+
+    /**
+     * 设置动画效果
+     * @param animation
+     */
+    public void setAnimation(BaseAnimation animation){
+        this.mOpenAnimationEnable = true;
+        this.mSelectAnimation = animation;
+    }
+
+    /**
+     * 添加动画
+     * @param holder
+     */
+    public void addAnimation(RecyclerView.ViewHolder holder) {
+        if (mOpenAnimationEnable) {
+            if (holder.getLayoutPosition() > mLastPosition) {
+                BaseAnimation animation = null;
+                if (mSelectAnimation != null) {
+                    animation = mSelectAnimation;
+                }
+                for (Animator anim : animation.getAnimators(holder.itemView)) {
+                    startAnim(anim);
+
+                }
+                mLastPosition = holder.getLayoutPosition();
+            }
+        }
+    }
+
+
 }

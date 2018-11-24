@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -71,15 +73,32 @@ public class SearchActivity extends AppCompatActivity implements ISview {
                 keyword = s.toString();
             }
         });
-        searchNow.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(keyword)){
-                presenter.search(keyword);
-            }else {
-                Toast.makeText(SearchActivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    doSearch();
+                    return true;
+                }
+                return false;
             }
+        });
+
+
+
+        searchNow.setOnClickListener(v -> {
+            doSearch();
 
         });
         clearEt.setOnClickListener(v -> etSearch.setText(""));
+    }
+
+    private void doSearch() {
+        if (!TextUtils.isEmpty(keyword)){
+            presenter.search(keyword);
+        }else {
+            Toast.makeText(SearchActivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

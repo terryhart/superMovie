@@ -62,6 +62,7 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.MyTransformation;
+import dev.baofeng.com.supermovie.view.widget.SlideInRightAnimation;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -143,6 +144,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         return view;
     }
 
+
     private MainActivity.OnPageChanged lisener;
     public void setOnPageChangeListener(MainActivity.OnPageChanged onPageChanged) {
         this.lisener = onPageChanged;
@@ -179,6 +181,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         downCenter.setOnClickListener(this);
 
         rvlist.setItemAnimator(new DefaultItemAnimator());
+        refreshLayout.setEnableAutoLoadMore(true);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -319,6 +322,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
        GridLayoutManager manager =  new GridLayoutManager(getContext(), 3);
         rvlist.setLayoutManager(manager);
         homeAdapter = new CategoryAdapter(getContext(), info);
+        homeAdapter.setAnimation(new SlideInRightAnimation());
         rvlist.setAdapter(homeAdapter);
     }
 
@@ -336,6 +340,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     @Override
     public void loadBtData(RecentUpdate result) {
         this.bannerInfo = result;
+        this.dataBeans.clear();
         this.dataBeans.addAll(result.getData()) ;
         adapter.notifyDataSetChanged();
         viewPager.notifyDataSetChanged();
