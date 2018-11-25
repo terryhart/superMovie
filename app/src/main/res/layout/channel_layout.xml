@@ -160,6 +160,7 @@
                     android:layout_height="@dimen/dp_40"
                     android:layout_gravity="bottom"
                     android:gravity="bottom"
+
                     android:orientation="horizontal">
 
                     <TextView
@@ -187,6 +188,26 @@
                 android:overScrollMode="never"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:id="@+id/empty_view"
+                android:visibility="gone"
+                android:layout_marginBottom="30dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="服务器无响应，稍后再来吧"
+                    android:id="@+id/empty_img"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="60dp"
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:textSize="14sp"
+
+                    />
+            </FrameLayout>
         </android.support.design.widget.CoordinatorLayout>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -227,6 +227,11 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     }
 
     @Override
+    public void loadFail() {
+
+    }
+
+    @Override
     public void noUpdate(String url) {
         Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
     }

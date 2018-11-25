@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -115,6 +116,9 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     @BindView(R.id.downCenter)
     TextView downCenter;
 
+    @BindView(R.id.empty_view)
+    FrameLayout empView;
+
 
     private GetRecpresenter getRecpresenter;
     private RecentUpdate info;
@@ -150,18 +154,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         this.lisener = onPageChanged;
     }
 
-    private final class SpringInterpolator implements Interpolator {
 
-        private final static float FACTOR = 0.5F;
-
-        @Override
-        public float getInterpolation(final float input) {
-            return (float) (Math.pow(2.0F, -10.0F * input) *
-                    Math.sin((input - FACTOR / 4.0F) * (2.0F * Math.PI) / FACTOR) + 1.0F);
-        }
-    }
     private void initEvent() {
-       // pulllayout.postRefresh();
 
         appbar.addOnOffsetChangedListener(new MyOffsetChangedListener());
         toobar.setOnClickListener(v -> {
@@ -187,6 +181,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
             public void onRefresh(RefreshLayout refreshlayout) {
                 getRecpresenter.getRecentUpdate(1,18);
                 refreshlayout.finishRefresh(2000);//传入false表示刷新失败
+                getRecpresenter.getBtRecommend(1,10);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -196,22 +191,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
                 refreshlayout.finishLoadMore(10);//传入false表示加载失败
             }
         });
-    }
-
-
-
-    private OnDownPageListener listener;
-    public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
-        this.listener = onDownPageListener;
-    }
-
-    public void autoRefresh(){
-//        if (pulllayout!=null){
-//            pulllayout.postRefresh();
-//        }
-        if (getRecpresenter!=null){
-            getRecpresenter.getBtRecommend(1,10);
-        }
     }
 
 
@@ -312,10 +291,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         unbinder.unbind();
     }
 
-
-
-
-
     @Override
     public void loadData(RecentUpdate info) {
         this.info = info;
@@ -324,11 +299,15 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         homeAdapter = new CategoryAdapter(getContext(), info);
         homeAdapter.setAnimation(new SlideInRightAnimation());
         rvlist.setAdapter(homeAdapter);
+
+        if (empView.isShown()){
+            empView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public void loadError(String msg) {
-
+        empView.setVisibility(View.VISIBLE);
     }
 
 
@@ -347,6 +326,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         viewPager.setOffscreenPageLimit(10);
         viewPager.setCurrentItem(2);
         contentMain.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 return viewPager.dispatchTouchEvent(motionEvent);

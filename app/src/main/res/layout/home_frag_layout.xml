@@ -6,7 +6,25 @@
     android:paddingTop="10dp"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/empty_view"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="点击屏幕刷新"
+            android:id="@+id/empty_img"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:focusable="true"
+            android:drawablePadding="@dimen/dp_10"
+            android:textSize="18sp"
+            android:drawableTop="@drawable/common_page_empty_zx"
 
+            />
+    </FrameLayout>
 
     <com.xiaosu.pulllayout.SimplePullLayout
         android:layout_width="match_parent"

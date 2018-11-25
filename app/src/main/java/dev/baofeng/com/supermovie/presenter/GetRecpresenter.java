@@ -37,7 +37,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     @Override
                     public void onError(Throwable e) {
-
+                        iview.loadError("");
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
@@ -60,7 +60,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
 
                     @Override
                     public void onError(Throwable e) {
-
+                        iview.loadError("");
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
@@ -98,28 +98,7 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                 });
         addSubscription(subscription);
     }
-    public void getBtMoreData(int page,int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getBtRecomend(page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                    @Override
-                    public void onNext(RecentUpdate result) {
-                    }
-                });
-        addSubscription(subscription);
-    }
 
     public void getBtDetail(String title) {
         Subscription subscription = ApiManager
