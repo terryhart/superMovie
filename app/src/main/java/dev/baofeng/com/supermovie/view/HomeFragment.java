@@ -182,13 +182,16 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
                 getRecpresenter.getRecentUpdate(1,18);
                 refreshlayout.finishRefresh(2000);//传入false表示刷新失败
                 getRecpresenter.getBtRecommend(1,10);
+
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 getRecpresenter.getMoreData(++index,18);
-                refreshlayout.finishLoadMore(10);//传入false表示加载失败
+                //传入false表示加载失败
+                refreshlayout.finishLoadMore(10);
+
             }
         });
     }

@@ -69,7 +69,7 @@ public class DownloadUtil {
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
-                    File file = new File(savePath, getNameFromUrl(url));
+                    File file = new File(savePath, getNameFromUrl(url)+".ing");
                     fos = new FileOutputStream(file);
                     long sum = 0;
                     while ((len = is.read(buf)) != -1) {
@@ -82,7 +82,8 @@ public class DownloadUtil {
                     fos.flush();
                     // 下载完成
                     isDownloading=false;
-                    listener.onDownloadSuccess(file);
+
+                    listener.onDownloadSuccess(reNameFile(file));
                 } catch (Exception e) {
                     isDownloading=false;
                     listener.onDownloadFailed();
@@ -103,6 +104,17 @@ public class DownloadUtil {
                 }
             }
         });
+    }
+
+    private File reNameFile(File file) {
+        String fileName = file.getName().replace(".ing","");
+        File aFile = new File("/sdcard/app_update/"+file.getName());
+        File sss = new File("/sdcard/app_update/" + fileName);
+        if (aFile.exists()){
+            aFile.renameTo(sss);
+            return sss;
+        }
+        return sss;
     }
 
 

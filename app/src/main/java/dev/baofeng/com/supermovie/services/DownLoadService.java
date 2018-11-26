@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.services;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -27,6 +29,7 @@ import dev.baofeng.com.supermovie.utils.DownloadUtil;
  */
 public class DownLoadService extends IntentService {
 
+    private static final int INSTALL_APK_REQUESTCODE = 100;
     private NotificationManager notificationManager;
 
     private boolean isDownloading = false;
@@ -84,20 +87,42 @@ public class DownLoadService extends IntentService {
 
     }
 
+    /**
+     * https://blog.csdn.net/qq_17470165/article/details/80574195
+     * @param apkFile
+     */
     private void installApp(File apkFile) {
-        Log.e("downloadname","---"+apkFile.getName());
-        if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
-            Uri apkUri = FileProvider.getUriForFile(this, "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
-            Intent install = new Intent();
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
-            startActivity(install);
-        } else{
-            Intent install = new Intent();
-            install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(install);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            //来判断应用是否有权限安装apk
+            boolean installAllowed= getPackageManager().canRequestPackageInstalls();
+            //有权限
+            if (installAllowed) {
+                //安装apk
+                install(apkFile.getPath());
+            } else {
+                //无权限 申请权限
+                //ActivityCompat.requestPermissions(DownLoadService.this, new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+            }
+        } else {
+            install(apkFile.getPath());
+        }
+
+    }
+
+    private void install(String apkPath) {
+        //7.0以上通过FileProvider
+        if (Build.VERSION.SDK_INT > 25) {
+            Uri uri = FileProvider.getUriForFile(this, "dev.baofeng.com.supermovie.fileprovider", new File(apkPath));
+            Intent intent = new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.parse("file://" + apkPath), "application/vnd.android.package-archive");
+            startActivity(intent);
         }
     }
     private void showToastByRunnable(final IntentService context, final CharSequence text, final int duration) {

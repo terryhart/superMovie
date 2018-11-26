@@ -244,6 +244,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             savePath = isExistDir("app_update");
             File file = new File(savePath, getNameFromUrl(downloadUrl));
             if (file.exists()){
+
                 installApp(file);
                 return;
             }
@@ -277,19 +278,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             install(apkFile.getPath());
         }
 
-       /* if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
-            Uri apkUri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
-            Intent install = new Intent();
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
-            startActivity(install);
-        } else{
-            Intent install = new Intent();
-            install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(install);
-        }*/
     }
     public static String getVersionName(Context context, String packageName){
         try {
