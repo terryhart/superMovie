@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
@@ -38,13 +42,15 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     private int mDuration = 500;
     private BaseAnimation mSelectAnimation = new SlideInRightAnimation();
     private boolean mOpenAnimationEnable = true;
-
-
+    private final String time;
 
 
     public CategoryAdapter(Context context, RecentUpdate datas) {
         this.context = context;
         this.datas = datas;
+        SimpleDateFormat format0 = new SimpleDateFormat("yyyy-MM-dd");
+        Date ss = new Date();
+        time = format0.format(ss.getTime());
     }
 
     @Override
@@ -71,6 +77,13 @@ public class CategoryAdapter extends RecyclerView.Adapter {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
             String downItemTitle = datas.getData().get(position).getDowndtitle();
+            String updateTime = datas.getData().get(position).getMv_update_time();
+            if (time.equals(updateTime)){
+                ((CommonHolder) holder).itemTag.setVisibility(View.VISIBLE);
+            }else {
+                ((CommonHolder) holder).itemTag.setVisibility(View.INVISIBLE);
+            }
+            Log.e("updateTime",updateTime);
 
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);

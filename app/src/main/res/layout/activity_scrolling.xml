@@ -47,7 +47,7 @@
                    />
            </RelativeLayout>
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbars"
                 android:layout_width="match_parent"
                 app:titleTextAppearance="@style/ToolbarTitle"
                 app:navigationIcon="?attr/homeAsUpIndicator"

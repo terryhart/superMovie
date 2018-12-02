@@ -18,12 +18,13 @@ public class CommonHolder extends RecyclerView.ViewHolder {
 
     public ImageView itemimg;
     public TextView itemtitle;
+    public TextView itemTag;
 
     public CommonHolder(View itemView) {
         super(itemView);
-        itemimg = (ImageView) itemView.findViewById(R.id.post_img);
-        itemtitle = (TextView) itemView.findViewById(R.id.post_title);
-
+        itemimg =  itemView.findViewById(R.id.post_img);
+        itemtitle =  itemView.findViewById(R.id.post_title);
+        itemTag = itemView.findViewById(R.id.item_update_tag);
 
     }
 }

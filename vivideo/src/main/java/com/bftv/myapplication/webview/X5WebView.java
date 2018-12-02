@@ -32,17 +32,7 @@ public class X5WebView extends WebView {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
-			if (l!=null){
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						l.ready();
-					}
-				},2000);
 
-			}
-			view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'" +
-					"+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 		}
 
 		/**
@@ -55,12 +45,8 @@ public class X5WebView extends WebView {
 
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest) {
-			if (webResourceRequest.getUrl().toString().endsWith("GIF")||webResourceRequest.getUrl().toString().endsWith("gif")){
-//                Log.e("ddddddd",webResourceRequest.getUrl().toString());
-			    return null;
-            }else {
+
 			   return super.shouldInterceptRequest(webView,webResourceRequest);
-            }
 
 		}
 
@@ -94,7 +80,6 @@ public class X5WebView extends WebView {
 		 this.setWebChromeClient(chromeClient);
 		// WebStorage webStorage = WebStorage.getInstance();
 		initWebViewSettings();
-		addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 		this.getView().setClickable(true);
 	}
 	class MyJavaScriptInterface {

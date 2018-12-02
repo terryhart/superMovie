@@ -1,20 +1,13 @@
 package dev.baofeng.com.supermovie.view;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,33 +16,27 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.view.IndexActivity;
+import com.bftv.myapplication.view.LineWebview;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.cpacm.library.SimpleViewPager;
-import com.cpacm.library.transformers.CyclePageTransformer;
 import com.huangyong.downloadlib.DownLoadMainActivity;
-import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,9 +51,6 @@ import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.MyTransformation;
 import dev.baofeng.com.supermovie.view.widget.SlideInRightAnimation;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
-
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -229,16 +213,24 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.catfrag:
-                Intent intentOnline = new Intent(getContext(),OnlineActivity.class);
-                startActivity(intentOnline);
+//                Intent intentOnline = new Intent(getContext(),OnlineActivity.class);
+//                startActivity(intentOnline);
+                Intent intentOline = new Intent(getContext(), LineWebview.class);
+                String url = "http://1.aibl.com.cn/";
+                intentOline.putExtra(KeyParam.PLAYURL,url);
+                startActivity(intentOline);
                 break;
             case R.id.bangdan:
                 Intent intents = new Intent(getContext(), IndexActivity.class);
                 startActivity(intents);
                 break;
             case R.id.douban:
-                Intent intentHistory = new Intent(getContext(), HistoryActivity.class);
-                startActivity(intentHistory);
+//                Intent intentHistory = new Intent(getContext(), HistoryActivity.class);
+//                startActivity(intentHistory);
+                Intent mvTv = new Intent(getContext(), LineWebview.class);
+                String urls = "http://1.aibl.com.cn/index.php/label/live.html";
+                mvTv.putExtra(KeyParam.PLAYURL,urls);
+                startActivity(mvTv);
                 break;
             case R.id.reclist:
                 if (lisener!=null){

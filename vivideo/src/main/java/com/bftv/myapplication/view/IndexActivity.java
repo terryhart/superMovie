@@ -28,7 +28,7 @@ public class IndexActivity extends AppCompatActivity {
         "https://tv.sohu.com/",
         "http://www.56.com/",
         "http://v.163.com/",
-        "http://www.le.com/",
+        "http://1.aibl.com.cn/",
         "http://www.tudou.com/",
         "https://www.mgtv.com/"
     };

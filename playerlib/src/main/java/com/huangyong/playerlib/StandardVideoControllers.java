@@ -132,7 +132,11 @@ public class StandardVideoControllers extends GestureVideoController implements 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.fullscreen || i == R.id.back) {
+
+        if (i==R.id.back){
+            onBackPressed();
+        }
+        if (i == R.id.fullscreen) {
 
             toggleSpeed();
 //            doStartStopFullScreen();
@@ -319,7 +323,9 @@ public class StandardVideoControllers extends GestureVideoController implements 
     public void onStopTrackingTouch(SeekBar seekBar) {
         long duration = mediaPlayer.getDuration();
         long newPosition = (duration * seekBar.getProgress()) / videoProgress.getMax();
-        mediaPlayer.seekTo((int) newPosition);
+//        mediaPlayer.seekTo((int) newPosition);
+        long current = mediaPlayer.getCurrentPosition();
+        mediaPlayer.seekTo(current+10000);
         isDragging = false;
         post(mShowProgress);
         show();

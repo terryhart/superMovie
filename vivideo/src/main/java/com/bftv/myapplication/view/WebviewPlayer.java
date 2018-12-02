@@ -28,6 +28,8 @@ public class WebviewPlayer extends AppCompatActivity {
         mWebView = findViewById(R.id.root);
         final com.tencent.smtt.sdk.WebSettings webSetting = mWebView.getSettings();
         webSetting.setAllowFileAccess(true);
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setAllowFileAccess(true);
         webSetting.setUseWideViewPort(true);
         webSetting.setSupportMultipleWindows(false);
         webSetting.setAppCacheEnabled(true);
