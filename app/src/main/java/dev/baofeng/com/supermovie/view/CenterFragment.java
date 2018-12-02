@@ -257,13 +257,22 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         dialog.show();
     }
 
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            String[] mPermissionList = new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES};
+            ActivityCompat.requestPermissions(getActivity(), mPermissionList, 123);
+            Log.e("dddddddd","dddd");
+
+        }
+    }
+
     /**
      * https://blog.csdn.net/qq_17470165/article/details/80574195
      * @param apkFile
      */
     private void installApp(File apkFile) {
 
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >=26) {
             //来判断应用是否有权限安装apk
             boolean installAllowed= getContext().getPackageManager().canRequestPackageInstalls();
             //有权限
@@ -272,7 +281,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
                 install(apkFile.getPath());
             } else {
                 //无权限 申请权限
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+                //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+                initPermission();
             }
         } else {
             install(apkFile.getPath());
