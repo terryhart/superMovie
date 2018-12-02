@@ -232,7 +232,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
         DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
-
+        downLoadListDialog.setCanceledOnTouchOutside(true);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

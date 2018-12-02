@@ -133,6 +133,16 @@ public class LineWebview extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()){
+            mWebView.goBack();
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
     protected void onDestroy() {
         mWebView.destroyDrawingCache();
         mWebView.destroy();
