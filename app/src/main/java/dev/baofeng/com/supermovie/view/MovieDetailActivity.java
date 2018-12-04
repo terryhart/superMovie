@@ -109,16 +109,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
     private void initView() {
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbars);
         detail_app_bar = findViewById(R.id.app_bar);
         favor = findViewById(R.id.favor);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         poster = findViewById(R.id.poster);
 //        mvdesc = findViewById(R.id.mvdesc);
@@ -139,7 +134,12 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         StringBuffer buffer = new StringBuffer();
         ArrayList<String> listDesc=new ArrayList<>();
         DetailInfo info = new DetailInfo();
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         if (splitArr.length>5){
             for (int i = 1; i < 5; i++) {
@@ -232,7 +232,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
         DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
-
+        downLoadListDialog.setCanceledOnTouchOutside(true);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

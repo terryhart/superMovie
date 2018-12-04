@@ -138,7 +138,7 @@ public class PlayerActivity extends AppCompatActivity {
         intent.putExtra(Params.TASK_TITLE_KEY,title);
         intent.putExtra(Params.LOCAL_PATH_KEY,url);
         Log.e("movieprogress", ProgressUtil.getSavedProgress(this.path)+"");
-        intent.putExtra(Params.MOVIE_PROGRESS, ProgressUtil.getSavedProgress(this.path)+"");
+        intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition()+"");
 
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);
         intent.putExtra(Params.POST_IMG_KEY,poster);

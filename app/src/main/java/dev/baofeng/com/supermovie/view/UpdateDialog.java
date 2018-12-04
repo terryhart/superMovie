@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bftv.myapplication.config.KeyParam;
+import com.bftv.myapplication.view.LineWebview;
 import com.huangyong.downloadlib.model.Params;
 
 import java.io.File;
@@ -43,7 +45,7 @@ public class UpdateDialog extends Dialog {
         TextView title =findViewById(R.id.update_title);
         TextView content =findViewById(R.id.update_content);
         Button confirm =findViewById(R.id.bt_confirm);
-        Button cancel =findViewById(R.id.bt_cancel);
+        Button btWeb =findViewById(R.id.bt_web);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +59,17 @@ public class UpdateDialog extends Dialog {
                 intent.putExtra(Params.DURL,downloadUrl);
                 getContext().startService(intent);
                 dismiss();
+
             }
         });
-        cancel.setOnClickListener(new View.OnClickListener() {
+        btWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent mvTv = new Intent(getContext(), LineWebview.class);
+                String urls = "https://fir.im/btmovie";
+                mvTv.putExtra(KeyParam.PLAYURL,urls);
+                getContext().startActivity(mvTv);
+                dismiss();
                 dismiss();
             }
         });

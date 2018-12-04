@@ -10,7 +10,8 @@ public class UrlConfig {
     public static String BASE_URL = "http://123.207.150.253/";
     //版本更新
     public static final String CHECK_UPDATE  = "ygcms/app/update.json" ;
-
+    //关于我们
+    public static final String ABOUT_US = BASE_URL+"ygcms/app/about.html";
 
     //获取专题
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;

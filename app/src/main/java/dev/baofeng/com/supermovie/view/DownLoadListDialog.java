@@ -28,6 +28,7 @@ public class DownLoadListDialog extends Dialog {
         RecyclerView dorvlist =findViewById(R.id.downloadList);
         Button closeList =findViewById(R.id.close_list);
         dorvlist.setLayoutManager(new LinearLayoutManager(getContext()));
+        setCanceledOnTouchOutside(true);
         dorvlist.setAdapter(detailAdapter);
         closeList.setOnClickListener(new View.OnClickListener() {
             @Override

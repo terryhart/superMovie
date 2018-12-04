@@ -8,4 +8,6 @@ public interface IAllView {
     void loadSuccess(RecentUpdate movieBean);
 
     void loadMore(RecentUpdate movieBean);
+
+    void loadFail();
 }

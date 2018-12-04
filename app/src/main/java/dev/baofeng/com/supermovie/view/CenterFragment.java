@@ -71,6 +71,8 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     TextView tvCollect;
     @BindView(R.id.versionName)
     TextView versionName;
+    @BindView(R.id.tv_help)
+    TextView tvHelp;
     @BindView(R.id.share_app)
     Button shareApp;
 
@@ -174,6 +176,14 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
                 startActivity(intent);
             }
         });
+
+        tvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AboutUsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -217,6 +227,11 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     }
 
     @Override
+    public void loadFail() {
+
+    }
+
+    @Override
     public void noUpdate(String url) {
         Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
     }
@@ -229,6 +244,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             savePath = isExistDir("app_update");
             File file = new File(savePath, getNameFromUrl(downloadUrl));
             if (file.exists()){
+
                 installApp(file);
                 return;
             }
@@ -241,13 +257,22 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         dialog.show();
     }
 
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            String[] mPermissionList = new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES};
+            ActivityCompat.requestPermissions(getActivity(), mPermissionList, 123);
+            Log.e("dddddddd","dddd");
+
+        }
+    }
+
     /**
      * https://blog.csdn.net/qq_17470165/article/details/80574195
      * @param apkFile
      */
     private void installApp(File apkFile) {
 
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >=26) {
             //来判断应用是否有权限安装apk
             boolean installAllowed= getContext().getPackageManager().canRequestPackageInstalls();
             //有权限
@@ -256,25 +281,13 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
                 install(apkFile.getPath());
             } else {
                 //无权限 申请权限
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+                //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+                initPermission();
             }
         } else {
             install(apkFile.getPath());
         }
 
-       /* if(Build.VERSION.SDK_INT>25) {//判读版本是否在7.0以上
-            Uri apkUri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", apkFile);//在AndroidManifest中的android:authorities值
-            Intent install = new Intent();
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
-            startActivity(install);
-        } else{
-            Intent install = new Intent();
-            install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(install);
-        }*/
     }
     public static String getVersionName(Context context, String packageName){
         try {

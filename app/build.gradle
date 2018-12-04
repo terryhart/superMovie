@@ -6,8 +6,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 110
-        versionName "1.0.10"
+        versionCode 113
+        versionName "1.0.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -128,7 +128,6 @@ dependencies {
     //https://github.com/jdsjlzx/LRecyclerView  下拉刷新上拉加载
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
 
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
 
     compile "com.github.yjfnypeu:UpdatePlugin:3.1.2"

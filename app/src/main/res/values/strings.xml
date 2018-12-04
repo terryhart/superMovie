@@ -2,7 +2,7 @@
     <string name="app_name">极光影院</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="action_share">分享</string>
-    <string name="string_share_text">发现了一个看电影神器，每天更新多种大片，美剧，追剧超方便，点我下载吧~：https://github.com/hiliving/superMovie/raw/master/app/release/BTMovie_1.0.10_release.apk[分享自极光影院]</string>
+    <string name="string_share_text">发现了一个看电影神器，每天更新多种大片，美剧，追剧超方便，点我下载吧~：https://fir.im/btmovie [分享自极光影院]</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -94,4 +94,17 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="desc_about">极光影院是一款免费的可以下载BT高清电影的应用，无需依赖电脑，有Wi-Fi就可以自由下载，还可以边下边播，
+        看剧更方便，该app今后也将长期更新维护，争取成为一款好用，实用的好应用，所以，如果你在使用中遇到任何问题，或者有任何意见或建议，
+        可通过邮件1195996300@qq.com联系我,如果你是开发者，也可以直接到我的项目主页 https://github.com/hiliving/superMovie提issue。
+        \n常见问题：\n
+        1.资源下载失败，提示版权受限，需复制链接到百度网盘下载，这是因为下载内核是基于迅雷下载，部分资源受版权保护，迅雷做了限制，解决方法就是手机安装
+        个百度网盘app，长按复制链接后到百度网盘离线下载即可。
+        2.下载更新，app进首页会自动检查更新，并在我的页面提示，建议耐心等待下载完成，自动跳转安装，如果没有自动跳转，也可到文件目录，找到
+        app_update文件夹，下载好到app就在里面，点击安装即可。
+        \n\n
+        \n\n
+        3.有时进入app会没有数据，这是因为服务器正在执行其他任务脚本，而引起资源不足，一般等待十分钟左右，待脚本执行完即可恢复访问
+    </string>
+
 </resources>

@@ -15,8 +15,10 @@ import rx.schedulers.Schedulers;
 
 public class CenterPresenter extends BasePresenter<IAllView> {
 
+
     public CenterPresenter(Context context, IAllView iview) {
         super(context, iview);
+
     }
 
     @Override
@@ -39,11 +41,15 @@ public class CenterPresenter extends BasePresenter<IAllView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        iview.loadFail();
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
-                        iview.loadSuccess(result);
+                        if (result.getData().size()>0){
+                            iview.loadSuccess(result);
+                        }else {
+                            iview.loadFail();
+                        }
                     }
                 });
         addSubscription(subscription);
@@ -62,11 +68,15 @@ public class CenterPresenter extends BasePresenter<IAllView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        iview.loadFail();
                     }
                     @Override
                     public void onNext(RecentUpdate result) {
-                        iview.loadMore(result);
+                        if (result.getData().size()>0){
+                            iview.loadMore(result);
+                        }else {
+                            iview.loadFail();
+                        }
                     }
                 });
         addSubscription(subscription);

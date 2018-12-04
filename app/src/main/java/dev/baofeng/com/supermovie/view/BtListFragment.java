@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
@@ -32,12 +35,15 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     RecyclerView rvlist;
     @BindView(R.id.pull_layout)
     SimplePullLayout pulllayout;
+    @BindView(R.id.empty_img)
+    TextView empImg;
+    @BindView(R.id.empty_view)
+    FrameLayout empFram;
 
     private CenterPresenter recpresenter;
     BTcategoryAdapter adapter;
     private static BtListFragment btlistFragment;
     private Unbinder bind;
-    private RecentUpdate infos;
     private int index;
     private RecentUpdate movieInfo;
     private String type;
@@ -101,12 +107,30 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         adapter =new BTcategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
+
+        if (empFram.isShown()){
+            empFram.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void loadMore(RecentUpdate movieBean) {
         this.movieInfo.getData().addAll(movieBean.getData());
         adapter.notifyDataSetChanged();
+        if (empFram.isShown()){
+            empFram.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void loadFail() {
+        empFram.setVisibility(View.VISIBLE);
+        empImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pulllayout.autoRefresh();
+            }
+        });
     }
 
     @Override

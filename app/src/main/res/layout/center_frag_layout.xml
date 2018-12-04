@@ -144,7 +144,6 @@
                 android:background="@drawable/item_pressed"
                 android:id="@+id/tv_help"
                 android:textColor="#313131"
-                android:visibility="gone"
                 android:paddingLeft="30dp"
                 android:paddingTop="4dp"
                 />
