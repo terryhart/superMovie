@@ -45,7 +45,7 @@
             android:id="@+id/iv_battery"
             android:layout_width="26dp"
             android:layout_height="20dp"
-            tools:src="@drawable/dkplayer_ic_action_battery" />
+            android:src="@drawable/dkplayer_battery_level" />
 
         <TextView
             android:id="@+id/sys_time"
@@ -132,7 +132,7 @@
             tools:text="高清"
             tools:visibility="visible" />
 
-         <Button
+        <Button
             android:id="@+id/fullscreen"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="14dp"
@@ -142,7 +142,7 @@
             android:textColor="@color/text_select"
             android:layout_height="20dp"
             android:background="@drawable/bt_bg_selector"
-             />
+            />
     </LinearLayout>
 
     <ImageView

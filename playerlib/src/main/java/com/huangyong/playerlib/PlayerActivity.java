@@ -1,20 +1,12 @@
 package com.huangyong.playerlib;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.dueeeke.videoplayer.util.ProgressUtil;
@@ -32,7 +24,7 @@ public class PlayerActivity extends AppCompatActivity {
     private String poster;
     private IjkVideoView ijkVideoView;
     private String path;
-    private StandardVideoControllers controller;
+    private CustomControler controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +40,7 @@ public class PlayerActivity extends AppCompatActivity {
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         ijkVideoView.setTitle(title);
 
-        controller = new StandardVideoControllers(this);
+        controller = new CustomControler(this);
         controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
 
