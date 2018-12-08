@@ -16,21 +16,17 @@ public class UrlConfig {
     //获取专题
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
 
-    //获取专题
+    //废弃
     public static final String GET_ONLINE  = "ygcms/getOnline.php" ;
+
+    //获取电视剧
+    public static final String GET_SERIS = "ygcms/getSeris.php";
 
     //获取专题
     public static final String GET_SUBJECT_TITLE  = "ygcms/getSubjectTitle.php" ;
 
     public static final String DOWNLOADBASEURL  = "https://www.bttt.la/" ;
 //    public static final String CHECK_UPDATE  = "update.json" ;
-
-    //获取首页标签
-    public static final String GET_HOME_INFO ="text/movie_title.php";
-
-    public static final String GET_DETAIL = "new/";
-
-    public static final String GET_SEARCH_VIDEO = "ygcms/getSearch.php";
 
     //获取最新更新的视频
     public static final String GETRECOMEND = "ygcms/getUpdate.php";

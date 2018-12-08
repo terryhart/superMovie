@@ -47,18 +47,18 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop" />
 
-                        <com.cpacm.library.SimpleViewPager
-                            android:id="@+id/vp"
-                            android:layout_width="160dp"
-                            android:layout_height="210dp"
+                        <com.leochuan.AutoPlayRecyclerView
+                            android:scrollbars="none"
+                            android:id="@+id/recycler"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="100dp"
                             android:layout_marginTop="80dp"
                             android:background="@android:color/transparent"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                             />
+                            android:layout_width="match_parent"
+                            app:direction="right"
+                            app:timeInterval="3000"
+                            android:layout_height="210dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

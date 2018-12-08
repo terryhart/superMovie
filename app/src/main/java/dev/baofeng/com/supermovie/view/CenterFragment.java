@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.bftv.myapplication.view.IndexActivity;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.model.Params;
+import com.vector.update_app.UpdateAppManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.SplashActivity;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.http.UrlConfig;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
@@ -50,6 +52,7 @@ import dev.baofeng.com.supermovie.receiver.LocalDataReceiver;
 import dev.baofeng.com.supermovie.utils.BDecoder;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
+import dev.baofeng.com.supermovie.utils.UpdateAppHttpUtil;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -158,7 +161,18 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatePresenter.getAppUpdate(getContext());
+                //updatePresenter.getAppUpdate(getContext());
+
+                new UpdateAppManager
+                        .Builder()
+                        //当前Activity
+                        .setActivity(getActivity())
+                        //更新地址
+                        .setUpdateUrl(UrlConfig.BASE_URL+UrlConfig.CHECK_UPDATE)
+                        //实现httpManager接口的对象
+                        .setHttpManager(new UpdateAppHttpUtil())
+                        .build()
+                        .update();
             }
         });
 

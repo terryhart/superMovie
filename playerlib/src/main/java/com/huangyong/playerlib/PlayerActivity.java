@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.dueeeke.videoplayer.util.ProgressUtil;
 
 import java.io.File;
+
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 
 public class PlayerActivity extends AppCompatActivity {
@@ -48,13 +51,21 @@ public class PlayerActivity extends AppCompatActivity {
         PlayerConfig playerConfig = new PlayerConfig.Builder()
                 //启用边播边缓存功能
                // .autoRotate() //启用重力感应自动进入/退出全屏功能
-               // .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
+                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
                 .usingSurfaceView() //启用SurfaceView显示视频，不调用默认使用TextureView
                 .savingProgress() //保存播放进度
                 .disableAudioFocus() //关闭AudioFocusChange监听
                 .setLooping() //循环播放当前正在播放的视频
+                .setCustomMediaPlayer(new IjkPlayer(this){
+                    @Override
+                    public void setEnableMediaCodec(boolean isEnable) {
+                        int value = isEnable ? 1 : 0;
+                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", value);
+                    }
+                })
                 .build();
         ijkVideoView.setPlayerConfig(playerConfig);
+
         Log.e("exoplaypath--",url);
 
         if (url.startsWith("/storage")){
