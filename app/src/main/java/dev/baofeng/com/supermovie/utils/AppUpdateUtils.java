@@ -23,8 +23,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 
-import com.tencent.smtt.sdk.JsContext;
-
 import java.io.File;
 import java.util.List;
 
@@ -73,7 +71,7 @@ public class AppUpdateUtils {
         File appFile = getAppFile(updateAppBean);
         return !TextUtils.isEmpty(updateAppBean.getNewMd5())
                 && appFile.exists()
-                && Md5Util.getFileMD5(appFile).equalsIgnoreCase(updateAppBean.getNewMd5());
+                && Md5Utils.getFileMD5(appFile).equalsIgnoreCase(updateAppBean.getNewMd5());
     }
 
 
