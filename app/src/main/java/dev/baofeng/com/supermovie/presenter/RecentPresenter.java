@@ -49,7 +49,7 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
     public void getSerisMore(int page,int pagesize) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getRecomend(page,pagesize)
+                .getSerisUpdate(page,pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RecentUpdate>() {

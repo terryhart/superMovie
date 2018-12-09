@@ -6,8 +6,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 114
-        versionName "1.0.14"
+        versionCode 113
+        versionName "1.0.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -116,13 +116,10 @@ dependencies {
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
 
-
-
-    compile 'com.qianwen:update-app:3.5.2'
-
+    //权限管理
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     //https://github.com/yanzhenjie/SwipeRecyclerView
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-
 
     //https://github.com/jdsjlzx/LRecyclerView  下拉刷新上拉加载
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'

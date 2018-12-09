@@ -77,16 +77,16 @@
         <service android:name=".services.DownLoadService"
             >
         </service>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="dev.baofeng.com.supermovie.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/new_app_file_paths"/>
         </provider>
+
     </application>
 
 </manifest>

@@ -95,14 +95,20 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     }
 
     private void initData() {
-        presenter = new DownLoadPresenter(getContext(),this);
+        presenter = DownLoadPresenter.getInstance(getContext(),this);
         //下载中列表
-        List<DowningTaskInfo> taskInfos = TaskDao.getInstance(getContext()).queryAll();
+        TaskDao taskDao = TaskDao.getInstance(getContext());
+        List<DowningTaskInfo> taskInfos =taskDao.queryAll();
+        //重启应用后，原来正在进行当任务都已停止，这些任务的taskid是没有意义的，应该改为其他值，不然会影响新添加的任务，看起来用的是同一个taskID
         if (taskInfos!=null&&taskInfos.size()>0){
-            Log.e("downtaskinit","本地数据库有数据"+taskInfos.size());
-            this.infos.clear();
-            this.infos.addAll(taskInfos);
-            adapter.notifyDataSetChanged();
+            for (int i = 0; i < taskInfos.size(); i++) {
+                if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
+                    taskInfos.get(i).setTaskId("404");
+                    taskDao.update(taskInfos.get(i));
+                }
+            }
+
+            adapter.setTaskData(taskInfos);
         }else {
             Log.e("downtaskinit","本地数据库为空");
         }
@@ -132,9 +138,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 //查询数据库所有数据
                 List<DowningTaskInfo> downingTaskInfos = TaskDao.getInstance(getContext()).queryAll();
                 if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
-                    infos.clear();
-                    infos.addAll(downingTaskInfos);
-                    adapter.notifyDataSetChanged();
+                    adapter.setTaskData(downingTaskInfos);
                 }
             }
             if (intent.getAction().equals(Params.TASK_COMMPLETE)){
@@ -142,9 +146,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 List<DowningTaskInfo> taskInfos =dao.queryAll();
                 if (taskInfos.size()>0){
                     synchronized (DownloadingTaskFragment.class){
-                        infos.clear();
-                        infos.addAll(taskInfos);
-                        adapter.notifyDataSetChanged();
+                        adapter.setTaskData(taskInfos);
                     }
                 }else {
                     synchronized (DownloadingTaskFragment.class){
@@ -161,7 +163,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     public void clicked(DowningTaskInfo info) {
 
         //已暂停，点击重新开始下载
-        if (info.getStatu()==0||info.getStatu()==4&&!TextUtils.isEmpty(info.getTaskId())){
+        if (info.getStatu()==0||info.getStatu()==4){
             Toast.makeText(getContext(), "下载已开始", Toast.LENGTH_SHORT).show();
 
             //由于本身的重新启动下载有点问题，无法重启下载，折衷的策略就是删除任务，重新添加，幸好支持续传
@@ -180,6 +182,7 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
         }else {
             //正在下载，点击停止
             Toast.makeText(getContext(), "已暂停下载", Toast.LENGTH_SHORT).show();
+
             XLTaskHelper.instance().stopTask(Long.parseLong(info.getTaskId()));
         }
     }

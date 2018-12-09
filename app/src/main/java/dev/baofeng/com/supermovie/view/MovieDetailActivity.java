@@ -39,10 +39,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.adapter.HeaderAndFooterWrapper;
-import dev.baofeng.com.supermovie.adapter.OnlinePlayAdapter;
-import dev.baofeng.com.supermovie.domain.BtPlayInfo;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
-import dev.baofeng.com.supermovie.utils.MD5Util;
 
 /**
  *  intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);

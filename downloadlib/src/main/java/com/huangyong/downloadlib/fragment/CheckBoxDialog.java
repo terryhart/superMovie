@@ -26,17 +26,11 @@ class CheckBoxDialog {
         final List<String> choseName = new ArrayList();
 
         for (int j = 0; j <list.mSubFileInfo.length ; j++) {
-            Log.e("torrentInfo--",list.mSubFileInfo[j].mFileName);
-            Log.e("torrentInfo--",list.mSubFileInfo[j].mFileSize+"");
-            Log.e("torrentInfo--",list.mSubFileInfo[j].mFileIndex+"");
-//                                list.add(torrentInfo.mSubFileInfo[i].mFileIndex);
             listArr.add(list.mSubFileInfo[j].mFileIndex);
             listName.add(list.mSubFileInfo[j].mFileName);
             name[j]= list.mSubFileInfo[j].mFileName;
             isCheckedList[j]=false;
         }
-        //TODO 对话框提示，下载其中哪个文件，list保存其中的index  path为种子文件全路径名
-//        presenter.addTorrentTask(filePath, Params.DEFAULT_PATH,list);
         try {
             XLTaskHelper.instance().addTorrentTask(filePath,Params.DEFAULT_PATH,listArr);
         } catch (Exception e) {

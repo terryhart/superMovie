@@ -4,9 +4,20 @@
     android:layout_width="match_parent"
     android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
+    android:id="@+id/rootContent"
     android:layout_height="match_parent">
    <com.bftv.myapplication.webview.X5WebView
        android:layout_width="match_parent"
        android:id="@+id/root"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent">
+
+
+   </com.bftv.myapplication.webview.X5WebView>
+   <ProgressBar
+       android:id="@+id/progressBar"
+       style="?android:attr/progressBarStyle"
+       android:layout_width="wrap_content"
+       android:layout_gravity="center"
+       android:visibility="invisible"
+       android:layout_height="wrap_content" />
 </FrameLayout>

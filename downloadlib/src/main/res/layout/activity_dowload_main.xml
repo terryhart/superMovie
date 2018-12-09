@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:elevation="4dp"
     tools:context=".DownLoadMainActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="230dp"
         android:background="@drawable/live_voice"
         android:elevation="12dp"
         app:elevation="12dp"
@@ -25,16 +26,9 @@
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             >
-         <!--   <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="#3ad0d3"
-                android:scaleType="fitXY"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                />-->
+
             <include layout="@layout/banner_layout"
-                android:layout_height="160dp"
+                android:layout_height="180dp"
                 android:layout_width="match_parent"
                 android:scaleType="fitXY"
                 android:fitsSystemWindows="true"

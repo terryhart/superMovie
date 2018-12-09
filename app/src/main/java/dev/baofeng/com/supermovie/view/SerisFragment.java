@@ -147,7 +147,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisUpdate(1,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },2000);
+        },1500);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisMore(++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },2000);
+        },1500);
 
     }
 }

@@ -28,11 +28,25 @@ public class DownLoadPresenter implements IPresenter {
     private static String taskId;
     private  ITask iTask;
     private Context context;
+    private String newTaskId;
 
 
-    public DownLoadPresenter(Context context,ITask iTask) {
+    private DownLoadPresenter(Context context,ITask iTask) {
         this.context = context;
         this.iTask = iTask;
+    }
+
+    private static volatile DownLoadPresenter downLoadPresenter;
+
+    public static DownLoadPresenter getInstance(Context context,ITask iTask){
+        if (downLoadPresenter==null){
+            synchronized (DownLoadPresenter.class){
+                if (downLoadPresenter==null){
+                    downLoadPresenter = new DownLoadPresenter(context,iTask);
+                }
+            }
+        }
+        return downLoadPresenter;
     }
 
 
@@ -85,24 +99,25 @@ public class DownLoadPresenter implements IPresenter {
             taskId = addThunderTask(link, path, null, context);
         }
 
-        //这个是用来重新启动任务的，更新数据库，而不插入新的记录，一种取巧的重启任务的策略
-        if (taskInfos!=null&&taskInfos.size()>0){
-            for (int i = 0; i < taskInfos.size(); i++) {
-                if (taskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
-                    //已在任务列表，查看状态，如果是正在下载，不添加
-                    //更新表数据,如果是暂停，或者停止
-                    if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
-                        taskInfos.get(i).setTaskId(taskId);
-                        taskDao.update(taskInfos.get(i));
-                        Intent intent = new Intent();
-                        intent.putExtra(Params.TASK_ID,taskId);
-                        BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);
-                        return;
-                    }
-                }
-            }
-        }
-
+//        //这个是用来重新启动任务的，更新数据库，而不插入新的记录，一种取巧的重启任务的策略
+//        if (taskInfos!=null&&taskInfos.size()>0){
+//            for (int i = 0; i < taskInfos.size(); i++) {
+//                if (taskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
+//                    //已在任务列表，查看状态，如果是正在下载，不添加
+//
+//                    //更新表数据,如果是暂停，或者停止
+//                    if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
+//                        taskInfos.get(i).setTaskId(taskId);
+//                        taskDao.update(taskInfos.get(i));
+//                        Intent intent = new Intent();
+//                        intent.putExtra(Params.TASK_ID,taskId);
+//                        BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+        Log.e("testdownload","-----yes"+taskId);
         info.setTaskId(taskId);
         //存入数据库
         taskDao.add(info);
@@ -271,6 +286,54 @@ public class DownLoadPresenter implements IPresenter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    /**
+     *  重启已存在列表中的任务，原理上也是新任务，不过不插入数据库，而是更新已有记录，先添加，拿到ID后再更新记录里的ID
+     */
+    public void restartNormalTask(DowningTaskInfo downTaskInfo) {
+
+        try {
+            String path = FileUtils.isExistDir(Params.DEFAULT_PATH);
+            TaskDao taskDao = TaskDao.getInstance(context);
+            List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+
+            String link = downTaskInfo.getTaskUrl();
+            if (link.contains("magnet") || XLTaskHelper.instance().getFileName(link).endsWith("torrent")) {
+                if (link.startsWith("magnet")) {
+                    newTaskId = addMagnetTask(link, path, null);
+                } else {
+                    newTaskId = addMagnetTask(getRealUrl(link), path, null);
+                }
+            } else {
+                newTaskId = addThunderTask(link, path, null, context);
+            }
+
+            Log.e("testtaskid","--------"+newTaskId+"-----"+downTaskInfo.getTitle());
+
+            if (taskInfos!=null&&taskInfos.size()>0){
+                for (int i = 0; i < taskInfos.size(); i++) {
+                    if (taskInfos.get(i).getUrlMd5().equals(downTaskInfo.getUrlMd5())){
+                        //已在任务列表，查看状态，如果是正在下载，不添加
+                        //更新表数据,如果是暂停，或者停止
+                        if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
+                            taskInfos.get(i).setTaskId(newTaskId);
+                            taskDao.update(taskInfos.get(i));
+                            Intent intent = new Intent();
+                            intent.putExtra(Params.TASK_ID,newTaskId);
+                            BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);
+                            return;
+                        }
+                    }
+                }
+            }
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

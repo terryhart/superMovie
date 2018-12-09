@@ -57,5 +57,5 @@ public interface ApiService {
   Observable<Object> getTorrentFile(@Field("id") int id,@Field("action") String action,@Field("uhash") String uhush);
 
   @GET(UrlConfig.GET_SERIS)
-  Observable<RecentUpdate> getSerisUpdate(int page, int pagesize);
+  Observable<RecentUpdate> getSerisUpdate(@Query("page")int page, @Query("pagesize")int pagesize);
 }

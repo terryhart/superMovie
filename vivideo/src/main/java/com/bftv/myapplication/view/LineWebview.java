@@ -8,8 +8,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.bftv.myapplication.R;
 import com.bftv.myapplication.config.KeyParam;
@@ -26,6 +28,8 @@ public class LineWebview extends AppCompatActivity {
     private X5WebView mWebView;
     private WebView root;
     private String url;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class LineWebview extends AppCompatActivity {
         setContentView(R.layout.load_html);
         url = getIntent().getStringExtra(KeyParam.PLAYURL);
         mWebView = findViewById(R.id.root);
+        progressBar = findViewById(R.id.progressBar);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebChromeClient(new com.tencent.smtt.sdk.WebChromeClient());
         mWebView.setWebViewClient(new com.tencent.smtt.sdk.WebViewClient(){
@@ -41,6 +46,18 @@ public class LineWebview extends AppCompatActivity {
             public WebResourceResponse shouldInterceptRequest(com.tencent.smtt.sdk.WebView webView, String s) {
                 hideHtmlContent();
                 return super.shouldInterceptRequest(webView, s);
+            }
+
+            @Override
+            public void onPageStarted(com.tencent.smtt.sdk.WebView webView, String s, Bitmap bitmap) {
+                super.onPageStarted(webView, s, bitmap);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(com.tencent.smtt.sdk.WebView webView, String s) {
+                super.onPageFinished(webView, s);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override

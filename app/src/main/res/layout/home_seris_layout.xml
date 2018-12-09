@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="110dp"
-    android:paddingTop="10dp"
+    android:paddingBottom="50dp"
+    android:paddingTop="2dp"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout

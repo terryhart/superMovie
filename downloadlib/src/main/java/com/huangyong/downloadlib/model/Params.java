@@ -21,7 +21,6 @@ public class Params {
     public static final String HAVE_UPDATE = "HAVE_UPDATE";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
-    public static String TASK_PAUSE ="downlib.pause.task";
     public static String TASK_START ="downlib.start.task";
     public static String TASK_ID = "TASK_ID";
     public static String LOCAL_PATH_KEY = "LOCAL_PATH_KEY";

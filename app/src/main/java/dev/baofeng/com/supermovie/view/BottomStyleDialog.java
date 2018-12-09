@@ -65,7 +65,7 @@ public class BottomStyleDialog extends Dialog implements View.OnClickListener {
             }
 
             @Override
-            public void onDownloading(int progress) {
+            public void onDownloading(int progress, long total) {
 
             }
 
