@@ -2,9 +2,6 @@ package dev.baofeng.com.supermovie.view;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +23,6 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.BtDownAdapter;
 import dev.baofeng.com.supermovie.domain.BTParamInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
@@ -38,7 +34,7 @@ import dev.baofeng.com.supermovie.utils.BlurUtil;
 
 public class BtDownActivity extends AppCompatActivity implements IMoview{
 
-    @BindView(R.id.poster)
+    @BindView(R.id.blurPoster)
     ImageView poster;
     @BindView(R.id.mvname)
     TextView mvname;

@@ -31,7 +31,7 @@ public class SharedBitmapManager {
         String md5 = MD5Utils.stringToMD5(url);
         Bitmap d = cacheUrl.get(md5);
         if (d==null){
-           Glide.with(context).load(url).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
+           Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     cacheUrl.put(md5, resource);
