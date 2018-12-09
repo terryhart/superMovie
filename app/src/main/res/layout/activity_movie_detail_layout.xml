@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent"
     tools:context=".view.MovieDetailActivity">
     <android.support.design.widget.AppBarLayout
@@ -26,24 +27,31 @@
                android:scaleType="centerCrop"
                android:fitsSystemWindows="true"
                app:layout_collapseMode="parallax"
+               android:gravity="bottom"
                android:layout_height="match_parent">
-               <dev.baofeng.com.supermovie.view.BlurImageView
+               <ImageView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:id="@+id/poster"
+                   android:id="@+id/blurPoster"
+                   android:scaleType="centerCrop"
                    />
+               <ImageView
+                   android:layout_width="160dp"
+                   android:layout_centerHorizontal="true"
+                   android:id="@+id/detail_poster"
+                   android:layout_above="@+id/imgTitle"
+                   android:layout_height="220dp" />
+
                <TextView
-                   android:layout_width="180dp"
-                   android:layout_height="match_parent"
-                   android:gravity="center_vertical"
-                   android:layout_marginTop="30dp"
-                   android:text=""
-                   android:id="@+id/sdesc"
-                   android:textSize="14sp"
-                   android:lineSpacingExtra="10dp"
+                   android:layout_width="match_parent"
+                   android:background="#691c1c1c"
+                   android:layout_height="30dp"
+                   android:textSize="@dimen/sp_12"
                    android:textColor="#fff"
-                   android:layout_marginRight="10dp"
-                   android:layout_alignParentRight="true"
+                   android:gravity="center"
+                   android:id="@+id/imgTitle"
+                   android:layout_alignParentBottom="true"
+                   android:layout_centerHorizontal="true"
                    />
            </RelativeLayout>
             <android.support.v7.widget.Toolbar

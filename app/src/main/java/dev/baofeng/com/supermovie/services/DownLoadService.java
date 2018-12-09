@@ -1,17 +1,13 @@
 package dev.baofeng.com.supermovie.services;
 
-import android.Manifest;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -65,7 +61,7 @@ public class DownLoadService extends IntentService {
                 installApp(apkFile);
             }
             @Override
-            public void onDownloading(int progress) {
+            public void onDownloading(int progress, long total) {
 
                 Intent intents = new Intent();
                 intents.setAction(Params.ACTION_UPDATE_PROGERSS);

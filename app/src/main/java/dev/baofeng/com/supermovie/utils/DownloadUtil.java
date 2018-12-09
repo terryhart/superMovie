@@ -77,7 +77,7 @@ public class DownloadUtil {
                         sum += len;
                        int progress = (int) (sum * 1.0f / total * 100);
                         // 下载中
-                        listener.onDownloading(progress);
+                        listener.onDownloading(progress,total);
                     }
                     fos.flush();
                     // 下载完成
@@ -86,6 +86,7 @@ public class DownloadUtil {
                     listener.onDownloadSuccess(reNameFile(file));
                 } catch (Exception e) {
                     isDownloading=false;
+                    e.printStackTrace();
                     listener.onDownloadFailed();
                     e.printStackTrace();
                 } finally {
@@ -159,8 +160,9 @@ public class DownloadUtil {
 
         /**
          * @param progress
+         * @param total
          */
-        void onDownloading(int progress);
+        void onDownloading(int progress, long total);
 
         /**
          * 下载失败

@@ -83,7 +83,7 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         adapter = new DownedTaskAdapter(taskInfos);
         adapter.setOnLongPressListener(this);
         downed.setAdapter(adapter);
-        presenter = new DownLoadPresenter(getContext(),this);
+        presenter = DownLoadPresenter.getInstance(getContext(),this);
         initReceiver();
 
     }

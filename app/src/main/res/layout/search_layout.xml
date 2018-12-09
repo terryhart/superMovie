@@ -14,7 +14,7 @@
         android:gravity="center_vertical"
         android:layout_height="50dp">
         <EditText
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:id="@+id/et_search"
             android:layout_alignParentTop="true"
             android:layout_margin="8dp"
@@ -24,6 +24,7 @@
             android:paddingStart="10dp"
             android:singleLine="true"
             android:textSize="13sp"
+            android:gravity="center_vertical"
             android:textColor="@color/editcolorhint"
             android:drawablePadding="20dp"
             android:hint="输入搜索关键词"
@@ -32,21 +33,25 @@
             android:textColorHint="@color/editcolorhint"
             android:paddingLeft="20dp"
             android:background="@drawable/edit_bg"
+
+            android:layout_toLeftOf="@+id/search_now"
             />
         <Button
             android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="搜索"
+            android:gravity="center"
             android:id="@+id/search_now"
-            android:textColor="@color/confirm"
-            android:layout_toRightOf="@+id/et_search"
+            android:textColor="@color/background"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
             android:background="@android:color/transparent"
             />
         <Button
             android:layout_width="15dp"
             android:background="@drawable/icon_clear"
             android:layout_toLeftOf="@+id/search_now"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="18dp"
             android:id="@+id/clear_et"
             android:layout_centerVertical="true"
             android:layout_height="15dp" />
@@ -60,7 +65,6 @@
         android:layout_below="@+id/ll_search_layout"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:visibility="gone"
         android:gravity="center_vertical"
 
         />

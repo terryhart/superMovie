@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="50dp"
+    android:paddingTop="2dp"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/empty_view"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="点击屏幕刷新"
+            android:id="@+id/empty_img"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:focusable="true"
+            android:drawablePadding="@dimen/dp_10"
+            android:textSize="18sp"
+            android:drawableTop="@drawable/common_page_empty_zx"
+
+            />
+    </FrameLayout>
+
+    <com.xiaosu.pulllayout.SimplePullLayout
+        android:layout_width="match_parent"
+        android:id="@+id/pull_layout"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rvlist"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+        </android.support.v7.widget.RecyclerView>
+    </com.xiaosu.pulllayout.SimplePullLayout>
+</RelativeLayout>

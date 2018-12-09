@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -18,6 +19,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:id="@+id/clearSpace"
+        android:visibility="invisible"
         android:background="@drawable/photo_title_more_normal"
         android:backgroundTint="#fff"
         />
@@ -39,6 +41,6 @@
         android:textSize="12sp"
         android:id="@+id/tv_memerysize"
         android:textColor="#a1fcfcfc"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         />
 </RelativeLayout>

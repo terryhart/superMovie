@@ -34,11 +34,11 @@ Tips:
 
 
 
-#### 扫码下载体验版（release-1.0.10）
+#### 扫码下载体验（release-1.0.15）
 
 
 <div>
-    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_11_02_1236194782.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="200" height="200" alt="仅供学习交流" align=center>
 </div>
 
 
@@ -61,12 +61,18 @@ Tips:
 
   - 1.更换播放组件，优化播放体验，播放器增加倍速播放功能
   - 2.首页数据改为滑动时自动加载，不再用上拉加载
-  
+ 
+>2018/12/9更新
+
+  - 1.首页增加电视剧板块，与电影一样同步更新，追剧更方便
+  - 2.播放器支持4k，优化滑动快进体验
+  - 3.优化界面UI显示，优化操作体验
+  - 4.解决下载相关的一些bug
+   
 >TODO LIST：
 
-    1.完善专题内容，增加可在线观看功能。
-
-    2.开发TV版本
+    1.开发TV版本
+    2.优化在线观看资源
 
 
 

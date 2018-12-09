@@ -3,7 +3,6 @@ package dev.baofeng.com.supermovie.view;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -37,17 +36,14 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.SplashActivity;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
-import dev.baofeng.com.supermovie.receiver.LocalDataReceiver;
-import dev.baofeng.com.supermovie.utils.BDecoder;
+import dev.baofeng.com.supermovie.utils.AppUpdateUtils;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
 
@@ -199,7 +195,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     public void onClick(View v) {
     }
 
-
     @Override
     public void onDestroy() {
 
@@ -211,10 +206,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         super.onResume();
     }
 
-    private OnDownPageListener listener;
-    public void setOnDownPageListener(OnDownPageListener onDownPageListener) {
-        this.listener = onDownPageListener;
-    }
 
     @Override
     public void loadSuccess(RecentUpdate movieBean) {
@@ -244,10 +235,10 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             savePath = isExistDir("app_update");
             File file = new File(savePath, getNameFromUrl(downloadUrl));
             if (file.exists()){
-
-                installApp(file);
+                AppUpdateUtils.installApp(getActivity(), file);
                 return;
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -257,38 +248,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         dialog.show();
     }
 
-    private void initPermission() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            String[] mPermissionList = new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES};
-            ActivityCompat.requestPermissions(getActivity(), mPermissionList, 123);
-            Log.e("dddddddd","dddd");
-
-        }
-    }
-
-    /**
-     * https://blog.csdn.net/qq_17470165/article/details/80574195
-     * @param apkFile
-     */
-    private void installApp(File apkFile) {
-
-        if (Build.VERSION.SDK_INT >=26) {
-            //来判断应用是否有权限安装apk
-            boolean installAllowed= getContext().getPackageManager().canRequestPackageInstalls();
-            //有权限
-            if (installAllowed) {
-                //安装apk
-                install(apkFile.getPath());
-            } else {
-                //无权限 申请权限
-                //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
-                initPermission();
-            }
-        } else {
-            install(apkFile.getPath());
-        }
-
-    }
     public static String getVersionName(Context context, String packageName){
         try {
             PackageManager manager = context.getPackageManager();
@@ -330,19 +289,4 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         return savePath;
     }
 
-    private void install(String apkPath) {
-        //7.0以上通过FileProvider
-        if (Build.VERSION.SDK_INT > 25) {
-            Uri uri = FileProvider.getUriForFile(getContext(), "dev.baofeng.com.supermovie.fileprovider", new File(apkPath));
-            Intent intent = new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            getContext().startActivity(intent);
-        } else {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.parse("file://" + apkPath), "application/vnd.android.package-archive");
-            getContext().startActivity(intent);
-        }
-    }
 }

@@ -37,11 +37,13 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 public class DownLoadService extends Service implements ITask {
 
-    private DownLoadPresenter presenter;
+    private static DownLoadPresenter presenter;
     private Subscription subscribe;
+
 
     @Nullable
     @Override
@@ -59,7 +61,7 @@ public class DownLoadService extends Service implements ITask {
         super.onCreate();
         initReceiver();
         initQuery();
-        presenter = new DownLoadPresenter(this,this);
+        presenter = DownLoadPresenter.getInstance(this,this);
     }
 
     /**
@@ -96,7 +98,7 @@ public class DownLoadService extends Service implements ITask {
                         taskInfos.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
                         taskInfos.get(i).setSpeed(FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
 
-                        Log.e("sdkjgsdlsldlldd",taskInfo.mFileSize+"--**--"+taskInfo.mTaskStatus);
+                        Log.e("sdkjgsdlsldlldd",taskInfo.mDownloadSpeed+"--**--"+taskInfos.get(i).getTaskId()+"----"+taskInfos.get(i).getTitle());
                         if (taskInfo.mDownloadSize!=0&&taskInfo.mFileSize!=0&&taskInfo.mDownloadSize== Long.parseLong(taskInfos.get(i).getTotalSize())){
                             //添加到数据库
                             synchronized (DownLoadService.class){
@@ -136,7 +138,7 @@ public class DownLoadService extends Service implements ITask {
             }
         };
 
-        subscribe = Observable.interval(0, 2, TimeUnit.SECONDS).subscribe(subscriber);
+        subscribe = Observable.interval(0, 2, TimeUnit.SECONDS).subscribeOn(Schedulers.newThread()).subscribe(subscriber);
     }
 
     @Override
@@ -149,7 +151,6 @@ public class DownLoadService extends Service implements ITask {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Params.NetWorkChangeAction);
         intentFilter.addAction(Params.TASK_DELETE);
-        intentFilter.addAction(Params.TASK_PAUSE);
         intentFilter.addAction(Params.TASK_START);
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(Params.TASK_COMMPLETE);
@@ -177,22 +178,23 @@ public class DownLoadService extends Service implements ITask {
                 downTaskInfo.setUrlMd5(urlMd5);
                 downTaskInfo.setReceiveSize("0");
                 downTaskInfo.setTaskFrom(taskFrom);
-                if (presenter!=null){
-                    presenter.addTask(downTaskInfo);
+                //新任务or 重启的任务，区别是，新任务会在数据库插入记录，重启的任务不插入新记录，而是更新已有的记录
+                if (taskFrom){
+                    if (presenter!=null){
+                        presenter.addTask(downTaskInfo);
+                    }
+                }else {
+                    if (presenter!=null){
+                        presenter.restartNormalTask(downTaskInfo);
+                    }
                 }
-            }
-            if (Params.TASK_PAUSE.equals(intent.getAction())){
-                if (presenter!=null){
-                    presenter.pauseTask("");
-                }
-            }
-            if (Params.TASK_DELETE.equals(intent.getAction())){
 
             }
 
             if (Params.TASK_COMMPLETE.equals(intent.getAction())){
                 String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
                 Toast.makeText(getApplicationContext(), title+"\n下载完成", Toast.LENGTH_SHORT).show();
+
             }
             if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 int netWorkState = NetUtil.getNetWorkState(context);

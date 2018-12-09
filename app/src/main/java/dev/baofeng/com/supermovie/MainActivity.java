@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
@@ -18,6 +20,9 @@ import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.HomeFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
+import rx.functions.Action1;
+
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,20 +48,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
-        initPermission();
-    }
-    private void initPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE,  Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this, mPermissionList, 123);
-        }
+        getPermission();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+
+    public void getPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                        } else {
+                            Toast.makeText(MainActivity.this, "你没有授权读写文件权限，将无法下载影片", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
+
+
+
     public interface OnPageChanged{
         void clicked();
     }

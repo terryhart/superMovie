@@ -1,23 +1,17 @@
 package dev.baofeng.com.supermovie.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +19,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.db.FavorDao;
 import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.utils.BlurUtil;
 import com.huangyong.downloadlib.utils.MD5Utils;
 
 import java.util.ArrayList;
@@ -39,10 +33,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.adapter.HeaderAndFooterWrapper;
-import dev.baofeng.com.supermovie.adapter.OnlinePlayAdapter;
-import dev.baofeng.com.supermovie.domain.BtPlayInfo;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
-import dev.baofeng.com.supermovie.utils.MD5Util;
 
 /**
  *  intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
@@ -52,13 +43,12 @@ import dev.baofeng.com.supermovie.utils.MD5Util;
  */
 public class MovieDetailActivity extends AppCompatActivity implements OnItemClickListenr {
 
-    private BlurImageView poster;
+    private ImageView poster;
 //    private TextView mvdesc;
     private String title;
     private String downUrl;
     private String posterUrl;
     private String mvdescTx;
-    private TextView sdesc;
     private RecyclerView recyclerView;
     private String posterImagUrl;
     private String imgScreenShot;
@@ -74,11 +64,14 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String playUrl;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private String playTitle;
+    private ImageView mDetailPoster;
+    private TextView imgTitle;
+    private ConstraintLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_movie_detail_layout);
 
         initData();
         initView();
@@ -109,21 +102,24 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
     private void initView() {
+        root = findViewById(R.id.root);
         toolbar = findViewById(R.id.toolbars);
+        mDetailPoster = findViewById(R.id.detail_poster);
+        imgTitle = findViewById(R.id.imgTitle);
         detail_app_bar = findViewById(R.id.app_bar);
         favor = findViewById(R.id.favor);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
 
 
-        poster = findViewById(R.id.poster);
+        poster = findViewById(R.id.blurPoster);
 //        mvdesc = findViewById(R.id.mvdesc);
         recyclerView = findViewById(R.id.rv_detail);
         titleView = findViewById(R.id.toolbarTitle);
         titleView.setText(title);
+        imgTitle.setText(title);
         recyclerView.setLayoutManager(layoutManager);
 
 
-        sdesc = findViewById(R.id.sdesc);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -143,7 +139,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         if (splitArr.length>5){
             for (int i = 1; i < 5; i++) {
-                if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
+                if (splitArr[i].contains("//") ){
                     continue;
                 }
                 buffer.append(splitArr[i]);
@@ -151,7 +147,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             }
 
             StringBuffer descBuffer =new StringBuffer();
-            for (int i = 5; i <splitArr.length ; i++) {
+            for (int i = 1; i <splitArr.length ; i++) {
                 if (splitArr[i].contains("//")||splitArr[i].contains("类") ){
                     continue;
                 }
@@ -174,9 +170,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         }
 
 
-        //海报右边的短简介
-        sdesc.setText(buffer.toString());
-
 
         String[] downUrl = this.downUrl.split(",");
         ArrayList url = new ArrayList();
@@ -191,45 +184,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         //下载页显示的海报
         info.setImgUrl(posterImagUrl);
 
-
         ArrayList<DetailInfo> list = new ArrayList<>();
         list.add(info);
         detailAdapter = new DetailAdapter(downItemList,list,this);
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList,list,this);
         recyclerView.setAdapter(detailAdapter);
-
-        //添加点播按钮布局到底部
-       /* *//**
-         *  url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
-         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
-         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
-         movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
-         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
-         *//*
-        if (!TextUtils.isEmpty(playUrl)){
-            View playView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.online_item,null);
-            RecyclerView onlineBt = playView.findViewById(R.id.rvOnline);
-            String[] playUri = playUrl.split(",");
-            String[] playTitles = playTitle.split(",");
-            ArrayList<BtPlayInfo> infos = new ArrayList<>();
-            for (int i = 0; i < playUri.length; i++) {
-                BtPlayInfo info1 = new BtPlayInfo();
-                info1.setMovPoster(posterImagUrl);
-                info1.setMovTitle(title);
-                info1.setProgress("0");
-                info1.setMovName(playTitles[i]);
-                info1.setMovPlayUrl(playUri[i]);
-                infos.add(info1);
-            }
-            OnlinePlayAdapter playAdapter = new OnlinePlayAdapter(infos);
-            onlineBt.setLayoutManager(new GridLayoutManager(getApplicationContext(),4));
-            onlineBt.setAdapter(playAdapter);
-            mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(detailAdapter);
-            mHeaderAndFooterWrapper.addHeaderView(playView);
-            recyclerView.setAdapter(mHeaderAndFooterWrapper);
-            mHeaderAndFooterWrapper.notifyDataSetChanged();
-        }*/
-
 
         DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
         downLoadListDialog.setCanceledOnTouchOutside(true);
@@ -242,7 +201,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         Glide.with(this).load(posterImagUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                poster.setImageBitmap(resource);
+                Bitmap blurBitmap = BlurUtil.getBlurBitmap(4, 4, resource);
+                mDetailPoster.setImageBitmap(resource);
+                poster.setImageBitmap(blurBitmap);
             }
         });
         //初始化收藏状态
@@ -294,33 +255,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     }
 
-    public class Myadapter extends BaseAdapter{
-
-        @Override
-        public int getCount() {
-            return items.length;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return items[i];
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View views = LayoutInflater.from(MovieDetailActivity.this).inflate(R.layout.down_item,viewGroup,false);
-            TextView tidown = views.findViewById(R.id.tv_down);
-            tidown.setText(items[i]);
-            return views;
-        }
-    }
-
-
     private class MyOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
 
         @Override
@@ -338,8 +272,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     @Override
     public void clicked(String url, String imgUrl) {
-        Toast.makeText(this, "下载任务已添加", Toast.LENGTH_SHORT).show();
-        Log.e("dowurllsit",url+"\n"+imgUrl);
         TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
+
+        Snackbar.make(root, "下载任务已添加", Snackbar.LENGTH_LONG).show();
     }
 }

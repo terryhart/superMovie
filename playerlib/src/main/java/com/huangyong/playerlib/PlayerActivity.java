@@ -1,25 +1,20 @@
 package com.huangyong.playerlib;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.dueeeke.videocontroller.StandardVideoController;
+import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.dueeeke.videoplayer.util.ProgressUtil;
 
 import java.io.File;
+
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 
 public class PlayerActivity extends AppCompatActivity {
@@ -32,7 +27,7 @@ public class PlayerActivity extends AppCompatActivity {
     private String poster;
     private IjkVideoView ijkVideoView;
     private String path;
-    private StandardVideoControllers controller;
+    private CustomControler controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +43,7 @@ public class PlayerActivity extends AppCompatActivity {
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         ijkVideoView.setTitle(title);
 
-        controller = new StandardVideoControllers(this);
+        controller = new CustomControler(this);
         controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
 
@@ -56,13 +51,21 @@ public class PlayerActivity extends AppCompatActivity {
         PlayerConfig playerConfig = new PlayerConfig.Builder()
                 //启用边播边缓存功能
                // .autoRotate() //启用重力感应自动进入/退出全屏功能
-               // .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
+                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
                 .usingSurfaceView() //启用SurfaceView显示视频，不调用默认使用TextureView
                 .savingProgress() //保存播放进度
                 .disableAudioFocus() //关闭AudioFocusChange监听
                 .setLooping() //循环播放当前正在播放的视频
+                .setCustomMediaPlayer(new IjkPlayer(this){
+                    @Override
+                    public void setEnableMediaCodec(boolean isEnable) {
+                        int value = isEnable ? 1 : 0;
+                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", value);
+                    }
+                })
                 .build();
         ijkVideoView.setPlayerConfig(playerConfig);
+
         Log.e("exoplaypath--",url);
 
         if (url.startsWith("/storage")){
@@ -137,7 +140,6 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_TITLE_KEY,title);
         intent.putExtra(Params.LOCAL_PATH_KEY,url);
-        Log.e("movieprogress", ProgressUtil.getSavedProgress(this.path)+"");
         intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition()+"");
 
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);

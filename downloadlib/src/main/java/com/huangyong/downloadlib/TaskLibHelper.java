@@ -34,12 +34,6 @@ public class TaskLibHelper {
         context.startService(intent);
     }
 
-    public static void pauseTask(String url,Context context){
-        Intent intent = new Intent();
-        intent.putExtra(Params.TASK_URL_KEY,url);
-        BroadCastUtils.sendIntentBroadCask(context,intent, Params.TASK_PAUSE);
-    }
-
     public static void deleteTask(String url,Context context){
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_URL_KEY,url);
@@ -48,6 +42,8 @@ public class TaskLibHelper {
 
 
     public static void addNewTask(String url, String savepath, String postImgUrl, Context applicationContext) {
+
+
 
         if (TextUtils.isEmpty(url)){
             Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
@@ -72,7 +68,7 @@ public class TaskLibHelper {
         intent.putExtra(Params.IS_TASK_NEW,true);
         BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
     }
-    public static void reStartTask(String url, String savepath, String postImgUrl, Context applicationContext) {
+    public static synchronized  void  reStartTask(String url, String savepath, String postImgUrl, Context applicationContext) {
         if (TextUtils.isEmpty(url)){
             Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
         }

@@ -9,13 +9,13 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:id="@+id/poster"
+        android:id="@+id/blurPoster"
         android:background="@drawable/placehoder"
         android:layout_alignParentTop="true"
         android:layout_height="220dp" />
 
     <GridView
-        android:layout_below="@+id/poster"
+        android:layout_below="@+id/blurPoster"
         android:layout_marginTop="50dp"
         android:id="@+id/grid"
         android:numColumns="4"

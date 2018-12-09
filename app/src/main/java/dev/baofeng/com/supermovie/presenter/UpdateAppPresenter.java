@@ -8,15 +8,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
 
-import org.lzh.framework.updatepluginlib.UpdateConfig;
-import org.lzh.framework.updatepluginlib.base.UpdateParser;
-import org.lzh.framework.updatepluginlib.model.Update;
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
-import dev.baofeng.com.supermovie.http.UrlConfig;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import rx.Subscriber;
 import rx.Subscription;

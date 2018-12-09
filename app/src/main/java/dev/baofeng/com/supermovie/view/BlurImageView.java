@@ -63,7 +63,9 @@ public class BlurImageView extends View {
     }
     public void setImageBitmap(Bitmap bitmap){
         this.forgroundBitmap = bitmap;
-        this.blurBitmap = BlurUtil.getBlurBitmap(4, 4, forgroundBitmap);
+        if (forgroundBitmap!=null){
+            this.blurBitmap = BlurUtil.getBlurBitmap(4, 4, forgroundBitmap);
+        }
         invalidate();
     }
 
@@ -74,15 +76,15 @@ public class BlurImageView extends View {
             forRectF.bottom = getMeasuredHeight();
             canvas.drawBitmap(blurBitmap,null,forRectF,bitmapPaint);
         }
-        canvas.scale(1.2f,1.2f,0,0);
-        if (forgroundBitmap!=null){
-            destRectF.right =320;
-            destRectF.bottom=460;
-
-            canvas.translate(40,140);
-            canvas.drawBitmap(forgroundBitmap,null,destRectF,bitmapPaint);
-
-        }
+        //canvas.scale(1.2f,1.2f,0,0);
+//        if (forgroundBitmap!=null){
+//            destRectF.right =320;
+//            destRectF.bottom=460;
+//
+//            canvas.translate(getMeasuredWidth()*0.5f-forgroundBitmap.getWidth()*0.5f,140);
+//            canvas.drawBitmap(forgroundBitmap,null,destRectF,bitmapPaint);
+//
+//        }
 
     }
 

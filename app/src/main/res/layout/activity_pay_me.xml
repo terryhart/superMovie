@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root"
+    android:background="@drawable/splash_ad_bg_blue_tree"
+    tools:context=".view.PayMeActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dp_60"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="400dp">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:textSize="20sp"
+               android:layout_marginTop="30dp"
+               android:textColor="#262626"
+               android:text="赞助/打赏"
+               />
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="20dp"
+               android:layout_marginTop="100dp"
+               android:lineSpacingExtra="@dimen/dp_10"
+               android:text="极光影院是一款免费使用的app，不会有任何形式的付费要求，但是开发和维护不易，需要付出很多时间和脑细胞，如果你喜欢这个软件，欢迎打赏和赞助，你的支持将是软件不断优化和改进的动力。"
+               />
+
+           <Button
+               android:layout_width="200dp"
+               android:layout_alignParentBottom="true"
+               android:layout_centerHorizontal="true"
+               android:layout_marginBottom="30dp"
+               android:gravity="center"
+               android:background="#cf43e7f0"
+               android:onClick="toAlipay"
+               android:textColor="#f9f6f6"
+               android:text="支付宝赞助"
+               android:layout_height="60dp" />
+       </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

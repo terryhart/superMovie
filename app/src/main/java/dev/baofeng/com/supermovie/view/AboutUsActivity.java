@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -46,5 +47,10 @@ public class AboutUsActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void payfordever(View view) {
+        Intent intent = new Intent(AboutUsActivity.this,PayMeActivity.class);
+        startActivity(intent);
     }
 }
