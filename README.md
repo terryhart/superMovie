@@ -34,11 +34,11 @@ Tips:
 
 
 
-#### 扫码下载体验版（release-1.0.10）
+#### 扫码下载体验（release-1.0.15）
 
 
 <div>
-    <img src="https://github.com/hiliving/superMovie/blob/master/picture/2018_11_02_1236194782.png" width="200" height="200" alt="扫码下载体验版，体验版非正式版，会有些bug，仅供预览" align=center>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="200" height="200" alt="仅供学习交流" align=center>
 </div>
 
 
