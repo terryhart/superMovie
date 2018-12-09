@@ -15,8 +15,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -44,12 +47,14 @@ import dev.baofeng.com.supermovie.view.UpdateDialog;
 public class SplashActivity extends AppCompatActivity implements IupdateView {
 
     private UpdateAppPresenter presenter;
+    private RelativeLayout root;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.splash_layout);
+        root = findViewById(R.id.root);
 
         presenter = new UpdateAppPresenter(this,this);
         presenter.getAppUpdate(this);
@@ -70,7 +75,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
 
     @Override
     public void updateYes(AppUpdateInfo result) {
-        Toast.makeText(this, "发现新版本，请到“我的”页面手动下载", Toast.LENGTH_SHORT).show();
+        Snackbar.make(root, "发现新版本，请到“我的”页面手动下载", Snackbar.LENGTH_LONG).show();
         SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,1);
     }
 

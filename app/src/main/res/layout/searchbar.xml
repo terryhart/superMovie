@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
+        android:layout_toLeftOf="@+id/downtask"
         android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="10dp"
         android:layout_alignParentLeft="true"
         android:id="@+id/square"
         android:background="@drawable/search_bg"
@@ -16,8 +17,8 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="60dp"
+        android:layout_toLeftOf="@+id/downtask"
+        android:layout_marginRight="20dp"
         android:src="@drawable/play_btn_icon_search"
         />
     <TextView

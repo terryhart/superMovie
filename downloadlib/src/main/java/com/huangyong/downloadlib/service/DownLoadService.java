@@ -194,6 +194,7 @@ public class DownLoadService extends Service implements ITask {
             if (Params.TASK_COMMPLETE.equals(intent.getAction())){
                 String title = intent.getStringExtra(Params.TASK_TITLE_KEY);
                 Toast.makeText(getApplicationContext(), title+"\n下载完成", Toast.LENGTH_SHORT).show();
+
             }
             if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 int netWorkState = NetUtil.getNetWorkState(context);

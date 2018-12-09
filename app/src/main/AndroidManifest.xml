@@ -10,9 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BATTERY_STATS" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".MyApp"
@@ -22,11 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask"
-            >
-
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"></activity>
         <activity android:name=".view.BtDownActivity" />
         <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.AboutUsActivity" />
@@ -35,48 +33,45 @@
         <activity
             android:name=".view.MovieDetailActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".SplashActivity">
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".view.HistoryActivity" />
 
-        </activity>
-        <activity android:name=".view.HistoryActivity"/>
         <receiver android:name=".receiver.NetBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
         <receiver android:name=".receiver.LocalDataReceiver">
             <intent-filter>
-                <action android:name="com.movie.history"/>
+                <action android:name="com.movie.history" />
             </intent-filter>
         </receiver>
-        <activity android:name=".PreActivity"
-            android:theme="@style/SplashTheme"
+
+        <activity
+            android:name=".PreActivity"
             android:launchMode="singleTask"
-            >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
-                <data android:scheme="growing.6858aa81da64ed76"/>
+                <data android:scheme="growing.6858aa81da64ed76" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-
-
         </activity>
+        <activity android:name=".view.FavorActivity" />
+        <activity android:name=".view.SubjectListActivity" />
+        <activity android:name=".view.OnlineActivity" />
+        <activity android:name=".view.PayMeActivity"/>
+        <service android:name=".services.DownLoadService"></service>
 
-        <activity android:name=".view.FavorActivity"/>
-        <activity android:name=".view.SubjectListActivity"/>
-        <activity android:name=".view.OnlineActivity"/>
-        <service android:name=".services.DownLoadService"
-            >
-        </service>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -84,9 +79,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/new_app_file_paths"/>
+                android:resource="@xml/new_app_file_paths" />
         </provider>
 
+        <activity android:name=".view.PayMeActivity"></activity>
     </application>
 
 </manifest>

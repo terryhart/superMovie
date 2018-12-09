@@ -54,12 +54,12 @@ android {
             if (variant.buildType.name.equals('release')) {
                 fileName = String.format("BTMovie_%s_%s.apk", defaultConfig.versionName, type)
             } else if (variant.buildType.name.equals('debug')) {
-                fileName = "${ defaultConfig.versionName}_debug_${dateTime}.apk"
+                fileName = "${defaultConfig.versionName}_debug_${dateTime}.apk"
             }
             outputFileName = fileName;
         }
     }
-    dataBinding{
+    dataBinding {
         enabled true
     }
 }
@@ -126,13 +126,15 @@ dependencies {
 
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
 
-    compile "com.github.yjfnypeu:UpdatePlugin:3.1.2"
+//    compile "com.github.yjfnypeu:UpdatePlugin:3.1.2"
     //    implementation project(':library')
     implementation('com.cpacm.simpleslider:library:2.2.1') {
         exclude module: 'appcompat-v7'
     }
 
     compile 'rouchuan.viewpagerlayoutmanager:viewpagerlayoutmanager:2.0.22'
+
+    compile 'com.github.alidili:FlowLayout:v1.5'
 
     implementation project(':AopLib')
 }

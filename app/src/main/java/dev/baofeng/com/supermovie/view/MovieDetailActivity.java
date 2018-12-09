@@ -3,8 +3,10 @@ package dev.baofeng.com.supermovie.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +66,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String playTitle;
     private ImageView mDetailPoster;
     private TextView imgTitle;
+    private ConstraintLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
     private void initView() {
+        root = findViewById(R.id.root);
         toolbar = findViewById(R.id.toolbars);
         mDetailPoster = findViewById(R.id.detail_poster);
         imgTitle = findViewById(R.id.imgTitle);
@@ -268,7 +272,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     @Override
     public void clicked(String url, String imgUrl) {
-        Toast.makeText(this, "下载任务已添加", Toast.LENGTH_SHORT).show();
         TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
+
+        Snackbar.make(root, "下载任务已添加", Snackbar.LENGTH_LONG).show();
     }
 }
