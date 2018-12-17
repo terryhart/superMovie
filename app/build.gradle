@@ -6,8 +6,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 115
-        versionName "1.0.15"
+        versionCode 116
+        versionName "1.0.16"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -16,12 +16,32 @@ android {
 
 
     }
-    buildTypes {
+
+
+    signingConfigs {
+
         release {
+            keyAlias 'key0'
+            keyPassword "123456"
+            storeFile file('../key.jks')
+            storePassword "123456"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     dexOptions {
         jumboMode true
     }
@@ -50,11 +70,10 @@ android {
         variant.outputs.all {
             def fileName
             def type = variant.buildType.name
-            def dateTime = new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
             if (variant.buildType.name.equals('release')) {
                 fileName = String.format("BTMovie_%s_%s.apk", defaultConfig.versionName, type)
             } else if (variant.buildType.name.equals('debug')) {
-                fileName = "${defaultConfig.versionName}_debug_${dateTime}.apk"
+                fileName = String.format("BTMovie_%s_%s.apk", defaultConfig.versionName, type)
             }
             outputFileName = fileName;
         }
@@ -73,28 +92,23 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
-
     //recyclerview
     compile 'jp.wasabeef:glide-transformations:2.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:cardview-v7:27.1.0'
     compile 'com.android.support:design:27.1.0'
-
     //view 绑定
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'io.reactivex:rxjava:1.3.2'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
-
     //网页加载
     compile 'com.just.agentweb:agentweb:4.0.0-alpha-3'
-
     //RxCache缓存依赖
     compile 'com.zchu:rxcache:1.2.6'
     compile 'com.trello:rxlifecycle:1.0'
@@ -103,40 +117,29 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':downloadlib')
-
     //下拉刷新上拉加载
     compile 'com.xiaosu:pullLayout:3.0.4'
     implementation project(':playerlib')
     implementation project(':vivideo')
-
     //友盟统计
     compile 'com.umeng.sdk:common:1.5.0'
     compile 'com.umeng.sdk:analytics:7.5.0'
-
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
-
     //权限管理
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    //蚯蚓导航 https://github.com/auv1107/tablayout-android
+    implementation 'com.github.hiliving:tablayout-android:1.0.1'
     //https://github.com/yanzhenjie/SwipeRecyclerView
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-
     //https://github.com/jdsjlzx/LRecyclerView  下拉刷新上拉加载
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
-
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'//没有使用特殊Header，可以不加这行
-
-//    compile "com.github.yjfnypeu:UpdatePlugin:3.1.2"
-    //    implementation project(':library')
-    implementation('com.cpacm.simpleslider:library:2.2.1') {
-        exclude module: 'appcompat-v7'
-    }
-
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15'
+    //没有使用特殊Header，可以不加这行
     compile 'rouchuan.viewpagerlayoutmanager:viewpagerlayoutmanager:2.0.22'
-
     compile 'com.github.alidili:FlowLayout:v1.5'
-
     implementation project(':AopLib')
+    implementation project(':common')
 }
 
 apply from: 'config.gradle'
