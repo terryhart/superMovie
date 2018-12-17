@@ -13,7 +13,6 @@ import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
-import com.umeng.socialize.PlatformConfig;
 import com.zchu.rxcache.RxCache;
 import com.zchu.rxcache.diskconverter.SerializableDiskConverter;
 
@@ -50,9 +49,6 @@ public class MyApp extends Application{
 
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
-        //初始化友盟分享
-        UMConfigure.init(this,Params.UMENG_KEY,"zmovie",UMConfigure.DEVICE_TYPE_PHONE,"");
-        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
 

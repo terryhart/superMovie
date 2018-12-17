@@ -84,14 +84,6 @@
                 android:resource="@xml/new_app_file_paths" />
         </provider>
 
-        <activity android:name=".view.PayMeActivity"></activity>
-
-        <activity
-            android:name=".apshare.ShareEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
