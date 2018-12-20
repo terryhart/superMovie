@@ -35,8 +35,8 @@ Tips:
 
 
 #### 扫码下载体验（release-1.0.15）
-    若二维码扫不出来，点击这里：https://fir.im/btmovie
 
+  若扫不出，点击这里 https://fir.im/btmovie
 
 <div>
     <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="300" height="300" alt="仅供学习交流" align=center>
