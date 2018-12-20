@@ -17,9 +17,9 @@ public class DbHelper {
     public static ArrayList<SearchHistory> getAllHistory() {
 
         ArrayList<SearchHistory> searchHistories = (ArrayList<SearchHistory>) AppDatabase.getInstance(MyApp.getContext()).searchDao().getAll();
-        if (searchHistories!=null&&searchHistories.size()>0){
+        if (searchHistories != null && searchHistories.size() > 0) {
             return searchHistories;
-        }else {
+        } else {
             return new ArrayList<>();
         }
     }
@@ -27,9 +27,9 @@ public class DbHelper {
     public static boolean checkKeyWords(String keyword) {
 
         ArrayList<SearchHistory> byKeywords = (ArrayList<SearchHistory>) AppDatabase.getInstance(MyApp.getContext()).searchDao().getByKeywords(keyword);
-        if (byKeywords!=null&&byKeywords.size()>0){
+        if (byKeywords != null && byKeywords.size() > 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -37,7 +37,7 @@ public class DbHelper {
 
     public static void addKeywords(String keyword) {
         ArrayList<SearchHistory> allHistory = getAllHistory();
-        if (allHistory.size()>16){
+        if (allHistory.size() > 16) {
             AppDatabase.getInstance(MyApp.getContext()).searchDao().delete(allHistory.get(0));
         }
 
@@ -48,8 +48,8 @@ public class DbHelper {
 
     public static void clearKeywords() {
         ArrayList<SearchHistory> allHistory = getAllHistory();
-        if (allHistory!=null&&allHistory.size()>0){
-            for (SearchHistory history: allHistory) {
+        if (allHistory != null && allHistory.size() > 0) {
+            for (SearchHistory history : allHistory) {
                 AppDatabase.getInstance(MyApp.getContext()).searchDao().delete(history);
             }
         }

@@ -12,10 +12,9 @@ import android.arch.persistence.room.PrimaryKey;
  * createTime 2018/11/13 下午5:21
  * path com.xiachufang.tracklib.db
  * description:
- *
  */
 
-@Entity(tableName = SearchHistory.TABLE_NAME,indices = {@Index("searchKeyWords")})
+@Entity(tableName = SearchHistory.TABLE_NAME, indices = {@Index("searchKeyWords")})
 public class SearchHistory {
 
     public static final String TABLE_NAME = "t_search";

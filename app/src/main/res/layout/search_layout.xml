@@ -65,8 +65,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_below="@+id/ll_search_layout"
-        android:id="@+id/list_title"
-        />
+        android:id="@+id/list_title" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,8 +75,8 @@
         android:layout_below="@+id/ll_search_layout"
         android:layout_marginRight="20dp"
         android:text="@string/clear"
-        android:layout_marginTop="8dp"
-        />
+        android:layout_marginTop="8dp" />
+
     <com.yang.flowlayoutlibrary.FlowLayout
         android:id="@+id/tv_history"
         android:layout_marginTop="8dp"

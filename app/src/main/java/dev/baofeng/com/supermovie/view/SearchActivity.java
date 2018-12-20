@@ -90,11 +90,11 @@ public class SearchActivity extends AppCompatActivity implements ISview {
             @Override
             public void afterTextChanged(Editable s) {
                 keyword = s.toString();
-                if (TextUtils.isEmpty(keyword)){
+                if (TextUtils.isEmpty(keyword)) {
                     flKeyword.setVisibility(View.VISIBLE);
                     listTitle.setVisibility(View.VISIBLE);
                     clearHistory.setVisibility(View.VISIBLE);
-                    if (adapter!=null){
+                    if (adapter != null) {
                         adapter.clear();
                     }
                 }
@@ -110,7 +110,7 @@ public class SearchActivity extends AppCompatActivity implements ISview {
 
         clearHistory.setOnClickListener(v -> {
             clearEtFocus();
-            Snackbar.make(root,"清除所有搜索记录？", Snackbar.LENGTH_LONG).setAction("确定", v1 -> {
+            Snackbar.make(root, "清除所有搜索记录？", Snackbar.LENGTH_LONG).setAction("确定", v1 -> {
                 presenter.clearSearchHistory();
                 initSearchHistory();
             }).show();
@@ -132,7 +132,7 @@ public class SearchActivity extends AppCompatActivity implements ISview {
     private void initSearchHistory() {
         searchHistory = presenter.getSearchHistory();
         historyList = new ArrayList();
-        for (SearchHistory itemList: searchHistory) {
+        for (SearchHistory itemList : searchHistory) {
             historyList.add(itemList.searchKeyWords);
         }
         // 最后调用setViews方法
@@ -143,7 +143,7 @@ public class SearchActivity extends AppCompatActivity implements ISview {
     }
 
     private void doSearch(String content) {
-        if (!TextUtils.isEmpty(content)){
+        if (!TextUtils.isEmpty(content)) {
             presenter.search(content);
         }else {
             Toast.makeText(SearchActivity.this, R.string.search_none_tips, Toast.LENGTH_SHORT).show();
@@ -154,12 +154,13 @@ public class SearchActivity extends AppCompatActivity implements ISview {
 
     /**
      * 校验数据库，更新搜索历史，添加或者不添加
+     *
      * @param keyword
      */
     private void refreshSearchHistory(String keyword) {
-        if (presenter.keywordsExist(keyword)){
+        if (presenter.keywordsExist(keyword)) {
             return;
-        }else {
+        } else {
 
             presenter.addKeyWordsTodb(keyword);
             initSearchHistory();

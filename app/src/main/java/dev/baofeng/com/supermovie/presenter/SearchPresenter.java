@@ -64,15 +64,16 @@ public class SearchPresenter extends BasePresenter<ISview> {
     }
 
     public boolean keywordsExist(String keyword) {
-        return  DbHelper.checkKeyWords(keyword);
+        return DbHelper.checkKeyWords(keyword);
     }
 
     /**
      * 查询数据库，保存的搜索记录
+     *
      * @return
      */
     public ArrayList getSearchHistory() {
-        return  DbHelper.getAllHistory();
+        return DbHelper.getAllHistory();
     }
 
     public void addKeyWordsTodb(String keyword) {
