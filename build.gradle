@@ -26,6 +26,7 @@ allprojects {
         maven {
             url "http://117.78.40.97:9003/nexus/content/repositories/releases/"
         }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://dl.bintray.com/jenly/maven' }
     }
 }

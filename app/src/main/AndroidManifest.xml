@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
+
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -79,10 +81,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/new_app_file_paths" />
+                 android:resource="@xml/new_app_file_paths" />
         </provider>
 
-        <activity android:name=".view.PayMeActivity"></activity>
     </application>
 
 </manifest>

@@ -44,7 +44,7 @@ public class LineWebview extends AppCompatActivity {
         mWebView.setWebViewClient(new com.tencent.smtt.sdk.WebViewClient(){
             @Override
             public WebResourceResponse shouldInterceptRequest(com.tencent.smtt.sdk.WebView webView, String s) {
-                hideHtmlContent();
+               // hideHtmlContent();
                 return super.shouldInterceptRequest(webView, s);
             }
 
@@ -63,11 +63,12 @@ public class LineWebview extends AppCompatActivity {
             @Override
             public void onLoadResource(com.tencent.smtt.sdk.WebView webView, String s) {
                 super.onLoadResource(webView, s);
-                hideHtmlContent();
+               // hideHtmlContent();
             }
         });
 
         mWebView.loadUrl(url);
+
 
     }
 

@@ -2,7 +2,7 @@
 # 🔥基于MVP+RxJava+Retrofit的电影资源聚合APP
 
 
-手机端随时随地下载高清电影，更有大量在线观看资源，每日实时更新。
+手机端更舒适地下载高清电影，热门电影，美剧，每日更新。
 
 <table style="border-width: 0px ;">
 			<tr>
@@ -35,9 +35,11 @@ Tips:
 
 
 #### 扫码下载体验（release-1.0.15）
+
   若扫不出，点击这里 https://fir.im/btmovie
+
 <div>
-    <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="200" height="200" alt="仅供学习交流" align=center>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="300" height="300" alt="仅供学习交流" align=center>
 </div>
 
 

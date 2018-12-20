@@ -49,8 +49,6 @@ public class MyApp extends Application{
 
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
-
-
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
 
@@ -66,6 +64,7 @@ public class MyApp extends Application{
         };
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(),  cb);
+
 
     }
 

@@ -2,7 +2,6 @@ package dev.baofeng.com.supermovie.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -10,19 +9,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.bftv.myapplication.config.KeyParam;
@@ -31,17 +24,11 @@ import com.bftv.myapplication.view.LineWebview;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.cpacm.library.SimpleViewPager;
 import com.huangyong.downloadlib.DownLoadMainActivity;
-import com.huangyong.downloadlib.adapter.TaskFragmentPagerAdapter;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.leochuan.AutoPlayRecyclerView;
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 
 import java.util.ArrayList;
@@ -53,7 +40,6 @@ import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.BannerAdapter;
-import dev.baofeng.com.supermovie.adapter.BasicPagerAdapter;
 import dev.baofeng.com.supermovie.adapter.CategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.HomeTabFragmentPagerAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
@@ -61,12 +47,7 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.UrlConfig;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
-import dev.baofeng.com.supermovie.utils.MyTransformation;
-import dev.baofeng.com.supermovie.utils.SharedBitmapManager;
 import dev.baofeng.com.supermovie.utils.Util;
-import dev.baofeng.com.supermovie.view.widget.SlideInRightAnimation;
-
-import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -90,10 +71,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     ImageView downtask;
     @BindView(R.id.content_main)
     LinearLayout contentMain;
-//    @BindView(R.id.refreshLayout)
-//    SmartRefreshLayout refreshLayout;
     @BindView(R.id.home_tabs)
-    TabLayout homeTabView;
+    com.antiless.support.widget.TabLayout homeTabView;
     /**
      * 磁力搜索
      */

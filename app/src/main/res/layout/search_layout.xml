@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fdf7f7f7"
+    android:id="@+id/root"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,7 +28,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/editcolorhint"
             android:drawablePadding="20dp"
-            android:hint="输入搜索关键词"
+            android:hint="@string/search_keyword"
             android:imeOptions="actionSearch"
             android:completionThreshold="1"
             android:textColorHint="@color/editcolorhint"
@@ -39,7 +40,7 @@
         <Button
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:text="搜索"
+            android:text="@string/search"
             android:gravity="center"
             android:id="@+id/search_now"
             android:textColor="@color/background"
@@ -58,20 +59,45 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_history"
-        android:paddingLeft="20dp"
-        android:background="#fff"
-        android:layout_marginTop="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_history"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_below="@+id/ll_search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
+        android:id="@+id/list_title" />
 
-        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clear_history"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ll_search_layout"
+        android:layout_marginRight="20dp"
+        android:text="@string/clear"
+        android:layout_marginTop="8dp" />
+
+    <com.yang.flowlayoutlibrary.FlowLayout
+        android:id="@+id/tv_history"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/list_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:backgroundResource="@drawable/flow_tag_bg"
+        app:horizontalSpacing="10dp"
+        app:itemColor="@color/confirm"
+        app:itemSize="15sp"
+        app:textPaddingH="10dp"
+        app:textPaddingV="4dp"
+        app:verticalSpacing="10dp" />
     <include
         android:layout_below="@+id/tv_history"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_4"
         android:layout_height="match_parent"
         layout="@layout/refresh_layout"/>
 </RelativeLayout>

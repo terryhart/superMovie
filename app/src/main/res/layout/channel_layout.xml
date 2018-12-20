@@ -15,6 +15,7 @@
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
+                android:background="#fff"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 app:contentScrim="@android:color/transparent"
@@ -146,16 +147,19 @@
                     </android.support.v7.widget.Toolbar>
 
                 </android.support.design.widget.CollapsingToolbarLayout>
-                <android.support.design.widget.TabLayout
+                <com.antiless.support.widget.TabLayout
                     android:id="@+id/home_tabs"
-                    android:layout_width="match_parent"
+                    android:layout_width="330dp"
                     android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="bottom|center_horizontal"
                     android:background="#fff"
-                    app:tabIndicatorColor="#00505050"
-                    app:tabIndicatorHeight="1px"
-                    app:tabSelectedTextColor="#161616"
+                    app:tabIndicatorHeight="3dp"
+
+                    app:indicatorStartColor="#29a2ca"
+                    app:indicatorEndColor="#25b5c0"
+                    app:indicatorMarginStart="56dp"
+                    app:indicatorMarginEnd="56dp"
                     app:tabTextColor="#b24c4c4c"/>
             </android.support.design.widget.AppBarLayout>
             <!--<com.xiaosu.pulllayout.SimplePullLayout

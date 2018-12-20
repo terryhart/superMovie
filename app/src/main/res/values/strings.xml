@@ -106,5 +106,10 @@
         \n\n
         3.有时进入app会没有数据，这是因为服务器正在执行其他任务脚本，而引起资源不足，一般等待十分钟左右，待脚本执行完即可恢复访问
     </string>
+    <string name="clear">清空</string>
+    <string name="search_history">搜索历史：</string>
+    <string name="search">搜索</string>
+    <string name="search_keyword">输入搜索关键词</string>
+    <string name="search_none_tips">搜索内容不能为空</string>
 
 </resources>
