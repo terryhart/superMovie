@@ -1,25 +1,36 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yang.flowlayoutlibrary.FlowLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.SearchAdapter;
+import dev.baofeng.com.supermovie.db.data.SearchHistory;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.presenter.SearchPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
@@ -38,13 +49,21 @@ public class SearchActivity extends AppCompatActivity implements ISview {
     Button clearEt;
     @BindView(R.id.ll_search_layout)
     RelativeLayout llSearchLayout;
+    @BindView(R.id.root)
+    RelativeLayout root;
     @BindView(R.id.tv_history)
-    TextView tvHistory;
+    FlowLayout flKeyword;
     @BindView(R.id.searchrv)
     RecyclerView searchrv;
+    @BindView(R.id.list_title)
+    TextView listTitle;
+    @BindView(R.id.clear_history)
+    TextView clearHistory;
     private SearchPresenter presenter;
     private String keyword;
     private SearchAdapter adapter;
+    private List historyList;
+    private ArrayList<SearchHistory> searchHistory;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,33 +90,79 @@ public class SearchActivity extends AppCompatActivity implements ISview {
             @Override
             public void afterTextChanged(Editable s) {
                 keyword = s.toString();
-            }
-        });
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    doSearch();
-                    return true;
+                if (TextUtils.isEmpty(keyword)){
+                    flKeyword.setVisibility(View.VISIBLE);
+                    listTitle.setVisibility(View.VISIBLE);
+                    clearHistory.setVisibility(View.VISIBLE);
+                    if (adapter!=null){
+                        adapter.clear();
+                    }
                 }
-                return false;
             }
         });
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                doSearch(keyword);
+                return true;
+            }
+            return false;
+        });
 
-
-
-        searchNow.setOnClickListener(v -> {
-            doSearch();
+        clearHistory.setOnClickListener(v -> {
+            clearEtFocus();
+            Snackbar.make(root,"清除所有搜索记录？", Snackbar.LENGTH_LONG).setAction("确定", v1 -> {
+                presenter.clearSearchHistory();
+                initSearchHistory();
+            }).show();
 
         });
+        searchNow.setOnClickListener(v -> doSearch(keyword));
         clearEt.setOnClickListener(v -> etSearch.setText(""));
+        initSearchHistory();
     }
 
-    private void doSearch() {
-        if (!TextUtils.isEmpty(keyword)){
-            presenter.search(keyword);
+    private void clearEtFocus() {
+        if (etSearch.isFocusable()) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+        }
+    }
+
+
+    private void initSearchHistory() {
+        searchHistory = presenter.getSearchHistory();
+        historyList = new ArrayList();
+        for (SearchHistory itemList: searchHistory) {
+            historyList.add(itemList.searchKeyWords);
+        }
+        // 最后调用setViews方法
+        flKeyword.setViews(historyList, content -> {
+            doSearch(content);
+            etSearch.setText(content);
+        });
+    }
+
+    private void doSearch(String content) {
+        if (!TextUtils.isEmpty(content)){
+            presenter.search(content);
         }else {
-            Toast.makeText(SearchActivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchActivity.this, R.string.search_none_tips, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        refreshSearchHistory(content);
+    }
+
+    /**
+     * 校验数据库，更新搜索历史，添加或者不添加
+     * @param keyword
+     */
+    private void refreshSearchHistory(String keyword) {
+        if (presenter.keywordsExist(keyword)){
+            return;
+        }else {
+
+            presenter.addKeyWordsTodb(keyword);
+            initSearchHistory();
         }
     }
 
@@ -106,6 +171,9 @@ public class SearchActivity extends AppCompatActivity implements ISview {
         adapter = new SearchAdapter(this, info);
         searchrv.setLayoutManager(new LinearLayoutManager(this));
         searchrv.setAdapter(adapter);
+        flKeyword.setVisibility(View.GONE);
+        listTitle.setVisibility(View.GONE);
+        clearHistory.setVisibility(View.GONE);
     }
 
     @Override
@@ -114,6 +182,9 @@ public class SearchActivity extends AppCompatActivity implements ISview {
             adapter.clear();
             adapter.notifyDataSetChanged();
         }
+        flKeyword.setVisibility(View.VISIBLE);
+        listTitle.setVisibility(View.VISIBLE);
+        clearHistory.setVisibility(View.VISIBLE);
         Toast.makeText(this, "未找到相关内容", Toast.LENGTH_SHORT).show();
     }
 }

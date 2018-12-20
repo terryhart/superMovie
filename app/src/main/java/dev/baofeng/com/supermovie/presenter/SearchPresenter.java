@@ -5,6 +5,10 @@ import android.content.Context;
 import com.example.aop.Function;
 import com.example.aop.Statistics;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dev.baofeng.com.supermovie.db.dao.DbHelper;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
@@ -54,9 +58,28 @@ public class SearchPresenter extends BasePresenter<ISview> {
                         }else {
 
                         }
-
                     }
                 });
         addSubscription(subscription);
+    }
+
+    public boolean keywordsExist(String keyword) {
+        return  DbHelper.checkKeyWords(keyword);
+    }
+
+    /**
+     * 查询数据库，保存的搜索记录
+     * @return
+     */
+    public ArrayList getSearchHistory() {
+        return  DbHelper.getAllHistory();
+    }
+
+    public void addKeyWordsTodb(String keyword) {
+        DbHelper.addKeywords(keyword);
+    }
+
+    public void clearSearchHistory() {
+        DbHelper.clearKeywords();
     }
 }
