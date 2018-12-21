@@ -25,7 +25,7 @@ public class PlayerActivity extends AppCompatActivity {
     private String progress="";
     private String url;
     private String poster;
-    private IjkVideoView ijkVideoView;
+    private CustomIjkplayer ijkVideoView;
     private String path;
     private CustomControler controller;
 
@@ -44,10 +44,24 @@ public class PlayerActivity extends AppCompatActivity {
         ijkVideoView.setTitle(title);
 
         controller = new CustomControler(this);
+        controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
 
+        IjkPlayer ijkPlayer = new IjkPlayer(this) {
+            @Override
+            public void setEnableMediaCodec(boolean isEnable) {
+                int value = isEnable ? 1 : 0;
+                mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", value);
+            }
 
+            @Override
+            public void setOptions() {
+                super.setOptions();
+                //设置ijkplayer支持concat协议，以播放分段视频
+                mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist", "rtmp,concat,ffconcat,file,subfile,http,https,tls,rtp,tcp,udp,crypto");
+            }
+        };
         PlayerConfig playerConfig = new PlayerConfig.Builder()
                 //启用边播边缓存功能
                // .autoRotate() //启用重力感应自动进入/退出全屏功能
@@ -56,16 +70,9 @@ public class PlayerActivity extends AppCompatActivity {
                 .savingProgress() //保存播放进度
                 .disableAudioFocus() //关闭AudioFocusChange监听
                 .setLooping() //循环播放当前正在播放的视频
-                .setCustomMediaPlayer(new IjkPlayer(this){
-                    @Override
-                    public void setEnableMediaCodec(boolean isEnable) {
-                        int value = isEnable ? 1 : 0;
-                        mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", value);
-                    }
-                })
+                .setCustomMediaPlayer(ijkPlayer)
                 .build();
         ijkVideoView.setPlayerConfig(playerConfig);
-
         Log.e("exoplaypath--",url);
 
         if (url.startsWith("/storage")){
