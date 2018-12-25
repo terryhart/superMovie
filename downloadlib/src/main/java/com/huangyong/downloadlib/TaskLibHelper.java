@@ -3,10 +3,8 @@ package com.huangyong.downloadlib;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.service.DownLoadService;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
@@ -14,7 +12,6 @@ import com.huangyong.downloadlib.utils.FileUtils;
 import com.huangyong.downloadlib.utils.MD5Utils;
 import com.xunlei.downloadlib.XLTaskHelper;
 
-import java.io.File;
 import java.io.IOException;
 
 public class TaskLibHelper {

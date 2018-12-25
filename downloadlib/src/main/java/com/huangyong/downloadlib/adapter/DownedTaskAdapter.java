@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.R;
-import com.huangyong.downloadlib.domain.DoneTaskInfo;
+import com.huangyong.downloadlib.room.data.DoneTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
 
 import java.util.List;
@@ -33,15 +33,19 @@ public class DownedTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, final int position) {
-//        holder.taskTitile.setText("测试下载标题");
         if (taskInfo.size()>0){
 
 
             holder.posterImg.setProgress(100);
 
             holder.taskTitile.setText(taskInfo.get(position).getTitle());
+            String fileSize;
+            try {
+                fileSize = FileUtils.convertFileSize(Long.parseLong(taskInfo.get(position).getTotalSize()));
+            } catch (Exception e) {
+                fileSize = "0";
+            }
 
-            String fileSize = FileUtils.convertFileSize(Long.parseLong(taskInfo.get(position).getTotalSize()));
 
             holder.task_size.setText(fileSize+"/"+fileSize);
             holder.task_msg.setText("已完成");

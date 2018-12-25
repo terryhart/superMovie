@@ -3,8 +3,6 @@ package com.huangyong.downloadlib.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.huangyong.downloadlib.domain.DoneTaskInfo;
-import com.huangyong.downloadlib.domain.DowningTaskInfo;
 import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -40,8 +38,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, DowningTaskInfo.class);
-            TableUtils.createTable(connectionSource, DoneTaskInfo.class);
             TableUtils.createTable(connectionSource, HistoryInfo.class);
             TableUtils.createTable(connectionSource, FavorInfo.class);
         } catch (SQLException e) {
@@ -52,8 +48,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
-            TableUtils.dropTable(connectionSource,DowningTaskInfo.class,true);
-            TableUtils.dropTable(connectionSource,DoneTaskInfo.class,true);
             TableUtils.dropTable(connectionSource,HistoryInfo.class,true);
             TableUtils.dropTable(connectionSource,FavorInfo.class,true);
             onCreate(sqLiteDatabase,connectionSource);

@@ -1,13 +1,18 @@
 package com.huangyong.downloadlib.model;
 
+
+import com.huangyong.downloadlib.room.data.DoneTaskInfo;
+import com.huangyong.downloadlib.room.data.DowningTaskInfo;
+
+import java.util.List;
+
 public interface ITask {
 
 
     void repeatAdd(String s);
 
-   /* void TaskPause(String taskId);
+    void updateIngTask(List<DowningTaskInfo> taskInfo);
 
-    void restartTask(String taskId);
+    void updateDoneTask(List<DoneTaskInfo> taskInfo);
 
-    void deleteTask(String taskId);*/
 }

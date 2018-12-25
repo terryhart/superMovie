@@ -1,17 +1,24 @@
 package com.huangyong.downloadlib.presenter;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.huangyong.downloadlib.db.TaskDao;
-import com.huangyong.downloadlib.db.TaskedDao;
-import com.huangyong.downloadlib.domain.DoneTaskInfo;
-import com.huangyong.downloadlib.domain.DowningTaskInfo;
+import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.model.ITask;
+import com.huangyong.downloadlib.model.MovieDownloadDataModel;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.downloadlib.room.AppDatabaseManager;
+import com.huangyong.downloadlib.room.DowningTaskDao;
+import com.huangyong.downloadlib.room.DoneTaskDao;
+import com.huangyong.downloadlib.room.data.DoneTaskInfo;
+import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.huangyong.downloadlib.utils.FileUtils;
 import com.huangyong.downloadlib.utils.MD5Utils;
@@ -23,15 +30,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownLoadPresenter implements IPresenter {
+/**
+ * 下载管理，添加，重启下载任务，更新下载数据到业务层
+ */
+public class DownLoadPresenter {
 
     private static String taskId;
     private  ITask iTask;
     private Context context;
     private String newTaskId;
+    private MovieDownloadDataModel downloadDataModel;
 
 
-    private DownLoadPresenter(Context context,ITask iTask) {
+    public DownLoadPresenter(Context context, ITask iTask) {
         this.context = context;
         this.iTask = iTask;
     }
@@ -50,11 +61,10 @@ public class DownLoadPresenter implements IPresenter {
     }
 
 
-    @Override
     public void addTask(DowningTaskInfo info) {
         //查询下已完成列表，是否有记录，有则不下载
-        TaskedDao taskedDao = TaskedDao.getInstance(context);
-        List<DoneTaskInfo> doneTaskInfos = taskedDao.queryAll();
+        DoneTaskDao taskedDao = AppDatabaseManager.getInstance(context).doneTaskDao();
+        List<DoneTaskInfo> doneTaskInfos = taskedDao.getAll();
         if (doneTaskInfos!=null&&doneTaskInfos.size()>0){
             for (int i = 0; i < doneTaskInfos.size(); i++) {
                 if (doneTaskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
@@ -75,8 +85,8 @@ public class DownLoadPresenter implements IPresenter {
         info.setFilePath(path+"/"+taskName);
         info.setTitle(taskName);
         //数据库存一份，先查询数据库是否已有记录，没有则添加，有则不添加，0为停止状态，1正在进行和4为正在暂停，连接中的状态
-        TaskDao taskDao = TaskDao.getInstance(context);
-        List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+        DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
+        List<DowningTaskInfo> taskInfos = taskDao.getAll();
         if (taskInfos!=null&&info.getUrlMd5()!=null&&taskInfos.size()>0){
             for (int i = 0; i < taskInfos.size(); i++) {
                 if (taskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
@@ -98,44 +108,13 @@ public class DownLoadPresenter implements IPresenter {
         } else {
             taskId = addThunderTask(link, path, null, context);
         }
-
-//        //这个是用来重新启动任务的，更新数据库，而不插入新的记录，一种取巧的重启任务的策略
-//        if (taskInfos!=null&&taskInfos.size()>0){
-//            for (int i = 0; i < taskInfos.size(); i++) {
-//                if (taskInfos.get(i).getUrlMd5().equals(info.getUrlMd5())){
-//                    //已在任务列表，查看状态，如果是正在下载，不添加
-//
-//                    //更新表数据,如果是暂停，或者停止
-//                    if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
-//                        taskInfos.get(i).setTaskId(taskId);
-//                        taskDao.update(taskInfos.get(i));
-//                        Intent intent = new Intent();
-//                        intent.putExtra(Params.TASK_ID,taskId);
-//                        BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);
-//                        return;
-//                    }
-//                }
-//            }
-//        }
-        Log.e("testdownload","-----yes"+taskId);
         info.setTaskId(taskId);
         //存入数据库
-        taskDao.add(info);
+        taskDao.insert(info);
         //广播通知更新
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_ID,taskId);
         BroadCastUtils.sendIntentBroadCask(context,intent, Params.UPDATE_PROGERSS);
-    }
-
-    @Override
-    public void pauseTask(String url) {
-        if (!TextUtils.isEmpty(taskId)){
-            XLTaskHelper.instance().stopTask(Long.parseLong(taskId));
-        }
-    }
-
-    @Override
-    public void restartTask(String url) {
     }
 
 
@@ -164,13 +143,13 @@ public class DownLoadPresenter implements IPresenter {
         //列表只显示下载的标题就行了，暂时取第一个索引的文件名，后面跟文件数量即可
         //任务id是只有一个的，根据任务id来重启和删除任务
         //查询下已完成列表，是否有记录，有则不下载
-        TaskedDao taskedDao = TaskedDao.getInstance(context);
-        List<DoneTaskInfo> doneTaskInfos = taskedDao.queryAll();
+        DoneTaskDao taskedDao = AppDatabaseManager.getInstance(context).doneTaskDao();
+        List<DoneTaskInfo> doneTaskInfos = taskedDao.getAll();
         if (doneTaskInfos!=null&&doneTaskInfos.size()>0){
             for (int i = 0; i < doneTaskInfos.size(); i++) {
                 if (doneTaskInfos.get(i).getTitle().equals(torrentInfo.mSubFileInfo[0].mFileName+"共"+index.size()+"个文件")){
                     if (iTask!=null){
-                        iTask.repeatAdd("该影片已下载完成了，去中心看看吧");
+                        iTask.repeatAdd("该影片已下载完成了，去中心看看吧h");
                         Log.e("repeatAdd","该影片已下载完成了");
                         return;
                     }
@@ -178,8 +157,8 @@ public class DownLoadPresenter implements IPresenter {
             }
         }
         //数据库存一份，先查询数据库是否已有记录，没有则添加，有则不添加，0为停止状态，1正在进行和4为正在暂停，连接中的状态
-        TaskDao taskDao = TaskDao.getInstance(context);
-        List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+        DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
+        List<DowningTaskInfo> taskInfos = taskDao.getAll();
         if (taskInfos!=null&&taskInfos.size()>0){
             for (int i = 0; i < taskInfos.size(); i++) {
                 if (taskInfos.get(i).getTitle().equals(torrentInfo.mSubFileInfo[0].mFileName)){
@@ -216,7 +195,7 @@ public class DownLoadPresenter implements IPresenter {
             info.setFilePath(savePath+"/"+torrentInfo.mSubFileInfo[0].mFileName);
             info.setIndex(indexList.toString());
             //存入数据库
-            taskDao.add(info);
+            taskDao.insert(info);
             //广播通知更新
             Intent intent = new Intent();
             intent.putExtra(Params.TASK_ID,taskIds);
@@ -230,9 +209,6 @@ public class DownLoadPresenter implements IPresenter {
     }
 
 
-    public void  restartTasks(String taskId) {
-        XLTaskHelper.instance().startTask(Long.parseLong(taskId));
-    }
 
     /**
      * 迅雷thunder://地址与普通url地址转换
@@ -262,8 +238,8 @@ public class DownLoadPresenter implements IPresenter {
 
             String taskIds = String.valueOf(XLTaskHelper.instance().addTorrentTask(info.getTorrentPath(),savePath,indexList));
 
-            TaskDao taskDao = TaskDao.getInstance(context);
-            List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+            DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
+            List<DowningTaskInfo> taskInfos = taskDao.getAll();
             if (taskInfos!=null&&taskInfos.size()>0){
                 for (int i = 0; i < taskInfos.size(); i++) {
                     if (taskInfos.get(i).getTitle().equals(info.getTitle())){
@@ -295,8 +271,8 @@ public class DownLoadPresenter implements IPresenter {
 
         try {
             String path = FileUtils.isExistDir(Params.DEFAULT_PATH);
-            TaskDao taskDao = TaskDao.getInstance(context);
-            List<DowningTaskInfo> taskInfos = taskDao.queryAll();
+            DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
+            List<DowningTaskInfo> taskInfos = taskDao.getAll();
 
             String link = downTaskInfo.getTaskUrl();
             if (link.contains("magnet") || XLTaskHelper.instance().getFileName(link).endsWith("torrent")) {
@@ -308,8 +284,6 @@ public class DownLoadPresenter implements IPresenter {
             } else {
                 newTaskId = addThunderTask(link, path, null, context);
             }
-
-            Log.e("testtaskid","--------"+newTaskId+"-----"+downTaskInfo.getTitle());
 
             if (taskInfos!=null&&taskInfos.size()>0){
                 for (int i = 0; i < taskInfos.size(); i++) {
@@ -328,12 +302,25 @@ public class DownLoadPresenter implements IPresenter {
                 }
             }
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
 
+    public void initDownloadLiveData(DownLoadMainActivity activity) {
+        downloadDataModel = ViewModelProviders.of(activity).get(MovieDownloadDataModel.class);
+        subcribe(activity);
+    }
+
+    private void subcribe(DownLoadMainActivity activity) {
+
+        final Observer<List<DowningTaskInfo>> elapsedTimeObsever = new Observer<List<DowningTaskInfo>>() {
+            @Override
+            public void onChanged(@Nullable List<DowningTaskInfo> taskInfo) {
+                iTask.updateIngTask(taskInfo);
+            }
+        };
+        downloadDataModel.getRealTimeTaskInfo().observe(activity, elapsedTimeObsever);
     }
 }

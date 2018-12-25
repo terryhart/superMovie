@@ -255,7 +255,7 @@ public class XLTaskHelper {
      * @param taskId
      */
     public synchronized void startTask(long taskId) {
-        XLDownloadManager.getInstance().startTask(taskId);
+        XLDownloadManager.getInstance().startTask(taskId, true);
     }
 
     /**

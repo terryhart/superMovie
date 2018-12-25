@@ -8,15 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.R;
-import com.huangyong.downloadlib.domain.DowningTaskInfo;
+import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
-import com.j256.ormlite.stmt.query.In;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {

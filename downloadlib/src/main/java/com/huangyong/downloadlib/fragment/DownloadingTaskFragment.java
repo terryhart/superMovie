@@ -4,35 +4,27 @@ package com.huangyong.downloadlib.fragment;
  */
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.adapter.DownTaskAdapter;
-import com.huangyong.downloadlib.db.TaskDao;
-import com.huangyong.downloadlib.db.TaskedDao;
-import com.huangyong.downloadlib.domain.DoneTaskInfo;
-import com.huangyong.downloadlib.domain.DowningTaskInfo;
-import com.huangyong.downloadlib.model.ITask;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.presenter.DownLoadPresenter;
+import com.huangyong.downloadlib.room.AppDatabaseManager;
+import com.huangyong.downloadlib.room.DowningTaskDao;
+import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.BroadCastUtils;
 import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.downloadlib.utils.Utils;
@@ -54,8 +46,7 @@ import java.util.List;
  * @changeRecord [修改记录] <br/>
  * 2018/9/19 ：created
  */
-public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter.OnItemClickListener, ITask {
-
+public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter.OnItemClickListener {
 
     private RecyclerView downing;
     private List<DowningTaskInfo> infos =new ArrayList<>();
@@ -81,84 +72,26 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        initData();
+    }
+
+    private void initView(View view) {
         downing = view.findViewById(R.id.rv_downing_task);
         downing.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new DownTaskAdapter(infos);
-        initData();
-        initReceiver();
     }
-
-    private void initReceiver() {
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Params.UPDATE_PROGERSS);
-        intentFilter.addAction(Params.TASK_COMMPLETE);
-        getContext().registerReceiver(taskReceiver,intentFilter);
-    }
-
     private void initData() {
-        presenter = DownLoadPresenter.getInstance(getContext(),this);
         //下载中列表
-        TaskDao taskDao = TaskDao.getInstance(getContext());
-        List<DowningTaskInfo> taskInfos =taskDao.queryAll();
-        //重启应用后，原来正在进行当任务都已停止，这些任务的taskid是没有意义的，应该改为其他值，不然会影响新添加的任务，看起来用的是同一个taskID
-        if (taskInfos!=null&&taskInfos.size()>0){
-            for (int i = 0; i < taskInfos.size(); i++) {
-                if (taskInfos.get(i).getStatu()==0||taskInfos.get(i).getStatu()==4){
-                    taskInfos.get(i).setTaskId("404");
-                    taskDao.update(taskInfos.get(i));
-                }
-            }
-
-            adapter.setTaskData(taskInfos);
-        }else {
-            Log.e("downtaskinit","本地数据库为空");
-        }
         downing.setAdapter(adapter);
         adapter.setOnItemclickListenr(this);
     }
 
-    public void updateTaskDatas(List<DowningTaskInfo> info, DownLoadMainActivity downLoadMainActivity) {
-        if (this.infos!=null){
-            this.infos.clear();
-            this.infos.addAll(info);
-        }
+    public void reFreshTaskData(List<DowningTaskInfo> info) {
         if (adapter!=null){
-            Log.e("zhegadatep","dapter是空的");
-            adapter.notifyDataSetChanged();
+            adapter.setTaskData(info);
         }
     }
-
-    /**
-     * 下载中的任务完成后，会从下载中移除，并添加到已完成的列表，已完成因为没有下载进度，所以不会实时更新，只
-     * 在数据变化时更新，所以已完成的列表在这个页面封装并传送
-     */
-    BroadcastReceiver taskReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Params.UPDATE_PROGERSS)){
-                //查询数据库所有数据
-                List<DowningTaskInfo> downingTaskInfos = TaskDao.getInstance(getContext()).queryAll();
-                if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
-                    adapter.setTaskData(downingTaskInfos);
-                }
-            }
-            if (intent.getAction().equals(Params.TASK_COMMPLETE)){
-                TaskDao dao = TaskDao.getInstance(getContext());
-                List<DowningTaskInfo> taskInfos =dao.queryAll();
-                if (taskInfos.size()>0){
-                    synchronized (DownloadingTaskFragment.class){
-                        adapter.setTaskData(taskInfos);
-                    }
-                }else {
-                    synchronized (DownloadingTaskFragment.class){
-                        infos.clear();
-                        adapter.notifyDataSetChanged();
-                    }
-
-                }
-            }
-        }
-    };
 
     @Override
     public void clicked(DowningTaskInfo info) {
@@ -176,7 +109,6 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                     presenter.restartTorrent(info);
                 }
             }else {
-//                XLTaskHelper.instance().startTask(Long.parseLong(info.getTaskId()));
                 TaskLibHelper.reStartTask(info.getTaskUrl(),info.getLocalPath(),info.getPostImgUrl(),getActivity());
             }
 
@@ -210,8 +142,8 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
         dialog.findViewById(R.id.deleteTaskAndFile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskDao dao = TaskDao.getInstance(getContext());
-                dao.delete(taskInfo.getId());
+                DowningTaskDao dao = AppDatabaseManager.getInstance(getContext()).donwingDao();
+                dao.delete(taskInfo);
                 if (adapter!=null){
                     adapter.deleteItem(taskInfo.getId());
 
@@ -232,8 +164,8 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
             @Override
             public void onClick(View view) {
                 //删除数据库记录
-                TaskDao dao = TaskDao.getInstance(getContext());
-                dao.delete(taskInfo.getId());
+                DowningTaskDao dao = AppDatabaseManager.getInstance(getContext()).donwingDao();
+                dao.delete(taskInfo);
 
                 XLTaskHelper.instance().removeTask(Long.parseLong(taskInfo.getTaskId()));
                 //删除列表记录
@@ -263,11 +195,9 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getContext().unregisterReceiver(taskReceiver);
     }
 
-    @Override
-    public void repeatAdd(String s) {
-
+    public void setPresenter(DownLoadPresenter downLoadPresenter) {
+        this.presenter = downLoadPresenter;
     }
 }

@@ -1,23 +1,26 @@
-package com.huangyong.downloadlib.domain;
+package com.huangyong.downloadlib.room.data;
 
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.List;
 
 /**
  * 下载数据封装的数据库文件
  */
 
-@DatabaseTable(tableName = DowningTaskInfo.TABLE_NAME)
+@Entity(tableName = DowningTaskInfo.TABLE_NAME, indices = {@Index("title")})
 public class DowningTaskInfo {
 
     public static final String TABLE_NAME = "t_task";
-    @DatabaseField(generatedId = true)
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @DatabaseField(columnName = "title")
+    @ColumnInfo(name = "title")
     private String title;
 
     public String getTitle() {
@@ -36,37 +39,37 @@ public class DowningTaskInfo {
         this.urlMd5 = urlMd5;
     }
 
-    @DatabaseField(columnName = "urlMd5")
+    @ColumnInfo(name = "urlMd5")
     private String urlMd5;
 
-    @DatabaseField(columnName = "taskId")
+    @ColumnInfo(name = "taskId")
     private String taskId;
 
-    @DatabaseField(columnName = "taskUrl")
+    @ColumnInfo(name = "taskUrl")
     private String taskUrl;
 
-    @DatabaseField(columnName = "totalSize")
+    @ColumnInfo(name = "totalSize")
     private String totalSize;
 
-    @DatabaseField(columnName = "receiveSize")
+    @ColumnInfo(name = "receiveSize")
     private String receiveSize;
 
-    @DatabaseField(columnName = "localPath")
+    @ColumnInfo(name = "localPath")
     private String localPath;
 
-    @DatabaseField(columnName = "taskStatu")
+    @ColumnInfo(name = "taskStatu")
     private boolean taskStatu;
 
-    @DatabaseField(columnName = "postImgUrl")
+    @ColumnInfo(name = "postImgUrl")
     private String postImgUrl;
 
-    @DatabaseField(columnName = "speed")
+    @ColumnInfo(name = "speed")
     private String speed;
 
-    @DatabaseField(columnName = "proxyPlayUrl")
+    @ColumnInfo(name = "proxyPlayUrl")
     private String proxyPlayUrl;
 
-    @DatabaseField(columnName = "index")
+    @ColumnInfo(name = "index")
     private String index;
 
     public String getTorrentPath() {
@@ -77,7 +80,7 @@ public class DowningTaskInfo {
         this.torrentPath = torrentPath;
     }
 
-    @DatabaseField(columnName = "torrentPath")
+    @ColumnInfo(name = "torrentPath")
     private String torrentPath;
 
     public String getFilePath() {
@@ -88,7 +91,7 @@ public class DowningTaskInfo {
         this.filePath = filePath;
     }
 
-    @DatabaseField(columnName = "filePath")
+    @ColumnInfo(name = "filePath")
     private String filePath ;
 
     public String getIndex() {
@@ -108,7 +111,7 @@ public class DowningTaskInfo {
     }
 
 
-    @DatabaseField(columnName = "taskFrom")
+    @ColumnInfo(name = "taskFrom")
     private boolean taskFrom;
 
     public String getProxyPlayUrl() {
@@ -128,7 +131,7 @@ public class DowningTaskInfo {
         this.statu = statu;
     }
 
-    @DatabaseField(columnName = "statu")
+    @ColumnInfo(name = "statu")
     private int statu;
 
 

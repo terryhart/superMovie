@@ -1,19 +1,24 @@
-package com.huangyong.downloadlib.domain;
+package com.huangyong.downloadlib.room.data;
 
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = DoneTaskInfo.TABLE_NAME)
+@Entity(tableName = DoneTaskInfo.TABLE_NAME, indices = {@Index("title")})
 public class DoneTaskInfo {
 
-    public static final String TABLE_NAME = "t_edtask";
+    public static final String TABLE_NAME = "t_haveedtask";
 
 
-    @DatabaseField(columnName = "title")
+    @ColumnInfo(name = "title")
     private String title;
 
-    @DatabaseField(columnName = "urlMd5")
+    @ColumnInfo(name = "urlMd5")
     private String urlMd5;
 
     public String getTitle() {
@@ -32,31 +37,31 @@ public class DoneTaskInfo {
         this.urlMd5 = urlMd5;
     }
 
-    @DatabaseField(generatedId = true)
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @DatabaseField(columnName = "taskId")
+    @ColumnInfo(name = "taskId")
     private String taskId;
 
-    @DatabaseField(columnName = "taskUrl")
+    @ColumnInfo(name = "taskUrl")
     private String taskUrl;
 
-    @DatabaseField(columnName = "totalSize")
+    @ColumnInfo(name = "totalSize")
     private String totalSize;
 
-    @DatabaseField(columnName = "receiveSize")
+    @ColumnInfo(name = "receiveSize")
     private String receiveSize;
 
-    @DatabaseField(columnName = "localPath")
+    @ColumnInfo(name = "localPath")
     private String localPath;
 
-    @DatabaseField(columnName = "taskStatu")
+    @ColumnInfo(name = "taskStatu")
     private boolean taskStatu;
 
-    @DatabaseField(columnName = "postImgUrl")
+    @ColumnInfo(name = "postImgUrl")
     private String postImgUrl;
 
-    @DatabaseField(columnName = "filePath")
+    @ColumnInfo(name = "filePath")
     private String filePath;
 
     public String getFilePath() {
