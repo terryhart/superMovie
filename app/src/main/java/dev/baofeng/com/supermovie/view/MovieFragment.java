@@ -116,7 +116,7 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
                         rvlist.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
+                                recpresenter.getMovieMore(++index, 18);
                             }
                         }, 1);
                     }
