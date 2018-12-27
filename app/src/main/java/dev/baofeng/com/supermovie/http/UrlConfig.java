@@ -21,7 +21,7 @@ public class UrlConfig {
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
 
     //废弃
-    public static final String GET_ONLINE  = "ygcms/getOnline.php" ;
+    public static final String GET_ONLINE = "ygcms/getLineSeris.php";
 
     //获取电视剧
     public static final String GET_SERIS = "ygcms/getSeris.php";

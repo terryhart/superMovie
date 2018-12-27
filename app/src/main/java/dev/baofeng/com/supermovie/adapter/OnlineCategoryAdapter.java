@@ -9,16 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.huangyong.downloadlib.model.Params;
 
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.domain.OnlineInfo;
-import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
+import dev.baofeng.com.supermovie.view.OnLineMovieActivity;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -26,9 +25,9 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
 public class OnlineCategoryAdapter extends RecyclerView.Adapter {
     private Context context;
-    private OnlineInfo datas;
+    private OnlinePlayInfo datas;
 
-    public OnlineCategoryAdapter(Context context, OnlineInfo datas) {
+    public OnlineCategoryAdapter(Context context, OnlinePlayInfo datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -56,30 +55,26 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
         }else {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
-            String downItemTitle = datas.getData().get(position).getDowndtitle();
 
-            String posterImgUrl= imgUrl.split(",")[0];
-            Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
+            Glide.with(context).load(imgUrl).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180, 240).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 
-            String finalImgUrl = imgUrl;
-            String finalName = name;
             ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-//                        Intent intent = new Intent(context, DetailActivity.class);
-                        Intent intent = new Intent(context, MovieDetailActivity.class);
-                        intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
+                        Intent intent = new Intent(context, OnLineMovieActivity.class);
+                        intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
-                        intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
-                        intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
+                        //简介
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
 
-                        intent.putExtra(GlobalMsg.KEY_PLAY_TITLE,datas.getData().get(position).getPlayName());
-                        intent.putExtra(GlobalMsg.KEY_PLAY_URL,datas.getData().get(position).getPlayUrl());
+                        //地址类型 m3u8/kuyun
+                        intent.putExtra(GlobalMsg.KEY_PLAY_TITLE, datas.getData().get(position).getDowndtitle());
+                        //地址列表，title & url
+                        intent.putExtra(GlobalMsg.KEY_PLAY_URL, datas.getData().get(position).getDownLoadUrl());
                         context.startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();

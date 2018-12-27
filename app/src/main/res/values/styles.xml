@@ -18,10 +18,12 @@
 
     </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar"/>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar" />
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="ToolbarTitle">
         <item name="android:textSize">12sp</item>
     </style>
@@ -29,23 +31,24 @@
 
     <!-- 自定义Dialog主题 -->
     <style name="BottomDialogStyle" parent="@android:style/Theme.Dialog">
-            <item name="android:windowNoTitle">true</item>
-          <item name="android:windowBackground">@android:color/white</item>
-         <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
     </style>
 
     <!-- 自定义Dialog动画 -->
     <style name="BottomDialogAnimation">
-            <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
-            <item name="android:windowExitAnimation">@anim/input_method_exit</item>
+        <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
+        <item name="android:windowExitAnimation">@anim/input_method_exit</item>
     </style>
 
-    <style name="Dialog_Fullscreen" parent="Animation.AppCompat.Dialog" >
+    <style name="Dialog_Fullscreen" parent="Animation.AppCompat.Dialog">
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/AlertDialog.AppCompat</item>
     </style>
+
     <style name="CheckBoxTintTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
 
         <item name="colorAccent">#128e9c</item>

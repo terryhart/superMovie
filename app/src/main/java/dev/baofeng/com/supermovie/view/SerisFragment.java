@@ -30,6 +30,8 @@ import dev.baofeng.com.supermovie.presenter.RecentPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.IRecentView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/31.
@@ -112,7 +114,20 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
         adapter =new CategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        rvlist.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recpresenter.getSerisMore(++index, 18);
+                            }
+                        }, 1);
+                    }
+                })
+                .into(rvlist);
         if (empFram.isShown()){
             empFram.setVisibility(View.GONE);
         }
@@ -147,7 +162,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisUpdate(1,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },1500);
+        }, 1);
     }
 
     @Override
@@ -158,7 +173,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisMore(++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },1500);
+        }, 1);
 
     }
 }

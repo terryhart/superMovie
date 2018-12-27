@@ -14,8 +14,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-
-
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -26,7 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <activity android:name=".view.BtDownActivity" />
         <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.AboutUsActivity" />
@@ -36,7 +34,7 @@
             android:name=".view.MovieDetailActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".SplashActivity" />
         <activity android:name=".view.HistoryActivity" />
 
         <receiver android:name=".receiver.NetBroadcastReceiver">
@@ -71,8 +69,9 @@
         <activity android:name=".view.FavorActivity" />
         <activity android:name=".view.SubjectListActivity" />
         <activity android:name=".view.OnlineActivity" />
-        <activity android:name=".view.PayMeActivity"/>
-        <service android:name=".services.DownLoadService"></service>
+        <activity android:name=".view.PayMeActivity" />
+
+        <service android:name=".services.DownLoadService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -81,9 +80,52 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                 android:resource="@xml/new_app_file_paths" />
+                android:resource="@xml/new_app_file_paths" />
         </provider>
 
+        <!-- 微信分享注册 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="tencent_qq_appid"
+            android:value="jjjj" />
+
+        <meta-data
+            android:name="weixin_key"
+            android:value="wx1e84103dfec426ac" />
+
+        <!-- QQ SDK 需要註冊Activity -->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent222222" />
+                <!-- 100380359 100381104 222222 -->
+            </intent-filter>
+        </activity>
+        <!-- QQ SDK 需要註冊 Activity -->
+
+        <activity
+            android:name=".view.OnLineMovieActivity"
+            android:label="@string/title_activity_on_line_movie"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

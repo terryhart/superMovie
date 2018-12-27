@@ -3,7 +3,6 @@ package dev.baofeng.com.supermovie.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +25,9 @@ import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.BlurUtil;
 import com.huangyong.downloadlib.utils.MD5Utils;
+import com.xyzlf.share.library.bean.ShareEntity;
+import com.xyzlf.share.library.interfaces.ShareConstant;
+import com.xyzlf.share.library.util.ShareUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,6 @@ import dev.baofeng.com.supermovie.domain.DetailInfo;
 public class MovieDetailActivity extends AppCompatActivity implements OnItemClickListenr {
 
     private ImageView poster;
-//    private TextView mvdesc;
     private String title;
     private String downUrl;
     private String posterUrl;
@@ -68,12 +69,12 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private ImageView mDetailPoster;
     private TextView imgTitle;
     private CoordinatorLayout root;
+    private ImageView share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail_layout);
-
         initData();
         initView();
 
@@ -108,6 +109,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         mDetailPoster = findViewById(R.id.detail_poster);
         imgTitle = findViewById(R.id.imgTitle);
         detail_app_bar = findViewById(R.id.app_bar);
+        share = findViewById(R.id.share);
         favor = findViewById(R.id.favor);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
 
@@ -122,7 +124,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle(title);
@@ -215,6 +217,32 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 toggleFavor();
             }
         });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareEntity testBean = new ShareEntity("我是标题", "我是内容，描述内容。");
+                testBean.setUrl("https://www.baidu.com"); //分享链接
+                testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
+                ShareUtil.startShare(MovieDetailActivity.this, ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND, testBean, ShareConstant.REQUEST_CODE);
+            }
+        });
+
+    }
+
+    /**
+     * 使用统一数据结构
+     */
+    public void showShareDialog(View view) {
+        ShareEntity testBean = new ShareEntity("我是标题", "我是内容，描述内容。");
+        testBean.setUrl("https://www.baidu.com"); //分享链接
+        testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
+        ShareUtil.showShareDialog(this, testBean, ShareConstant.REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 

@@ -78,6 +78,15 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/ic_share_black_24dp"
+                        android:id="@+id/share"
+                        android:layout_toLeftOf="@+id/favor"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/fullscreen_favority_normal"
                         android:id="@+id/favor"
                         android:layout_centerVertical="true"

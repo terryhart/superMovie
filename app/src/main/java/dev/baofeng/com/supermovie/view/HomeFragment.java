@@ -129,7 +129,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     }
 
     private void initView() {
-
         movieFragment = MovieFragment.newInstance("movie");
         serisFragment = SerisFragment.newInstance("seris");
         List listfragment=new ArrayList<Fragment>();
@@ -233,10 +232,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.catfrag:
-                Intent intentOline = new Intent(getContext(), LineWebview.class);
-                String url = UrlConfig.ONLINE_MV;
-                intentOline.putExtra(KeyParam.PLAYURL,url);
-                startActivity(intentOline);
+                Intent onlineIntent = new Intent(getActivity(), OnlineActivity.class);
+                startActivity(onlineIntent);
                 break;
             case R.id.bangdan:
                 Intent intents = new Intent(getContext(), IndexActivity.class);
@@ -282,6 +279,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         getRecpresenter = new GetRecpresenter(getContext(), this);
         getRecpresenter.getRecentUpdate( index,18);
         getRecpresenter.getBtRecommend(1,10);
+
     }
 
     public static HomeFragment getInstance() {

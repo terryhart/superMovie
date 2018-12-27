@@ -111,5 +111,7 @@
     <string name="search">搜索</string>
     <string name="search_keyword">输入搜索关键词</string>
     <string name="search_none_tips">搜索内容不能为空</string>
+    <string name="title_activity_on_line_movie">OnLineMovieActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

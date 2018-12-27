@@ -19,6 +19,7 @@ import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.BtDownAdapter;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
 import dev.baofeng.com.supermovie.domain.OnlineInfo;
+import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.presenter.GetOnlinePresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IOnlineView;
 
@@ -31,7 +32,7 @@ public class OnlineActivity extends AppCompatActivity implements BasePullLayout.
     private GetOnlinePresenter presenter;
     private int index;
     private OnlineCategoryAdapter adapter;
-    private OnlineInfo info;
+    private OnlinePlayInfo info;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class OnlineActivity extends AppCompatActivity implements BasePullLayout.
     }
 
     @Override
-    public void loadData(OnlineInfo info) {
+    public void loadData(OnlinePlayInfo info) {
         this.info = info;
         adapter = new OnlineCategoryAdapter(this,info);
         rvOnline.setLayoutManager(new GridLayoutManager(this,3));
@@ -87,7 +88,7 @@ public class OnlineActivity extends AppCompatActivity implements BasePullLayout.
     }
 
     @Override
-    public void loadMore(OnlineInfo result) {
+    public void loadMore(OnlinePlayInfo result) {
         this.info.getData().addAll(result.getData());
         adapter.notifyDataSetChanged();
     }

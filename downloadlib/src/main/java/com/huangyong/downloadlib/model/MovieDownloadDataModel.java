@@ -68,7 +68,6 @@ public class MovieDownloadDataModel extends AndroidViewModel {
                 DowningTaskDao downingTaskDao = AppDatabaseManager.getInstance(getApplication()).donwingDao();
                 List<DowningTaskInfo> downingTaskDaoAll = downingTaskDao.getAll();
 
-
                 if (downingTaskDaoAll != null && downingTaskDaoAll.size() > 0) {
                     for (int i = 0; i < downingTaskDaoAll.size(); i++) {
                         String taskId = downingTaskDaoAll.get(i).getTaskId();
@@ -78,7 +77,6 @@ public class MovieDownloadDataModel extends AndroidViewModel {
                         downingTaskDaoAll.get(i).setReceiveSize(String.valueOf(taskInfo.mDownloadSize));
                         downingTaskDaoAll.get(i).setSpeed(FileUtils.convertFileSize(taskInfo.mDownloadSpeed));
 
-                        Log.e("sdkjgsdlsldlldd", taskInfo.mDownloadSpeed + "--**--" + downingTaskDaoAll.get(i).getTaskId() + "----" + downingTaskDaoAll.get(i).getTitle());
                         if (taskInfo.mDownloadSize != 0 && taskInfo.mFileSize != 0 && taskInfo.mFileSize == Long.parseLong(downingTaskDaoAll.get(i).getReceiveSize())) {
                             //添加到数据库
                             synchronized (MovieDownloadDataModel.class) {

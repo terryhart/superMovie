@@ -3,12 +3,10 @@ package dev.baofeng.com.supermovie.presenter;
 import android.content.Context;
 
 import dev.baofeng.com.supermovie.domain.OnlineInfo;
-import dev.baofeng.com.supermovie.domain.SubjectInfo;
-import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
+import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.IOnlineView;
-import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,8 +17,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class GetOnlinePresenter extends BasePresenter<IOnlineView>{
-    private Context context;
-    private IMoview iMoview;
 
     public GetOnlinePresenter(Context context, IOnlineView iview) {
         super(context, iview);
@@ -30,10 +26,10 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView>{
 
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getOnlineMovie(page,pagesize)
+                .getOnlineMovie("native", page, pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlineInfo>() {
+                .subscribe(new Subscriber<OnlinePlayInfo>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -43,7 +39,7 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView>{
 
                     }
                     @Override
-                    public void onNext(OnlineInfo result) {
+                    public void onNext(OnlinePlayInfo result) {
                         iview.loadData(result);
                     }
                 });
@@ -58,10 +54,10 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView>{
     public void getMoreData(int page,int pagesize) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getOnlineMovie(page,pagesize)
+                .getOnlineMovie("native", page, pagesize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlineInfo>() {
+                .subscribe(new Subscriber<OnlinePlayInfo>() {
                     @Override
                     public void onCompleted() {
 
@@ -72,7 +68,7 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView>{
 
                     }
                     @Override
-                    public void onNext(OnlineInfo result) {
+                    public void onNext(OnlinePlayInfo result) {
                         iview.loadMore(result);
                     }
                 });
