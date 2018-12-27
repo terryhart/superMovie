@@ -93,11 +93,12 @@
 
         <meta-data
             android:name="tencent_qq_appid"
-            android:value="jjjj" />
+            android:value="@string/tencent_qq_appid" />
 
         <meta-data
             android:name="weixin_key"
-            android:value="wx1e84103dfec426ac" />
+            android:value="@string/weixin_key" />
+
 
         <!-- QQ SDK 需要註冊Activity -->
         <activity
