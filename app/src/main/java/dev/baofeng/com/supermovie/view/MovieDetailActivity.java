@@ -221,10 +221,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareEntity testBean = new ShareEntity("我是标题", "我是内容，描述内容。");
-                testBean.setUrl("https://www.baidu.com"); //分享链接
-                testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
-                ShareUtil.startShare(MovieDetailActivity.this, ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND, testBean, ShareConstant.REQUEST_CODE);
+                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
+                testBean.setContent("热门电影，美剧，海量资源每日更新");
+                testBean.setUrl("https://fir.im/btmovie"); //分享链接
+                testBean.setDrawableId(R.mipmap.icon_share);
+                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
             }
         });
 

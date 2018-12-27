@@ -145,11 +145,10 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
-    //implementation 'com.github.arvinljw:SocialHelper:v1.2.0'
-    //compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile ('com.xyzlf.share:sharesdk:0.0.11') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
 }
+
 
 apply from: 'config.gradle'
