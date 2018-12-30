@@ -114,5 +114,6 @@
     <string name="title_activity_on_line_movie">OnLineMovieActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_online_detail_page">OnlineDetailPageActivity</string>
+    <string name="favor">收藏</string>
 
 </resources>

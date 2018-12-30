@@ -105,7 +105,7 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
     @Override
     public void loadData(CacheResult<RecentUpdate> movieBean) {
         this.movieInfo = movieBean.getData();
-        adapter = new CategoryAdapter(getContext(), movieBean.getData());
+        adapter = new CategoryAdapter(getActivity(), movieBean.getData());
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)

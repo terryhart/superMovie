@@ -72,7 +72,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
 
     @Override
     public void updateYes(AppUpdateInfo result) {
-        Snackbar.make(root, "发现新版本，请到“我的”页面手动下载", Snackbar.LENGTH_LONG).show();
+        //Snackbar.make(root, "发现新版本，请到“我的”页面手动下载", Snackbar.LENGTH_LONG).show();
         SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,1);
     }
 

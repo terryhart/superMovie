@@ -186,6 +186,9 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
                     }else {
                         poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()+1).getDownimgurl().split(",")[0];
                     }
+                    if (isDetached()) {
+                        return;
+                    }
                     Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
