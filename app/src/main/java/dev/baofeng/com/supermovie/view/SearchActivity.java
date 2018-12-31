@@ -32,14 +32,16 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.SearchAdapter;
 import dev.baofeng.com.supermovie.db.data.SearchHistory;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.SearchPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
+import dev.baofeng.com.supermovie.presenter.iview.Isearch;
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class SearchActivity extends AppCompatActivity implements ISview {
+public class SearchActivity extends AppCompatActivity implements Isearch {
 
     @BindView(R.id.et_search)
     EditText etSearch;
@@ -168,7 +170,7 @@ public class SearchActivity extends AppCompatActivity implements ISview {
     }
 
     @Override
-    public void onResult(MovieInfo info) {
+    public void loadData(MovieInfo info) {
         adapter = new SearchAdapter(this, info);
         searchrv.setLayoutManager(new LinearLayoutManager(this));
         searchrv.setAdapter(adapter);
@@ -178,7 +180,7 @@ public class SearchActivity extends AppCompatActivity implements ISview {
     }
 
     @Override
-    public void onNoData() {
+    public void loadFail() {
         if (adapter!=null){
             adapter.clear();
             adapter.notifyDataSetChanged();

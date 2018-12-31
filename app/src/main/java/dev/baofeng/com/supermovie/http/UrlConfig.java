@@ -17,7 +17,7 @@ public class UrlConfig {
     public static final String ONLINE_MV = BASE_URL+"ygcms/app/online.html";
     public static final String TV_CHINNALE = BASE_URL+"ygcms/app/tv_online.html";
 
-    public static final String GET_SHARE = "ygcms/getShare.php";
+    public static final String GET_SHARE = "ygcms/getKeyShare.php";
     //获取专题
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
 

@@ -57,6 +57,7 @@ public class FavorAdapter extends RecyclerView.Adapter {
                 intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
                 intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, info.getData().get(position).getDowndtitle());
                 intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.getData().get(position).getMvdesc());
+                intent.putExtra(GlobalMsg.KEY_MV_ID, info.getData().get(position).getMv_md5_id());
                 context.startActivity(intent);
             }catch (Exception e){
                 e.printStackTrace();

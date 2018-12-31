@@ -61,6 +61,17 @@ public class FavorInfo {
     @DatabaseField(columnName = "movieDesc")
     private String movieDesc;
 
+    public String getMv_md5_id() {
+        return mv_md5_id;
+    }
+
+    public void setMv_md5_id(String mv_md5_id) {
+        this.mv_md5_id = mv_md5_id;
+    }
+
+    @DatabaseField(columnName = "mv_md5_id")
+    private String mv_md5_id;
+
     public String getMovieDesc() {
         return movieDesc;
     }

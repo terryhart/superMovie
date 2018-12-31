@@ -77,6 +77,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView, IS
 
         if (!TextUtils.isEmpty(extra)) {
             sharePresenter.getMovieForShare(extra);
+
             finish();
         } else {
             new Handler().postDelayed(() -> {

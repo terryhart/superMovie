@@ -106,6 +106,9 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
     public void loadData(CacheResult<RecentUpdate> movieBean) {
         this.movieInfo = movieBean.getData();
         adapter = new CategoryAdapter(getActivity(), movieBean.getData());
+        if (rvlist == null) {
+            return;
+        }
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)

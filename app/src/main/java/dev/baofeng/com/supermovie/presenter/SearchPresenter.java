@@ -12,6 +12,7 @@ import dev.baofeng.com.supermovie.db.dao.DbHelper;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
+import dev.baofeng.com.supermovie.presenter.iview.Isearch;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,10 +22,10 @@ import rx.schedulers.Schedulers;
  * Created by huangyong on 2018/2/23.
  */
 
-public class SearchPresenter extends BasePresenter<ISview> {
+public class SearchPresenter extends BasePresenter<Isearch> {
 
 
-    public SearchPresenter(Context context, ISview iview) {
+    public SearchPresenter(Context context, Isearch iview) {
         super(context, iview);
     }
 
@@ -49,12 +50,12 @@ public class SearchPresenter extends BasePresenter<ISview> {
 
                     @Override
                     public void onError(Throwable e) {
-                        iview.onNoData();
+                        iview.loadFail();
                     }
                     @Override
                     public void onNext(MovieInfo result) {
                         if (result.getCode()==200){
-                            iview.onResult(result);
+                            iview.loadData(result);
                         }else {
 
                         }

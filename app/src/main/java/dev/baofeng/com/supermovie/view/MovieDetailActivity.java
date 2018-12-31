@@ -139,7 +139,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 testBean.setDrawableId(R.mipmap.icon_share);
                 try {
                     String encode = URLEncoder.encode(replace, "utf-8");
-                    String url = "https://hiliving.github.io/?t=" + URLEncoder.encode(title, "utf-8") + "&d=" + encode + "&i=" + URLEncoder.encode(posterImagUrl, "utf-8") + "&id=" + md5Id;
+//                    String url = "https://hiliving.github.io/?t=" + URLEncoder.encode(title, "utf-8") + "&d=" + encode + "&i=" + URLEncoder.encode(posterImagUrl, "utf-8") + "&id=" + md5Id;
+                    String url = "https://hiliving.github.io/?id=" + md5Id;
                 testBean.setUrl(url);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
