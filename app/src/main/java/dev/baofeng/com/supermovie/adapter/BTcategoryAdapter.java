@@ -1,8 +1,11 @@
 package dev.baofeng.com.supermovie.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +28,8 @@ import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 public class BTcategoryAdapter extends RecyclerView.Adapter {
     private Context context;
     private RecentUpdate datas;
-
+    private static final String VIEW_NAME_HEADER_IMAGE = "image";
+    private static final String VIEW_NAME_HEADER_TITLE = "title";
     public BTcategoryAdapter(Context context, RecentUpdate datas) {
         this.context = context;
         this.datas = datas;
@@ -67,16 +71,27 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
             ((CommonHolder) holder).itemimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     try {
-//                        Intent intent = new Intent(context, DetailActivity.class);
-                        Intent intent = new Intent(context, MovieDetailActivity.class);
+                        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                (Activity) context,
+                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemimg,
+                                        VIEW_NAME_HEADER_IMAGE),
+                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemtitle,
+                                        VIEW_NAME_HEADER_TITLE)
+                        );
+                        Intent intent = new Intent();
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
                         intent.putExtra(GlobalMsg.KEY_MV_ID, md5Id);
-                        context.startActivity(intent);
+                        intent.setClass(context, MovieDetailActivity.class);
+
+                        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }

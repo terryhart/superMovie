@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.huangyong.downloadlib.TaskLibHelper;
@@ -49,9 +50,7 @@ import javax.xml.transform.URIResolver;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
-import dev.baofeng.com.supermovie.adapter.HeaderAndFooterWrapper;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
-import dev.baofeng.com.supermovie.http.UrlConfig;
 
 /**
  *  intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
@@ -248,7 +247,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle(title);
-        Glide.with(this).load(posterImagUrl).asBitmap().placeholder(R.drawable.ic_place_hoder).into(new SimpleTarget<Bitmap>() {
+
+        Glide.with(this).load(posterImagUrl).asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 Bitmap blurBitmap = BlurUtil.getBlurBitmap(4, 4, resource);
