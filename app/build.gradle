@@ -12,11 +12,6 @@ android {
         packagingOptions {
             exclude 'META-INF/rxjava.properties'
         }
-
-        manifestPlaceholders = [
-                //  替换成你的qq_id
-                qq_id: "123456789"
-        ]
     }
 
 
@@ -145,9 +140,10 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
-    compile ('com.xyzlf.share:sharesdk:0.0.11') {
+    implementation ('com.xyzlf.share:sharesdk:0.0.11') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+
 }
 
 

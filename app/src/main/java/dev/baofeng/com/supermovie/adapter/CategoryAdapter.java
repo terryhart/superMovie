@@ -1,11 +1,15 @@
 package dev.baofeng.com.supermovie.adapter;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,8 @@ import dev.baofeng.com.supermovie.view.widget.SlideInRightAnimation;
  */
 
 public class CategoryAdapter extends RecyclerView.Adapter {
+    private static final String VIEW_NAME_HEADER_IMAGE = "image";
+    private static final String VIEW_NAME_HEADER_TITLE = "title";
     private Context context;
     private RecentUpdate datas;
 
@@ -87,7 +93,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
 
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
+            Glide.with(context).load(uri).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 
@@ -97,14 +103,25 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     try {
-//                        Intent intent = new Intent(context, DetailActivity.class);
-                        Intent intent = new Intent(context, MovieDetailActivity.class);
+                        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                (Activity) context,
+                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemimg,
+                                        VIEW_NAME_HEADER_IMAGE),
+                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemtitle,
+                                        VIEW_NAME_HEADER_TITLE)
+                        );
+                        Intent intent = new Intent();
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
-                        context.startActivity(intent);
+                        intent.putExtra(GlobalMsg.KEY_MV_ID, datas.getData().get(position).getMv_md5_id());
+                        intent.setClass(context, MovieDetailActivity.class);
+
+                        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
+
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/private/var/folders/48/vwd9wpr116sd_gsqbrh7783m0000gn/T/AppTranslocation/A85E5F5B-6F97-4C70-B7B4-4D5938B30BC8/d/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_share_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/private/var/folders/48/vwd9wpr116sd_gsqbrh7783m0000gn/T/AppTranslocation/115DF546-3704-42CC-8532-332738DC22C9/d/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_border_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="fbfbfb" />
-                            <entry key="outputName" value="ic_share_black_24dp" />
+                            <entry key="color" value="fb370b" />
+                            <entry key="outputName" value="ic_favorite_border_black_24dp" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
                         </option>

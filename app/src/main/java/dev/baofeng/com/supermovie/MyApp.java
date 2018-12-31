@@ -54,7 +54,9 @@ public class MyApp extends Application{
 
             @Override
             public void onViewInitFinished(boolean arg0) {
-                // TODO Auto-generated method stub
+                // TODO Auto-generated method stub https://github.com/H07000223/FlycoSystemBar  https://github.com/codevscolor/MaterialPreference
+                // TODO https://github.com/lufficc/StateLayout 多状态 https://github.com/tarek360/RichPath  https://github.com/Jaouan/Revealator
+                // TODO https://github.com/didixyy/BilibiliSearchView
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 Log.d("app", " onViewInitFinished is " + arg0);
             }

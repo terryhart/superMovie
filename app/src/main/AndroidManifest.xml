@@ -52,6 +52,18 @@
             android:name=".PreActivity"
             android:launchMode="singleTask"
             android:theme="@style/SplashTheme">
+
+            <intent-filter>
+                <data
+                    android:scheme="zmovie"
+                    android:host="zhost"
+                    android:pathPrefix="/bt/open" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -94,11 +106,9 @@
         <meta-data
             android:name="tencent_qq_appid"
             android:value="@string/tencent_qq_appid" />
-
         <meta-data
             android:name="weixin_key"
             android:value="@string/weixin_key" />
-
 
         <!-- QQ SDK 需要註冊Activity -->
         <activity
@@ -106,7 +116,6 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -126,6 +135,10 @@
         <activity
             android:name=".view.OnLineMovieActivity"
             android:label="@string/title_activity_on_line_movie"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.OnlineDetailPageActivity"
+            android:label="@string/title_activity_online_detail_page"
             android:theme="@style/AppTheme"></activity>
     </application>
 

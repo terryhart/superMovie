@@ -25,6 +25,8 @@ import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/31.
@@ -107,7 +109,20 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         adapter =new BTcategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        rvlist.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recpresenter.getLibraryMoreDdata(type, ++index, 18);
+                            }
+                        }, 1);
+                    }
+                })
+                .into(rvlist);
         if (empFram.isShown()){
             empFram.setVisibility(View.GONE);
         }

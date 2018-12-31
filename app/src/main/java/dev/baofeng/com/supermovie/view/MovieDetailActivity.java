@@ -1,16 +1,24 @@
 package dev.baofeng.com.supermovie.view;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.transition.Transition;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,14 +37,18 @@ import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.URIResolver;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.adapter.HeaderAndFooterWrapper;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
+import dev.baofeng.com.supermovie.http.UrlConfig;
 
 /**
  *  intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
@@ -45,7 +57,8 @@ import dev.baofeng.com.supermovie.domain.DetailInfo;
  intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
  */
 public class MovieDetailActivity extends AppCompatActivity implements OnItemClickListenr {
-
+    private static final String VIEW_NAME_HEADER_IMAGE = "image";
+    private static final String VIEW_NAME_HEADER_TITLE = "title";
     private ImageView poster;
     private String title;
     private String downUrl;
@@ -62,14 +75,15 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String[] downItemList;
     private LinearLayoutManager layoutManager;
     private String[] items;
-    private ImageView favor;
     private String playUrl;
-    private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private String playTitle;
     private ImageView mDetailPoster;
     private TextView imgTitle;
     private CoordinatorLayout root;
-    private ImageView share;
+    private FloatingActionButton fab;
+    private DetailInfo info;
+    private String sj;
+    private String md5Id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +91,104 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         setContentView(R.layout.activity_movie_detail_layout);
         initData();
         initView();
+        ViewCompat.setTransitionName(mDetailPoster, VIEW_NAME_HEADER_IMAGE);
+        addTransitionListener();
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cat_topappbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!TextUtils.isEmpty(downUrl)) {
+            MenuItem item = menu.findItem(R.id.favorate);
+            FavorDao dao = FavorDao.getInstance(getApplicationContext());
+            String md5 = MD5Utils.stringToMD5(downUrl);
+            List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+            if (favorInfos != null && favorInfos.size() > 0) {
+                item.setIcon(R.drawable.ic_favorite_black_24dp);
+            } else {
+                item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+            }
+
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shares:
+                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
+                testBean.setContent("热门电影，美剧，海量资源每日更新");
+                testBean.setImgUrl(posterImagUrl);
+
+                String url = "https://hiliving.github.io?t=" + title + "&d=" + sj + "&i=" + URLEncoder.encode(posterImagUrl) + "&id=" + md5Id;
+                testBean.setUrl(url);
+                testBean.setDrawableId(R.mipmap.icon_share);
+                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
+
+                break;
+            case R.id.favorate:
+                toggleFavor(item);
+
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean addTransitionListener() {
+
+
+        // There is an entering shared element transition so add a listener to it
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            final Transition transition = getWindow().getSharedElementEnterTransition();
+            if (transition != null) {
+                transition.addListener(new Transition.TransitionListener() {
+                    @Override
+                    public void onTransitionEnd(Transition transition) {
+                        // As the transition has ended, we can now load the full-size image
+
+                        // Make sure we remove ourselves as a listener
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            transition.removeListener(this);
+                        }
+                    }
+
+                    @Override
+                    public void onTransitionStart(Transition transition) {
+                    }
+
+                    @Override
+                    public void onTransitionCancel(Transition transition) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            transition.removeListener(this);
+                        }
+                    }
+
+                    @Override
+                    public void onTransitionPause(Transition transition) {
+                        // No-op
+                    }
+
+                    @Override
+                    public void onTransitionResume(Transition transition) {
+                        // No-op
+                    }
+                });
+            }
+
+            return true;
+        }
+        return false;
+    }
     private void initData() {
         layoutManager = new LinearLayoutManager(this);
 
@@ -88,6 +197,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         playUrl = intent.getStringExtra(GlobalMsg.KEY_PLAY_URL);
         playTitle = intent.getStringExtra(GlobalMsg.KEY_PLAY_TITLE);
         downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
+        md5Id = intent.getStringExtra(GlobalMsg.KEY_MV_ID);
         downItemList = downItemTitle.split(",");
 
 
@@ -109,13 +219,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         mDetailPoster = findViewById(R.id.detail_poster);
         imgTitle = findViewById(R.id.imgTitle);
         detail_app_bar = findViewById(R.id.app_bar);
-        share = findViewById(R.id.share);
-        favor = findViewById(R.id.favor);
         detail_app_bar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-
-
         poster = findViewById(R.id.blurPoster);
-//        mvdesc = findViewById(R.id.mvdesc);
         recyclerView = findViewById(R.id.rv_detail);
         titleView = findViewById(R.id.toolbarTitle);
         titleView.setText(title);
@@ -124,15 +229,23 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle(title);
+        Glide.with(this).load(posterImagUrl).asBitmap().placeholder(R.drawable.ic_place_hoder).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Bitmap blurBitmap = BlurUtil.getBlurBitmap(4, 4, resource);
+                mDetailPoster.setImageBitmap(resource);
+                poster.setImageBitmap(blurBitmap);
 
+            }
+        });
         String[] splitArr = mvdescTx.split("◎");
         StringBuffer buffer = new StringBuffer();
         ArrayList<String> listDesc=new ArrayList<>();
-        DetailInfo info = new DetailInfo();
+        info = new DetailInfo();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +284,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             }
             info.setMvDesc(shortDesc.toString());
         }
+        sj = info.getMvDesc();
+        if (sj.contains("◎")) {
+            sj = sj.substring(sj.lastIndexOf("◎") + 1);
+        }
 
 
 
@@ -201,45 +318,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 downLoadListDialog.show();
             }
         });
-        Glide.with(this).load(posterImagUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Bitmap blurBitmap = BlurUtil.getBlurBitmap(4, 4, resource);
-                mDetailPoster.setImageBitmap(resource);
-                poster.setImageBitmap(blurBitmap);
-            }
-        });
-        //初始化收藏状态
-        initFavorTag();
-        favor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleFavor();
-            }
-        });
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
-                testBean.setContent("热门电影，美剧，海量资源每日更新");
-                testBean.setUrl("https://fir.im/btmovie"); //分享链接
-                testBean.setDrawableId(R.mipmap.icon_share);
-                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
-            }
-        });
 
     }
 
-    /**
-     * 使用统一数据结构
-     */
-    public void showShareDialog(View view) {
-        ShareEntity testBean = new ShareEntity("我是标题", "我是内容，描述内容。");
-        testBean.setUrl("https://www.baidu.com"); //分享链接
-        testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
-        ShareUtil.showShareDialog(this, testBean, ShareConstant.REQUEST_CODE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,29 +329,21 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     }
 
-    private void initFavorTag() {
-        FavorDao dao = FavorDao.getInstance(getApplicationContext());
-        String md5 = MD5Utils.stringToMD5(downUrl);
-        List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
-        if (favorInfos!=null&&favorInfos.size()>0){
-            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
-        }else {
-            favor.setBackgroundResource(R.drawable.fullscreen_favority_normal);
-        }
-    }
 
     /**
      * 添加或取消收藏
+     * @param item
      */
-    private void toggleFavor() {
+    private void toggleFavor(MenuItem item) {
 
         FavorDao dao = FavorDao.getInstance(getApplicationContext());
         String md5 = MD5Utils.stringToMD5(downUrl);
         List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
         if (favorInfos!=null&&favorInfos.size()>0){
             dao.delete(favorInfos.get(0).getId());
-            favor.setBackgroundResource(R.drawable.fullscreen_favority_normal);
             Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+            item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+
         }else {
             FavorInfo info = new FavorInfo();
             info.setMovieDesc(mvdescTx);
@@ -280,7 +354,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             info.setDownItemTitle(downItemTitle);
             dao.add(info);
             Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();
-            favor.setBackgroundResource(R.drawable.fullscreen_favority_press);
+            item.setIcon(R.drawable.ic_favorite_black_24dp);
         }
 
     }
@@ -305,5 +379,14 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
 
         Snackbar.make(root, "下载任务已添加", Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        fab.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        }
     }
 }

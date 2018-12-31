@@ -6,6 +6,7 @@ package dev.baofeng.com.supermovie.http;
  */
 
 public class UrlConfig {
+
     public static String UUIDA = null;
     public static String BASE_URL = "http://123.207.150.253/";
     //版本更新
@@ -16,7 +17,7 @@ public class UrlConfig {
     public static final String ONLINE_MV = BASE_URL+"ygcms/app/online.html";
     public static final String TV_CHINNALE = BASE_URL+"ygcms/app/tv_online.html";
 
-
+    public static final String GET_SHARE = "ygcms/getShare.php";
     //获取专题
     public static final String GET_SUBJECT  = "ygcms/getSubject.php" ;
 

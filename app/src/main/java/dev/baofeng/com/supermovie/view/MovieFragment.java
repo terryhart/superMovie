@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
+import com.zchu.rxcache.data.CacheResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,10 +103,9 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
 
 
     @Override
-    public void loadData(RecentUpdate movieBean) {
-        this.movieInfo = movieBean;
-        Log.e("movieInfo",movieBean.getData().size()+"");
-        adapter =new CategoryAdapter(getContext(),movieBean);
+    public void loadData(CacheResult<RecentUpdate> movieBean) {
+        this.movieInfo = movieBean.getData();
+        adapter = new CategoryAdapter(getActivity(), movieBean.getData());
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)
@@ -116,7 +116,7 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
                         rvlist.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
+                                recpresenter.getMovieMore(++index, 18);
                             }
                         }, 1);
                     }

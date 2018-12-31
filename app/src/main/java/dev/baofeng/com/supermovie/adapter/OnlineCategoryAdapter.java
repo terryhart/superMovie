@@ -18,6 +18,7 @@ import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 import dev.baofeng.com.supermovie.view.OnLineMovieActivity;
+import dev.baofeng.com.supermovie.view.OnlineDetailPageActivity;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -64,7 +65,7 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Intent intent = new Intent(context, OnLineMovieActivity.class);
+                        Intent intent = new Intent(context, OnlineDetailPageActivity.class);
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);

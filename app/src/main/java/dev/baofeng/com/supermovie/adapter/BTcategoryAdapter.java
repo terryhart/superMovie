@@ -55,7 +55,7 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
             String downItemTitle = datas.getData().get(position).getDowndtitle();
-
+            String md5Id = datas.getData().get(position).getMv_md5_id();
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
             Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
@@ -75,6 +75,7 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
+                        intent.putExtra(GlobalMsg.KEY_MV_ID, md5Id);
                         context.startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();

@@ -2,11 +2,15 @@ package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
 
-import dev.baofeng.com.supermovie.domain.BtInfo;
+import com.zchu.rxcache.data.CacheResult;
+import com.zchu.rxcache.stategy.CacheStrategy;
+
+import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.IRecentView;
+import io.reactivex.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,9 +32,10 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
                 .getSerisUpdate(page,pagesize)
+                .compose(MyApp.getCacheInstance().transformer("custom_key", RecentUpdate.class, CacheStrategy.cacheAndRemote()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
+                .subscribe(new Subscriber<CacheResult<RecentUpdate>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -40,7 +45,7 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
                         iview.loadFail("");
                     }
                     @Override
-                    public void onNext(RecentUpdate result) {
+                    public void onNext(CacheResult<RecentUpdate> result) {
                         iview.loadData(result);
                     }
                 });
@@ -72,12 +77,14 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
 
     public void getMovieUpdate(int page, int pagesize){
 
+
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
                 .getRecomend(page,pagesize)
+                .compose(MyApp.getCacheInstance().transformer("custom_key", RecentUpdate.class, CacheStrategy.cacheAndRemote()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
+                .subscribe(new Subscriber<CacheResult<RecentUpdate>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -87,7 +94,7 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
                         iview.loadFail("");
                     }
                     @Override
-                    public void onNext(RecentUpdate result) {
+                    public void onNext(CacheResult<RecentUpdate> result) {
                         iview.loadData(result);
                     }
                 });

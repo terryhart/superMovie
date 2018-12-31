@@ -28,7 +28,9 @@
     <color name="gm_header_bg">#21292c</color>
     <color name="background">#BB000000</color>
     <color name="main_color">#ff9a00</color>
+
     <color name="secondary_color">#BDBDBD</color>
+    <color name="favor_unchecked">#55ffffff</color>
 
     <drawable name="image_default">#454545</drawable>
 
