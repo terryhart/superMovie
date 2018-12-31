@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.logging.Handler;
+
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IShare;
@@ -39,6 +41,7 @@ public class SharePresenter extends BasePresenter<IShare> {
 
                     @Override
                     public void onError(Throwable e) {
+                        iview.loadFail("fail");
                     }
 
                     @Override
@@ -58,7 +61,13 @@ public class SharePresenter extends BasePresenter<IShare> {
                             intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downdtitle);
                             intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL, mvdesc);
                             intent.putExtra(GlobalMsg.KEY_MV_ID, mv_md5_id);
-                            context.startActivity(intent);
+                            new android.os.Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    context.startActivity(intent);
+                                }
+                            }, 2000);
+
                         }
                     }
                 });

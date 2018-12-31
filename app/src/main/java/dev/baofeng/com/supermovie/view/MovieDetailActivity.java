@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,8 @@ import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,13 +126,24 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
+
+                String replace = "";
+                if (sj.contains("·")) {
+                    replace = sj.replaceAll("·", "_");
+                } else {
+                    replace = sj;
+                }
                 ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
                 testBean.setContent("热门电影，美剧，海量资源每日更新");
                 testBean.setImgUrl(posterImagUrl);
-
-                String url = "https://hiliving.github.io?t=" + title + "&d=" + sj + "&i=" + URLEncoder.encode(posterImagUrl) + "&id=" + md5Id;
-                testBean.setUrl(url);
                 testBean.setDrawableId(R.mipmap.icon_share);
+                try {
+                    String encode = URLEncoder.encode(replace, "utf-8");
+                    String url = "https://hiliving.github.io/?t=" + URLEncoder.encode(title, "utf-8") + "&d=" + encode + "&i=" + URLEncoder.encode(posterImagUrl, "utf-8") + "&id=" + md5Id;
+                testBean.setUrl(url);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
 
                 break;
@@ -323,11 +337,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
 
 
     /**
