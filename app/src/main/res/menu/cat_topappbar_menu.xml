@@ -19,11 +19,14 @@
     tools:ignore="AppCompatResource">
     <item
         android:title="分享"
+        android:id="@+id/shares"
         android:icon="@drawable/ic_share_black_24dp"
         app:showAsAction="ifRoom" />
     <item
-        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:icon="@drawable/ic_favorite_black_24dp"
         android:title="@string/favor"
+        android:checked="true"
+
         android:id="@+id/favorate"
         app:showAsAction="ifRoom" />
 </menu>

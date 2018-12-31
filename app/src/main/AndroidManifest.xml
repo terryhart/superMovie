@@ -52,6 +52,18 @@
             android:name=".PreActivity"
             android:launchMode="singleTask"
             android:theme="@style/SplashTheme">
+
+            <intent-filter>
+                <data
+                    android:scheme="zmovie"
+                    android:host="zhost"
+                    android:pathPrefix="/bt/open" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

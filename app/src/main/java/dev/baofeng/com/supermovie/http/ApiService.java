@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -55,4 +56,8 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_SERIS)
   Observable<RecentUpdate> getSerisUpdate(@Query("page")int page, @Query("pagesize")int pagesize);
+
+
+  @GET(UrlConfig.GET_SHARE)
+  Observable<RecentUpdate> getShare(@Query("md5id") String mvId);
 }

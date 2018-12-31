@@ -1,11 +1,14 @@
 package dev.baofeng.com.supermovie;
 
 import android.Manifest;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -18,11 +21,15 @@ import com.umeng.analytics.MobclickAgent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.presenter.SharePresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
+import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.HomeFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
 import dev.baofeng.com.supermovie.view.UpdateDialog;
@@ -31,7 +38,7 @@ import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, IupdateView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, IupdateView, IShare {
 
     private static boolean TABLEFTSELECTED = true;
     @BindView(R.id.content)
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CenterFragment centerFragment;
     private SubjectFragment subjectFragment;
     private UpdateAppPresenter updateAppPresenter;
+    private SharePresenter sharePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    @Override
+    public void loadData(RecentUpdate data) {
+
+    }
+
+    @Override
+    public void loadFail(String e) {
+
+    }
+
 
     public interface OnPageChanged{
         void clicked();
@@ -117,7 +135,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commitAllowingStateLoss();
 
         updateAppPresenter = new UpdateAppPresenter(this, this);
+        sharePresenter = new SharePresenter(this, this);
+        initExraData();
     }
+
+    /**
+     * 如果来自分享跳转，检查参数请求数据并直接跳转
+     */
+    private void initExraData() {
+        String extra = getIntent().getStringExtra(GlobalMsg.KEY_MV_ID);
+        if (!TextUtils.isEmpty(extra)) {
+            sharePresenter.getMovieForShare(extra);
+        }
+    }
+
 
     @Override
     public void onClick(View view) {

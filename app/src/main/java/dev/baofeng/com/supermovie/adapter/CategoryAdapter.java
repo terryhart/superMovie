@@ -116,6 +116,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, finalName);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
+                        intent.putExtra(GlobalMsg.KEY_MV_ID, datas.getData().get(position).getMv_md5_id());
                         intent.setClass(context, MovieDetailActivity.class);
 
                         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
