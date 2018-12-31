@@ -136,19 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         updateAppPresenter = new UpdateAppPresenter(this, this);
         sharePresenter = new SharePresenter(this, this);
-        initExraData();
-    }
 
-    /**
-     * 如果来自分享跳转，检查参数请求数据并直接跳转
-     */
-    private void initExraData() {
-        String extra = getIntent().getStringExtra(GlobalMsg.KEY_MV_ID);
-        if (!TextUtils.isEmpty(extra)) {
-            sharePresenter.getMovieForShare(extra);
-        }
     }
-
 
     @Override
     public void onClick(View view) {

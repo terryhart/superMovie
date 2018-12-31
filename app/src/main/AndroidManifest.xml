@@ -32,6 +32,7 @@
 
         <activity
             android:name=".view.MovieDetailActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
         <activity android:name=".SplashActivity" />

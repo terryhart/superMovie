@@ -30,7 +30,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.presenter.SharePresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
@@ -46,10 +49,11 @@ import dev.baofeng.com.supermovie.view.UpdateDialog;
  * @changeRecord [修改记录] <br/>
  * 2018/9/27 ：created
  */
-public class SplashActivity extends AppCompatActivity implements IupdateView {
+public class SplashActivity extends AppCompatActivity implements IupdateView, IShare {
 
     private UpdateAppPresenter presenter;
     private RelativeLayout root;
+    private SharePresenter sharePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +61,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
 
         setContentView(R.layout.splash_layout);
         root = findViewById(R.id.root);
-
+        sharePresenter = new SharePresenter(this, this);
         presenter = new UpdateAppPresenter(this,this);
         presenter.getAppUpdate(this);
         initExraData();
@@ -72,13 +76,16 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 
         if (!TextUtils.isEmpty(extra)) {
-            intent.putExtra(GlobalMsg.KEY_MV_ID, extra);
+            sharePresenter.getMovieForShare(extra);
+            finish();
+        } else {
+            new Handler().postDelayed(() -> {
+                startActivity(intent);
+                finish();
+            }, 3000);
         }
 
-        new Handler().postDelayed(() -> {
-            startActivity(intent);
-            finish();
-        },3000);
+
     }
 
     @Override
@@ -92,4 +99,17 @@ public class SplashActivity extends AppCompatActivity implements IupdateView {
         SharePreferencesUtil.setIntSharePreferences(SplashActivity.this,Params.HAVE_UPDATE,1);
     }
 
+    @Override
+    public void loadData(RecentUpdate data) {
+
+    }
+
+    @Override
+    public void loadFail(String e) {
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }, 2000);
+    }
 }

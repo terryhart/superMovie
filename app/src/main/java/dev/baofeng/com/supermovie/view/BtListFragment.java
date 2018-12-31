@@ -170,4 +170,5 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         },2000);
 
     }
+
 }

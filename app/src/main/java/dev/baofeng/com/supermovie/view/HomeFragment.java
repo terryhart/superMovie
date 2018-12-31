@@ -189,6 +189,9 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
                     if (isDetached()) {
                         return;
                     }
+                    if (getContext() == null) {
+                        return;
+                    }
                     Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -235,8 +238,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.catfrag:
-                Intent onlineIntent = new Intent(getActivity(), OnlineActivity.class);
-                startActivity(onlineIntent);
+//                Intent onlineIntent = new Intent(getActivity(), OnlineActivity.class);
+//                startActivity(onlineIntent);
                 break;
             case R.id.bangdan:
                 Intent intents = new Intent(getContext(), IndexActivity.class);
