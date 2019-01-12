@@ -83,7 +83,7 @@ public class MovieDownloadDataModel extends AndroidViewModel {
         if (downingTaskDaoAll != null && downingTaskDaoAll.size() > 0) {
             for (int i = 0; i < downingTaskDaoAll.size(); i++) {
                 String taskId = downingTaskDaoAll.get(i).getTaskId();
-
+                Log.e("testtaskid", taskId);
                 //如果任务已暂停，不去执行获取详情操作，这里是因为暂停的我都给id设为uuid了,uuid是带有"-"的
                 if (taskId.contains("-")) {
                     continue;

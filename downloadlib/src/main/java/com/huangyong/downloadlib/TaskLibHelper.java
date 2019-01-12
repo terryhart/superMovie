@@ -65,29 +65,5 @@ public class TaskLibHelper {
         intent.putExtra(Params.IS_TASK_NEW,true);
         BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
     }
-    public static synchronized  void  reStartTask(String url, String savepath, String postImgUrl, Context applicationContext) {
-        if (TextUtils.isEmpty(url)){
-            Toast.makeText(applicationContext, "下载地址为空", Toast.LENGTH_SHORT).show();
-        }
-        String savePath = null;
-        try {
-            savePath = FileUtils.isExistDir(savepath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (savePath==null){
-            Toast.makeText(applicationContext, "文件目录创建失败，检查是否具有文件读写权限", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String urlMd5 = MD5Utils.stringToMD5(url);
-        Intent intent = new Intent();
-        intent.putExtra(Params.TASK_URL_KEY,url);
-        intent.putExtra(Params.POST_IMG_KEY,postImgUrl);
-        intent.putExtra(Params.LOCAL_PATH_KEY,savepath);
-        intent.putExtra(Params.URL_MD5_KEY,urlMd5);
-        intent.putExtra(Params.IS_TASK_NEW,false);
-        BroadCastUtils.sendIntentBroadCask(applicationContext,intent, Params.TASK_START);
-    }
 }

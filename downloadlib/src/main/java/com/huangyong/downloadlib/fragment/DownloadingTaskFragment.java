@@ -244,7 +244,6 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         //TODO 后台清理内存会结束app进程，需要先更新下载的taskid,遍历所有下载任务，重设其id为随机数
         Log.e("ddkdkddkdkdk", "dkkdkdkdkdkdkd");
         DowningTaskDao downingTaskDao = AppDatabaseManager.getInstance(getActivity()).donwingDao();
@@ -256,5 +255,6 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
                 downingTaskDao.update(taskInfos.get(i));
             }
         }
+        super.onDestroy();
     }
 }

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,8 @@ import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
 import com.huangyong.downloadlib.view.CustomViewPager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +87,19 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initReceiver() {
+        String savePath = null;
+        try {
+            savePath = FileUtils.isExistDir(Params.DEFAULT_PATH);
+            Uri contentUri = Uri.fromFile(new File(savePath));
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri);
+            sendBroadcast(mediaScanIntent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Params.UPDATE_PROGERSS);
         intentFilter.addAction(Params.TASK_COMMPLETE);
