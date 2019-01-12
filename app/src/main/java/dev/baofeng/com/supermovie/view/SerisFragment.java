@@ -15,21 +15,18 @@ import android.widget.TextView;
 
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
+import com.zchu.rxcache.data.CacheResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.CategoryAdapter;
-import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
-import dev.baofeng.com.supermovie.presenter.CenterPresenter;
-import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.RecentPresenter;
-import dev.baofeng.com.supermovie.presenter.iview.IAllView;
-import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.IRecentView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/31.
@@ -106,13 +103,28 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
 
 
     @Override
-    public void loadData(RecentUpdate movieBean) {
-        this.movieInfo = movieBean;
-        Log.e("movieInfo",movieBean.getData().size()+"");
-        adapter =new CategoryAdapter(getContext(),movieBean);
+    public void loadData(CacheResult<RecentUpdate> movieBean) {
+        this.movieInfo = movieBean.getData();
+        adapter = new CategoryAdapter(getActivity(), movieBean.getData());
+        if (rvlist == null) {
+            return;
+        }
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        rvlist.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recpresenter.getSerisMore(++index, 18);
+                            }
+                        }, 1);
+                    }
+                })
+                .into(rvlist);
         if (empFram.isShown()){
             empFram.setVisibility(View.GONE);
         }
@@ -147,7 +159,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisUpdate(1,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },1500);
+        }, 1);
     }
 
     @Override
@@ -158,7 +170,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
                 recpresenter.getSerisMore(++index,18);
                 pulllayout.finishPull("加载完成",true);
             }
-        },1500);
+        }, 1);
 
     }
 }

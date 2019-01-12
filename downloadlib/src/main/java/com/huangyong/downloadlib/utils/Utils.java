@@ -11,4 +11,9 @@ public class Utils {
         systemService.setText(text);
     }
 
+
+    public static String generateRandomId() {
+        String savedID = java.util.UUID.randomUUID().toString().toUpperCase();
+        return savedID;
+    }
 }

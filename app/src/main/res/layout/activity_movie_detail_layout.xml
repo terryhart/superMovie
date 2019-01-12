@@ -10,7 +10,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
-        android:background="@drawable/live_voice_pw_bg_one"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -40,11 +39,11 @@
                    android:layout_centerHorizontal="true"
                    android:id="@+id/detail_poster"
                    android:layout_above="@+id/imgTitle"
+                   android:scaleType="centerCrop"
                    android:layout_height="220dp" />
 
                <TextView
                    android:layout_width="match_parent"
-                   android:background="#691c1c1c"
                    android:layout_height="30dp"
                    android:textSize="@dimen/sp_12"
                    android:textColor="#fff"
@@ -78,8 +77,19 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/ic_share_black_24dp"
+                        android:id="@+id/share"
+                        android:visibility="invisible"
+                        android:layout_toLeftOf="@+id/favor"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/fullscreen_favority_normal"
                         android:id="@+id/favor"
+                        android:visibility="invisible"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="16dp"
                         android:layout_alignParentRight="true"

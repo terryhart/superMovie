@@ -1,11 +1,11 @@
 package dev.baofeng.com.supermovie.presenter.iview;
 
-import dev.baofeng.com.supermovie.domain.OnlineInfo;
+import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
 
 public interface IOnlineView {
-    void loadData(OnlineInfo info);
+    void loadData(OnlinePlayInfo info);
 
     void loadError(String msg);
 
-    void loadMore(OnlineInfo result);
+    void loadMore(OnlinePlayInfo result);
 }

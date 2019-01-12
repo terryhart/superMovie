@@ -2,7 +2,6 @@ package com.huangyong.downloadlib.db;
 
 import android.content.Context;
 
-import com.huangyong.downloadlib.domain.DoneTaskInfo;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 import com.j256.ormlite.dao.Dao;
 

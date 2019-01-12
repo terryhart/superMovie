@@ -1,8 +1,13 @@
 package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 import dev.baofeng.com.supermovie.domain.BtInfo;
+import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
+import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
@@ -39,9 +44,37 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
                     public void onError(Throwable e) {
                         iview.loadError("");
                     }
+
                     @Override
                     public void onNext(RecentUpdate result) {
                         iview.loadData(result);
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    public void getOnline(String type, int page, int pagesize) {
+
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getOnlineMovie(type, page, pagesize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OnlinePlayInfo>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        iview.loadError("");
+                    }
+
+                    @Override
+                    public void onNext(OnlinePlayInfo result) {
+
+                        PlayUrlBean playUrlBean = new Gson().fromJson(result.getData().get(0).getDownLoadUrl(), PlayUrlBean.class);
+
                     }
                 });
         addSubscription(subscription);

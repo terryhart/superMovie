@@ -59,6 +59,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerHolder> {
                     intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, info.get(position).getDownLoadName());
                     intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, info.get(position).getDowndtitle());
                     intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.get(position).getMvdesc());
+                    intent.putExtra(GlobalMsg.KEY_MV_ID, info.get(position).getMv_md5_id());
                     context.startActivity(intent);
                 }catch (Exception e){
                     e.printStackTrace();

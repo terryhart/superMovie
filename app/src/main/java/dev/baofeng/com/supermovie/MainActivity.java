@@ -1,30 +1,44 @@
 package dev.baofeng.com.supermovie;
 
 import android.Manifest;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.huangyong.downloadlib.model.Params;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.presenter.SharePresenter;
+import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
+import dev.baofeng.com.supermovie.presenter.iview.IShare;
+import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
+import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
+import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.HomeFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
+import dev.baofeng.com.supermovie.view.UpdateDialog;
+import rx.Observable;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, IupdateView, IShare {
 
     private static boolean TABLEFTSELECTED = true;
     @BindView(R.id.content)
@@ -41,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HomeFragment homeFragment;
     private CenterFragment centerFragment;
     private SubjectFragment subjectFragment;
+    private UpdateAppPresenter updateAppPresenter;
+    private SharePresenter sharePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +71,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void getPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                        } else {
-                            Toast.makeText(MainActivity.this, "你没有授权读写文件权限，将无法下载影片", Toast.LENGTH_SHORT).show();
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        if (updateAppPresenter != null) {
+                            updateAppPresenter.getAppUpdate(this);
                         }
+                    } else {
+                        Toast.makeText(MainActivity.this, "你没有授权读写文件权限，将无法下载影片", Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
 
+    @Override
+    public void noUpdate(String url) {
+        //Toast.makeText(this, "当前已是最新版本", Toast.LENGTH_SHORT).show();
+        SharePreferencesUtil.setIntSharePreferences(MainActivity.this, Params.HAVE_UPDATE, 0);
+    }
+
+    @Override
+    public void updateYes(AppUpdateInfo result) {
+        SharePreferencesUtil.setIntSharePreferences(MainActivity.this, Params.HAVE_UPDATE, 1);
+        UpdateDialog dialog = new UpdateDialog(this, result);
+        dialog.show();
+    }
+
+    @Override
+    public void loadData(RecentUpdate data) {
+
+    }
+
+    @Override
+    public void loadFail(String e) {
+
+    }
 
 
     public interface OnPageChanged{
@@ -82,12 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         homeFragment = HomeFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
         subjectFragment = SubjectFragment.getInstance();
-        homeFragment.setOnPageChangeListener(new OnPageChanged() {
-            @Override
-            public void clicked() {
-                toggleFrag(4);
-            }
-        });
+        homeFragment.setOnPageChangeListener(() -> toggleFrag(4));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content, downfragment);
         fragmentTransaction.add(R.id.content, homeFragment);
@@ -101,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fragmentTransaction.commitAllowingStateLoss();
 
+        updateAppPresenter = new UpdateAppPresenter(this, this);
+        sharePresenter = new SharePresenter(this, this);
 
     }
 

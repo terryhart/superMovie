@@ -79,6 +79,7 @@ public class FavorActivity extends AppCompatActivity implements FavorAdapter.onL
                 dataBean.setDowndtitle(favorInfos.get(i).getDownItemTitle());
                 dataBean.setMvdesc(favorInfos.get(i).getMovieDesc());
                 dataBean.setId(favorInfos.get(i).getId()+"");
+
                 dataBeans.add(dataBean);
             }
 

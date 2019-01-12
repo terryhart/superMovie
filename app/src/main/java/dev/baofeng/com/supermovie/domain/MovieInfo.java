@@ -8,10 +8,11 @@ import java.util.List;
 
 public class MovieInfo {
 
+
     /**
      * Code : 200
-     * Msg : 数据获取成功
-     * Data : [{"movClass":"经典高清","downLoadName":"《沉默的目击者》","downLoadUrl":"magnet:?xt=urn:btih:DMKLPHCAH6YZWJNND5HIBII6FO64BFZA&dn=%e6%b2%89%e9%bb%98%2e720p%2eHD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,ed2k://|file|%E6%B2%89%E9%BB%98.720p.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|1269395982|9DB3217112BCBC52D5C037BD120A4DE1|h=GJDAPZJQYJ67KTNAMRSTZWXEPX5JE6TV|/","mvdesc":"◎译　　名　沉默/沉默的目击者(台)/全民目击/版《全民目击》\r\n◎年　　代　2017\r\n◎产　　地　\r\n◎类　　别　//\r\n◎语　　言　韩语\r\n◎字　　幕　中字\r\n◎上映日期　2017-11-02()\r\n◎IMDb评分  6.1/10 from 7 users\r\n◎豆瓣评分　7.7/10 from 39 users\r\n◎片　　长　125分钟\r\n◎导　　演　郑址宇 Ji-woo Jung\r\n◎主　　演　崔岷植 Min-sik Choi\r\n　　　　　　朴信惠 Shin-hye Park\r\n　　　　　　柳俊烈 Jun-yeol Ryu\r\n　　　　　　朴海俊 Hea-jun Park\r\n　　　　　　李秀卿 Soo-kyung Lee\r\n　　　　　　李荷妮 Ha-nui Lee◎简　　介　　《沉默的目击者》根据中国电影《全民目击》翻拍，讲述财阀未婚妻遇害后，财阀女儿被看指认为杀人犯的法律惊险片，由《银娇》的导演郑址宇执导，崔岷植饰演财阀，朴信惠饰演女儿的辩护律师，女儿由李秀卿饰演，柳俊烈饰演原作中没有的、拥有解决事件的重要关键点的人物。","downimgurl":"http://tu.66vod.net/2017/6601.jpg,http://tu.66vod.net/2017/7052.jpg","mv_update_time":"2017-12-25","downdtitle":"磁力下载","id":"2200"},{"movClass":"经典高清","downLoadName":"《目击者之追凶》","downLoadUrl":"magnet:?xt=urn:btih:90BA49E3763425CA4838E449C4664C27539BD789,ed2k://|file|%E7%9B%AE%E5%87%BB%E8%80%85%E4%B9%8B%E8%BF%BD%E5%87%B6.720p.BD%E5%9B%BD%E8%AF%AD%E4%B8%AD%E5%AD%97[66%E5%BD%B1%E8%A7%86www.66ys.tv].mp4|1272369279|FB98E349AAD12383E3F809BDD7C47B0C|h=SFW2YK2FR2BCLWI3D6TXP7EXV4FZVPRQ|/","mvdesc":"◎译　　名　目击者之追凶/目擊者\r\n◎片　　名　Who Killed Cock Robin\r\n◎年　　代　2017\r\n◎产　　地　中国\r\n◎类　　别　//\r\n◎语　　言　汉语普通话\r\n◎字　　幕　中字\r\n◎上映日期　2017-03-31()/2017-06-21(上海电影节)\r\n◎IMDb评分  7.5/10 from 215 users\r\n◎豆瓣评分　7.4/10 from 228 users\r\n◎片　　长　113分钟\r\n◎导　　演　程伟豪 Wei-hao Cheng\r\n◎主　　演　许玮甯 Tiffany Hsu\r\n　　　　　　柯佳嬿 Alice Ko\r\n　　　　　　庄凯勋 Cash Chuang\r\n　　　　　　李铭顺 Christopher Lee Ming Shun\r\n　　　　　　李淳 Mason Lee\r\n　　　　　　Ian Chen\r\n　　　　　　郑志伟 Chih-Wei Cheng\r\n　　　　　　汤志伟 Chih Wei Tang\r\n　　　　　　Mario Pu◎简　　介　　报社记者小齐，仕途顺遂，但是高压力与超忙碌的生活，使得女友开始抱怨这样的生活使得两个人更加疏离，而事实上与女同事有更进一步的暧昧关系的小齐，为了安抚女友，而来到美丽的民宿，想来一个自由无压力的旅程，没想到一切异象却开始发生，一连串的失控，使得小齐与所有人的关系有了巨大的震动，而此时，小齐意外的发现一桩深埋多年的秘密。如果你看见不该看的，是否有勇气说出来？如果揭发真相是一种正义，你愿意拿什么样的代价来换取？在追求真相的道路上，注定会迷路，因为，真相，也许不仅仅只是能看到的\u2026\u2026","downimgurl":"http://tu.pp63.org/2017/2567.jpg,http://tu.pp63.org/2017/2840.jpg,http://tu.pp63.org/2017/2839.jpg,http://tu.pp63.org/2017/2830.jpg,http://tu.pp63.org/2017/2829.jpg","mv_update_time":"2017-08-11","downdtitle":"磁力下载","id":"1785"},{"movClass":"最新电影","downLoadName":"《目击者[韩版]》","downLoadUrl":"magnet:?xt=urn:btih:5ZJNEY7TLVEBXC5L2OYO32LBLU67WAZZ&dn=%e7%9b%ae%e5%87%bb%e8%80%85%2e720p%2eBD%e4%bf%ae%e6%ad%a3%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,ed2k://|file|%E7%9B%AE%E5%87%BB%E8%80%85.720p.BD%E4%BF%AE%E6%AD%A3%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|1557586682|6E092CA67F30745B1A8BD04A876907DC|h=VPRDPI7YST6ETJLI6SQE3FDK3TQ2OMAG|/","mvdesc":"◎译　　名　目击者/致命目击(台)\r\n◎片　　名　목격자\r\n◎年　　代　2018\r\n◎产　　地　\r\n◎类　　别　/\r\n◎语　　言　韩语\r\n◎字　　幕　中字\r\n◎上映日期　2018-08-15()\r\n◎片　　长　111分钟\r\n◎导　　演　曹圭章 Kyu-jang Cho\r\n◎主　　演　李星民 Sung-min Lee\r\n　　　　　　金相浩 Sang-ho Kim\r\n　　　　　　陈庆 Jin Gyeong\r\n　　　　　　郭时旸 Si-yang Kwak\r\n　　　　　　朴春 Park Bom\r\n　　　　　　金成钧 Sung-Kyun Kim\r\n　　　　　　李民雄 Min-woong Lee\r\n　　　　　　延济旭 Je-wook Yun\r\n　　　　　　申承焕 Seung-hwan Sin\r\n　　　　　　李载宇 Jae-woo Lee\r\n　　　　　　裴贞华 Bae Jeong-hwa\r\n　　　　　　郑侑敏 Yoo-min Jung\r\n　　　　　　黄英熙 Young-hee Hwang\r\n　　　　　　孙钟学 Jong-Hak Son\r\n　　　　　　李相熹 Jang-yoo  Lee\r\n　　　　　　金子英 Kim Ja-yeong\r\n　　　　　　朴成根 Park Sung-geun◎简　　介　　午夜兩點，傳來無辜女子的淒厲求救聲，在陽台上目睹殺人實況的尚勳（李星民飾演），當他正準備要報警的時候，竟意外跟兇手對上了眼，讓他與家人成為兇手的下一個目標。為了保護自己與家人，尚勳必須對警方隱瞞自己看見兇手的事實，並展開與殺人魔之間的驚悚追擊\u2026。","downimgurl":"https://tu.66vod.net/2018/3390.jpg,https://tu.66vod.net/2018/3536.jpg","mv_update_time":"2018-09-18","downdtitle":"磁力下载","id":"1"}]
+     * Msg : 首页数据获取成功
+     * Data : [{"movClass":"经典高清","downLoadName":"与神同行","downLoadUrl":"magnet:?xt=urn:btih:IXDCVQPXI6UEWI5JQXI4OFFGK5CKSCVR&dn=%e4%b8%8e%e7%a5%9e%e5%90%8c%e8%a1%8c%ef%bc%9a%e7%bd%aa%e4%b8%8e%e7%bd%9a%2e720p%2e%e9%9f%a9%e7%b2%a4%e5%8f%8c%e8%af%ad%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:OK522SCMBTYRR3CBXCYUVL2ZLITPHWLY&dn=YSTX%2e1080p%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:GNXN4SGYBSYACXNCUUGNR6IMBWPPYDR5&dn=YSTX%2e720p%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:LYV44BD7QO6KTF7HZ23ZPAUOVXIXHCJR&dn=%e4%b8%8e%e7%a5%9e%e5%90%8c%e8%a1%8c%2e1080p%2eHD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C%EF%BC%9A%E7%BD%AA%E4%B8%8E%E7%BD%9A.720p.BD%E9%9F%A9%E7%B2%A4%E5%8F%8C%E8%AF%AD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mkv|1955919934|5ADCC5D2BBC53B4C3B90C192C21103C8|h=RK72PNOT44EV2I7DZEPMXOOYWHFHWDLC|/,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C%EF%BC%9A%E7%BD%AA%E4%B8%8E%E7%BD%9A.720p.%E9%9F%A9%E7%B2%A4%E5%8F%8C%E8%AF%AD.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|1858046878|AFCBDD107B58A2A6EDE6081B69EB9C67|h=UERHET57HSUM63SC3OAHRLXF4RD5X7G4|/,ed2k://|file|YSTX.1080p.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|3267957369|EB4245BEBD4DCE5F410FA03E09FA44E1|h=LMP72TD2KEQCOHK4NG2U6LWVGHCVUE3E|/,ed2k://|file|YSTX.720p.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|1764729200|3539C302EAC31BC88D46500DF29D1B25|h=QFQBTB7IDWCQD7OGMMEPUM2JKR4EXZDO|/,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C.1080p.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|2199758616|8721B76073C4271D472988EF775A4862|h=H2LHPY3VTAKI3J3U6OSKL66OFNZYGN2C|/","mvdesc":"◎译　　名　与神同行/与神一起/与神同在/和神一起/与神同行：罪与罚\r\n◎片　　名　신과 함께\r\n◎年　　代　2017\r\n◎产　　地　\r\n◎类　　别　/\r\n◎语　　言　韩语\r\n◎字　　幕　中字\r\n◎上映日期　2017-12-20()\r\n◎IMDb评分  7.7/10 from 1,772 users\r\n◎豆瓣评分　8.1/10 from 3,287 users\r\n◎片　　长　139分钟\r\n◎导　　演　金容华 Yong-hwa Kim\r\n◎主　　演　河正宇 Jung-woo Ha\r\n　　　　　　车太贤 Tae-hyun Cha\r\n　　　　　　朱智勋 Ji-hun Ju\r\n　　　　　　金香奇 Hyang-ki Kim\r\n　　　　　　李政宰 Jung-Jae Lee\r\n　　　　　　金东旭 Dong-wook Kim\r\n　　　　　　马东锡 Tong-Seok Ma\r\n　　　　　　都暻秀 Kyung-soo Doh\r\n　　　　　　吴达洙 Dal-su Oh\r\n　　　　　　林元熙 Won-hie Lim\r\n　　　　　　张光 Gwang Jang\r\n　　　　　　郑海钧 Hae-kyun Jung\r\n　　　　　　金荷娜 Ha-Neul Kim\r\n　　　　　　金海淑 Hae-suk Kim◎简　　介　　影片根据漫画改编，讲述人死之后，在地狱使者的辩护下，接受49天审判的故事，以阴间影射人间丑态和人的命运前程。影片由金容华执导，上下两集。◎获奖情况　　第12届亚洲电影大奖  (2018)\r\n　　最佳美术指导(提名) 李莫元\r\n　　最佳视觉效果(提名) Jonghyun Jin","downimgurl":"https://tu.66vod.net/2017/8093.jpg,https://tu.66vod.net/2018/0228.jpg","mv_update_time":"2018-11-05","downdtitle":"与神同行.720p.韩粤双语.BD中字.mp4,与神同行.1080p.BD中字.mp4,与神同行.720p.BD中字.mp4,与神同行.1080p.HD中字.mp4,与神同行.720p.韩粤双语.BD中字.mkv,与神同行.720p.韩粤双语.BD中字.mp4,与神同行.1080p.BD中字.mp4,与神同行.720p.BD中字.mp4,与神同行.1080p.HD中字.mp4","id":"12283","mv_md5_id":"6262f8c36ea75492c38980dac83ecb87"}]
      */
 
     private int Code;
@@ -45,29 +46,41 @@ public class MovieInfo {
     public static class DataBean {
         /**
          * movClass : 经典高清
-         * downLoadName : 《沉默的目击者》
-         * downLoadUrl : magnet:?xt=urn:btih:DMKLPHCAH6YZWJNND5HIBII6FO64BFZA&dn=%e6%b2%89%e9%bb%98%2e720p%2eHD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,ed2k://|file|%E6%B2%89%E9%BB%98.720p.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|1269395982|9DB3217112BCBC52D5C037BD120A4DE1|h=GJDAPZJQYJ67KTNAMRSTZWXEPX5JE6TV|/
-         * mvdesc : ◎译　　名　沉默/沉默的目击者(台)/全民目击/版《全民目击》
+         * downLoadName : 与神同行
+         * downLoadUrl : magnet:?xt=urn:btih:IXDCVQPXI6UEWI5JQXI4OFFGK5CKSCVR&dn=%e4%b8%8e%e7%a5%9e%e5%90%8c%e8%a1%8c%ef%bc%9a%e7%bd%aa%e4%b8%8e%e7%bd%9a%2e720p%2e%e9%9f%a9%e7%b2%a4%e5%8f%8c%e8%af%ad%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e66ys%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:OK522SCMBTYRR3CBXCYUVL2ZLITPHWLY&dn=YSTX%2e1080p%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:GNXN4SGYBSYACXNCUUGNR6IMBWPPYDR5&dn=YSTX%2e720p%2eBD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,magnet:?xt=urn:btih:LYV44BD7QO6KTF7HZ23ZPAUOVXIXHCJR&dn=%e4%b8%8e%e7%a5%9e%e5%90%8c%e8%a1%8c%2e1080p%2eHD%e4%b8%ad%e5%ad%97%5b%e6%9c%80%e6%96%b0%e7%94%b5%e5%bd%b1www%2e6vhao%2etv%5d%2emp4&tr=udp%3a%2f%2f9%2erarbg%2eto%3a2710%2fannounce&tr=udp%3a%2f%2f9%2erarbg%2eme%3a2710%2fannounce&tr=http%3a%2f%2ftr%2ecili001%2ecom%3a8070%2fannounce&tr=http%3a%2f%2ftracker%2etrackerfix%2ecom%3a80%2fannounce&tr=udp%3a%2f%2fopen%2edemonii%2ecom%3a1337&tr=udp%3a%2f%2ftracker%2eopentrackr%2eorg%3a1337%2fannounce&tr=udp%3a%2f%2fp4p%2earenabg%2ecom%3a1337,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C%EF%BC%9A%E7%BD%AA%E4%B8%8E%E7%BD%9A.720p.BD%E9%9F%A9%E7%B2%A4%E5%8F%8C%E8%AF%AD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mkv|1955919934|5ADCC5D2BBC53B4C3B90C192C21103C8|h=RK72PNOT44EV2I7DZEPMXOOYWHFHWDLC|/,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C%EF%BC%9A%E7%BD%AA%E4%B8%8E%E7%BD%9A.720p.%E9%9F%A9%E7%B2%A4%E5%8F%8C%E8%AF%AD.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.66ys.tv].mp4|1858046878|AFCBDD107B58A2A6EDE6081B69EB9C67|h=UERHET57HSUM63SC3OAHRLXF4RD5X7G4|/,ed2k://|file|YSTX.1080p.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|3267957369|EB4245BEBD4DCE5F410FA03E09FA44E1|h=LMP72TD2KEQCOHK4NG2U6LWVGHCVUE3E|/,ed2k://|file|YSTX.720p.BD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|1764729200|3539C302EAC31BC88D46500DF29D1B25|h=QFQBTB7IDWCQD7OGMMEPUM2JKR4EXZDO|/,ed2k://|file|%E4%B8%8E%E7%A5%9E%E5%90%8C%E8%A1%8C.1080p.HD%E4%B8%AD%E5%AD%97[%E6%9C%80%E6%96%B0%E7%94%B5%E5%BD%B1www.6vhao.tv].mp4|2199758616|8721B76073C4271D472988EF775A4862|h=H2LHPY3VTAKI3J3U6OSKL66OFNZYGN2C|/
+         * mvdesc : ◎译　　名　与神同行/与神一起/与神同在/和神一起/与神同行：罪与罚
+         ◎片　　名　신과 함께
          ◎年　　代　2017
          ◎产　　地　
-         ◎类　　别　//
+         ◎类　　别　/
          ◎语　　言　韩语
          ◎字　　幕　中字
-         ◎上映日期　2017-11-02()
-         ◎IMDb评分  6.1/10 from 7 users
-         ◎豆瓣评分　7.7/10 from 39 users
-         ◎片　　长　125分钟
-         ◎导　　演　郑址宇 Ji-woo Jung
-         ◎主　　演　崔岷植 Min-sik Choi
-         　　　　　　朴信惠 Shin-hye Park
-         　　　　　　柳俊烈 Jun-yeol Ryu
-         　　　　　　朴海俊 Hea-jun Park
-         　　　　　　李秀卿 Soo-kyung Lee
-         　　　　　　李荷妮 Ha-nui Lee◎简　　介　　《沉默的目击者》根据中国电影《全民目击》翻拍，讲述财阀未婚妻遇害后，财阀女儿被看指认为杀人犯的法律惊险片，由《银娇》的导演郑址宇执导，崔岷植饰演财阀，朴信惠饰演女儿的辩护律师，女儿由李秀卿饰演，柳俊烈饰演原作中没有的、拥有解决事件的重要关键点的人物。
-         * downimgurl : http://tu.66vod.net/2017/6601.jpg,http://tu.66vod.net/2017/7052.jpg
-         * mv_update_time : 2017-12-25
-         * downdtitle : 磁力下载
-         * id : 2200
+         ◎上映日期　2017-12-20()
+         ◎IMDb评分  7.7/10 from 1,772 users
+         ◎豆瓣评分　8.1/10 from 3,287 users
+         ◎片　　长　139分钟
+         ◎导　　演　金容华 Yong-hwa Kim
+         ◎主　　演　河正宇 Jung-woo Ha
+         　　　　　　车太贤 Tae-hyun Cha
+         　　　　　　朱智勋 Ji-hun Ju
+         　　　　　　金香奇 Hyang-ki Kim
+         　　　　　　李政宰 Jung-Jae Lee
+         　　　　　　金东旭 Dong-wook Kim
+         　　　　　　马东锡 Tong-Seok Ma
+         　　　　　　都暻秀 Kyung-soo Doh
+         　　　　　　吴达洙 Dal-su Oh
+         　　　　　　林元熙 Won-hie Lim
+         　　　　　　张光 Gwang Jang
+         　　　　　　郑海钧 Hae-kyun Jung
+         　　　　　　金荷娜 Ha-Neul Kim
+         　　　　　　金海淑 Hae-suk Kim◎简　　介　　影片根据漫画改编，讲述人死之后，在地狱使者的辩护下，接受49天审判的故事，以阴间影射人间丑态和人的命运前程。影片由金容华执导，上下两集。◎获奖情况　　第12届亚洲电影大奖  (2018)
+         　　最佳美术指导(提名) 李莫元
+         　　最佳视觉效果(提名) Jonghyun Jin
+         * downimgurl : https://tu.66vod.net/2017/8093.jpg,https://tu.66vod.net/2018/0228.jpg
+         * mv_update_time : 2018-11-05
+         * downdtitle : 与神同行.720p.韩粤双语.BD中字.mp4,与神同行.1080p.BD中字.mp4,与神同行.720p.BD中字.mp4,与神同行.1080p.HD中字.mp4,与神同行.720p.韩粤双语.BD中字.mkv,与神同行.720p.韩粤双语.BD中字.mp4,与神同行.1080p.BD中字.mp4,与神同行.720p.BD中字.mp4,与神同行.1080p.HD中字.mp4
+         * id : 12283
+         * mv_md5_id : 6262f8c36ea75492c38980dac83ecb87
          */
 
         private String movClass;
@@ -78,18 +91,17 @@ public class MovieInfo {
         private String mv_update_time;
         private String downdtitle;
         private String id;
-        private String progress;
+        private String mv_md5_id;
         private String urlMd5;
+        private String progress;
 
-        public String getPlayUrl() {
-            return playUrl;
+        public String getProgress() {
+            return progress;
         }
 
-        public void setPlayUrl(String playUrl) {
-            this.playUrl = playUrl;
+        public void setProgress(String progress) {
+            this.progress = progress;
         }
-
-        private String playUrl;
 
         public String getUrlMd5() {
             return urlMd5;
@@ -97,15 +109,6 @@ public class MovieInfo {
 
         public void setUrlMd5(String urlMd5) {
             this.urlMd5 = urlMd5;
-        }
-
-        public String getProgress() {
-            return progress;
-        }
-
-
-        public void setProgress(String progress) {
-            this.progress = progress;
         }
 
         public String getMovClass() {
@@ -170,6 +173,14 @@ public class MovieInfo {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getMv_md5_id() {
+            return mv_md5_id;
+        }
+
+        public void setMv_md5_id(String mv_md5_id) {
+            this.mv_md5_id = mv_md5_id;
         }
     }
 }

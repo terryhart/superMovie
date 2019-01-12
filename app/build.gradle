@@ -5,15 +5,13 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 116
-        versionName "1.0.16"
+        versionCode 117
+        versionName "1.0.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
             exclude 'META-INF/rxjava.properties'
         }
-
-
     }
 
 
@@ -74,7 +72,7 @@ android {
             } else if (variant.buildType.name.equals('debug')) {
                 fileName = String.format("BTMovie_%s_%s.apk", defaultConfig.versionName, type)
             }
-            outputFileName = fileName;
+            outputFileName = fileName
         }
     }
     dataBinding {
@@ -83,7 +81,7 @@ android {
 }
 
 def getTime() {
-    return new Date().format("yyyyMMdd_hhmm", TimeZone.getDefault());
+    return new Date().format("yyyyMMdd_hhmm", TimeZone.getDefault())
 }
 
 dependencies {
@@ -141,6 +139,12 @@ dependencies {
     //implementation project(':common')
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation ('com.xyzlf.share:sharesdk:0.0.11') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+
 }
+
 
 apply from: 'config.gradle'

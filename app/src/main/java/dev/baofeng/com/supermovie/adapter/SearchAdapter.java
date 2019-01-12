@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.FormatInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.SearchHolder;
 import dev.baofeng.com.supermovie.view.BtDownActivity;
@@ -62,6 +63,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
                intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, downItemTitle);
                intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,info.getData().get(position).getMvdesc());
+               intent.putExtra(GlobalMsg.KEY_MV_ID, info.getData().get(position).getMv_md5_id());
                context.startActivity(intent);
 
            }catch (Exception e){
