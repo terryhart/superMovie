@@ -21,7 +21,7 @@
         android:paddingRight="20dp"
         android:layout_below="@+id/head_banner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,50 +31,59 @@
             android:textColor="#1b1b1b"
             android:text="发现新版本：1.0.2"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:id="@+id/update_content"
-            android:lineSpacingExtra="10dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/update_title"
-            android:text="这个更新\r\n这个更新内容\r\\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_below="@+id/update_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="本地下载更新"
-                android:textColor="#ffffff"
-                android:background="@drawable/guide_follow_tag"
-                android:id="@+id/bt_confirm"
-                />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="网页下载更新"
-                android:background="@drawable/guide_follow_tag"
-                android:textColor="#ffffff"
-                android:layout_marginTop="@dimen/dp_10"
-                android:id="@+id/bt_web"
-                />
-        </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/update_content"
+                android:lineSpacingExtra="10dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/update_title"
+                android:text="这个更新\r\n这个更新内容\r\\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n这个更新内容\r\n"
+                />
+
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/center"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:background="@color/white"
+        android:id="@+id/bt_layout"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="本地下载更新"
+            android:textColor="#ffffff"
+            android:background="@drawable/guide_follow_tag"
+            android:id="@+id/bt_confirm" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="网页下载更新"
+            android:background="@drawable/guide_follow_tag"
+            android:textColor="#ffffff"
+            android:layout_marginTop="@dimen/dp_10"
+            android:id="@+id/bt_web" />
     </LinearLayout>
     <ImageView
         android:background="@drawable/bottom_shap"
         android:layout_width="match_parent"
-        android:layout_below="@+id/center"
+        android:layout_below="@+id/bt_layout"
         android:layout_height="20dp"/>
 </RelativeLayout>
