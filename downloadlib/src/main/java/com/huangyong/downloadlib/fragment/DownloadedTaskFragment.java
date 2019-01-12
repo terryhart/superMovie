@@ -82,15 +82,15 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
         adapter = new DownedTaskAdapter(taskInfos);
         adapter.setOnLongPressListener(this);
         downed.setAdapter(adapter);
-        //initReceiver();
-
-    }
-
-    public void initTaskData(List<DoneTaskInfo> infoList) {
-        if (adapter!=null){
-            adapter.setTaskData(infoList);
+        List<DoneTaskInfo> doneTaskInfos = AppDatabaseManager.getInstance(getActivity()).doneTaskDao().getAll();
+        if (doneTaskInfos.size() > 0) {
+            adapter.setTaskData(doneTaskInfos);
         }
+        initReceiver();
+
     }
+
+
     private void initReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Params.TASK_COMMPLETE);
@@ -187,7 +187,6 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
             intent.putExtra(Params.URL_MD5_KEY, MD5Utils.stringToMD5(loacalURL));
             intent.putExtra(Params.POST_IMG_KEY,taskInfo.getPostImgUrl());
             intent.putExtra(Params.TASK_TITLE_KEY,taskInfo.getTitle());
-            intent.putExtra(Params.MOVIE_PROGRESS,"0");
             startActivity(intent);
         }
     }
@@ -218,5 +217,17 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
 
     public void setPresenter(DownLoadPresenter downLoadPresenter) {
         this.presenter = downLoadPresenter;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(taskReceiver);
+    }
+
+    public void FlushData(List<DoneTaskInfo> taskInfo) {
+        if (adapter != null) {
+            adapter.setTaskData(taskInfo);
+        }
     }
 }

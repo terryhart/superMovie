@@ -78,7 +78,7 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
 
         ingList.setPresenter(downLoadPresenter);
         doneList.setPresenter(downLoadPresenter);
-        initData();
+
         initReceiver();
 
     }
@@ -92,23 +92,13 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
     }
     private void initData() {
         memerysize.setText("已下载文件"+FileUtils.getCacheSize()+"，机身剩余可用"+ FileUtils.getSpaceSize()[0]);
-
-        //下载中列表
-        List<DowningTaskInfo> taskInfos = AppDatabaseManager.getInstance(this).donwingDao().getAll();
-        if (taskInfos!=null&&taskInfos.size()>0){
-            ingList.reFreshTaskData(taskInfos);
-        }
-        //下载完成任务列表
-        List<DoneTaskInfo> doneTaskInfos = AppDatabaseManager.getInstance(this).doneTaskDao().getAll();
-        if (doneTaskInfos.size()>0){
-            doneList.initTaskData(doneTaskInfos);
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         this.viewVisible = true;
+        initData();
     }
 
     @Override
@@ -159,13 +149,14 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+
     @Override
     public void updateIngTask(List<DowningTaskInfo> taskInfo) {
-        ingList.reFreshTaskData(taskInfo);
+        ingList.FlushData(taskInfo);
     }
 
     @Override
     public void updateDoneTask(List<DoneTaskInfo> taskInfo) {
-        doneList.initTaskData(taskInfo);
+        doneList.FlushData(taskInfo);
     }
 }

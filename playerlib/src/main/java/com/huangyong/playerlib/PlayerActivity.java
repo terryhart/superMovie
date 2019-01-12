@@ -39,7 +39,6 @@ public class PlayerActivity extends AppCompatActivity {
         url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
-        movieProgress = getIntent().getStringExtra(Params.MOVIE_PROGRESS);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         ijkVideoView.setTitle(title);
 
@@ -48,6 +47,7 @@ public class PlayerActivity extends AppCompatActivity {
         controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
 
+        //设置这个是为了支持4K视频播放
         IjkPlayer ijkPlayer = new IjkPlayer(this) {
             @Override
             public void setEnableMediaCodec(boolean isEnable) {
@@ -73,7 +73,6 @@ public class PlayerActivity extends AppCompatActivity {
                 .setCustomMediaPlayer(ijkPlayer)
                 .build();
         ijkVideoView.setPlayerConfig(playerConfig);
-        Log.e("exoplaypath--",url);
 
         if (url.startsWith("/storage")){
             File file = new File(url);
@@ -88,7 +87,6 @@ public class PlayerActivity extends AppCompatActivity {
         ijkVideoView.setUrl(path);
         ijkVideoView.startFullScreen();
         ijkVideoView.start();
-//        exoPlayerManager.setPlaybackParameters(1f, 1f);
     }
      OncheckListener listener = new OncheckListener() {
         @Override
@@ -148,7 +146,6 @@ public class PlayerActivity extends AppCompatActivity {
         intent.putExtra(Params.TASK_TITLE_KEY,title);
         intent.putExtra(Params.LOCAL_PATH_KEY,url);
         intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition()+"");
-
         intent.putExtra(Params.URL_MD5_KEY,urlMd5);
         intent.putExtra(Params.POST_IMG_KEY,poster);
         intent.setAction(Params.HISTORY_SAVE);

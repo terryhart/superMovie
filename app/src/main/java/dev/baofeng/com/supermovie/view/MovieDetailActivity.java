@@ -358,7 +358,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         }else {
             FavorInfo info = new FavorInfo();
             info.setMovieDesc(mvdescTx);
-            info.setPostImgUrl(posterUrl);
+            info.setPostImgUrl(posterImagUrl);
             info.setTitle(title);
             info.setTaskUrl(downUrl);
             info.setUrlMd5(md5);

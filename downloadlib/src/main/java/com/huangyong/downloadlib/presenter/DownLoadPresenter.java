@@ -77,7 +77,6 @@ public class DownLoadPresenter {
             }
         }
 
-        //TODO 获取到taskId,localPath，存入数据库,发送广播到任务列表，查询数据库，查询并显示更新进度
         String link = info.getTaskUrl();
         String path = info.getLocalPath();
         //获取文件名
@@ -238,6 +237,7 @@ public class DownLoadPresenter {
 
             String taskIds = String.valueOf(XLTaskHelper.instance().addTorrentTask(info.getTorrentPath(),savePath,indexList));
 
+
             DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
             List<DowningTaskInfo> taskInfos = taskDao.getAll();
             if (taskInfos!=null&&taskInfos.size()>0){
@@ -284,6 +284,7 @@ public class DownLoadPresenter {
             } else {
                 newTaskId = addThunderTask(link, path, null, context);
             }
+
 
             if (taskInfos!=null&&taskInfos.size()>0){
                 for (int i = 0; i < taskInfos.size(); i++) {

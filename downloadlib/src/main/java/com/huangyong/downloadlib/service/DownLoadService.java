@@ -88,7 +88,7 @@ public class DownLoadService extends Service implements ITask {
                     }
                 }else {
                     if (presenter!=null){
-                        presenter.restartNormalTask(downTaskInfo);
+                        //presenter.restartNormalTask(downTaskInfo);
                     }
                 }
 
