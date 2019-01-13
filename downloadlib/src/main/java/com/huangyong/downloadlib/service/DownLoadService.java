@@ -18,6 +18,7 @@ import com.huangyong.downloadlib.room.DowningTaskDao;
 import com.huangyong.downloadlib.room.data.DoneTaskInfo;
 import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.NetUtil;
+import com.huangyong.downloadlib.utils.Utils;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 import java.util.List;
@@ -49,6 +50,17 @@ public class DownLoadService extends Service implements ITask {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //应用被结束，将下载任务都移除掉
+        DowningTaskDao downingTaskDao = AppDatabaseManager.getInstance(this).donwingDao();
+        List<DowningTaskInfo> taskInfos = downingTaskDao.getAll();
+        if (taskInfos != null && taskInfos.size() > 0) {
+            for (int i = 0; i < taskInfos.size(); i++) {
+                XLTaskHelper.instance().removeTask(Long.parseLong(taskInfos.get(i).getTaskId()));
+                taskInfos.get(i).setTaskId(Utils.generateRandomId());
+                taskInfos.get(i).setStatu(4);
+                downingTaskDao.update(taskInfos.get(i));
+            }
+        }
     }
 
     private void initReceiver() {
@@ -114,7 +126,7 @@ public class DownLoadService extends Service implements ITask {
                         List<DowningTaskInfo> downingTaskInfos = taskDao.getAll();
                         if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
                             for (int i = 0; i < downingTaskInfos.size(); i++) {
-                                XLTaskHelper.instance().stopTask(Long.parseLong(downingTaskInfos.get(i).getTaskId()));
+                                XLTaskHelper.instance().removeTask(Long.parseLong(downingTaskInfos.get(i).getTaskId()));
                             }
                         }
                         break;
@@ -139,4 +151,6 @@ public class DownLoadService extends Service implements ITask {
     @Override
     public void updateDoneTask(List<DoneTaskInfo> taskInfo) {
     }
+
+
 }
