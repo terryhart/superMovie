@@ -34,7 +34,7 @@ Tips:
 
 
 
-#### 扫码下载体验（release-1.0.15）
+#### 扫码下载体验（release-1.0.19）
 
   若扫不出，点击这里 https://fir.im/btmovie
 
