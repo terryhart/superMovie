@@ -245,6 +245,5 @@ public class DownloadingTaskFragment extends Fragment implements DownTaskAdapter
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("kdkkdkdkd", "task destroed");
     }
 }
