@@ -32,10 +32,12 @@
 
         <activity
             android:name=".view.MovieDetailActivity"
-            android:launchMode="singleTask"
             android:label="@string/title_activity_scrolling"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SplashActivity" />
+        <activity
+            android:name=".SplashActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".view.HistoryActivity" />
 
         <receiver android:name=".receiver.NetBroadcastReceiver">
@@ -53,16 +55,15 @@
             android:name=".PreActivity"
             android:launchMode="singleTask"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <data
-                    android:scheme="zmovie"
                     android:host="zhost"
-                    android:pathPrefix="/bt/open" />
+                    android:pathPrefix="/bt/open"
+                    android:scheme="zmovie" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <intent-filter>
@@ -81,7 +82,6 @@
         </activity>
         <activity android:name=".view.FavorActivity" />
         <activity android:name=".view.SubjectListActivity" />
-        <activity android:name=".view.OnlineActivity" />
         <activity android:name=".view.PayMeActivity" />
 
         <service android:name=".services.DownLoadService" />
@@ -138,8 +138,12 @@
             android:label="@string/title_activity_on_line_movie"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.OnlineDetailPageActivity"
+            android:name=".view.online.detail.OnlineDetailPageActivity"
             android:label="@string/title_activity_online_detail_page"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.online.OnlineFilmActivity"
+            android:label="@string/title_activity_online_film"
             android:theme="@style/AppTheme"></activity>
     </application>
 

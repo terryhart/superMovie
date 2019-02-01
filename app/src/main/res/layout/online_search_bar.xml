@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/square"
+        android:background="@drawable/search_bg" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignEnd="@+id/square"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:src="@drawable/play_btn_icon_search" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/square"
+        android:layout_marginLeft="10dp"
+        android:text=" 电影、电视剧 名称 / 关键词"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

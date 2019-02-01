@@ -53,32 +53,6 @@ public class GetRecpresenter extends BasePresenter<IMoview>{
         addSubscription(subscription);
     }
 
-    public void getOnline(String type, int page, int pagesize) {
-
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getOnlineMovie(type, page, pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        iview.loadError("");
-                    }
-
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-
-                        PlayUrlBean playUrlBean = new Gson().fromJson(result.getData().get(0).getDownLoadUrl(), PlayUrlBean.class);
-
-                    }
-                });
-        addSubscription(subscription);
-    }
     public void getBtRecommend(int page,int pagesize){
 
         Subscription subscription = ApiManager

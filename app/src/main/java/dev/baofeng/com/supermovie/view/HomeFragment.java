@@ -5,12 +5,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.view.IndexActivity;
-import com.bftv.myapplication.view.LineWebview;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -44,10 +40,10 @@ import dev.baofeng.com.supermovie.adapter.CategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.HomeTabFragmentPagerAdapter;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
-import dev.baofeng.com.supermovie.http.UrlConfig;
 import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.Util;
+import dev.baofeng.com.supermovie.view.online.OnlineFilmActivity;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -63,14 +59,7 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     ImageView imgBg;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
-    @BindView(R.id.toobar)
-    Toolbar toobar;
-    @BindView(R.id.square)
-    ImageView square;
-    @BindView(R.id.downtask)
-    ImageView downtask;
-    @BindView(R.id.content_main)
-    LinearLayout contentMain;
+
     @BindView(R.id.home_tabs)
     com.antiless.support.widget.TabLayout homeTabView;
     /**
@@ -151,15 +140,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     private void initEvent() {
 
         appbar.addOnOffsetChangedListener(new MyOffsetChangedListener());
-        toobar.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            getContext().startActivity(intent);
-        });
-        downtask.setOnClickListener(v -> {
-           Intent intent =new Intent(getContext(), DownLoadMainActivity.class);
-           startActivity(intent);
-        });
-
 
         recList.setOnClickListener(this);
         bangdan.setOnClickListener(this);
@@ -216,7 +196,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     public void onPageSelected(int i) {
         if (bannerInfo!=null&&bannerInfo.getData().size()>0){
             int currentItem = i;
-            Log.e("currentItem",i+"");
             String poster = bannerInfo.getData().get(currentItem%10).getDownimgurl().split(",")[0];
             Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
                 @Override
@@ -238,8 +217,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.catfrag:
-//                Intent onlineIntent = new Intent(getActivity(), OnlineActivity.class);
-//                startActivity(onlineIntent);
+                Intent onlineIntent = new Intent(getActivity(), OnlineFilmActivity.class);
+                startActivity(onlineIntent);
                 break;
             case R.id.bangdan:
                 Intent intents = new Intent(getContext(), IndexActivity.class);
@@ -270,11 +249,11 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
             float progress = Math.abs(verticalOffset) * 1.0f / appBarLayout.getTotalScrollRange();
             if (progress >= 0.4) {
-                toobar.setVisibility(View.VISIBLE);
-                toobar.setAlpha(progress);
+                // toobar.setVisibility(View.VISIBLE);
+                // toobar.setAlpha(progress);
             } else {
-                toobar.setVisibility(View.VISIBLE);
-                toobar.setAlpha(0.4f);
+                // toobar.setVisibility(View.VISIBLE);
+                // toobar.setAlpha(0.4f);
             }
         }
     }
@@ -328,13 +307,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         banner.setAdapter(bannerAdapter);
         bannerAdapter.notifyDataSetChanged();
         poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()).getDownimgurl().split(",")[0];
-        Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Bitmap reverseBitmapById = BlurUtil.getBlurBitmap(4,4,resource);
-                imgBg.setImageBitmap(reverseBitmapById);
-            }
-        });
 
     }
     @Override

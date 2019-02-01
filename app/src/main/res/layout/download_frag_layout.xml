@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.design.widget.TabLayout
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toobar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="20dp"
+        android:gravity="bottom"
+        app:paddingStart="0dp">
+
+        <include
+            android:id="@+id/search_bar"
+            layout="@layout/searchbar" />
+    </android.support.v7.widget.Toolbar>
+
+    <com.antiless.support.widget.TabLayout
         android:id="@+id/tab_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        app:tabIndicatorColor="#1f90bc"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabSelectedTextColor="#1f90bc"
-        app:tabTextColor="#232323"
-        />
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="#fff"
+        app:tabIndicatorHeight="3dp"
+        app:indicatorStartColor="#29a2ca"
+        app:indicatorEndColor="#25b5c0"
+        app:indicatorMarginStart="18dp"
+        app:indicatorMarginEnd="18dp"
+        app:tabTextColor="#b24c4c4c" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:id="@+id/tabline"
-        app:layout_constraintTop_toBottomOf="@+id/tab_title"
         android:background="#d7dedede"
         />
     <android.support.v4.view.ViewPager
@@ -26,4 +41,4 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/tabline"
         android:layout_height="wrap_content"/>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

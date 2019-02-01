@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:fitsSystemWindows="true">
-        <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
@@ -29,7 +25,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="320dp"
                         app:layout_collapseMode="parallax"
                         android:clipChildren="false">
 
@@ -42,15 +38,15 @@
                         <com.leochuan.AutoPlayRecyclerView
                             android:scrollbars="none"
                             android:id="@+id/recycler"
-                            android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="100dp"
-                            android:layout_marginTop="80dp"
+                            android:layout_alignParentTop="true"
                             android:background="@android:color/transparent"
                             android:layout_width="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="30dp"
                             app:direction="right"
                             app:timeInterval="3000"
-                            android:layout_height="210dp" />
+                            android:layout_height="200dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -130,21 +126,6 @@
 
                         </LinearLayout>
                     </RelativeLayout>
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toobar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_marginTop="20dp"
-                        app:contentInsetStart="0dp"
-                        android:gravity="bottom"
-                        app:contentInsetStartWithNavigation="0dp"
-                        app:layout_collapseMode="pin"
-                        app:paddingStart="0dp">
-
-                        <include
-                            android:id="@+id/search_bar"
-                            layout="@layout/searchbar" />
-                    </android.support.v7.widget.Toolbar>
 
                 </android.support.design.widget.CollapsingToolbarLayout>
                 <com.antiless.support.widget.TabLayout
@@ -155,27 +136,16 @@
                     android:layout_gravity="bottom|center_horizontal"
                     android:background="#fff"
                     app:tabIndicatorHeight="3dp"
-
                     app:indicatorStartColor="#29a2ca"
                     app:indicatorEndColor="#25b5c0"
                     app:indicatorMarginStart="56dp"
                     app:indicatorMarginEnd="56dp"
                     app:tabTextColor="#b24c4c4c"/>
             </android.support.design.widget.AppBarLayout>
-            <!--<com.xiaosu.pulllayout.SimplePullLayout
-
-                android:layout_width="match_parent"
-                android:id="@+id/pulllayout"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="40dp"
-                android:layout_height="match_parent">
-
-            </com.xiaosu.pulllayout.SimplePullLayout>-->
             <android.support.v4.view.ViewPager
                 android:id="@+id/homepager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-        </android.support.design.widget.CoordinatorLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

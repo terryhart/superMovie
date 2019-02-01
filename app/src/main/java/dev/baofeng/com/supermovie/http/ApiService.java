@@ -3,10 +3,10 @@ package dev.baofeng.com.supermovie.http;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
-import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
+import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -29,6 +29,9 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_ONLINE)
   Observable<OnlinePlayInfo> getOnlineMovie(@Query("type") String type, @Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
+
+    @GET(UrlConfig.GET_ONLINE_Seris)
+    Observable<OnlinePlayInfo> getOnlineSeris(@Query("type") String type, @Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
 
   @GET(UrlConfig.GET_SUBJECT_TITLE)
   Observable<SubjectTitleInfo> getSubjectTitle(@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表

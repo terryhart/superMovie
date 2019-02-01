@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toobar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="20dp"
+        android:gravity="bottom"
+        android:visibility="gone"
+        app:paddingStart="0dp">
+
+        <include
+            android:id="@+id/search_bar"
+            layout="@layout/online_search_bar" />
+    </android.support.v7.widget.Toolbar>
+
+    <com.antiless.support.widget.TabLayout
+        android:id="@+id/online_tab"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        app:tabTextAppearance="@style/CustomTablayoutTextAppearance"
+        app:tabIndicatorHeight="3dp"
+        app:indicatorStartColor="#8a8a8a"
+        app:indicatorMarginStart="10dp"
+        app:indicatorMarginEnd="10dp"
+        app:indicatorEndColor="#9d9e9f"
+        app:tabTextColor="#b24c4c4c" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/onlinepager"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</LinearLayout>

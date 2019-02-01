@@ -1,8 +1,9 @@
 package dev.baofeng.com.supermovie.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +11,14 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
+import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.domain.OnlinePlayInfo;
+import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.holder.CommonHolder;
 import dev.baofeng.com.supermovie.holder.HeadHolder;
 import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.MovieDetailActivity;
-import dev.baofeng.com.supermovie.view.OnLineMovieActivity;
-import dev.baofeng.com.supermovie.view.OnlineDetailPageActivity;
+import dev.baofeng.com.supermovie.view.online.detail.OnlineDetailPageActivity;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -71,9 +71,8 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
                         //简介
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
-
                         //地址类型 m3u8/kuyun
-                        intent.putExtra(GlobalMsg.KEY_PLAY_TITLE, datas.getData().get(position).getDowndtitle());
+                        intent.putExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE, datas.getData().get(position).getDowndtitle());
                         //地址列表，title & url
                         intent.putExtra(GlobalMsg.KEY_PLAY_URL, datas.getData().get(position).getDownLoadUrl());
                         context.startActivity(intent);
@@ -90,4 +89,6 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return datas.getData().size();
     }
+
+
 }

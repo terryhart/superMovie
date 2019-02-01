@@ -144,6 +144,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
 
+    //调色板
+    compile 'com.android.support:palette-v7:27.1.0'
 }
 
 

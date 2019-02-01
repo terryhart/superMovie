@@ -20,10 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.model.Params;
 
 import java.lang.reflect.Field;
@@ -54,6 +56,8 @@ public class SplashActivity extends AppCompatActivity implements IupdateView, IS
     private UpdateAppPresenter presenter;
     private RelativeLayout root;
     private SharePresenter sharePresenter;
+    private ImageView poster;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +65,10 @@ public class SplashActivity extends AppCompatActivity implements IupdateView, IS
 
         setContentView(R.layout.splash_layout);
         root = findViewById(R.id.root);
+        poster = findViewById(R.id.splash_poster);
+        int pic = (int) ((Math.random()) * 5);
+        Glide.with(this).load(GlobalMsg.imgList[pic]).placeholder(R.drawable.splash3).into(poster);
+
         sharePresenter = new SharePresenter(this, this);
         presenter = new UpdateAppPresenter(this,this);
         presenter.getAppUpdate(this);

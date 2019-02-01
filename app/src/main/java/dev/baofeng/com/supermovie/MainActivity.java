@@ -1,14 +1,8 @@
 package dev.baofeng.com.supermovie;
 
-import android.Manifest;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -29,12 +23,10 @@ import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
-import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.HomeFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
 import dev.baofeng.com.supermovie.view.UpdateDialog;
-import rx.Observable;
-import rx.functions.Action1;
+import dev.baofeng.com.supermovie.view.online.OnlineFilmRootFragment;
+import dev.baofeng.com.supermovie.view.online.OnlineRootFragment;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -47,16 +39,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView main;
     @BindView(R.id.bt_subject)
     TextView subject;
-    @BindView(R.id.down)
+    @BindView(R.id.online)
     TextView down;
     @BindView(R.id.my)
     TextView my;
-    private BTFragment downfragment;
-    private HomeFragment homeFragment;
+    private BTFragment homefragment;
     private CenterFragment centerFragment;
     private SubjectFragment subjectFragment;
     private UpdateAppPresenter updateAppPresenter;
     private SharePresenter sharePresenter;
+    private OnlineRootFragment onlineFilmRootFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void noUpdate(String url) {
-        //Toast.makeText(this, "当前已是最新版本", Toast.LENGTH_SHORT).show();
         SharePreferencesUtil.setIntSharePreferences(MainActivity.this, Params.HAVE_UPDATE, 0);
     }
 
@@ -116,20 +107,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         my.setOnClickListener(this);
         subject.setOnClickListener(this);
         main.setSelected(true);
-        downfragment = BTFragment.getInstance();
-        homeFragment = HomeFragment.getInstance();
+        homefragment = BTFragment.getInstance();
         centerFragment = CenterFragment.getInstance();
         subjectFragment = SubjectFragment.getInstance();
-        homeFragment.setOnPageChangeListener(() -> toggleFrag(4));
+        onlineFilmRootFragment = OnlineRootFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.content, downfragment);
-        fragmentTransaction.add(R.id.content, homeFragment);
+        fragmentTransaction.add(R.id.content, homefragment);
         fragmentTransaction.add(R.id.content, centerFragment);
         fragmentTransaction.add(R.id.content, subjectFragment);
-        fragmentTransaction.hide(downfragment);
+        fragmentTransaction.add(R.id.content, onlineFilmRootFragment);
         fragmentTransaction.hide(centerFragment);
         fragmentTransaction.hide(subjectFragment);
-        fragmentTransaction.show(homeFragment);
+        fragmentTransaction.hide(onlineFilmRootFragment);
+        fragmentTransaction.show(homefragment);
         //下载中心的fragment
 
         fragmentTransaction.commitAllowingStateLoss();
@@ -145,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main:
                 toggleFrag(1);
                 break;
-            case R.id.down:
+            case R.id.online:
                 toggleFrag(2);
                 break;
             case R.id.my:
@@ -162,10 +152,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (i) {
             case 1:
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.show(homeFragment);
+                fragmentTransaction.show(homefragment);
                 fragmentTransaction.hide(centerFragment);
-                fragmentTransaction.hide(downfragment);
                 fragmentTransaction.hide(subjectFragment);
+                fragmentTransaction.hide(onlineFilmRootFragment);
                 fragmentTransaction.commit();
                 main.setSelected(true);
                 down.setSelected(false);
@@ -174,9 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 FragmentTransaction fragmentTran2 = getSupportFragmentManager().beginTransaction();
-                fragmentTran2.show(downfragment);
+                fragmentTran2.show(onlineFilmRootFragment);
                 fragmentTran2.hide(centerFragment);
-                fragmentTran2.hide(homeFragment);
+                fragmentTran2.hide(homefragment);
                 fragmentTran2.hide(subjectFragment);
                 fragmentTran2.commit();
                 main.setSelected(false);
@@ -187,9 +177,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 3:
                 FragmentTransaction fragmentTran3 = getSupportFragmentManager().beginTransaction();
                 fragmentTran3.show(centerFragment);
-                fragmentTran3.hide(homeFragment);
-                fragmentTran3.hide(downfragment);
+                fragmentTran3.hide(homefragment);
                 fragmentTran3.hide(subjectFragment);
+                fragmentTran3.hide(onlineFilmRootFragment);
                 fragmentTran3.commit();
                 main.setSelected(false);
                 down.setSelected(false);
@@ -199,9 +189,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 4:
                 FragmentTransaction fragmentTran4 = getSupportFragmentManager().beginTransaction();
                 fragmentTran4.show(subjectFragment);
-                fragmentTran4.hide(downfragment);
+                fragmentTran4.hide(homefragment);
                 fragmentTran4.hide(centerFragment);
-                fragmentTran4.hide(homeFragment);
+                fragmentTran4.hide(onlineFilmRootFragment);
                 fragmentTran4.commit();
                 main.setSelected(false);
                 down.setSelected(false);

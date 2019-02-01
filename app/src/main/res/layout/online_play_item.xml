@@ -11,21 +11,14 @@
     <RelativeLayout
         android:layout_width="70dp"
         android:layout_height="40dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="4dp"
-            android:src="@drawable/ic_dl_mp4"
-            android:id="@+id/playIcon"
-            />
         <TextView
             android:layout_width="match_parent"
-            android:layout_toRightOf="@+id/playIcon"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="@color/theme_dark"
+            android:textSize="18sp"
             android:id="@+id/btPlayText"
             android:text="高清"
             />

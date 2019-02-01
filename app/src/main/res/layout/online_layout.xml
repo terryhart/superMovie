@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar_4"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingTop="40dp"
-        android:id="@+id/bar"
-        android:background="#1ca7e3"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:text="在线资源"
-            android:textColor="#fff"
-            android:layout_marginLeft="20dp"
-            android:textSize="16sp"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        toolbar:navigationIcon="@drawable/navigation_back_white"
+        toolbar:theme="@style/ToolbarTheme"></android.support.v7.widget.Toolbar>
+
     <com.xiaosu.pulllayout.SimplePullLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/bar"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
         android:id="@+id/onlineRefresh"
+        android:layout_below="@+id/tool_bar_4"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
