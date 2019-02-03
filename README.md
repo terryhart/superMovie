@@ -2,7 +2,7 @@
 # 🔥基于MVP+RxJava+Retrofit的电影资源聚合APP
 
 
-手机端更舒适地下载高清电影，热门电影，美剧，每日更新。
+手机端更舒适地下载高清电影，热门电影，美剧，每日更新。（效果图更新不及时，以最新app实际效果为准）
 
 <table style="border-width: 0px ;">
 			<tr>
@@ -28,13 +28,11 @@
 
 
 
-Tips:
-    如果你自己写了个APP，依赖了thunder，出现能获取文件大小，无法下载的情况，可能是因为APP的manifest没申明
-    文件读写权限。虽然thunder内申明了，但是还是需要APP里再次声明。注意！
 
 
 
-#### 扫码下载体验（release-1.0.19）
+
+#### 扫码下载体验（release-2.1.0）
 
   若扫不出，点击这里 https://fir.im/btmovie
 
@@ -42,7 +40,15 @@ Tips:
     <img src="https://github.com/hiliving/superMovie/blob/master/picture/apk_code.png" width="300" height="300" alt="仅供学习交流" align=center>
 </div>
 
+>2019/2/3更新：
 
+  - 1.首页改版，分类与首页合并
+
+  - 2.增加在线资源库，发现喜欢的电影可以直接在线观看
+
+  - 3.在线播放支持腾讯王卡免流，如果你是王卡用户，可以选择从qq浏览器打开播放，没有Wi-Fi也可免流量观看.
+  
+  - TODO ：增加登录模块，收藏和历史记录不再因版本升级丢失
 
 >2019/1/12更新：
 
