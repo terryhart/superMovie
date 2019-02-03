@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class OnlineSearchAdapter extends RecyclerView.Adapter {
     private void toDetailPage(String imgUrl, int position, String name) {
 
         for (int i = 0; i < UrlConfig.mvArr.length; i++) {
-            if (UrlConfig.mvArr[i].equals(datas.getData().get(position).getMovClass())) {
+            if (datas.getData().get(position).getMovClass().contains(UrlConfig.mvArr[i])) {
                 classType = UrlConfig.mvType[i];
                 if (useList(typeConfirm, UrlConfig.mvType[i])) {
                     movieType = 0;
@@ -96,7 +97,7 @@ public class OnlineSearchAdapter extends RecyclerView.Adapter {
                 }
             }
         }
-
+        Log.e("getmovie", movieType + "--" + classType);
         Intent intent = new Intent(context, OnlineDetailPageActivity.class);
         intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
         intent.putExtra(GlobalMsg.KEY_DOWN_URL, datas.getData().get(position).getDownLoadUrl());

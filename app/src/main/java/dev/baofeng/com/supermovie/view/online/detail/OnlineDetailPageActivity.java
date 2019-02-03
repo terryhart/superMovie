@@ -163,7 +163,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
 
     public void getColor(Bitmap bitmap) {
-        // 用来提取颜色的Bitmap
         // Palette的部分
         Palette.Builder builder = Palette.from(bitmap);
         builder.generate(new Palette.PaletteAsyncListener() {
@@ -172,9 +171,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 //获取到充满活力的这种色调
                 Palette.Swatch vibrant = palette.getLightMutedSwatch();
                 //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
-                // toolbar_tab.setBackgroundColor(vibrant.getRgb());
-                // toolbar_tab.setSelectedTabIndicatorColor(colorBurn(vibrant.getRgb()));
-
                 if (root != null) {
                     if (vibrant != null) {
                         toolbar.setBackgroundColor(colorBurn(vibrant.getRgb()));
@@ -223,7 +219,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             randomRecpresenter.getSeriRecommend(mvType);
         }
 
-        Glide.with(this).load(posterUrl).transform(new CenterCrop(this), new GlideRoundTransform(this, 8)).into(lineDetailPoster);
+        Glide.with(this).load(posterUrl).transform(new CenterCrop(this), new GlideRoundTransform(this, 18)).into(lineDetailPoster);
         initDescData();
         initPlayerData();
         initThemeColor();
