@@ -3,10 +3,10 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "dev.baofeng.com.supermovie"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
-        versionCode 119
-        versionName "1.0.19"
+        versionCode 121
+        versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {

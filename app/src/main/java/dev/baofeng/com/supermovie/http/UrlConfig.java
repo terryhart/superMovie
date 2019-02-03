@@ -44,5 +44,37 @@ public class UrlConfig {
      public static final String GETSEARCH = "ygcms/getSearch.php";
 //    public static final String GET_VIDEO_THREE = "home.json";
 
+    public static final String GET_ONLINE_SEARCH_MOVIE = "ygcms/getOnlineMvSearch.php";
+
+    public static final String GET_ONLINE_SEARCH_SERIS = "ygcms/getOnlineSerisSearch.php";
+    //猜你喜欢,随机12个 需要跟参数type
+    public static final String GET_RANDOM_REOMMEND = "ygcms/getLineMovieRandom.php";
+
+    public static final String GET_RANDOM_SERI_RECMMEND = "ygcms/getLineSeriRandom.php";
+
+
+    public static String[] mvArr = {
+            "科幻",
+            "喜剧",
+            "爱情",
+            "战争",
+            "剧情",
+            "恐怖",
+            "综艺",
+
+            "美剧",
+            "动漫",
+            "国产剧",
+            "港剧",
+            "台湾剧",
+            "日剧",
+            "韩剧",
+            "微电影",
+            "海外剧"
+    };
+    public static String[] mvType = {"science", "comedy", "love", "war", "story", "terror", "show"
+            , "america", "curtoon", "native", "hongkong", "taiwan", "japanise",
+            "koria", "shortmv", "ocean"
+    };
 
 }

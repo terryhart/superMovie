@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.PageAdapter;
 
@@ -127,4 +128,5 @@ public class BTFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
+
 }

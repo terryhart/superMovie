@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
+    android:id="@+id/scroll_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:fitsSystemWindows="true"
     tools:showIn="@layout/activity_online_detail_page">
@@ -14,12 +14,12 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="110dp"
+            android:layout_width="120dp"
             android:scaleType="centerCrop"
             android:id="@+id/line_detail_poster"
             android:layout_margin="@dimen/dp_22"
             android:layout_alignParentTop="true"
-            android:layout_height="160dp" />
+            android:layout_height="170dp" />
 
         <TextView
             android:layout_width="200dp"
@@ -30,81 +30,108 @@
             android:id="@+id/head_desc"
             android:layout_toRightOf="@+id/line_detail_poster"
             android:layout_alignTop="@+id/line_detail_poster"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginRight="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="简介："
-            android:id="@+id/desc_title"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_below="@+id/line_detail_poster"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="26dp" />
-
-        <com.ctetin.expandabletextviewlibrary.ExpandableTextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="26dp"
-            android:layout_below="@+id/line_detail_poster"
-            android:layout_marginTop="60dp"
-            app:ep_max_line="8"
-            android:textColor="@color/white"
-            app:ep_need_contract="true"
-            android:lineSpacingExtra="10dp"
-            app:ep_need_animation="true"
-            app:ep_contract_text="收起"
-            app:ep_expand_text="展开"
-            app:ep_end_color="@color/white"
-            app:ep_need_expand="true"
-            android:id="@+id/line_desc" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="播放(webUrl)"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
-            android:id="@+id/weburl_title"
-            android:textColor="@color/white"
-            android:layout_below="@+id/line_desc"
+            android:layout_below="@+id/head_desc"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="26dp" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/play_list"
-            android:layout_below="@+id/weburl_title"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="26dp"
-            android:layout_height="60dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/desc_bg_shape"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/desc_content"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="播放(m3u8)"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
-            android:textColor="@color/white"
-            android:id="@+id/m3u8_title"
-            android:layout_below="@+id/play_list"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="26dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="简介："
+                    android:id="@+id/desc_title"
+                    android:textSize="20sp"
+                    android:textColor="@color/white" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/play_list2"
-            android:layout_below="@+id/m3u8_title"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="26dp"
-            android:layout_marginBottom="100dp"
-            android:layout_height="60dp" />
+                <com.ctetin.expandabletextviewlibrary.ExpandableTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:ep_max_line="3"
+                    android:textColor="@color/white"
+                    app:ep_need_contract="true"
+                    android:lineSpacingExtra="6dp"
+                    app:ep_need_animation="true"
+                    android:layout_marginLeft="@dimen/dp_4"
 
+                    app:ep_contract_text="收起"
+                    app:ep_expand_text="展开"
+                    app:ep_end_color="@color/white"
+                    app:ep_need_expand="true"
+                    android:id="@+id/line_desc" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放(webUrl)"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
+                android:id="@+id/weburl_title"
+                android:textColor="@color/white"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="26dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/play_list"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放(m3u8)"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
+                android:textColor="@color/white"
+                android:id="@+id/m3u8_title"
+                android:layout_below="@+id/play_list"
+                android:layout_marginLeft="26dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/play_list2"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="猜你喜欢"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_slideshow_black_24dp"
+                android:textColor="@color/white"
+                android:id="@+id/rec_title"
+                android:layout_marginLeft="26dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/rec_list"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="20dp"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

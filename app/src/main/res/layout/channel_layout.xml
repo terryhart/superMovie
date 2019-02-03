@@ -68,6 +68,7 @@
                                 android:drawablePadding="6dp"
                                 android:focusable="true"
                                 android:gravity="center"
+                                android:visibility="gone"
                                 android:text="在线影院"
                                 android:textColor="#222222"
                                 android:textSize="12sp" />

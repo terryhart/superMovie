@@ -13,7 +13,6 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="20dp"
         android:gravity="bottom"
-        android:visibility="gone"
         app:paddingStart="0dp">
 
         <include
@@ -26,7 +25,6 @@
         android:layout_width="160dp"
         android:layout_height="30dp"
         android:fitsSystemWindows="true"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
         app:tabTextAppearance="@style/CustomTablayoutTextAppearance"
         app:tabIndicatorHeight="3dp"

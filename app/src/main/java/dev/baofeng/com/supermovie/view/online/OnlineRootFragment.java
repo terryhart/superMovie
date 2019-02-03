@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.OnlineTabFragmentPagerAdapter;
+import dev.baofeng.com.supermovie.db.data.OnlineSearchHistory;
 import dev.baofeng.com.supermovie.view.SearchActivity;
 
 /**
@@ -61,8 +62,8 @@ public class OnlineRootFragment extends Fragment {
     private void initData() {
 
         toobar.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            //getContext().startActivity(intent);
+            Intent intent = new Intent(getContext(), OnlineSearchActivity.class);
+            getContext().startActivity(intent);
         });
 
         movieFragment = OnlineFilmRootFragment.getInstance();

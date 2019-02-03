@@ -8,21 +8,30 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import dev.baofeng.com.supermovie.db.data.OnlineSearchHistory;
 import dev.baofeng.com.supermovie.db.data.SearchHistory;
 
 @Dao
 public interface SearchDao {
 
     @Insert
-    public void insert(SearchHistory trackData);
+    void insert(SearchHistory trackData);
 
     @Delete
-    public void delete(SearchHistory trackData);
+    void delete(SearchHistory trackData);
+
+    @Delete
+    void delete(OnlineSearchHistory trackData);
 
     @Query("SELECT * FROM T_SEARCH")
     List<SearchHistory> getAll();
 
+    @Query("SELECT * FROM T_ONLINE_SEARCH")
+    List<OnlineSearchHistory> getOnlineAll();
+
     @Query("SELECT * FROM T_SEARCH WHERE  searchKeyWords=:keyword ")
     List<SearchHistory> getByKeywords(String keyword);
 
+    @Insert
+    void insertOnline(OnlineSearchHistory searchHistory);
 }

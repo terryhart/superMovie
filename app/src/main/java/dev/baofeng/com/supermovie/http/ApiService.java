@@ -45,6 +45,11 @@ public interface ApiService {
   @GET(UrlConfig.GETSEARCH)
   Observable<MovieInfo> getSearch(@Query("key") String key);//获取搜索
 
+  @GET(UrlConfig.GET_ONLINE_SEARCH_MOVIE)
+  Observable<OnlinePlayInfo> getOnlineSearch(@Query("key") String key);//获取搜索
+
+  @GET(UrlConfig.GET_ONLINE_SEARCH_SERIS)
+  Observable<OnlinePlayInfo> getOnlineSearchSeris(@Query("key") String key);//获取搜索
   //获取详情
   @GET(UrlConfig.GETDETAIL)
   Observable<BtInfo> getBtDetail(@Query("title") String title);
@@ -63,4 +68,10 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_SHARE)
   Observable<RecentUpdate> getShare(@Query("md5id") String mvId);
+
+  @GET(UrlConfig.GET_RANDOM_REOMMEND)
+  Observable<OnlinePlayInfo> getBtRandomRecomend(@Query("type") String type);//获取推荐
+
+  @GET(UrlConfig.GET_RANDOM_SERI_RECMMEND)
+  Observable<OnlinePlayInfo> getSeriRandomRecomend(@Query("type") String type);//获取推荐
 }

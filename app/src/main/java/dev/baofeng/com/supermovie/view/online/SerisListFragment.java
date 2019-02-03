@@ -20,12 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
-import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
-import dev.baofeng.com.supermovie.presenter.CenterPresenter;
-import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.online.GetOnlinePresenter;
 import dev.baofeng.com.supermovie.presenter.online.iview.IOnlineView;
 import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
@@ -131,7 +127,7 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
         Log.e("movieInfo", movieBean.getData().size() + "");
-        adapter = new OnlineCategoryAdapter(getContext(), movieBean);
+        adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)

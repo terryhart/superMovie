@@ -6,10 +6,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import dev.baofeng.com.supermovie.db.dao.SearchDao;
+import dev.baofeng.com.supermovie.db.data.OnlineSearchHistory;
 import dev.baofeng.com.supermovie.db.data.SearchHistory;
 
 
-@Database(entities = {SearchHistory.class}, version = 1, exportSchema = false)
+@Database(entities = {SearchHistory.class, OnlineSearchHistory.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TABLE_NAME = "com_bt_search.db";
