@@ -12,7 +12,6 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        app:contentScrim="#4b3029"
         android:id="@+id/app_bar"
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"

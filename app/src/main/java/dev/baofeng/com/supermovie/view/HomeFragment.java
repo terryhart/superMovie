@@ -1,27 +1,27 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bftv.myapplication.view.IndexActivity;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.huangyong.downloadlib.DownLoadMainActivity;
-import com.huangyong.downloadlib.utils.BlurUtil;
 import com.leochuan.AutoPlayRecyclerView;
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
@@ -44,12 +44,15 @@ import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.Util;
 import dev.baofeng.com.supermovie.view.online.OnlineFilmActivity;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
+import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageChangeListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements IMoview, View.OnClickListener {
 
     Unbinder unbinder;
     private static HomeFragment homeFragment;
@@ -155,6 +158,8 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         carouselLayoutManager.setOnPageChangeListener(new ViewPagerLayoutManager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
+
+
             }
 
             @Override
@@ -172,46 +177,16 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
                     if (getContext() == null) {
                         return;
                     }
-                    Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            Bitmap reverseBitmapById = BlurUtil.getBlurBitmap(4,4,resource);
-                            imgBg.setImageBitmap(reverseBitmapById);
-                        }
-                    });
-                }
 
+                    Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
+
+                }
             }
         });
     }
 
 
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int i) {
-        if (bannerInfo!=null&&bannerInfo.getData().size()>0){
-            int currentItem = i;
-            String poster = bannerInfo.getData().get(currentItem%10).getDownimgurl().split(",")[0];
-            Glide.with(getContext()).load(poster).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                    Bitmap reverseBitmapById = BlurUtil.getBlurBitmap(4,4,resource);
-                    imgBg.setImageBitmap(reverseBitmapById);
-                }
-            });
-
-        }
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-    }
 
     @Override
     public void onClick(View v) {
@@ -259,7 +234,6 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
     }
 
     private void initData() {
-       // pulllayout.setOnPullListener(this);
         index = 1;
         getRecpresenter = new GetRecpresenter(getContext(), this);
         getRecpresenter.getRecentUpdate( index,18);
@@ -307,11 +281,51 @@ public class HomeFragment extends Fragment implements IMoview, ViewPager.OnPageC
         banner.setAdapter(bannerAdapter);
         bannerAdapter.notifyDataSetChanged();
         poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()).getDownimgurl().split(",")[0];
+        Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
 
     }
     @Override
     public void loadDetail(BtInfo result) {
 
     }
+
+
+    public void getColor(Bitmap bitmap) {
+        // Palette的部分
+        Palette.Builder builder = Palette.from(bitmap);
+        builder.generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                //获取到充满活力的这种色调
+                Palette.Swatch vibrant = palette.getLightMutedSwatch();
+                //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
+                if (appbar != null) {
+                    if (vibrant != null) {
+
+                        ValueAnimator colorAnim2 = ValueAnimator.ofArgb(Color.rgb(110, 110, 100), colorBurn(vibrant.getRgb()));
+                        colorAnim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                //root.setBackgroundColor((Integer) animation.getAnimatedValue());
+                                // toolbar.setBackgroundColor((Integer) animation.getAnimatedValue());
+//                                detail_app_bar.setBackgroundColor((Integer) animation.getAnimatedValue());
+                            }
+                        });
+                        colorAnim2.setDuration(300);
+                        colorAnim2.setRepeatMode(ValueAnimator.RESTART);
+                        colorAnim2.start();
+
+                        if (Build.VERSION.SDK_INT >= 21) {
+                            Window window = getActivity().getWindow();
+                            window.setStatusBarColor(colorBurn(vibrant.getRgb()));
+                            window.setNavigationBarColor(colorBurn(vibrant.getRgb()));
+                        }
+                    }
+                }
+
+            }
+        });
+    }
+
 
 }

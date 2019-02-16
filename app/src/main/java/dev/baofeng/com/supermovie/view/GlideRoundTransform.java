@@ -19,7 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
  */
 public class GlideRoundTransform extends BitmapTransformation {
 
-    private static float radius = 0f;
+    private static float radius = 10f;
 
     /**
      * 构造函数 默认圆角半径 4dp
@@ -27,7 +27,7 @@ public class GlideRoundTransform extends BitmapTransformation {
      * @param context Context
      */
     public GlideRoundTransform(Context context) {
-        this(context, 4);
+        this(context, 24);
     }
 
     /**

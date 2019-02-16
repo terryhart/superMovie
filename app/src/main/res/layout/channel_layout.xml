@@ -20,7 +20,7 @@
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:contentScrim="@color/colorPrimary"
+                    app:contentScrim="@android:color/transparent"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">
 
                     <RelativeLayout
@@ -137,8 +137,8 @@
                     android:layout_gravity="bottom|center_horizontal"
                     android:background="#fff"
                     app:tabIndicatorHeight="3dp"
-                    app:indicatorStartColor="#29a2ca"
-                    app:indicatorEndColor="#25b5c0"
+                    app:indicatorStartColor="#303030"
+                    app:indicatorEndColor="#292929"
                     app:indicatorMarginStart="56dp"
                     app:indicatorMarginEnd="56dp"
                     app:tabTextColor="#b24c4c4c"/>

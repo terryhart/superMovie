@@ -55,18 +55,16 @@ public class OnlinePlayWebAdapter extends RecyclerView.Adapter<OnlinePlayHolder>
     @Override
     public void onBindViewHolder(@NonNull OnlinePlayHolder holder, int position) {
         if (playList.getNormal().size() == 1) {
-            holder.btPlayText.setText("播放");
+            holder.btPlayText.setText("1");
         } else {
-            holder.btPlayText.setText("第" + (position + 1) + "集");
+            holder.btPlayText.setText(position + 1 + "");
         }
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.DEFAULT_PATH, poster, context);
-                Toast.makeText(context, "已添加到下载任务", Toast.LENGTH_SHORT).show();
-//                showListDialog(playList.getXunlei().get(position).getUrl());
+                openBrowser(context, playList.getNormal().get(position).getUrl());
             }
         });
     }

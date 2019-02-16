@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bftv.myapplication.config.KeyParam;
@@ -51,9 +52,9 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
     public void onBindViewHolder(@NonNull OnlinePlayHolder holder, int position) {
 
         if (playList.getM3u8().size() == 1) {
-            holder.btPlayText.setText("播放");
+            holder.btPlayText.setText("1");
         } else {
-            holder.btPlayText.setText("第" + (position + 1) + "集");
+            holder.btPlayText.setText(position + 1 + "");
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,27 +14,45 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:id="@+id/line_detail_poster"
-            android:layout_margin="@dimen/dp_22"
             android:layout_alignParentTop="true"
-            android:layout_height="170dp" />
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:layout_height="190dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/line_detail_poster"
+            android:layout_alignTop="@+id/line_detail_poster"
+            android:layout_marginLeft="4dp"
+            android:textSize="22sp"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/mv_title"
+            android:layout_marginRight="20dp" />
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="#9cffffff"
             android:textSize="12sp"
-            android:lineSpacingExtra="4dp"
+            android:lineSpacingExtra="2dp"
             android:id="@+id/head_desc"
+            android:lines="7"
+            android:ellipsize="end"
             android:layout_toRightOf="@+id/line_detail_poster"
-            android:layout_alignTop="@+id/line_detail_poster"
+            android:layout_below="@+id/mv_title"
+            android:layout_marginTop="2dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_below="@+id/head_desc"
+            android:layout_below="@+id/line_detail_poster"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
@@ -53,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="简介："
+                    android:textStyle="bold"
                     android:id="@+id/desc_title"
                     android:textSize="20sp"
                     android:textColor="@color/white" />
@@ -62,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     app:ep_max_line="3"
-                    android:textColor="@color/white"
+                    android:textColor="#9cffffff"
                     app:ep_need_contract="true"
                     android:lineSpacingExtra="6dp"
                     app:ep_need_animation="true"
@@ -71,7 +90,8 @@
                     app:ep_contract_text="收起"
                     app:ep_expand_text="展开"
                     app:ep_end_color="@color/white"
-                    app:ep_expand_color="@color/theme_bgcolor"
+                    app:ep_expand_color="@color/white"
+                    app:ep_contract_color="@color/white"
                     app:ep_need_expand="true"
                     android:id="@+id/line_desc" />
             </LinearLayout>
@@ -79,8 +99,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="播放(迅雷)"
-                android:textSize="16sp"
+                android:text="H5播放"
+                android:alpha="0.7"
+                android:textSize="14sp"
                 android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
                 android:id="@+id/weburl_title"
                 android:textColor="@color/white"
@@ -98,11 +119,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="播放(m3u8)"
-                android:textSize="16sp"
+                android:text="m3u8播放"
+                android:textSize="14sp"
                 android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
                 android:textColor="@color/white"
                 android:id="@+id/m3u8_title"
+                android:alpha="0.7"
                 android:layout_below="@+id/play_list"
                 android:layout_marginLeft="26dp" />
 
@@ -115,11 +137,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
                 android:text="猜你喜欢"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:drawableLeft="@drawable/ic_slideshow_black_24dp"
                 android:textColor="@color/white"
+                android:alpha="0.7"
                 android:id="@+id/rec_title"
                 android:layout_marginLeft="26dp" />
 

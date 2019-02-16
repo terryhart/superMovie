@@ -24,9 +24,9 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:background="#fff"
-        app:tabIndicatorHeight="3dp"
-        app:indicatorStartColor="#29a2ca"
-        app:indicatorEndColor="#25b5c0"
+        app:tabIndicatorHeight="2dp"
+        app:indicatorStartColor="#2b2b2b"
+        app:indicatorEndColor="#383838"
         app:indicatorMarginStart="18dp"
         app:indicatorMarginEnd="18dp"
         app:tabTextColor="#b24c4c4c" />

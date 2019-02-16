@@ -161,14 +161,5 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
 
     @Override
     public void onLoad() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                recpresenter.getMovieMore(++index,18);
-//                pulllayout.finishPull("加载完成",true);
-//            }
-//        },1500);
-//        pulllayout.finishPull("加载完成",true);
-//        recpresenter.getMovieMore(++index,18);
     }
 }

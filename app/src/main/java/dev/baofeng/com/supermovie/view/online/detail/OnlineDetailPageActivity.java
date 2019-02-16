@@ -1,5 +1,8 @@
 package dev.baofeng.com.supermovie.view.online.detail;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -48,6 +51,7 @@ import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import dev.baofeng.com.supermovie.view.GlideRoundTransform;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
@@ -95,6 +99,8 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     ImageView toolbarIcon;
     @BindView(R.id.desc_content)
     LinearLayout descContent;
+    @BindView(R.id.mv_title)
+    TextView mvTitle;
 
 
     private String posterUrl;
@@ -175,8 +181,20 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
                 if (root != null) {
                     if (vibrant != null) {
-                        toolbar.setBackgroundColor(colorBurn(vibrant.getRgb()));
-                        root.setBackgroundColor(colorBurn(vibrant.getRgb()));
+
+
+                        ValueAnimator colorAnim2 = ValueAnimator.ofArgb(Color.rgb(110, 110, 100), colorBurn(vibrant.getRgb()));
+                        colorAnim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                root.setBackgroundColor((Integer) animation.getAnimatedValue());
+                                toolbar.setBackgroundColor((Integer) animation.getAnimatedValue());
+                            }
+                        });
+                        colorAnim2.setDuration(300);
+                        colorAnim2.setRepeatMode(ValueAnimator.RESTART);
+                        colorAnim2.start();
+
                         if (Build.VERSION.SDK_INT >= 21) {
                             Window window = getWindow();
                             window.setStatusBarColor(colorBurn(vibrant.getRgb()));
@@ -214,6 +232,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         blurColor = intent.getIntExtra(GlobalMsg.KEY_BLUR_COLOR, Color.parseColor("#4b3029"));
         toolbarTitle.setText(title);
 
+        mvTitle.setText(title);
 
         if (isMovie == GlobalMsg.MOVIE) {
             randomRecpresenter.getMovieRecommend(mvType);
@@ -221,7 +240,8 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             randomRecpresenter.getSeriRecommend(mvType);
         }
 
-        Glide.with(this).load(posterUrl).transform(new CenterCrop(this), new GlideRoundTransform(this, 18)).into(lineDetailPoster);
+        Glide.with(this).load(posterUrl).bitmapTransform(new RoundedCornersTransformation(this, 12, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(300).into(lineDetailPoster);
+
         initDescData();
         initPlayerData();
         initThemeColor();
@@ -239,17 +259,17 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
         for (int i = 0; i < playUrlBean.getNormal().size(); i++) {
             if (playUrlBean.getNormal().size() == 1) {
-                playXunleiUrlList.add("迅雷专线");
+                playXunleiUrlList.add("web");
             } else {
-                playXunleiUrlList.add("第" + (i + 1) + "集");
+                playXunleiUrlList.add((i + 1) + "");
             }
         }
         for (int i = 0; i < playUrlBean.getM3u8().size(); i++) {
             if (playUrlBean.getM3u8().size() == 1) {
-                playM3u8List.add("在线观看");
+                playM3u8List.add("播放");
             } else {
                 if (playUrlBean.getM3u8().size() > 10) {
-                    playM3u8List.add("第" + (i + 1) + "集");
+                    playM3u8List.add((i + 1) + "");
                     if (i == 9) {
                         break;
                     }

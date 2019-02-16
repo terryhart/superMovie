@@ -14,4 +14,5 @@
 
     </declare-styleable>
 
+    <attr name="shapeAppearanceLargeComponent" format="reference" />
 </resources>

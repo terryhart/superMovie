@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
     android:layout_marginRight="26dp"
         app:ep_max_line="8"
+        android:textColor="@color/white"
         app:ep_need_contract="true"
         android:lineSpacingExtra="10dp"
         app:ep_need_animation="true"
