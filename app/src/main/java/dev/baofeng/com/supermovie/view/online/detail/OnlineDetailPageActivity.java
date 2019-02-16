@@ -32,6 +32,8 @@ import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -232,13 +234,14 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
         playUrlBean = gson.fromJson(downUrl, PlayUrlBean.class);
         ArrayList<String> playM3u8List = new ArrayList<>();
-        ArrayList<String> playWebUrlList = new ArrayList<>();
+        ArrayList<String> playXunleiUrlList = new ArrayList<>();
+
 
         for (int i = 0; i < playUrlBean.getNormal().size(); i++) {
             if (playUrlBean.getNormal().size() == 1) {
-                playWebUrlList.add("在线观看");
+                playXunleiUrlList.add("迅雷专线");
             } else {
-                playWebUrlList.add("第" + (i + 1) + "集");
+                playXunleiUrlList.add("第" + (i + 1) + "集");
             }
         }
         for (int i = 0; i < playUrlBean.getM3u8().size(); i++) {
@@ -255,7 +258,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
         }
 
-        OnlinePlayWebAdapter adapter = new OnlinePlayWebAdapter(playUrlBean);
+        OnlinePlayWebAdapter adapter = new OnlinePlayWebAdapter(posterUrl, playUrlBean);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         playList.setLayoutManager(linearLayoutManager);
@@ -276,33 +279,18 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
     private void initDescData() {
         gson = new Gson();
-        final DescBean descBean = gson.fromJson(movDescription, DescBean.class);
-        lineDesc.setContent(descBean.getDesc());
+        DescBean descBean = gson.fromJson(movDescription, DescBean.class);
+        lineDesc.setContent(descBean.getDesc().trim());
 
-
+        StringBuilder builder = new StringBuilder();
         //海报右边的短简介
-        final StringBuilder mDescHeader = new StringBuilder();
-        if (descBean.getHeader_key().size() > descBean.getHeader_value().size()) {
-            for (int i = 0; i < descBean.getHeader_value().size(); i++) {
-
-                if (TextUtils.isEmpty(descBean.getHeader_value().get(i).trim())) {
-                    continue;
-                }
-                mDescHeader.append(descBean.getHeader_key().get(i) + descBean.getHeader_value().get(i) + "\n");
+        if (descBean.getHeader() != null)
+            for (int i = 0; i < descBean.getHeader().size(); i++) {
+                builder.append(descBean.getHeader().get(i)).append("\n");
             }
-        } else {
-            for (int i = 0; i < descBean.getHeader_key().size(); i++) {
-
-                if (TextUtils.isEmpty(descBean.getHeader_value().get(i).trim())) {
-                    continue;
-                }
-                mDescHeader.append(descBean.getHeader_key().get(i) + descBean.getHeader_value().get(i) + "\n");
-            }
-        }
-        headDesc.setText(mDescHeader.toString());
+        headDesc.setText(builder.toString());
         if (TextUtils.isEmpty(descBean.getDesc())) {
             descContent.setVisibility(View.GONE);
-
         }
     }
 
@@ -319,4 +307,15 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     public void loadRError(String msg) {
 
     }
+
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str != null) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
+
 }

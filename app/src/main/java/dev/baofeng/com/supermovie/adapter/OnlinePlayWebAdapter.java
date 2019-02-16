@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.view.WebviewPlayer;
+import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.playerlib.PlayerActivity;
@@ -36,9 +37,11 @@ public class OnlinePlayWebAdapter extends RecyclerView.Adapter<OnlinePlayHolder>
     private PlayUrlBean playList;
 
     private Context context;
+    private String poster;
 
-    public OnlinePlayWebAdapter(PlayUrlBean playList) {
+    public OnlinePlayWebAdapter(String posterUrl, PlayUrlBean playList) {
         this.playList = playList;
+        this.poster = posterUrl;
     }
 
     @NonNull
@@ -61,9 +64,9 @@ public class OnlinePlayWebAdapter extends RecyclerView.Adapter<OnlinePlayHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                showListDialog(playList.getNormal().get(position).getUrl());
+                TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.DEFAULT_PATH, poster, context);
+                Toast.makeText(context, "已添加到下载任务", Toast.LENGTH_SHORT).show();
+//                showListDialog(playList.getXunlei().get(position).getUrl());
             }
         });
     }

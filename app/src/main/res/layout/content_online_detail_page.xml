@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="播放(webUrl)"
+                android:text="播放(迅雷)"
                 android:textSize="16sp"
                 android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
                 android:id="@+id/weburl_title"

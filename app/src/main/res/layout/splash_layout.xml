@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/splash_poster"
+        android:scaleType="centerCrop"
         android:background="@drawable/splash3"
         />
 
