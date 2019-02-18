@@ -1,6 +1,7 @@
 ![btMovie-release](https://github.com/hiliving/superMovie/blob/master/picture/bt_movie.png)
 # 🔥基于MVP+RxJava+Retrofit的电影资源聚合APP
 
+### 这两天在改在线资源接口，有问题还请忽略，静待更新
 
 手机端更舒适地下载高清电影，热门电影，美剧，每日更新。（效果图更新不及时，以最新app实际效果为准）
 
