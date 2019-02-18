@@ -44,11 +44,26 @@ public class OnlineSerisRootFragment extends Fragment {
     }
 
     private void initView() {
-        String[] arr = {"美剧", "动漫", "国产剧", "港剧", "台湾剧", "日剧",
+        String[] arr = {"美剧",
+
+                "国产剧",
+                "港剧",
+                "台湾剧",
+                "日剧",
                 "韩剧",
-                "微电影", "海外剧"};
-        String[] type = {"america", "curtoon", "native", "hongkong", "taiwan", "japanise",
-                "koria", "shortmv", "ocean"};
+
+                "海外剧",
+                "福利"};
+        String[] type = {"america",
+
+                "native",
+                "hongkong",
+                "taiwan",
+                "japanise",
+                "koria",
+
+                "ocean",
+                "good"};
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             list.add(SerisListFragment.newInstance(type[i]));

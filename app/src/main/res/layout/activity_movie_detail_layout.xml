@@ -39,8 +39,9 @@
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="30dp"
-                   android:textSize="@dimen/sp_12"
+                   android:textSize="20sp"
                    android:textColor="#fff"
+                   android:textStyle="bold"
                    android:gravity="center"
                    android:id="@+id/imgTitle"
                    android:layout_alignParentBottom="true"
@@ -113,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#fff"
+        app:backgroundTintMode="screen"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_user_center_download_manage" />

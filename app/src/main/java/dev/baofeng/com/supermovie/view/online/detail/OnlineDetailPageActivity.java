@@ -181,8 +181,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
                 if (root != null) {
                     if (vibrant != null) {
-
-
                         ValueAnimator colorAnim2 = ValueAnimator.ofArgb(Color.rgb(110, 110, 100), colorBurn(vibrant.getRgb()));
                         colorAnim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
@@ -294,6 +292,10 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         if (playM3u8List.size() == 0) {
             playList2.setVisibility(View.GONE);
             m3u8Title.setVisibility(View.GONE);
+        }
+        if (playXunleiUrlList.size()==0){
+            playList.setVisibility(View.GONE);
+            weburlTitle.setVisibility(View.GONE);
         }
     }
 

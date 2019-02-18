@@ -105,7 +105,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         initView();
         ViewCompat.setTransitionName(mDetailPoster, VIEW_NAME_HEADER_IMAGE);
         addTransitionListener();
-
+        root.setBackgroundColor(Color.rgb(110, 110, 100));
     }
 
     @Override

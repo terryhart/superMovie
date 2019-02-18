@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class OnlineTabFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    String[] tabName = {"电影", "电视剧"};
+    String[] tabName = {"电影", "剧集","动漫","综艺"};
     //创建FragmentManager
 
     private FragmentManager fragmetnmanager;

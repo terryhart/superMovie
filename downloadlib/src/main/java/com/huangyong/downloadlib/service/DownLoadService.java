@@ -51,6 +51,10 @@ public class DownLoadService extends Service implements ITask {
     public void onDestroy() {
         super.onDestroy();
         //应用被结束，将下载任务都移除掉
+        resetTask();
+    }
+
+    private void resetTask() {
         DowningTaskDao downingTaskDao = AppDatabaseManager.getInstance(this).donwingDao();
         List<DowningTaskInfo> taskInfos = downingTaskDao.getAll();
         if (taskInfos != null && taskInfos.size() > 0) {
@@ -122,12 +126,10 @@ public class DownLoadService extends Service implements ITask {
                         Toast.makeText(context, "当前网络为移动网络，已停止所有下载任务\n如仍然需下载,可手动启动任务", Toast.LENGTH_LONG).show();
                         //不允许4G时下载
                         //获取下载列表，遍历并停止下载任务
-                        DowningTaskDao taskDao = AppDatabaseManager.getInstance(getApplicationContext()).donwingDao();
-                        List<DowningTaskInfo> downingTaskInfos = taskDao.getAll();
-                        if (downingTaskInfos!=null&&downingTaskInfos.size()>0){
-                            for (int i = 0; i < downingTaskInfos.size(); i++) {
-                                XLTaskHelper.instance().removeTask(Long.parseLong(downingTaskInfos.get(i).getTaskId()));
-                            }
+                        try {
+                            resetTask();
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                         break;
                     case NetUtil.NETWORK_WIFI:

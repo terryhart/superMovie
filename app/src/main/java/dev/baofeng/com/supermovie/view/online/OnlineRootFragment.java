@@ -49,6 +49,8 @@ public class OnlineRootFragment extends Fragment {
     private OnlineFilmRootFragment movieFragment;
     private OnlineSerisRootFragment serisFragment;
     private static OnlineRootFragment onlineRootFragment;
+    private SerisListFragment curtoon;
+    private SerisListFragment show;
 
     @Nullable
     @Override
@@ -68,9 +70,13 @@ public class OnlineRootFragment extends Fragment {
 
         movieFragment = OnlineFilmRootFragment.getInstance();
         serisFragment = OnlineSerisRootFragment.getInstance();
+        curtoon = SerisListFragment.newInstance("curtoon");
+        show = SerisListFragment.newInstance("show");
         List listfragment = new ArrayList<Fragment>();
         listfragment.add(movieFragment);
         listfragment.add(serisFragment);
+        listfragment.add(curtoon);
+        listfragment.add(show);
         FragmentManager fm = getChildFragmentManager();
         OnlineTabFragmentPagerAdapter adapter = new OnlineTabFragmentPagerAdapter(fm, listfragment);
         if (adapter != null) {

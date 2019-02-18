@@ -44,8 +44,8 @@ public class OnlineFilmRootFragment extends Fragment {
 
     private void initView() {
         String[] arr = {"科幻", "喜剧", "爱情", "战争", "剧情", "恐怖",
-                "综艺"};
-        String[] type = {"science", "comedy", "love", "war", "story", "terror", "show"};
+                };
+        String[] type = {"science", "comedy", "love", "war", "story", "terror"};
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             list.add(MoviesListFragment.newInstance(type[i]));

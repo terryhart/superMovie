@@ -29,7 +29,7 @@ public class WebCrossActivity extends AppCompatActivity {
     private String[] headUrl = {
             "http://yun.baiyug.cn/vip/index.php?url=",//默认线路1
             "http://jiexi.071811.cc/jx2.php?url=",//
-            "http://api.baiyug.cn/vip/?url=",//推荐线路2
+            "http://zuidajiexi.net/m3u8.html?url=",//推荐线路2
       "http://jx.598110.com/duo/index.php?url=",//万能线路2
       "http://jiexi.071811.cc/jx2.php?url=",//万能线路3
       "http://jqaaa.com/jq3/?url=&url=",//万能线路4

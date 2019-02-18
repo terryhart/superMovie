@@ -22,7 +22,7 @@
 
     <com.antiless.support.widget.TabLayout
         android:id="@+id/online_tab"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:fitsSystemWindows="true"
         android:layout_gravity="center_horizontal"

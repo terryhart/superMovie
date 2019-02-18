@@ -82,7 +82,7 @@ public class MyApp extends Application{
     }
 
     private void initDownloadLib() {
-        TaskLibHelper.init(this);
+       TaskLibHelper.init(instance);
     }
 
     public static MyApp appInstance() {
