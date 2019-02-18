@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.playerlib.PlayerActivity;
+import com.tencent.smtt.sdk.TbsVideo;
 
 import java.util.ArrayList;
 
@@ -91,9 +93,9 @@ public class OnlinePlayWebAdapter extends RecyclerView.Adapter<OnlinePlayHolder>
         listDialog.setItems(listItems, (dialog, which) -> {
 
             if (which == 0) {
-                Intent intent = new Intent(context, WebviewPlayer.class);
-                intent.putExtra(KeyParam.PLAYURL, url);
-                context.startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putInt("screenMode", 102);
+                TbsVideo.openVideo(context, url, bundle);
             }
             if (which == 1) {
                 openBrowser(context, url);
