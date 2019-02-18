@@ -288,6 +288,9 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList2.setLayoutManager(linearLayoutManager2);
         playList2.setAdapter(adapter2);
 
+        //暂时隐藏web和迅雷下载
+        playList.setVisibility(View.GONE);
+        weburlTitle.setVisibility(View.GONE);
 
         if (playM3u8List.size() == 0) {
             playList2.setVisibility(View.GONE);
