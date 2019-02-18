@@ -13,6 +13,7 @@
         android:layout_height="240dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="20dp"
+        android:scaleType="centerCrop"
         android:id="@+id/post_img"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"

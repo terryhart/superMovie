@@ -59,7 +59,7 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
 
-            Glide.with(context).load(imgUrl).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180, 240).into(((CommonHolder) holder).itemimg);
+            Glide.with(context).load(imgUrl).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 

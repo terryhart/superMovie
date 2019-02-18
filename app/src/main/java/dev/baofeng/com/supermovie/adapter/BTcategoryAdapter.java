@@ -62,7 +62,7 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
             String md5Id = datas.getData().get(position).getMv_md5_id();
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).asBitmap().placeholder(R.drawable.ic_place_hoder).override(180,240).into(((CommonHolder)holder).itemimg);
+            Glide.with(context).load(uri).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 
