@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
             public void onClick(View view) {
 
                 showListDialog(playList.getM3u8().get(position).getUrl());
+
             }
         });
     }
@@ -85,7 +87,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         final String listItems[] = new String[]{"应用内播放", "王卡专用免流播放(须选择QQ浏览器)"};
 
         AlertDialog.Builder listDialog = new AlertDialog.Builder(context);
-        listDialog.setTitle("选择播放路径");
+        listDialog.setTitle("选择播放方式");
         listDialog.setIcon(R.mipmap.icon);
 
         listDialog.setItems(listItems, (dialog, which) -> {
@@ -128,4 +130,6 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
             Toast.makeText(context.getApplicationContext(), "请下载浏览器", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

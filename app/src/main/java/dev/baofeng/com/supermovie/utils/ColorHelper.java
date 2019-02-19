@@ -27,9 +27,9 @@ public class ColorHelper {
         int red = RGBValues >> 16 & 0xFF;
         int green = RGBValues >> 8 & 0xFF;
         int blue = RGBValues & 0xFF;
-        red = (int) Math.floor(red * (1 - 0.4));
-        green = (int) Math.floor(green * (1 - 0.4));
-        blue = (int) Math.floor(blue * (1 - 0.4));
+        red = (int) Math.floor(red * (1 - 0.2));
+        green = (int) Math.floor(green * (1 - 0.2));
+        blue = (int) Math.floor(blue * (1 - 0.2));
         Log.e("testcolor", red + "" + green + "" + blue);
         return Color.rgb(red, green, blue);
     }

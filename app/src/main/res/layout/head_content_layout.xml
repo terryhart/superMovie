@@ -26,5 +26,6 @@
         android:textColor="#505050"
         android:textSize="14sp"
         android:layout_marginTop="20dp"
-        android:lineSpacingExtra="4dp" />
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="80dp" />
 </LinearLayout>

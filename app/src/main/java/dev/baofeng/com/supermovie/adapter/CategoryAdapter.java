@@ -103,13 +103,6 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     try {
-                        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                (Activity) context,
-                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemimg,
-                                        VIEW_NAME_HEADER_IMAGE),
-                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemtitle,
-                                        VIEW_NAME_HEADER_TITLE)
-                        );
                         Intent intent = new Intent();
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
@@ -119,8 +112,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MV_ID, datas.getData().get(position).getMv_md5_id());
                         intent.setClass(context, MovieDetailActivity.class);
 
-                        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
-
+                        context.startActivity(intent);
 
                     }catch (Exception e){
                         e.printStackTrace();

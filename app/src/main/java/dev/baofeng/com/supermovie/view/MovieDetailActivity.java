@@ -4,23 +4,24 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.Transition;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,16 +45,16 @@ import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import byc.imagewatcher.ImageWatcher;
+import byc.imagewatcher.ImageWatcherHelper;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
-import jp.wasabeef.glide.transformations.BlurTransformation;
+import dev.baofeng.com.supermovie.view.widget.GlideSimpleLoader;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
@@ -94,6 +94,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private String md5Id = "";
     private ArrayList<DetailInfo> downLoadList;
     private ImageView back;
+    private CardView posterbg;
+    private ImageWatcherHelper iwHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +105,27 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         setContentView(R.layout.activity_movie_detail_layout);
         initData();
         initView();
-        ViewCompat.setTransitionName(mDetailPoster, VIEW_NAME_HEADER_IMAGE);
-        addTransitionListener();
+        initImageWatcher();
         root.setBackgroundColor(Color.rgb(110, 110, 100));
+    }
+
+    private void initImageWatcher() {
+        iwHelper = ImageWatcherHelper.with(this, new GlideSimpleLoader()) // 一般来讲， ImageWatcher 需要占据全屏的位置
+                .setTranslucentStatus(0) // 如果不是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
+                .setErrorImageRes(R.mipmap.error_picture) // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
+                .setOnStateChangedListener(new ImageWatcher.OnStateChangedListener() {
+                    @Override
+                    public void onStateChangeUpdate(ImageWatcher imageWatcher, ImageView clicked, int position, Uri uri, float animatedValue, int actionTag) {
+                        Log.e("IW", "onStateChangeUpdate [" + position + "][" + uri + "][" + animatedValue + "][" + actionTag + "]");
+                    }
+
+                    @Override
+                    public void onStateChanged(ImageWatcher imageWatcher, int position, Uri uri, int actionTag) {
+                        if (actionTag == ImageWatcher.STATE_ENTER_DISPLAYING) {
+                        } else if (actionTag == ImageWatcher.STATE_EXIT_HIDING) {
+                        }
+                    }
+                });
     }
 
     @Override
@@ -165,52 +185,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean addTransitionListener() {
 
-
-        // There is an entering shared element transition so add a listener to it
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            final Transition transition = getWindow().getSharedElementEnterTransition();
-            if (transition != null) {
-                transition.addListener(new Transition.TransitionListener() {
-                    @Override
-                    public void onTransitionEnd(Transition transition) {
-                        // As the transition has ended, we can now load the full-size image
-
-                        // Make sure we remove ourselves as a listener
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            transition.removeListener(this);
-                        }
-                    }
-
-                    @Override
-                    public void onTransitionStart(Transition transition) {
-                    }
-
-                    @Override
-                    public void onTransitionCancel(Transition transition) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            transition.removeListener(this);
-                        }
-                    }
-
-                    @Override
-                    public void onTransitionPause(Transition transition) {
-                        // No-op
-                    }
-
-                    @Override
-                    public void onTransitionResume(Transition transition) {
-                        // No-op
-                    }
-                });
-            }
-
-            return true;
-        }
-        return false;
-    }
     private void initData() {
         layoutManager = new LinearLayoutManager(this);
 
@@ -245,14 +220,14 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         back = findViewById(R.id.back_icon);
         recyclerView = findViewById(R.id.rv_detail);
         titleView = findViewById(R.id.toolbarTitle);
+        posterbg = findViewById(R.id.poster_border);
         titleView.setText(title);
         imgTitle.setText(title);
         recyclerView.setLayoutManager(layoutManager);
 
-
+        setSupportActionBar(toolbar);
         fab = findViewById(R.id.fab);
 
-        Glide.with(this).load(posterImagUrl).bitmapTransform(new RoundedCornersTransformation(this, 12, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(100).into(mDetailPoster);
 
         Glide.with(this).load(posterImagUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
@@ -260,6 +235,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 getColor(resource);
             }
         });
+        Glide.with(this).load(posterImagUrl).bitmapTransform(new RoundedCornersTransformation(this, 12, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(100).into(mDetailPoster);
+
 
         String[] splitArr = mvdescTx.split("◎");
         StringBuffer buffer = new StringBuffer();
@@ -335,10 +312,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 showBottomSheetDialog();
             }
         });
-//
-
-
-
     }
 
 
@@ -381,11 +354,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             if (progress >= 0.8) {
                 toolbar.setVisibility(View.VISIBLE);
                 titleView.setAlpha(progress);
-                mDetailPoster.setAlpha(1 - progress);
+                posterbg.setAlpha(1 - progress);
             } else {
                 toolbar.setVisibility(View.VISIBLE);
                 titleView.setAlpha(0.0f);
-                mDetailPoster.setAlpha(1 - progress);
+                posterbg.setAlpha(1 - progress);
             }
         }
     }
@@ -395,6 +368,15 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
 
         Snackbar.make(root, "下载任务已添加", Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void clickedPic(ImageView screenShot, String screenShotImagUrl) {
+        SparseArray list = new SparseArray();
+        list.append(0, screenShot);
+        List<Uri> url = new ArrayList<>();
+        url.add(0, Uri.parse(screenShotImagUrl));
+        iwHelper.show(screenShot, list, url);
     }
 
     @Override
@@ -413,7 +395,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             @Override
             public void onGenerated(Palette palette) {
                 //获取到充满活力的这种色调
-                Palette.Swatch vibrant = palette.getLightMutedSwatch();
+                Palette.Swatch vibrant = palette.getMutedSwatch();
                 //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
                 if (root != null) {
                     if (vibrant != null) {
@@ -450,6 +432,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         View view = LayoutInflater.from(this).inflate(R.layout.download_sheet_layout, null);
         handleList(view);
         bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialog.show();
     }
 

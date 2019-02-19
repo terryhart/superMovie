@@ -3,19 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/list_bg_shap"
     android:id="@+id/bottome_sheet"
     android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@android:color/darker_gray" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/down_rv_list"
@@ -24,6 +14,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:focusable="true"
-        android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dp_60" />
 </android.support.v4.widget.NestedScrollView>

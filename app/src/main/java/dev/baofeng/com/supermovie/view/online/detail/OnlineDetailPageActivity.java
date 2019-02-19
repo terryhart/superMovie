@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -151,6 +152,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 if (scrollY >= 300) {
                     if (!toolbarIcon.isShown()) {
                         toolbarIcon.setVisibility(View.VISIBLE);
+                        appBar.setElevation(8);
                         Animation animation = AnimationUtils.loadAnimation(OnlineDetailPageActivity.this, R.anim.anim_in);
                         toolbarIcon.setAnimation(animation);
                     }
@@ -161,6 +163,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                         Animation animation = AnimationUtils.loadAnimation(OnlineDetailPageActivity.this, R.anim.anim_out);
                         toolbarIcon.setAnimation(animation);
                         toolbarIcon.setVisibility(View.GONE);
+                        appBar.setElevation(0);
                     }
 
                 }
@@ -178,7 +181,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             @Override
             public void onGenerated(Palette palette) {
                 //获取到充满活力的这种色调
-                Palette.Swatch vibrant = palette.getLightMutedSwatch();
+                Palette.Swatch vibrant = palette.getMutedSwatch();
                 //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
                 if (root != null) {
                     if (vibrant != null) {
@@ -239,7 +242,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             randomRecpresenter.getSeriRecommend(mvType);
         }
 
-        Glide.with(this).load(posterUrl).bitmapTransform(new RoundedCornersTransformation(this, 12, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(300).into(lineDetailPoster);
+        Glide.with(this).load(posterUrl).crossFade(300).into(lineDetailPoster);
 
         initDescData();
         initPlayerData();
@@ -329,6 +332,8 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.head_content_layout, null);
         bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         TextView headContent = view.findViewById(R.id.head_content);
         headContent.setText(string);
         bottomSheetDialog.show();

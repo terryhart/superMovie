@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="330dp"
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -27,14 +27,22 @@
                android:gravity="bottom"
                android:layout_height="match_parent">
 
-               <ImageView
+               <android.support.v7.widget.CardView
                    android:layout_width="160dp"
                    android:layout_centerHorizontal="true"
-                   android:id="@+id/detail_poster"
                    android:layout_above="@+id/imgTitle"
-                   android:padding="8dp"
-                   android:scaleType="centerCrop"
-                   android:layout_height="220dp" />
+                   app:cardElevation="3dp"
+                   android:id="@+id/poster_border"
+                   app:cardCornerRadius="6dp"
+                   android:layout_height="220dp">
+
+                   <ImageView
+                       android:layout_width="match_parent"
+                       android:id="@+id/detail_poster"
+                       android:scaleType="centerCrop"
+                       android:layout_height="match_parent" />
+               </android.support.v7.widget.CardView>
+
 
                <TextView
                    android:layout_width="match_parent"
@@ -54,13 +62,13 @@
                 app:titleTextAppearance="@style/ToolbarTitle"
                 android:background="@android:color/transparent"
                 android:layout_height="80dp"
-                android:gravity="bottom"
+                android:paddingTop="26dp"
+                android:gravity="top"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" >
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize">
-
 
                     <ImageView
                         android:layout_width="40dp"
