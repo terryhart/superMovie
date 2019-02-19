@@ -33,7 +33,7 @@
 
 
 
-#### 扫码下载体验（release-2.1.0）
+#### 扫码下载体验（release-1.2.2）
 
   若扫不出，点击这里 https://fir.im/btmovie
 
