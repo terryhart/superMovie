@@ -49,8 +49,6 @@ public class DownListAdapter extends RecyclerView.Adapter {
 
         if (infos!=null&&infos.size()>0){
             if (holder instanceof ListHeadHolder){
-//                String screenShotImagUrl = infos.get(0).getImgUrl();
-//                Glide.with(context).load(R.drawable.banner).into(((ListHeadHolder) holder).screenShot);
 
             }
             if (holder instanceof DownHolder){

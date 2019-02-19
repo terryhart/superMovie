@@ -329,12 +329,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList, downLoadList, this);
         recyclerView.setAdapter(detailAdapter);
 
-        DownLoadListDialog downLoadListDialog= new DownLoadListDialog(this,0,dialogAdapter);
-        downLoadListDialog.setCanceledOnTouchOutside(true);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                downLoadListDialog.show();
                 showBottomSheetDialog();
             }
         });
@@ -473,7 +470,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         recyclerView.setLayoutManager(manager);
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList, downLoadList, this);
         recyclerView.setAdapter(dialogAdapter);
-
     }
 
 

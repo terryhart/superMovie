@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="#ffffff"
     android:id="@+id/bottome_sheet"
-    android:fillViewport="true"
-    android:layout_height="400dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:text="下载列表" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
     <View
         android:layout_width="match_parent"
@@ -24,7 +19,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/down_rv_list"
+        app:behavior_hideable="true"
         android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:focusable="true"
         android:layout_height="match_parent" />
-</LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

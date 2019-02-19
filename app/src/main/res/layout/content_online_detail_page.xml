@@ -42,7 +42,7 @@
             android:textSize="12sp"
             android:lineSpacingExtra="2dp"
             android:id="@+id/head_desc"
-            android:lines="7"
+            android:lines="4"
             android:ellipsize="end"
             android:layout_toRightOf="@+id/line_detail_poster"
             android:layout_below="@+id/mv_title"

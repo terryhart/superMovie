@@ -18,6 +18,5 @@ public class ListHeadHolder extends ViewHolder {
 
     public ListHeadHolder(View itemView) {
         super(itemView);
-        screenShot = itemView.findViewById(R.id.list_banner);
     }
 }
