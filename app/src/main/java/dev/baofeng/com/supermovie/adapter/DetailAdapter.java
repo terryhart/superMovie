@@ -57,6 +57,15 @@ public class DetailAdapter extends RecyclerView.Adapter {
                 if (!TextUtils.isEmpty(screenShotImagUrl)){
                     ((HeadHolder) holder).screenShot.setVisibility(View.VISIBLE);
                     Glide.with(context).load(infos.get(0).getImgScreenShot()).into(((HeadHolder) holder).screenShot);
+
+                    ((HeadHolder) holder).screenShot.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (listenr != null) {
+                                listenr.clickedPic(((HeadHolder) holder).screenShot, screenShotImagUrl);
+                            }
+                        }
+                    });
                 }else {
                     ((HeadHolder) holder).screenShot.setVisibility(View.INVISIBLE);
                 }

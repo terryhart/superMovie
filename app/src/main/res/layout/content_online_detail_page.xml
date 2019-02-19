@@ -13,21 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="140dp"
-            android:id="@+id/line_detail_poster"
+        <android.support.v7.widget.CardView
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:padding="8dp"
-            android:layout_height="190dp" />
+            android:layout_width="134dp"
+            android:layout_height="190dp"
+            app:cardElevation="6dp"
+            android:id="@+id/poster_border"
+            app:cardCornerRadius="6dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/line_detail_poster"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/line_detail_poster"
-            android:layout_alignTop="@+id/line_detail_poster"
+            android:layout_toRightOf="@+id/poster_border"
+            android:layout_alignTop="@+id/poster_border"
             android:layout_marginLeft="4dp"
             android:textSize="22sp"
             android:layout_marginTop="@dimen/dp_6"
@@ -44,7 +53,7 @@
             android:id="@+id/head_desc"
             android:lines="7"
             android:ellipsize="end"
-            android:layout_toRightOf="@+id/line_detail_poster"
+            android:layout_toRightOf="@+id/poster_border"
             android:layout_below="@+id/mv_title"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="4dp"
@@ -52,7 +61,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_below="@+id/line_detail_poster"
+            android:layout_below="@+id/poster_border"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
@@ -125,7 +134,8 @@
                 android:gravity="center_vertical"
                 android:alpha="0.7"
                 android:textSize="14sp"
-                android:drawableLeft="@drawable/ic_cloud_download_black_24dp"
+                android:drawableTint="@color/white"
+                android:drawableLeft="@drawable/ic_down_center_24dp"
                 android:id="@+id/weburl_title"
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/dp_10"

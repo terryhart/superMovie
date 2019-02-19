@@ -95,7 +95,7 @@
                                 android:drawablePadding="6dp"
                                 android:focusable="true"
                                 android:gravity="center"
-                                android:text="专题汇总"
+                                android:text="豆瓣榜单"
                                 android:textColor="#222222"
                                 android:textSize="12sp" />
 

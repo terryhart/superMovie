@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                         return;
                     }
 
-                    Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
+                    //Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
 
                 }
             }
@@ -280,52 +280,11 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
         bannerAdapter = new BannerAdapter(getContext(),dataBeans);
         banner.setAdapter(bannerAdapter);
         bannerAdapter.notifyDataSetChanged();
-        poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()).getDownimgurl().split(",")[0];
-        Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
 
     }
     @Override
     public void loadDetail(BtInfo result) {
 
     }
-
-
-    public void getColor(Bitmap bitmap) {
-        // Palette的部分
-        Palette.Builder builder = Palette.from(bitmap);
-        builder.generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                //获取到充满活力的这种色调
-                Palette.Swatch vibrant = palette.getLightMutedSwatch();
-                //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
-                if (appbar != null) {
-                    if (vibrant != null) {
-
-                        ValueAnimator colorAnim2 = ValueAnimator.ofArgb(Color.rgb(110, 110, 100), colorBurn(vibrant.getRgb()));
-                        colorAnim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                //root.setBackgroundColor((Integer) animation.getAnimatedValue());
-                                // toolbar.setBackgroundColor((Integer) animation.getAnimatedValue());
-//                                detail_app_bar.setBackgroundColor((Integer) animation.getAnimatedValue());
-                            }
-                        });
-                        colorAnim2.setDuration(300);
-                        colorAnim2.setRepeatMode(ValueAnimator.RESTART);
-                        colorAnim2.start();
-
-                        if (Build.VERSION.SDK_INT >= 21) {
-                            Window window = getActivity().getWindow();
-                            window.setStatusBarColor(colorBurn(vibrant.getRgb()));
-                            window.setNavigationBarColor(colorBurn(vibrant.getRgb()));
-                        }
-                    }
-                }
-
-            }
-        });
-    }
-
 
 }

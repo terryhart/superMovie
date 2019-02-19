@@ -7,14 +7,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:paddingTop="40dp"
-        android:background="#1ca7e3"
+        android:background="#fafafa"
         android:layout_height="76dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="专题标题"
             android:id="@+id/subTitle"
-            android:textColor="#fff"
+            android:textColor="#272727"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
             android:textSize="16sp"

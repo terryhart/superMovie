@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 121
-        versionName "1.2.1"
+        targetSdkVersion 28
+        versionCode 122
+        versionName "1.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -86,14 +86,14 @@ def getTime() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     //recyclerview
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     //view 绑定
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -113,11 +113,11 @@ dependencies {
     implementation 'com.trello:rxlifecycle-components:1.0'
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
-    implementation project(':downloadlib')
+    implementation project(':modules:downloadlib')
     //下拉刷新上拉加载
     implementation 'com.xiaosu:pullLayout:3.0.4'
-    implementation project(':playerlib')
-    implementation project(':vivideo')
+    implementation project(':modules:playerlib')
+    implementation project(':modules:vivideo')
     //友盟统计
     implementation 'com.umeng.sdk:common:1.5.0'
     implementation 'com.umeng.sdk:analytics:7.5.0'
@@ -135,17 +135,20 @@ dependencies {
     //没有使用特殊Header，可以不加这行
     implementation 'rouchuan.viewpagerlayoutmanager:viewpagerlayoutmanager:2.0.22'
     implementation 'com.github.alidili:FlowLayout:v1.5'
-    implementation project(':AopLib')
+    implementation project(':modules:AopLib')
     //implementation project(':common')
-    implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-
-    implementation ('com.xyzlf.share:sharesdk:0.0.11') {
+    implementation('com.xyzlf.share:sharesdk:0.0.11') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
-
     //调色板
-    compile 'com.android.support:palette-v7:27.1.0'
+    compile 'com.android.support:palette-v7:28.0.0'
+    implementation project(':modules:pagelayout-java')
+    //loading view https://github.com/zzz40500/android-shapeLoadingView
+    implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+
+    implementation 'com.byc:ImageWatcher:1.1.0'
 }
 
 

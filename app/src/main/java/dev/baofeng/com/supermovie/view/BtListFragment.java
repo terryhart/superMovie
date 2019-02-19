@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mingle.widget.LoadingView;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
@@ -41,7 +42,8 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     TextView empImg;
     @BindView(R.id.empty_view)
     FrameLayout empFram;
-
+    @BindView(R.id.loadView)
+    LoadingView loadingView;
     private CenterPresenter recpresenter;
     BTcategoryAdapter adapter;
     private static BtListFragment btlistFragment;
@@ -75,6 +77,12 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.setLoadingText("正在加载，请稍后……");
+    }
     private void initView() {
         pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
@@ -105,6 +113,7 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     @Override
     public void loadSuccess(RecentUpdate movieBean) {
         this.movieInfo = movieBean;
+        loadingView.setVisibility(View.GONE);
         Log.e("movieInfo",movieBean.getData().size()+"");
         adapter =new BTcategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));

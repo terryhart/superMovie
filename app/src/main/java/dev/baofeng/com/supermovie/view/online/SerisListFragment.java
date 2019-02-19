@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mingle.widget.LoadingView;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
@@ -40,7 +41,8 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     TextView empImg;
     @BindView(R.id.empty_view)
     FrameLayout empFram;
-
+    @BindView(R.id.loadView)
+    LoadingView loadingView;
     OnlineCategoryAdapter adapter;
     private GetOnlinePresenter recpresenter;
     private static SerisListFragment btlistFragment;
@@ -57,6 +59,13 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
         initView();
         initData();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.setLoadingText("正在加载，请稍后……");
     }
 
     private void initData() {
@@ -126,6 +135,7 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
+        loadingView.setVisibility(View.GONE);
         Log.e("movieInfo", movieBean.getData().size() + "");
         adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));

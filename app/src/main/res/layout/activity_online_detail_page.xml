@@ -6,16 +6,16 @@
     android:layout_width="match_parent"
     android:id="@+id/root"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".view.online.detail.OnlineDetailPageActivity">
-
+    <!--app:elevation="0dp"属性可以控制toolbar的阴影深度，0为无阴影-->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:id="@+id/app_bar"
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
         android:layout_height="80dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"

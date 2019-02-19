@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:id="@+id/list_banner"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        />
+        android:layout_height="60dp"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="下载列表" />
 </RelativeLayout>
