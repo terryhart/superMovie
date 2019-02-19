@@ -35,4 +35,11 @@
             android:layout_height="0dp">
         </android.support.v7.widget.RecyclerView>
     </com.xiaosu.pulllayout.SimplePullLayout>
+
+    <com.mingle.widget.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="gone"
+        android:layout_width="200pt"
+        android:layout_gravity="center"
+        android:layout_height="200pt" />
 </RelativeLayout>
