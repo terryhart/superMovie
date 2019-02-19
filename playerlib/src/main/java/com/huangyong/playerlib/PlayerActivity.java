@@ -65,7 +65,7 @@ public class PlayerActivity extends AppCompatActivity {
         PlayerConfig playerConfig = new PlayerConfig.Builder()
                 //启用边播边缓存功能
                // .autoRotate() //启用重力感应自动进入/退出全屏功能
-                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
+//                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
                 .usingSurfaceView() //启用SurfaceView显示视频，不调用默认使用TextureView
                 .savingProgress() //保存播放进度
                 .disableAudioFocus() //关闭AudioFocusChange监听

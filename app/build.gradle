@@ -5,8 +5,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 122
-        versionName "1.2.2"
+        versionCode 121
+        versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {

@@ -1,7 +1,5 @@
 package dev.baofeng.com.supermovie.view.online.detail;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -43,7 +41,7 @@ import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.OnlinePlayM3u8Adapter;
-import dev.baofeng.com.supermovie.adapter.OnlinePlayWebAdapter;
+import dev.baofeng.com.supermovie.adapter.OnlineXunleiAdapter;
 import dev.baofeng.com.supermovie.domain.DescBean;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
@@ -276,7 +274,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
         }
 
-        OnlinePlayWebAdapter adapter = new OnlinePlayWebAdapter(posterUrl, playUrlBean);
+        OnlineXunleiAdapter adapter = new OnlineXunleiAdapter(posterUrl, playUrlBean);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         playList.setLayoutManager(linearLayoutManager);
@@ -289,8 +287,8 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList2.setAdapter(adapter2);
 
         //暂时隐藏web和迅雷下载
-        playList.setVisibility(View.GONE);
-        weburlTitle.setVisibility(View.GONE);
+//        playList.setVisibility(View.GONE);
+//        weburlTitle.setVisibility(View.GONE);
 
         if (playM3u8List.size() == 0) {
             playList2.setVisibility(View.GONE);
