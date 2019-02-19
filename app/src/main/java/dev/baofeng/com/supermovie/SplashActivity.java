@@ -66,9 +66,6 @@ public class SplashActivity extends AppCompatActivity implements IupdateView, IS
         setContentView(R.layout.splash_layout);
         root = findViewById(R.id.root);
         poster = findViewById(R.id.splash_poster);
-        int pic = (int) ((Math.random()) * 5);
-        Glide.with(this).load(GlobalMsg.imgList[pic]).placeholder(R.drawable.splash3).into(poster);
-
         sharePresenter = new SharePresenter(this, this);
         presenter = new UpdateAppPresenter(this,this);
         presenter.getAppUpdate(this);
