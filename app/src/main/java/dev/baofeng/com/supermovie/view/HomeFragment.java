@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                         return;
                     }
 
-                    Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
+                    //Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
 
                 }
             }
@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
         banner.setAdapter(bannerAdapter);
         bannerAdapter.notifyDataSetChanged();
         poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()).getDownimgurl().split(",")[0];
-        Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
+        //Glide.with(getContext()).load(poster).bitmapTransform(new BlurTransformation(getContext(), 25)).into(imgBg);
 
     }
     @Override

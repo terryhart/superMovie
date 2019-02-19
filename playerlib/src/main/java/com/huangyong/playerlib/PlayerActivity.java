@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.dueeeke.videoplayer.player.IjkPlayer;
-import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
-import com.dueeeke.videoplayer.util.ProgressUtil;
 
 import java.io.File;
 
