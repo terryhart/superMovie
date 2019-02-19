@@ -96,16 +96,39 @@
                     android:id="@+id/line_desc" />
             </LinearLayout>
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="H5播放"
-                android:alpha="0.7"
+                android:text="在线播放"
                 android:textSize="14sp"
                 android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
+                android:textColor="@color/white"
+                android:id="@+id/m3u8_title"
+                android:alpha="0.7"
+                android:layout_below="@+id/play_list"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="26dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/play_list2"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="迅雷下载"
+                android:gravity="center_vertical"
+                android:alpha="0.7"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/ic_cloud_download_black_24dp"
                 android:id="@+id/weburl_title"
                 android:textColor="@color/white"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="26dp" />
 
             <android.support.v7.widget.RecyclerView
@@ -114,26 +137,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
-                android:layout_height="60dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="m3u8播放"
-                android:textSize="14sp"
-                android:drawableLeft="@drawable/ic_playlist_play_black_24dp"
-                android:textColor="@color/white"
-                android:id="@+id/m3u8_title"
-                android:alpha="0.7"
-                android:layout_below="@+id/play_list"
-                android:layout_marginLeft="26dp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/play_list2"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"
-                android:layout_height="60dp" />
+                android:layout_height="50dp" />
 
             <TextView
                 android:layout_width="wrap_content"
