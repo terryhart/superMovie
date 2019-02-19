@@ -242,7 +242,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             randomRecpresenter.getSeriRecommend(mvType);
         }
 
-        Glide.with(this).load(posterUrl).crossFade(300).into(lineDetailPoster);
+        Glide.with(this).load(posterUrl).into(lineDetailPoster);
 
         initDescData();
         initPlayerData();

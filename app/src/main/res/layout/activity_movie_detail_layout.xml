@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="350dp"
         android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -34,6 +34,7 @@
                    app:cardElevation="3dp"
                    android:id="@+id/poster_border"
                    app:cardCornerRadius="6dp"
+                   android:layout_marginBottom="@dimen/dp_10"
                    android:layout_height="220dp">
 
                    <ImageView
@@ -46,8 +47,10 @@
 
                <TextView
                    android:layout_width="match_parent"
-                   android:layout_height="30dp"
+                   android:layout_height="wrap_content"
                    android:textSize="20sp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginRight="20dp"
                    android:textColor="#fff"
                    android:textStyle="bold"
                    android:gravity="center"

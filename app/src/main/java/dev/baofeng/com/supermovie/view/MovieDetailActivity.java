@@ -381,10 +381,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        fab.setVisibility(View.GONE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition();
+        if (!iwHelper.handleBackPressed()) {
+            super.onBackPressed();
         }
     }
 
@@ -454,6 +452,5 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList, downLoadList, this);
         recyclerView.setAdapter(dialogAdapter);
     }
-
 
 }
