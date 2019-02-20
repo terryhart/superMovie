@@ -132,22 +132,4 @@ public class DownLoadService extends IntentService {
     }
 
 
-   /* private void showRemoteView(Context context,int progress) {
-
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                R.layout.notification_upgrade);
-        remoteViews.setImageViewResource(R.id.icon_noti, R.mipmap.icon);
-        remoteViews.setTextViewText(R.id.progress, progress+"");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.mipmap.icon);
-        builder.setContent(remoteViews);
-        Notification build = builder.build();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            builder.setCustomBigContentView(remoteViews);
-        }
-
-        notificationManager = (NotificationManager) context.getSystemService(
-                Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(111, build);
-    }*/
 }

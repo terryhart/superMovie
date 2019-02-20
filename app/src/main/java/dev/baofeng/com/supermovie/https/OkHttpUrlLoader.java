@@ -12,13 +12,6 @@ import java.io.InputStream;
 
 import okhttp3.OkHttpClient;
 
-//import com.squareup.okhttp.OkHttpClient;
-
-//import okhttp3.OkHttpClient;
-
-//import okhttp3.OkHttpClient;
-
-//import com.squareup.okhttp.OkHttpClient;
 
 /**
  * author           Alpha58

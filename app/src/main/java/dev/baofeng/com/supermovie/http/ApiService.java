@@ -58,9 +58,6 @@ public interface ApiService {
   @GET(UrlConfig.CHECK_UPDATE)
   Observable<AppUpdateInfo> getAppUpdate();
 
-  @FormUrlEncoded
-  @POST(UrlConfig.DOWNLOADBASEURL+"download3.php")
-  Observable<Object> getTorrentFile(@Field("id") int id,@Field("action") String action,@Field("uhash") String uhush);
 
   @GET(UrlConfig.GET_SERIS)
   Observable<RecentUpdate> getSerisUpdate(@Query("page")int page, @Query("pagesize")int pagesize);
