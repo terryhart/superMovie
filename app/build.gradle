@@ -149,6 +149,9 @@ dependencies {
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 
     implementation 'com.byc:ImageWatcher:1.1.0'
+
+    compile 'com.youngfeng.android:snake:0.3.2'
+    annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
 }
 
 

@@ -34,6 +34,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -57,6 +58,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
+@EnableDragToClose()
 public class OnlineDetailPageActivity extends AppCompatActivity implements IRandom {
 
 
