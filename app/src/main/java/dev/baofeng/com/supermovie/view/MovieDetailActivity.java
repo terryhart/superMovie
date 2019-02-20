@@ -44,6 +44,7 @@ import com.huangyong.downloadlib.utils.MD5Utils;
 import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
+import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
  intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE,datas.getData().get(position).getDownLoadName());
  intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
  */
+@EnableDragToClose()
 public class MovieDetailActivity extends AppCompatActivity implements OnItemClickListenr {
     private static final String VIEW_NAME_HEADER_IMAGE = "image";
     private static final String VIEW_NAME_HEADER_TITLE = "title";

@@ -15,6 +15,7 @@ import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
+import com.youngfeng.snake.Snake;
 import com.zchu.rxcache.RxCache;
 import com.zchu.rxcache.diskconverter.SerializableDiskConverter;
 
@@ -47,6 +48,7 @@ public class MyApp extends Application{
 
         initDownloadLib();
 
+        Snake.init(this);
         //初始化缓存管理
         initCache();
         //让Glide能用HTTPS
