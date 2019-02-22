@@ -3,33 +3,18 @@ package dev.baofeng.com.supermovie;
  * Created by HuangYong on 2018/9/27.
  */
 
-import android.app.AppOpsManager;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.graphics.Paint;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
-import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.model.Params;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
@@ -39,7 +24,6 @@ import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.UpdateDialog;
 
 
 /**

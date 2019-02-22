@@ -5,6 +5,9 @@
 
 手机端更舒适地下载高清电影，热门电影，美剧，每日更新。（效果图更新不及时，以最新app实际效果为准）
 
+## 1.2.2版本没适配安卓9.0，新版本到来前，先下载这个版本吧  https://fir.im/btmovie
+
+
 <table style="border-width: 0px ;">
 			<tr>
 				<td><img src="https://github.com/hiliving/superMovie/blob/master/picture/Screenshot_2018-10-19-12-21-55.jpg" width = "240" height = "400" alt="图片名称" align=center />

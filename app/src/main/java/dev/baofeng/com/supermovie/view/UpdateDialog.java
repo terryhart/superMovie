@@ -24,10 +24,8 @@ import java.io.File;
 import java.io.IOException;
 
 import dev.baofeng.com.supermovie.R;
-import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.services.DownLoadService;
-import dev.baofeng.com.supermovie.utils.DownloadUtil;
 
 public class UpdateDialog extends Dialog {
 
