@@ -4,9 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 
+import dev.baofeng.com.supermovie.domain.DoubanTop250;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import rx.Subscriber;
 import rx.Subscription;
@@ -29,57 +32,34 @@ public class CenterPresenter extends BasePresenter<IAllView> {
 
     public void getLibraryDdata(String type,int page,int pagesize){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getLibraryDatas(type,page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getLibraryDatas(type,page,pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadSuccess(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail();
+                    public void onFail() {
                     }
-                    @Override
-                    public void onNext(RecentUpdate result) {
-                        if (result.getData().size()>0){
-                            iview.loadSuccess(result);
-                        }else {
-                            iview.loadFail();
-                        }
-                    }
-                });
-        addSubscription(subscription);
+                }
+        );
     }
     public void getLibraryMoreDdata(String type,int page,int pagesize){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getLibraryDatas(type,page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getLibraryDatas(type,page,pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadMore(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail();
+                    public void onFail() {
                     }
-                    @Override
-                    public void onNext(RecentUpdate result) {
-                        if (result.getData().size()>0){
-                            iview.loadMore(result);
-                        }else {
-                            iview.loadFail();
-                        }
-                    }
-                });
-        addSubscription(subscription);
+                }
+        );
     }
 
 }

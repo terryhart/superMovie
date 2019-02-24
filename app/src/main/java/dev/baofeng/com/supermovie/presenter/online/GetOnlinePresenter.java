@@ -3,8 +3,11 @@ package dev.baofeng.com.supermovie.presenter.online;
 import android.content.Context;
 
 
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.BasePresenter;
 import dev.baofeng.com.supermovie.presenter.online.iview.IOnlineView;
 import rx.Subscriber;
@@ -31,27 +34,19 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView> {
      */
     public void getOnlineMvData(String pageType, int page, int pagesize) {
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getOnlineMovie(pageType, page, pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getOnlineMovie(pageType, page, pagesize), new BaseApi.IResponseListener<OnlinePlayInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
+                }
+        );
 
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 
     @Override
@@ -60,28 +55,20 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView> {
     }
 
     public void getMovieMoreData(String pageType, int page, int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getOnlineMovie(pageType, page, pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
-                    @Override
-                    public void onCompleted() {
 
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getOnlineMovie(pageType, page, pagesize), new BaseApi.IResponseListener<OnlinePlayInfo>() {
+                    @Override
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadMore(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
-
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
+                }
+        );
     }
 
     /**
@@ -92,51 +79,34 @@ public class GetOnlinePresenter extends BasePresenter<IOnlineView> {
      * @param pagesize
      */
     public void getOnlineSerisData(String pageType, int page, int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getOnlineSeris(pageType, page, pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getOnlineSeris(pageType, page, pagesize), new BaseApi.IResponseListener<OnlinePlayInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
+                }
+        );
 
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 
     public void getSerisMoreData(String pageType, int page, int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getOnlineSeris(pageType, page, pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
-                    @Override
-                    public void onCompleted() {
 
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getOnlineSeris(pageType, page, pagesize), new BaseApi.IResponseListener<OnlinePlayInfo>() {
+                    @Override
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadMore(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
-
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
+                }
+        );
     }
 }

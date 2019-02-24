@@ -1,6 +1,5 @@
 package dev.baofeng.com.supermovie.presenter.iview;
 
-import com.zchu.rxcache.data.CacheResult;
 
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 
@@ -12,7 +11,7 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
  */
 public interface IRecentView {
 
-    void loadData(CacheResult<RecentUpdate> info);
+    void loadData(RecentUpdate info);
 
     void loadFail(String s);
 

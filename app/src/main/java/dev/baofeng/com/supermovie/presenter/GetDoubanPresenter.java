@@ -5,7 +5,10 @@ import android.content.Context;
 import dev.baofeng.com.supermovie.domain.BtInfo;
 import dev.baofeng.com.supermovie.domain.DoubanTop250;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
+import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IDBTop250;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import rx.Subscriber;
@@ -27,27 +30,20 @@ public class GetDoubanPresenter extends BasePresenter<IDBTop250> {
 
     public void getTop250(int page, int count) {
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getDoubanTop250(page, count)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DoubanTop250>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getDoubanTop250(page, count), new BaseApi.IResponseListener<DoubanTop250>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(DoubanTop250 data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadError("");
+                    public void onFail() {
                     }
+                }
+        );
 
-                    @Override
-                    public void onNext(DoubanTop250 result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 
 
@@ -56,30 +52,6 @@ public class GetDoubanPresenter extends BasePresenter<IDBTop250> {
         unSubcription();
     }
 
-    public void getMoreData(int page, int count) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getDoubanTop250(page, count)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DoubanTop250>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(DoubanTop250 result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
-    }
 
 
 }

@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
-import com.zchu.rxcache.data.CacheResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +60,7 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
     }
 
     private void initData() {
-        recpresenter = new RecentPresenter(getContext(),this);
+        recpresenter = new RecentPresenter(getActivity(),this);
         index = 1;
         recpresenter.getSerisUpdate(index,18);
     }
@@ -103,13 +102,13 @@ public class SerisFragment extends Fragment implements  BasePullLayout.OnPullCal
 
 
     @Override
-    public void loadData(CacheResult<RecentUpdate> movieBean) {
-        this.movieInfo = movieBean.getData();
-        adapter = new CategoryAdapter(getActivity(), movieBean.getData());
+    public void loadData(RecentUpdate movieBean) {
+        this.movieInfo = movieBean;
+        adapter = new CategoryAdapter(getActivity(), movieBean);
         if (rvlist == null) {
             return;
         }
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvlist.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)
                 .setLoadMoreEnabled(true)

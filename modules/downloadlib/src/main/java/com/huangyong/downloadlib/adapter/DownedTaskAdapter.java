@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.room.data.DoneTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
@@ -62,7 +63,11 @@ public class DownedTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
                 holder.posterImg.setImageResource(R.drawable.ic_dl_torrent_bt);
                 holder.posterImg.setPlayIconHide(true);
             }else {
-                Glide.with(context).load(taskInfo.get(position).getPostImgUrl()).placeholder(R.drawable.ic_dl_magnet_place_holder).into(holder.posterImg);
+                RequestOptions options = new RequestOptions()
+                        .placeholder(R.drawable.ic_dl_magnet_place_holder);
+                Glide.with(context).load(taskInfo.get(position).getPostImgUrl())
+                        .apply(options)
+                        .into(holder.posterImg);
                 holder.playinloading.setVisibility(View.INVISIBLE);
             }
 

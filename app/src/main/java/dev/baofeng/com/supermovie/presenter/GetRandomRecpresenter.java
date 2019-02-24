@@ -4,8 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 
 
+import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import rx.Subscriber;
 import rx.Subscription;
@@ -28,27 +31,19 @@ public class GetRandomRecpresenter extends BasePresenter<IRandom> {
         if (TextUtils.isEmpty(type)) {
             return;
         }
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getBtRandomRecomend(type)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getBtRandomRecomend(type), new BaseApi.IResponseListener<OnlinePlayInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadRandomData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
+                }
+        );
 
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadRandomData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 
     @Override
@@ -61,26 +56,19 @@ public class GetRandomRecpresenter extends BasePresenter<IRandom> {
         if (TextUtils.isEmpty(type)) {
             return;
         }
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSeriRandomRecomend(type)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSeriRandomRecomend(type), new BaseApi.IResponseListener<OnlinePlayInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(OnlinePlayInfo data) {
+                        iview.loadRandomData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
                     }
+                }
+        );
 
-                    @Override
-                    public void onNext(OnlinePlayInfo result) {
-                        iview.loadRandomData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 }

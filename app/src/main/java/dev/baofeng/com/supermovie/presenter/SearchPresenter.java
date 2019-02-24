@@ -10,7 +10,10 @@ import java.util.List;
 
 import dev.baofeng.com.supermovie.db.dao.DbHelper;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
 import dev.baofeng.com.supermovie.presenter.iview.Isearch;
 import rx.Subscriber;
@@ -38,62 +41,22 @@ public class SearchPresenter extends BasePresenter<Isearch> {
      */
     @Statistics(function = Function.SEARCH)
     public void search(String keywords, int page, int size) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSearch(keywords, page, size)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSearch(keywords,page, size), new BaseApi.IResponseListener<MovieInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(MovieInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail();
+                    public void onFail() {
                     }
-                    @Override
-                    public void onNext(MovieInfo result) {
-                        if (result.getCode()==200){
-                            iview.loadData(result);
-                        }else {
+                }
 
-                        }
-                    }
-                });
-        addSubscription(subscription);
-    }
 
-    /**
-     * 打点，搜索计数
-     */
-    @Statistics(function = Function.SEARCH)
-    public void searchMore(String keywords, int page, int size) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSearch(keywords, page, size)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MovieInfo>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+        );
 
-                    @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail();
-                    }
-
-                    @Override
-                    public void onNext(MovieInfo result) {
-                        if (result.getCode() == 200) {
-                            iview.loadMore(result);
-                        } else {
-
-                        }
-                    }
-                });
-        addSubscription(subscription);
     }
 
 

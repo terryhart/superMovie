@@ -2,12 +2,12 @@ package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
 
-import com.zchu.rxcache.data.CacheResult;
-import com.zchu.rxcache.stategy.CacheStrategy;
 
 import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.IRecentView;
 import io.reactivex.Observable;
@@ -29,105 +29,84 @@ public class RecentPresenter extends BasePresenter<IRecentView>{
 
     public void getSerisUpdate(int page, int pagesize){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSerisUpdate(page,pagesize)
-                .compose(MyApp.getCacheInstance().transformer("custom_key", RecentUpdate.class, CacheStrategy.cacheAndRemote()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CacheResult<RecentUpdate>>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSerisUpdate(page, pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail("");
+                    public void onFail() {
                     }
-                    @Override
-                    public void onNext(CacheResult<RecentUpdate> result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
+                }
+
+
+        );
+
     }
     public void getSerisMore(int page,int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSerisUpdate(page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
-                    @Override
-                    public void onCompleted() {
 
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSerisUpdate(page, pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
+                    @Override
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail() {
+                    }
+                }
 
-                    }
-                    @Override
-                    public void onNext(RecentUpdate result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
+
+        );
+
     }
 
     public void getMovieUpdate(int page, int pagesize){
 
-
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getRecomend(page,pagesize)
-                .compose(MyApp.getCacheInstance().transformer("custom_key", RecentUpdate.class, CacheStrategy.cacheAndRemote()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CacheResult<RecentUpdate>>() {
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getRecomend(page, pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail("");
+                    public void onFail() {
                     }
-                    @Override
-                    public void onNext(CacheResult<RecentUpdate> result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
+                }
+
+
+        );
+
+
     }
 
     public void getMovieMore(int page, int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getRecomend(page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
-                    @Override
-                    public void onCompleted() {
 
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getRecomend(page, pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
+                    @Override
+                    public void onSuccess(RecentUpdate data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail() {
+                    }
+                }
 
-                    }
-                    @Override
-                    public void onNext(RecentUpdate result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
+
+        );
+
     }
 
     @Override
     public void release() {
-        unSubcription();
     }
 
 }

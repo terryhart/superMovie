@@ -9,10 +9,14 @@ import java.util.concurrent.Callable;
 
 import dev.baofeng.com.supermovie.db.dao.DbHelper;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
+import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IOnlineSearch;
 import dev.baofeng.com.supermovie.presenter.iview.Isearch;
+import io.reactivex.disposables.Disposable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
@@ -42,34 +46,56 @@ public class OnlineSearchPresenter extends BasePresenter<IOnlineSearch> {
      */
     public void searchOnline(String keywords) {
 
-        rx.Observable<OnlinePlayInfo> serisObservable = ApiManager.getRetrofitInstance().getOnlineSearchSeris(keywords);
-        rx.Observable<OnlinePlayInfo> movieObservable = ApiManager.getRetrofitInstance().getOnlineSearch(keywords);
-
-        rx.Observable<OnlinePlayInfo> resultObservalble = rx.Observable.merge(serisObservable, movieObservable);
         OnlinePlayInfo info = new OnlinePlayInfo();
         ArrayList<OnlinePlayInfo.DataBean> dataBeans = new ArrayList<>();
         info.setData(dataBeans);
-        Subscription subscription = resultObservalble.
-                subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OnlinePlayInfo>() {
-                    @Override
-                    public void onCompleted() {
-                        iview.loadData(info);
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail();
-                    }
+        io.reactivex.Observable<OnlinePlayInfo> onlineSearch = BaseApi.createApi(ApiService.class)
+                .getOnlineSearch(keywords);
 
+        io.reactivex.Observable<OnlinePlayInfo> onlineSearchSeris = BaseApi.createApi(ApiService.class)
+                .getOnlineSearchSeris(keywords);
+
+        io.reactivex.Observable<OnlinePlayInfo> infoObservable = io.reactivex.Observable.merge(onlineSearch, onlineSearchSeris);
+
+        BaseApi.request(infoObservable, new BaseApi.IResponseListener<OnlinePlayInfo>() {
                     @Override
-                    public void onNext(OnlinePlayInfo result) {
+                    public void onSuccess(OnlinePlayInfo result) {
                         dataBeans.addAll(result.getData());
                     }
-                });
 
-        addSubscription(subscription);
+                    @Override
+                    public void onFail() {
+                    }
+                }
+        );
+
+        infoObservable.subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.Observer<OnlinePlayInfo>() {
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   e.printStackTrace();
+                                   iview.loadFail();
+                               }
+
+                               @Override
+                               public void onComplete() {
+                                   iview.loadData(info);
+                               }
+
+                               @Override
+                               public void onSubscribe(Disposable disposable) {
+
+                               }
+
+                               @Override
+                               public void onNext(OnlinePlayInfo result) {
+                                   dataBeans.addAll(result.getData());
+                               }
+                           }
+                );
     }
 
 
