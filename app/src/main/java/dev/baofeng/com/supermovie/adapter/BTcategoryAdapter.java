@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
@@ -62,7 +64,10 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
             String md5Id = datas.getData().get(position).getMv_md5_id();
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+            Glide.with(context).load(uri).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 

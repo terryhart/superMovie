@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.FavorAdapter;
+import dev.baofeng.com.supermovie.adapter.SearchAdapter;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 
 /**
@@ -40,13 +41,13 @@ import dev.baofeng.com.supermovie.domain.MovieInfo;
  * @changeRecord [修改记录] <br/>
  * 2018/9/29 ：created
  */
-public class FavorActivity extends AppCompatActivity implements FavorAdapter.onLongClickedListener {
+public class FavorActivity extends AppCompatActivity implements SearchAdapter.onLongClickedListener {
 
     @BindView(R.id.clearFavor)
     Button clearFavor;
     @BindView(R.id.rv_favor_list)
     RecyclerView rvFavorList;
-    private FavorAdapter adapter;
+    private SearchAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +69,6 @@ public class FavorActivity extends AppCompatActivity implements FavorAdapter.onL
         MovieInfo info = new MovieInfo();
         List<MovieInfo.DataBean> dataBeans = new ArrayList<>();
         if (favorInfos != null && favorInfos.size() > 0) {
-            Log.e("daohistory", favorInfos.size() + "");
 
 
             for (int i = 0; i < favorInfos.size(); i++) {
@@ -88,8 +88,8 @@ public class FavorActivity extends AppCompatActivity implements FavorAdapter.onL
             Toast.makeText(this, "暂无收藏记录哦", Toast.LENGTH_SHORT).show();
         }
         info.setData(dataBeans);
-        rvFavorList.setLayoutManager(new GridLayoutManager(FavorActivity.this,3));
-        adapter = new FavorAdapter(FavorActivity.this, info,this);
+        rvFavorList.setLayoutManager(new LinearLayoutManager(FavorActivity.this));
+        adapter = new SearchAdapter(FavorActivity.this, info, this);
         rvFavorList.setAdapter(adapter);
     }
 

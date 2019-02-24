@@ -103,4 +103,11 @@
         android:layout_marginRight="@dimen/dp_4"
         android:layout_height="match_parent"
         layout="@layout/refresh_layout"/>
+
+    <com.mingle.widget.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="200pt"
+        android:layout_height="200pt" />
 </RelativeLayout>

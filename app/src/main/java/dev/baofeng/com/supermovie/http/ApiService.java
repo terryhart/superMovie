@@ -2,6 +2,7 @@ package dev.baofeng.com.supermovie.http;
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
+import dev.baofeng.com.supermovie.domain.DoubanTop250;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
@@ -43,7 +44,7 @@ public interface ApiService {
   Observable<RecentUpdate> getLibraryDatas(@Query("type") String typeKey,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GETSEARCH)
-  Observable<MovieInfo> getSearch(@Query("key") String key);//获取搜索
+  Observable<MovieInfo> getSearch(@Query("key") String key, @Query("page") int page, @Query("pagesize") int pagesize);//获取搜索
 
   @GET(UrlConfig.GET_ONLINE_SEARCH_MOVIE)
   Observable<OnlinePlayInfo> getOnlineSearch(@Query("key") String key);//获取搜索
@@ -71,4 +72,7 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_RANDOM_SERI_RECMMEND)
   Observable<OnlinePlayInfo> getSeriRandomRecomend(@Query("type") String type);//获取推荐
+
+    @GET(UrlConfig.GET_DOU_BAN_TOP250)
+    Observable<DoubanTop250> getDoubanTop250(@Query("start") int start, @Query("count") int size);
 }

@@ -37,10 +37,10 @@ public class SearchPresenter extends BasePresenter<Isearch> {
      * 打点，搜索计数
      */
     @Statistics(function = Function.SEARCH)
-    public void search(String keywords){
+    public void search(String keywords, int page, int size) {
         Subscription subscription = ApiManager
                 .getRetrofitInstance()
-                .getSearch(keywords)
+                .getSearch(keywords, page, size)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MovieInfo>() {
@@ -63,6 +63,39 @@ public class SearchPresenter extends BasePresenter<Isearch> {
                 });
         addSubscription(subscription);
     }
+
+    /**
+     * 打点，搜索计数
+     */
+    @Statistics(function = Function.SEARCH)
+    public void searchMore(String keywords, int page, int size) {
+        Subscription subscription = ApiManager
+                .getRetrofitInstance()
+                .getSearch(keywords, page, size)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieInfo>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        iview.loadFail();
+                    }
+
+                    @Override
+                    public void onNext(MovieInfo result) {
+                        if (result.getCode() == 200) {
+                            iview.loadMore(result);
+                        } else {
+
+                        }
+                    }
+                });
+        addSubscription(subscription);
+    }
+
 
     public boolean keywordsExist(String keyword) {
         return DbHelper.checkKeyWords(keyword);

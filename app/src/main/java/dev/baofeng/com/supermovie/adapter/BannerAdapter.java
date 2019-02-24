@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.holder.BannerHolder;
 import dev.baofeng.com.supermovie.holder.FavorHolder;
+import dev.baofeng.com.supermovie.utils.imgload.GlideImageLoader;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
@@ -46,7 +49,9 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerHolder> {
             return;
         }
         String url=info.get(position).getDownimgurl().split(",")[0];
-        Glide.with(context).load(url).placeholder(R.drawable.ic_dl_magnet_place_holder).into(holder.iv);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+        Glide.with(context).load(url).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(holder.iv);
         holder.title.setText(info.get(position).getDownLoadName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
@@ -34,8 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.db.FavorDao;
 import com.huangyong.downloadlib.domain.FavorInfo;
@@ -231,14 +235,18 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         fab = findViewById(R.id.fab);
 
 
-        Glide.with(this).load(posterImagUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+        Glide.with(this).asBitmap().load(posterImagUrl).into(new SimpleTarget<Bitmap>() {
+
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 getColor(resource);
             }
         });
-        Glide.with(this).load(posterImagUrl).bitmapTransform(new RoundedCornersTransformation(this, 12, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(100).into(mDetailPoster);
 
+        //加入圆角变换
+        Glide.with(this)
+                .load(posterImagUrl)
+                .into(mDetailPoster);
 
         String[] splitArr = mvdescTx.split("◎");
         StringBuffer buffer = new StringBuffer();

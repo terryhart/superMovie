@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -21,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mingle.widget.LoadingView;
 import com.yang.flowlayoutlibrary.FlowLayout;
 
 import java.util.ArrayList;
@@ -32,16 +32,14 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.SearchAdapter;
 import dev.baofeng.com.supermovie.db.data.SearchHistory;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
-import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.SearchPresenter;
-import dev.baofeng.com.supermovie.presenter.iview.ISview;
 import dev.baofeng.com.supermovie.presenter.iview.Isearch;
 
 /**
  * Created by huangyong on 2018/1/26.
  */
 
-public class SearchActivity extends AppCompatActivity implements Isearch {
+public class SearchActivity extends AppCompatActivity implements Isearch, SearchAdapter.onLongClickedListener {
 
     @BindView(R.id.et_search)
     EditText etSearch;
@@ -61,11 +59,16 @@ public class SearchActivity extends AppCompatActivity implements Isearch {
     TextView listTitle;
     @BindView(R.id.clear_history)
     TextView clearHistory;
+    @BindView(R.id.loadView)
+    LoadingView loadingView;
     private SearchPresenter presenter;
     private String keyword;
     private SearchAdapter adapter;
     private List historyList;
     private ArrayList<SearchHistory> searchHistory;
+    private int index;
+    private String cacheContent;
+    private MovieInfo info = new MovieInfo();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,6 +102,11 @@ public class SearchActivity extends AppCompatActivity implements Isearch {
                     if (adapter != null) {
                         adapter.clear();
                     }
+                    if (loadingView.isShown()) {
+                        loadingView.setVisibility(View.GONE);
+                    }
+                    cacheContent = "";
+
                 }
             }
         });
@@ -114,6 +122,7 @@ public class SearchActivity extends AppCompatActivity implements Isearch {
             clearEtFocus();
             Snackbar.make(root, "清除所有搜索记录？", Snackbar.LENGTH_LONG).setAction("确定", v1 -> {
                 presenter.clearSearchHistory();
+                this.cacheContent = "";
                 initSearchHistory();
             }).show();
 
@@ -142,11 +151,20 @@ public class SearchActivity extends AppCompatActivity implements Isearch {
             doSearch(content);
             etSearch.setText(content);
         });
+        List<MovieInfo.DataBean> dataBean = new ArrayList<>();
+        info.setData(dataBean);
+        adapter = new SearchAdapter(this, info, this);
+        searchrv.setLayoutManager(new LinearLayoutManager(this));
+        searchrv.setAdapter(adapter);
     }
 
     private void doSearch(String content) {
+        index = 1;
+        this.cacheContent = content;
         if (!TextUtils.isEmpty(content)) {
-            presenter.search(content);
+            loadingView.setVisibility(View.VISIBLE);
+            loadingView.setLoadingText("正在搜索，请稍后……");
+            presenter.search(content, index, 18);
         }else {
             Toast.makeText(SearchActivity.this, R.string.search_none_tips, Toast.LENGTH_SHORT).show();
             return;
@@ -171,23 +189,42 @@ public class SearchActivity extends AppCompatActivity implements Isearch {
 
     @Override
     public void loadData(MovieInfo info) {
-        adapter = new SearchAdapter(this, info);
-        searchrv.setLayoutManager(new LinearLayoutManager(this));
-        searchrv.setAdapter(adapter);
+        if (adapter != null) {
+            adapter.clear();
+        }
+        adapter.setData(info);
+        loadingView.setVisibility(View.GONE);
         flKeyword.setVisibility(View.GONE);
         listTitle.setVisibility(View.GONE);
         clearHistory.setVisibility(View.GONE);
+        adapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void loadFail() {
-        if (adapter!=null){
-            adapter.clear();
-            adapter.notifyDataSetChanged();
-        }
+        adapter.notifyDataSetChanged();
+        loadingView.setVisibility(View.GONE);
         flKeyword.setVisibility(View.VISIBLE);
         listTitle.setVisibility(View.VISIBLE);
         clearHistory.setVisibility(View.VISIBLE);
         Toast.makeText(this, "未找到相关内容", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadMore(MovieInfo result) {
+        this.info.getData().addAll(result.getData());
+        adapter.notifyDataSetChanged();
+        if (loadingView.isShown()) {
+            loadingView.setVisibility(View.GONE);
+        }
+        flKeyword.setVisibility(View.VISIBLE);
+        listTitle.setVisibility(View.VISIBLE);
+        clearHistory.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLongClick(String id) {
+
     }
 }

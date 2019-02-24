@@ -204,9 +204,8 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                 startActivity(favor);
                 break;
             case R.id.reclist:
-                if (lisener!=null){
-                    lisener.clicked();
-                }
+                Intent douban = new Intent(getContext(), DoubanActivity.class);
+                startActivity(douban);
                 break;
             case R.id.downCenter:
                 Intent intent = new Intent(getContext(), DownLoadMainActivity.class);

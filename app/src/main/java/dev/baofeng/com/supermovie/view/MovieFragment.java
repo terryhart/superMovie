@@ -105,6 +105,7 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
     @Override
     public void loadData(CacheResult<RecentUpdate> movieBean) {
         this.movieInfo = movieBean.getData();
+        Log.e("testloadmore", "tesloadmore");
         adapter = new CategoryAdapter(getActivity(), movieBean.getData());
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
@@ -141,6 +142,7 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
 
     @Override
     public void loadMore(RecentUpdate movieBean) {
+        Log.e("testloadmore", "----tesloadmore");
         this.movieInfo.getData().addAll(movieBean.getData());
         adapter.notifyDataSetChanged();
         if (empFram.isShown()){

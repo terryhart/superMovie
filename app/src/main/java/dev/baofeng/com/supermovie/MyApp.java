@@ -52,7 +52,6 @@ public class MyApp extends Application{
         //初始化缓存管理
         initCache();
         //让Glide能用HTTPS
-        Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(ApiManager.getClientInstance()));
 
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");

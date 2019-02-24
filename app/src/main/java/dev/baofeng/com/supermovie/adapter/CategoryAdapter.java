@@ -17,6 +17,9 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+import com.youth.banner.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -93,7 +96,15 @@ public class CategoryAdapter extends RecyclerView.Adapter {
 
             String posterImgUrl= imgUrl.split(",")[0];
             Uri uri = Uri.parse(posterImgUrl);
-            Glide.with(context).load(uri).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
+
+            RequestOptions options = new RequestOptions()
+                    .placeholder(R.drawable.ic_place_hoder);
+            Glide.with(context)
+                    .load(uri)
+                    .transition(DrawableTransitionOptions.withCrossFade(300))
+                    .apply(options)
+                    .preload();
+            Glide.with(context).load(uri).transition(DrawableTransitionOptions.withCrossFade(300)).apply(options).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 
