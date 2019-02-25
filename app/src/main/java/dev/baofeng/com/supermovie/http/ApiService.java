@@ -2,18 +2,15 @@ package dev.baofeng.com.supermovie.http;
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.BtInfo;
+import dev.baofeng.com.supermovie.domain.DoubanTop250;
 import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
-import rx.Completable;
-import rx.Observable;
 
 /**
  * Created by Huangyong on 2017/10/24.
@@ -25,7 +22,7 @@ public interface ApiService {
   Observable<RecentUpdate> getRecomend(@Query("page") int page, @Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GET_SUBJECT)
-  Observable<SubjectInfo> getSubject(@Query("type") String typeKey,@Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
+  Observable<SubjectInfo> getSubject(@Query("type") String typeKey, @Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
 
   @GET(UrlConfig.GET_ONLINE)
   Observable<OnlinePlayInfo> getOnlineMovie(@Query("type") String type, @Query("page") int page, @Query("pagesize") int pagesize);//获取专题列表
@@ -43,7 +40,7 @@ public interface ApiService {
   Observable<RecentUpdate> getLibraryDatas(@Query("type") String typeKey,@Query("page") int page,@Query("pagesize") int pagesize);//获取推荐
 
   @GET(UrlConfig.GETSEARCH)
-  Observable<MovieInfo> getSearch(@Query("key") String key);//获取搜索
+  Observable<MovieInfo> getSearch(@Query("key") String key, @Query("page") int page, @Query("pagesize") int pagesize);//获取搜索
 
   @GET(UrlConfig.GET_ONLINE_SEARCH_MOVIE)
   Observable<OnlinePlayInfo> getOnlineSearch(@Query("key") String key);//获取搜索
@@ -71,4 +68,7 @@ public interface ApiService {
 
   @GET(UrlConfig.GET_RANDOM_SERI_RECMMEND)
   Observable<OnlinePlayInfo> getSeriRandomRecomend(@Query("type") String type);//获取推荐
+
+    @GET(UrlConfig.GET_DOU_BAN_TOP250)
+    Observable<DoubanTop250> getDoubanTop250(@Query("start") int start, @Query("count") int size);
 }

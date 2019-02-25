@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
@@ -59,7 +61,9 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
             String imgUrl = datas.getData().get(position).getDownimgurl();
             String name = datas.getData().get(position).getDownLoadName();
 
-            Glide.with(context).load(imgUrl).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+            Glide.with(context).load(imgUrl).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);
 

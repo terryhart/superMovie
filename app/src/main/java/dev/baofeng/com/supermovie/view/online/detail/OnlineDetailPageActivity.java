@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -18,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -30,8 +33,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
 import com.youngfeng.snake.annotations.EnableDragToClose;
@@ -51,9 +55,7 @@ import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
-import dev.baofeng.com.supermovie.view.GlideRoundTransform;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.HeadDescriptionDialog;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
@@ -138,14 +140,22 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     }
 
     private void initThemeColor() {
-        Glide.with(this).load(posterUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+
+        Glide.with(this).asBitmap().load(posterUrl).into(new SimpleTarget<Bitmap>() {
+
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 getColor(resource);
             }
         });
-        Glide.with(this).load(posterUrl).transform(new CenterCrop(this), new GlideRoundTransform(this, 2)).into(toolbarIcon);
 
+        RequestOptions requestOptions = new RequestOptions();
+        //加入圆角变换
+        requestOptions.transform(new RoundedCornersTransformation(this, 10, 0));
+        Glide.with(this)
+                .load(posterUrl)
+                .apply(requestOptions)
+                .into(toolbarIcon);
 
         scrollContent.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -352,16 +362,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     @Override
     public void loadRError(String msg) {
 
-    }
-
-    public static String replaceBlank(String str) {
-        String dest = "";
-        if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(str);
-            dest = m.replaceAll("");
-        }
-        return dest;
     }
 
 }

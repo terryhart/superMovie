@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
@@ -46,7 +47,10 @@ public class SujectAdapter extends RecyclerView.Adapter {
         ((CommonHolder) holder).itemtitle.setText(info.getData().get(position).getDownLoadName());
         String URLImg= info.getData().get(position).getDownimgurl();
         String name = info.getData().get(position).getDownLoadName();
-        Glide.with(context).load(URLImg.split(",")[0]).placeholder(R.drawable.ic_place_hoder).into(((CommonHolder) holder).itemimg);
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+        Glide.with(context).load(URLImg.split(",")[0]).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
         ((CommonHolder)holder).itemtitle.setText(name);
         ((CommonHolder) holder).itemView.setOnClickListener(view -> {

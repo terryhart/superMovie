@@ -7,6 +7,8 @@ import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
 import rx.Subscriber;
@@ -28,49 +30,41 @@ public class GetSujectPresenter extends BasePresenter<ISubjectView>{
 
     public void getSubject(int page, int pagesize, String type){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSubject(type,page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SubjectInfo>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSubject(type,page,pagesize), new BaseApi.IResponseListener<SubjectInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(SubjectInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail() {
+                        iview.loadError("请求失败");
+                    }
+                }
 
-                    }
-                    @Override
-                    public void onNext(SubjectInfo result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
+
+        );
+
     }
     public void getSubjectTitle(int page, int pagesize){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSubjectTitle(page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SubjectTitleInfo>() {
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSubjectTitle(page,pagesize), new BaseApi.IResponseListener<SubjectTitleInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSuccess(SubjectTitleInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail() {
+                        iview.loadError("请求失败");
+                    }
+                }
+        );
 
-                    }
-                    @Override
-                    public void onNext(SubjectTitleInfo result) {
-                        iview.loadData(result);
-                    }
-                });
-        addSubscription(subscription);
     }
 
     @Override
@@ -79,50 +73,38 @@ public class GetSujectPresenter extends BasePresenter<ISubjectView>{
     }
 
     public void getMoreData(int page,int pagesize,String type) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSubject(type,page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SubjectInfo>() {
-                    @Override
-                    public void onCompleted() {
 
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSubject(type,page,pagesize), new BaseApi.IResponseListener<SubjectInfo>() {
+                    @Override
+                    public void onSuccess(SubjectInfo data) {
+                        iview.loadData(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail() {
+                        iview.loadError("请求失败");
+                    }
+                }
+        );
 
-                    }
-                    @Override
-                    public void onNext(SubjectInfo result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
     }
     public void getMoreTitleData(int page,int pagesize) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getSubjectTitle(page,pagesize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SubjectTitleInfo>() {
-                    @Override
-                    public void onCompleted() {
 
+
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getSubjectTitle(page,pagesize), new BaseApi.IResponseListener<SubjectTitleInfo>() {
+                    @Override
+                    public void onSuccess(SubjectTitleInfo data) {
+                        iview.loadMore(data);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onFail() {
+                        iview.loadError("请求失败");
                     }
-                    @Override
-                    public void onNext(SubjectTitleInfo result) {
-                        iview.loadMore(result);
-                    }
-                });
-        addSubscription(subscription);
+                }
+        );
     }
 
 }

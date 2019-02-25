@@ -72,7 +72,7 @@ public class SplashActivity extends AppCompatActivity implements IupdateView, IS
             new Handler().postDelayed(() -> {
                 startActivity(intent);
                 finish();
-            }, 3000);
+            }, 1000);
         }
 
 

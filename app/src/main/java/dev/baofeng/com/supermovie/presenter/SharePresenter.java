@@ -6,8 +6,11 @@ import android.util.Log;
 
 import java.util.logging.Handler;
 
+import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
@@ -28,24 +31,11 @@ public class SharePresenter extends BasePresenter<IShare> {
     }
 
     public void getMovieForShare(String mvId) {
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getShare(mvId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentUpdate>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getShare(mvId), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
-                    public void onError(Throwable e) {
-                        iview.loadFail("fail");
-                    }
-
-                    @Override
-                    public void onNext(RecentUpdate result) {
+                    public void onSuccess(RecentUpdate result) {
                         if (result.getData().size() > 0) {
                             RecentUpdate.DataBean dataBean = result.getData().get(0);
                             String downimgurl = dataBean.getDownimgurl();
@@ -69,9 +59,16 @@ public class SharePresenter extends BasePresenter<IShare> {
                             }, 2000);
 
                         }
+                        iview.loadData(result);
                     }
-                });
-        addSubscription(subscription);
+
+                    @Override
+                    public void onFail() {
+                    }
+                }
+
+
+        );
     }
 
     @Override

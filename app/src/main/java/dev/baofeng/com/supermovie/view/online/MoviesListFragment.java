@@ -33,7 +33,6 @@ import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import dev.baofeng.com.supermovie.presenter.online.GetOnlinePresenter;
 import dev.baofeng.com.supermovie.presenter.online.iview.IOnlineView;
-import dev.baofeng.com.supermovie.utils.ColorHelper;
 import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
 import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
@@ -152,17 +151,7 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
         rvlist.setAdapter(adapter);
         LoadMoreWrapper.with(adapter)
                 .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getMovieMoreData(type, ++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
+                .setListener(enabled -> rvlist.postDelayed(() -> recpresenter.getMovieMoreData(type, ++index, 18), 1))
                 .into(rvlist);
         if (empFram.isShown()) {
             empFram.setVisibility(View.GONE);

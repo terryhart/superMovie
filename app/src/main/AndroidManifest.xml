@@ -21,15 +21,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".view.BtDownActivity" />
         <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.AboutUsActivity" />
         <!-- 注册service -->
 
+        <activity android:name=".view.DoubanActivity" />
         <activity
             android:name=".view.MovieDetailActivity"
             android:label="@string/title_activity_scrolling"

@@ -52,7 +52,7 @@ public class UrlConfig {
 
     public static final String GET_RANDOM_SERI_RECMMEND = "ygcms/getLineSeriRandom.php";
 
-
+    public static final String GET_DOU_BAN_TOP250 = "https://api.douban.com/v2/movie/top250";
     public static String[] mvArr = {
             "科幻",
             "喜剧",

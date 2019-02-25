@@ -49,7 +49,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         List<HistoryInfo> historyInfos = dao.queryAll();
 
         if (historyInfos != null && historyInfos.size() > 0) {
-            Log.e("daohistory", historyInfos.size() + "");
             MovieInfo info = new MovieInfo();
             List<MovieInfo.DataBean> dataBeans = new ArrayList<>();
             for (int i = 0; i < historyInfos.size(); i++) {

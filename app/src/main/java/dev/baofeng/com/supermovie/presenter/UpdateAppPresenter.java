@@ -11,7 +11,10 @@ import android.util.Log;
 
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
+import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.http.ApiManager;
+import dev.baofeng.com.supermovie.http.ApiService;
+import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import rx.Subscriber;
 import rx.Subscription;
@@ -42,36 +45,24 @@ public class UpdateAppPresenter extends BasePresenter<IupdateView> {
 
     public void getAppUpdate(Context context){
 
-        Subscription subscription = ApiManager
-                .getRetrofitInstance()
-                .getAppUpdate()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<AppUpdateInfo>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
+        BaseApi.request(BaseApi.createApi(ApiService.class)
+                        .getAppUpdate(), new BaseApi.IResponseListener<AppUpdateInfo>() {
                     @Override
-                    public void onError(Throwable e) {
-                        Log.e("appupdate","Throwable"+e.getMessage());
-                        e.printStackTrace();
-                    }
-                    @Override
-                    public void onNext(AppUpdateInfo result) {
-
-                        Log.e("appupdate","result");
+                    public void onSuccess(AppUpdateInfo result) {
                         if (result.getData().getVersionCode()> getVersionCode(context,"dev.baofeng.com.supermovie")){
                             //如果服务端的版本号大于本地，即更新
                             iview.updateYes(result);
                         }else {
                             iview.noUpdate(result.getData().getDownloadUrl());
                         }
-
                     }
-                });
-        addSubscription(subscription);
+
+                    @Override
+                    public void onFail() {
+                    }
+                }
+        );
 
     }
 

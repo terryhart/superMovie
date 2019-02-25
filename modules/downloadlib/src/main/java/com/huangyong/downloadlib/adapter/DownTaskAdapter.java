@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.huangyong.downloadlib.R;
 import com.huangyong.downloadlib.room.data.DowningTaskInfo;
 import com.huangyong.downloadlib.utils.FileUtils;
@@ -38,7 +39,12 @@ public class DownTaskAdapter extends RecyclerView.Adapter<TaskHolder> {
 
         if (taskInfo.size()>0){
             holder.taskTitile.setText(taskInfo.get(position).getTitle());
-            Glide.with(context).load(taskInfo.get(position).getPostImgUrl()).placeholder(R.drawable.ic_dl_magnet_place_holder).into(holder.posterImg);
+
+            RequestOptions options = new RequestOptions()
+                    .placeholder(R.drawable.ic_dl_magnet_place_holder);
+
+            Glide.with(context).load(taskInfo.get(position).getPostImgUrl())
+                    .apply(options).into(holder.posterImg);
             Log.e("dddddldlld",taskInfo.get(position).getPostImgUrl());
             long received=0,total=0;
             if (!taskInfo.get(position).getReceiveSize().equals("0")){

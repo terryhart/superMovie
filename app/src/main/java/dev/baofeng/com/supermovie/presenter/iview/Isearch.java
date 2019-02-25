@@ -12,4 +12,6 @@ public interface Isearch {
     void loadData(MovieInfo info);
 
     void loadFail();
+
+    void loadMore(MovieInfo result);
 }
