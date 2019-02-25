@@ -59,6 +59,7 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
+import dev.baofeng.com.supermovie.utils.ToastUtil;
 import dev.baofeng.com.supermovie.view.widget.GlideSimpleLoader;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -377,7 +378,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     public void clicked(String url, String imgUrl) {
         TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
 
-        Snackbar.make(root, "下载任务已添加", Snackbar.LENGTH_LONG).show();
+        ToastUtil.showMessage("下载任务已添加");
     }
 
     @Override
