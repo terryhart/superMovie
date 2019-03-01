@@ -45,6 +45,11 @@
 </div>
 
 
+### 为方便反馈沟通，已创建交流群，欢迎加入
+
+<div>
+    <img src="https://github.com/hiliving/superMovie/blob/master/picture/qq_group.png" width="300" height="300" alt="仅供学习交流" align=center>
+</div>
 
 >2019/2/17更新：
 
