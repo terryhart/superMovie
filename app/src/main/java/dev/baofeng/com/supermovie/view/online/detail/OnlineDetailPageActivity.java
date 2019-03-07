@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -38,6 +40,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
+import com.xyzlf.share.library.bean.ShareEntity;
+import com.xyzlf.share.library.interfaces.ShareConstant;
+import com.xyzlf.share.library.util.ShareUtil;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
@@ -56,6 +61,8 @@ import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
+import dev.baofeng.com.supermovie.view.MovieDetailActivity;
+import dev.baofeng.com.supermovie.view.widget.GlideRoundTransform;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
@@ -124,6 +131,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     private int isMovie;
     private GetRandomRecpresenter randomRecpresenter;
     private int blurColor;
+    private String mvId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +147,34 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cat_topappbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shares:
+                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
+                testBean.setContent("热门电影，美剧，海量资源每日更新");
+                testBean.setImgUrl(posterUrl);
+                testBean.setDrawableId(R.mipmap.icon_share);
+                try {
+                    String url = "https://hiliving.github.io/?id=" + mvId+"&tab="+isMovie;
+                    testBean.setUrl(url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ShareUtil.showShareDialog(OnlineDetailPageActivity.this, testBean, ShareConstant.REQUEST_CODE);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initThemeColor() {
 
         Glide.with(this).asBitmap().load(posterUrl).into(new SimpleTarget<Bitmap>() {
@@ -150,8 +186,8 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         });
 
         RequestOptions requestOptions = new RequestOptions();
+        requestOptions.transform(new GlideRoundTransform(this,4));
         //加入圆角变换
-        requestOptions.transform(new RoundedCornersTransformation(this, 10, 0));
         Glide.with(this)
                 .load(posterUrl)
                 .apply(requestOptions)
@@ -234,6 +270,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
         Intent intent = getIntent();
         posterUrl = intent.getStringExtra(GlobalMsg.KEY_POST_IMG);
+        mvId = intent.getStringExtra(GlobalMsg.KEY_MV_ID);
         playUrl = intent.getStringExtra(GlobalMsg.KEY_PLAY_URL);
         playTitle = intent.getStringExtra(GlobalMsg.KEY_PLAY_TITLE);
         downItemTitle = intent.getStringExtra(GlobalMsg.KEY_MOVIE_DOWN_ITEM_TITLE);
@@ -298,7 +335,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList.setLayoutManager(linearLayoutManager);
         playList.setAdapter(adapter);
 
-        OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(playUrlBean, posterUrl, title);
+        OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(this,playUrlBean, posterUrl, title);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         playList2.setLayoutManager(linearLayoutManager2);

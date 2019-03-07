@@ -86,6 +86,9 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
         intent.putExtra(GlobalMsg.KEY_DOWN_URL, datas.getData().get(position).getDownLoadUrl());
         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
         intent.putExtra(GlobalMsg.KEY_MV_TYPE, type);
+
+        intent.putExtra(GlobalMsg.KEY_MV_ID,datas.getData().get(position).getMv_md5_id());
+
         intent.putExtra(GlobalMsg.KEY_IS_MOVIE, isMV);
         //简介
         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL, datas.getData().get(position).getMvdesc());

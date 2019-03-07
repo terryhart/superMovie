@@ -43,7 +43,6 @@ public class PlayerActivity extends AppCompatActivity {
         controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener );
         ijkVideoView.setVideoController(controller);
-
         //设置这个是为了支持4K视频播放
         IjkPlayer ijkPlayer = new IjkPlayer(this) {
             @Override
@@ -70,6 +69,7 @@ public class PlayerActivity extends AppCompatActivity {
                 .setCustomMediaPlayer(ijkPlayer)
                 .build();
         ijkVideoView.setPlayerConfig(playerConfig);
+
 
         if (url.startsWith("/storage")){
             File file = new File(url);

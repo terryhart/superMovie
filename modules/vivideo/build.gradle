@@ -33,8 +33,8 @@ dependencies {
     //完整版
     api files('libs/jsoup-1.8.1.jar')
     // (可选)
-    api files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    api files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
 }
 repositories {
     mavenCentral()

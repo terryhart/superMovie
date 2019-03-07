@@ -1,21 +1,15 @@
 package dev.baofeng.com.supermovie.view.online;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -30,17 +24,15 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
-import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import dev.baofeng.com.supermovie.presenter.online.GetOnlinePresenter;
 import dev.baofeng.com.supermovie.presenter.online.iview.IOnlineView;
-import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
 import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/31.
  */
 
-public class MoviesListFragment extends Fragment implements BasePullLayout.OnPullCallBackListener, IOnlineView, IRandom {
+public class MoviesListFragment extends Fragment implements BasePullLayout.OnPullCallBackListener, IOnlineView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
     @BindView(R.id.pull_layout)
@@ -177,17 +169,5 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
             empFram.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    public void loadRandomData(OnlinePlayInfo info) {
-
-    }
-
-    @Override
-    public void loadRError(String msg) {
-
-    }
-
-
 
 }

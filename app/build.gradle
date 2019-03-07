@@ -5,8 +5,8 @@ android {
         applicationId "dev.baofeng.com.supermovie"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 122
-        versionName "Dev_1.2.2.1"
+        versionCode APP_VERSION as int
+        versionName APP_VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         packagingOptions {
@@ -107,7 +107,7 @@ dependencies {
     //网页加载
     implementation 'com.just.agentweb:agentweb:4.0.0-alpha-3'
     //RxCache缓存依赖
-    implementation 'com.zchu:rxcache:1.2.6'
+    implementation 'com.zchu:rxcache:2.1.0'
     implementation 'com.trello:rxlifecycle:1.0'
     implementation 'com.trello:rxlifecycle-android:1.0'
     implementation 'com.trello:rxlifecycle-components:1.0'
@@ -143,15 +143,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
     //调色板
-    compile 'com.android.support:palette-v7:28.0.0'
+    implementation 'com.android.support:palette-v7:28.0.0'
     implementation project(':modules:pagelayout-java')
     //loading view https://github.com/zzz40500/android-shapeLoadingView
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 
     implementation 'com.byc:ImageWatcher:1.1.0'
 
-    compile 'com.youngfeng.android:snake:0.3.2'
+    implementation 'com.youngfeng.android:snake:0.3.2'
     annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
+
+
 }
 
 

@@ -20,7 +20,6 @@
             android:drawablePadding="@dimen/dp_10"
             android:textSize="18sp"
             android:drawableTop="@drawable/common_page_empty_zx"
-
             />
     </FrameLayout>
 
@@ -31,6 +30,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/rvlist"
+            android:background="@color/white"
             android:layout_weight="1"
             android:layout_height="0dp">
         </android.support.v7.widget.RecyclerView>

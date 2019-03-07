@@ -13,6 +13,12 @@
             android:screenOrientation="landscape"
             >
         </activity>
+
+        <activity android:name=".PlayView"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape"
+            />
+
     </application>
 
 </manifest>

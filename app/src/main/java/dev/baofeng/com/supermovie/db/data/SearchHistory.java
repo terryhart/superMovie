@@ -7,11 +7,6 @@ import android.arch.persistence.room.PrimaryKey;
 
 
 /**
- * creator huangyong
- * creator huangyong
- * createTime 2018/11/13 下午5:21
- * path com.xiachufang.tracklib.db
- * description:
  */
 
 @Entity(tableName = SearchHistory.TABLE_NAME, indices = {@Index("searchKeyWords")})

@@ -144,12 +144,18 @@
         <activity
             android:name=".view.online.detail.OnlineDetailPageActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_online_detail_page" />
         <activity
             android:name=".view.online.OnlineFilmActivity"
             android:label="@string/title_activity_online_film"
             android:theme="@style/AppTheme" />
 
+
+        <activity android:name="com.huangyong.playerlib.PlayView"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            />
         <!--qq浏览器-->
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"

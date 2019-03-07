@@ -1,31 +1,26 @@
 package dev.baofeng.com.supermovie.view;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.graphics.Palette;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.antiless.support.widget.TabLayout;
 import com.bftv.myapplication.view.IndexActivity;
-import com.bumptech.glide.Glide;
 import com.huangyong.downloadlib.DownLoadMainActivity;
 import com.leochuan.AutoPlayRecyclerView;
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +39,6 @@ import dev.baofeng.com.supermovie.presenter.GetRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.utils.Util;
 import dev.baofeng.com.supermovie.view.online.OnlineFilmActivity;
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
-import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -64,7 +56,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
     AppBarLayout appbar;
 
     @BindView(R.id.home_tabs)
-    com.antiless.support.widget.TabLayout homeTabView;
+    TabLayout homeTabView;
     /**
      * 磁力搜索
      */
@@ -91,12 +83,13 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
 
     @BindView(R.id.recycler)
     AutoPlayRecyclerView banner;
+    @BindView(R.id.pullRefresh)
+    SwipeRefreshLayout pullRefresh;
 
 
     private GetRecpresenter getRecpresenter;
     private RecentUpdate info;
     private int index;
-    private CategoryAdapter homeAdapter;
     private RecentUpdate bannerInfo;
     private RecentUpdate update = new RecentUpdate();
 
@@ -123,18 +116,43 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
     private void initView() {
         movieFragment = MovieFragment.newInstance("movie");
         serisFragment = SerisFragment.newInstance("seris");
-        List listfragment=new ArrayList<Fragment>();
+        List listfragment = new ArrayList<Fragment>();
         listfragment.add(movieFragment);
         listfragment.add(serisFragment);
-        FragmentManager fm=getChildFragmentManager();
-        HomeTabFragmentPagerAdapter adapter=new HomeTabFragmentPagerAdapter(fm, listfragment);
+        FragmentManager fm = getChildFragmentManager();
+        HomeTabFragmentPagerAdapter adapter = new HomeTabFragmentPagerAdapter(fm, listfragment);
         homepager.setAdapter(adapter);
         homepager.setCurrentItem(0);
         homeTabView.setupWithViewPager(homepager);
+
+        pullRefresh.setProgressViewOffset(true,50,200);
+        pullRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+
+        pullRefresh.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        pullRefresh.setProgressBackgroundColor(android.R.color.white);
+
+        pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRecpresenter.getBtRecommend(1, 10);
+
+                if (movieFragment!=null&&movieFragment.isAdded()){
+                    movieFragment.onRefresh();
+                    serisFragment.onRefresh();
+                }
+            }
+        });
     }
 
 
     private MainActivity.OnPageChanged lisener;
+
     public void setOnPageChangeListener(MainActivity.OnPageChanged onPageChanged) {
         this.lisener = onPageChanged;
     }
@@ -151,7 +169,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
         downCenter.setOnClickListener(this);
 
         carouselLayoutManager = new CarouselLayoutManager(getContext(), Util.Dp2px(getContext(), 100));
-        carouselLayoutManager.setItemSpace(Util.Dp2px(getContext(),80));
+        carouselLayoutManager.setItemSpace(Util.Dp2px(getContext(), 80));
         carouselLayoutManager.setMoveSpeed(0.3f);
         banner.setLayoutManager(carouselLayoutManager);
 
@@ -165,11 +183,11 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
             @Override
             public void onPageScrollStateChanged(int i) {
 
-                if (i==2){
-                    if (carouselLayoutManager.getCurrentPosition()==9){
+                if (i == 2) {
+                    if (carouselLayoutManager.getCurrentPosition() == 9) {
                         poster = bannerInfo.getData().get(0).getDownimgurl().split(",")[0];
-                    }else {
-                        poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition()+1).getDownimgurl().split(",")[0];
+                    } else {
+                        poster = bannerInfo.getData().get(carouselLayoutManager.getCurrentPosition() + 1).getDownimgurl().split(",")[0];
                     }
                     if (isDetached()) {
                         return;
@@ -186,11 +204,9 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
     }
 
 
-
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.catfrag:
                 Intent onlineIntent = new Intent(getActivity(), OnlineFilmActivity.class);
                 startActivity(onlineIntent);
@@ -211,8 +227,8 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                 Intent intent = new Intent(getActivity(), DownLoadMainActivity.class);
                 startActivity(intent);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -222,12 +238,14 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
             float progress = Math.abs(verticalOffset) * 1.0f / appBarLayout.getTotalScrollRange();
-            if (progress >= 0.4) {
+            if (progress >= 0.1) {
                 // toobar.setVisibility(View.VISIBLE);
                 // toobar.setAlpha(progress);
+                pullRefresh.setEnabled(false);
             } else {
                 // toobar.setVisibility(View.VISIBLE);
                 // toobar.setAlpha(0.4f);
+                pullRefresh.setEnabled(true);
             }
         }
     }
@@ -235,8 +253,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
     private void initData() {
         index = 1;
         getRecpresenter = new GetRecpresenter(getContext(), this);
-        getRecpresenter.getRecentUpdate( index,18);
-        getRecpresenter.getBtRecommend(1,10);
+        getRecpresenter.getBtRecommend(1, 10);
 
     }
 
@@ -269,18 +286,26 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
     @Override
     public void loadMore(RecentUpdate result) {
         info.getData().addAll(result.getData());
-        homeAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void loadBtData(RecentUpdate result) {
-        this.bannerInfo = result;
-        this.dataBeans.clear();
-        this.dataBeans.addAll(result.getData()) ;
-        bannerAdapter = new BannerAdapter(getContext(),dataBeans);
-        banner.setAdapter(bannerAdapter);
-        bannerAdapter.notifyDataSetChanged();
+        if (isAdded()) {
+            Log.e("ddloadbt", "no load data");
+            pullRefresh.setRefreshing(false);
+            this.bannerInfo = result;
+            this.dataBeans.clear();
+            this.dataBeans.addAll(result.getData());
+            bannerAdapter = new BannerAdapter(getContext(), dataBeans);
+            banner.setAdapter(bannerAdapter);
+            bannerAdapter.notifyDataSetChanged();
+        } else {
+            Log.e("ddloadbt", "no load data fail");
+        }
+
 
     }
+
     @Override
     public void loadDetail(BtInfo result) {
 

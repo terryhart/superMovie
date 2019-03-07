@@ -34,7 +34,7 @@ public class WebviewPlayer extends AppCompatActivity {
         webSetting.setSupportMultipleWindows(false);
         webSetting.setAppCacheEnabled(true);
         webSetting.setDomStorageEnabled(true);
-        webSetting.setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+//        webSetting.setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
         webSetting.setJavaScriptEnabled(true);
 
         webSetting.setAppCacheEnabled(false);

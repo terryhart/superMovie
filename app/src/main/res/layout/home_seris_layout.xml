@@ -33,6 +33,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/rvlist"
+            android:background="@color/white"
             android:layout_weight="1"
             android:layout_height="0dp">
         </android.support.v7.widget.RecyclerView>
