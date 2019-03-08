@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mingle.widget.LoadingView;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,11 +31,9 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
  * Created by huangyong on 2018/1/31.
  */
 
-public class BtListFragment extends Fragment implements IAllView, BasePullLayout.OnPullCallBackListener {
+public class BtListFragment extends Fragment implements IAllView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.pull_layout)
-    SimplePullLayout pulllayout;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -84,7 +80,6 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         loadingView.setLoadingText("正在加载，请稍后……");
     }
     private void initView() {
-        pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
         Log.e("tytpetype", type);
@@ -152,32 +147,8 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pulllayout.autoRefresh();
             }
         });
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getLibraryDdata(type,1,18);
-                pulllayout.finishPull("加载完成",true);
-            }
-        },2000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getLibraryMoreDdata(type,++index,18);
-                pulllayout.finishPull("加载完成",true);
-            }
-        },2000);
-
     }
 
 }

@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.model.Params;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +33,12 @@ import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
  * @changeRecord [修改记录] <br/>
  * 2018/10/15 ：created
  */
-public class SubjectListActivity extends AppCompatActivity implements ISubjectView, BasePullLayout.OnPullCallBackListener {
+public class SubjectListActivity extends AppCompatActivity implements ISubjectView {
 
     @BindView(R.id.rv_subcat_list)
     RecyclerView rvSubcatList;
     @BindView(R.id.subTitle)
     TextView subTitle;
-    @BindView(R.id.refreshLoadMore)
-    SimplePullLayout refreshLoadMore;
     private GetSujectPresenter presenter;
     private int index;
     private SubjectInfo info;
@@ -64,7 +60,6 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         index = 1;
         presenter.getSubject(index, 18, titleType);
 
-        refreshLoadMore.setOnPullListener(this);
     }
 
     @Override
@@ -98,7 +93,7 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
     public void loadMore(SubjectTitleInfo result) {
     }
 
-    @Override
+    /*@Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -120,5 +115,5 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
                 refreshLoadMore.finishPull("加载完成",true);
             }
         },1000);
-    }
+    }*/
 }

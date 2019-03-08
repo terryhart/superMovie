@@ -20,16 +20,10 @@
             android:textSize="16sp"
             />
     </RelativeLayout>
-    <com.xiaosu.pulllayout.SimplePullLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/refreshLoadMore"
+        android:id="@+id/rv_subcat_list"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rv_subcat_list"
-            android:layout_height="match_parent"/>
-    </com.xiaosu.pulllayout.SimplePullLayout>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>

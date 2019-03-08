@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -31,11 +28,9 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
  * Created by huangyong on 2018/1/31.
  */
 
-public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCallBackListener, IRecentView {
+public class MovieFragment extends Fragment implements   IRecentView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.pull_layout)
-    SimplePullLayout pulllayout;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -75,7 +70,6 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
     }
 
     private void initView() {
-        pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
     }
@@ -133,7 +127,6 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pulllayout.autoRefresh();
             }
         });
     }
@@ -141,7 +134,6 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
 
     @Override
     public void loadMore(RecentUpdate movieBean) {
-        Log.e("testloadmore", "----tesloadmore");
         this.movieInfo.getData().addAll(movieBean.getData());
         adapter.notifyDataSetChanged();
         if (empFram.isShown()){
@@ -149,18 +141,12 @@ public class MovieFragment extends Fragment implements  BasePullLayout.OnPullCal
         }
     }
 
-    @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 recpresenter.getMovieUpdate(1,18);
-                pulllayout.finishPull("加载完成",true);
             }
-        },1500);
-    }
-
-    @Override
-    public void onLoad() {
+        },10);
     }
 }

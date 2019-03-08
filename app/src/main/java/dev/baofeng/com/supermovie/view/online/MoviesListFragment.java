@@ -14,8 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mingle.widget.LoadingView;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,11 +30,9 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
  * Created by huangyong on 2018/1/31.
  */
 
-public class MoviesListFragment extends Fragment implements BasePullLayout.OnPullCallBackListener, IOnlineView {
+public class MoviesListFragment extends Fragment implements IOnlineView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.pull_layout)
-    SimplePullLayout pulllayout;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -86,7 +82,6 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
     }
 
     private void initView() {
-        pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
     }
@@ -110,7 +105,7 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
     }
 
 
-    @Override
+   /* @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -131,7 +126,7 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
             }
         }, 2000);
 
-    }
+    }*/
 
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
@@ -156,7 +151,6 @@ public class MoviesListFragment extends Fragment implements BasePullLayout.OnPul
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pulllayout.autoRefresh();
             }
         });
     }

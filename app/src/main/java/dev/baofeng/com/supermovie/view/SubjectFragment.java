@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,14 +26,12 @@ import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
  * Created by huangyong on 2018/1/26.
  */
 
-public class SubjectFragment extends Fragment implements View.OnClickListener, ISubjectView, BasePullLayout.OnPullCallBackListener {
+public class SubjectFragment extends Fragment implements View.OnClickListener, ISubjectView{
 
     private static SubjectFragment subjectFragment;
     @BindView(R.id.rv_suject_list)
     RecyclerView rvSujectList;
     Unbinder unbinder;
-    @BindView(R.id.refreshMore)
-    SimplePullLayout refreshMore;
     private GetSujectPresenter getSujectPresenter;
     private int index = 1;
     private SubjectTitleInfo infoList;
@@ -69,7 +65,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
 
         getSujectPresenter.getSubjectTitle(index, 12);
 
-        refreshMore.setOnPullListener(this);
     }
 
 
@@ -124,7 +119,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
         }
     }
 
-    @Override
+    /*@Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -146,5 +141,5 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
                 refreshMore.finishPull("加载完成",true);
             }
         },1000);
-    }
+    }*/
 }
