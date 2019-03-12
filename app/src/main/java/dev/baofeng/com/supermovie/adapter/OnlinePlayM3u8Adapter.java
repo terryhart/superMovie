@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
+
+import com.huangyong.playerlib.IjkAndMediaPlayer;
 import com.huangyong.playerlib.PlayView;
+import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {
 
@@ -88,15 +92,9 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
 //                bundle.putInt("screenMode", 102);
 //                bundle.putBoolean("standardFullScreen", false);
 //                bundle.putBoolean("supportLiteWnd", true);
-//                //TbsVideo.openVideo(context, url, bundle);
-//
-//                TbsVideo.canUseYunbo(context);
-//                TbsVideo.openVideo(activity,url,bundle);
+//                TbsVideo.openVideo(context, url, bundle);
 
-
-
-
-                Intent intent = new Intent(context, PlayView.class);
+                Intent intent = new Intent(context, IjkAndMediaPlayer.class);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,"this is a title");

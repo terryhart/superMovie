@@ -8,6 +8,9 @@ import android.util.Log;
 
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
+import com.kk.taurus.ijkplayer.IjkPlayer;
+import com.kk.taurus.playerbase.config.PlayerConfig;
+import com.kk.taurus.playerbase.record.PlayRecordManager;
 import com.mob.MobSDK;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
@@ -45,7 +48,20 @@ public class MyApp extends Application{
         Snake.init(this);
         //初始化缓存管理
         initCache();
-        //让Glide能用HTTPS
+
+        //initIjkPlayer
+        IjkPlayer.init(this);
+        //播放记录的配置
+        //开启播放记录
+        PlayerConfig.playRecord(true);
+        PlayRecordManager.setRecordConfig(
+                new PlayRecordManager.RecordConfig.Builder()
+                        .setMaxRecordCount(100)
+                        //.setRecordKeyProvider()
+                        //.setOnRecordCallBack()
+                        .build());
+
+
 
         MobSDK.init(this);
         //初始化友盟统计

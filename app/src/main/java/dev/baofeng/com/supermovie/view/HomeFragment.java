@@ -125,11 +125,10 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
         homepager.setCurrentItem(0);
         homeTabView.setupWithViewPager(homepager);
 
-        pullRefresh.setProgressViewOffset(true,50,200);
         pullRefresh.setSize(SwipeRefreshLayout.DEFAULT);
 
         pullRefresh.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
+                android.R.color.black,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light

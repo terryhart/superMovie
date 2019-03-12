@@ -1,9 +1,9 @@
 package dev.baofeng.com.supermovie.view.online;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,6 +40,8 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @BindView(R.id.loadView)
     LoadingView loadingView;
     OnlineCategoryAdapter adapter;
+    @BindView(R.id.refresh_root)
+    SwipeRefreshLayout refreshRoot;
     private GetOnlinePresenter recpresenter;
     private static MoviesListFragment btlistFragment;
     private Unbinder bind;
@@ -65,6 +67,7 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
         loadingView.setVisibility(View.VISIBLE);
         loadingView.setLoadingText("正在加载，请稍后……");
     }
+
     private void initData() {
         recpresenter = new GetOnlinePresenter(getContext(), this);
         index = 1;
@@ -84,6 +87,24 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     private void initView() {
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
+
+        refreshRoot.setSize(SwipeRefreshLayout.DEFAULT);
+
+        refreshRoot.setColorSchemeResources(
+                android.R.color.black,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        refreshRoot.setProgressBackgroundColor(android.R.color.white);
+
+        refreshRoot.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recpresenter.getOnlineMvData(type, 1, 18);
+            }
+        });
     }
 
 
@@ -105,32 +126,11 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     }
 
 
-   /* @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getOnlineMvData(type, 1, 18);
-                pulllayout.finishPull("加载完成", true);
-            }
-        }, 2000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getMovieMoreData(type, ++index, 18);
-                pulllayout.finishPull("加载完成", true);
-            }
-        }, 2000);
-
-    }*/
 
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
+        refreshRoot.setRefreshing(false);
         loadingView.setVisibility(View.GONE);
         Log.e("movieInfo", movieBean.getData().size() + "");
         adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 0);
@@ -147,6 +147,7 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
 
     @Override
     public void loadError(String msg) {
+        refreshRoot.setRefreshing(false);
         empFram.setVisibility(View.VISIBLE);
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
