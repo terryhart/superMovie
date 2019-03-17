@@ -48,6 +48,7 @@ public class SerisListFragment extends Fragment implements IOnlineView {
     private int index;
     private OnlinePlayInfo movieInfo;
     private String type;
+    private static SerisListFragment btlistFragment;
 
     @Nullable
     @Override
@@ -69,13 +70,11 @@ public class SerisListFragment extends Fragment implements IOnlineView {
     private void initData() {
         recpresenter = new GetOnlinePresenter(getContext(), this);
         index = 1;
-        if (isVisible()&&isAdded()){
-            recpresenter.getOnlineSerisData(type, index, 18);
-        }
+        recpresenter.getOnlineSerisData(type, index, 18);
     }
 
     public static SerisListFragment newInstance(String type) {
-        SerisListFragment  btlistFragment = new SerisListFragment();
+        btlistFragment = new SerisListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Type", type);
         btlistFragment.setArguments(bundle);
@@ -86,7 +85,6 @@ public class SerisListFragment extends Fragment implements IOnlineView {
     private void initView() {
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
-        Log.e("tytpetype", type);
 
         refreshRoot.setSize(SwipeRefreshLayout.DEFAULT);
 
@@ -119,43 +117,33 @@ public class SerisListFragment extends Fragment implements IOnlineView {
         super.onDestroyView();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
 
 
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
-        if (isAdded() && isVisible() && loadingView != null) {
-            loadingView.setVisibility(View.GONE);
-            refreshRoot.setRefreshing(false);
-            Log.e("movieInfo", movieBean.getData().size() + "");
-            adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
-            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            rvlist.setAdapter(adapter);
-            LoadMoreWrapper.with(adapter)
-                    .setLoadMoreEnabled(true)
-                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                        @Override
-                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                            rvlist.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    recpresenter.getSerisMoreData(type, ++index, 18);
-                                }
-                            }, 1);
-                        }
-                    })
-                    .into(rvlist);
-            if (empFram.isShown()) {
-                empFram.setVisibility(View.GONE);
-            }
+        loadingView.setVisibility(View.GONE);
+        refreshRoot.setRefreshing(false);
+        adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
+        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvlist.setAdapter(adapter);
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        rvlist.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recpresenter.getSerisMoreData(type, ++index, 18);
+                            }
+                        }, 1);
+                    }
+                })
+                .into(rvlist);
+        if (empFram.isShown()) {
+            empFram.setVisibility(View.GONE);
         }
-
     }
 
     @Override

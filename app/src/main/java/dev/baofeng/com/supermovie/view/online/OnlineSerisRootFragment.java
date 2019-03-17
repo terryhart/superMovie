@@ -78,8 +78,6 @@ public class OnlineSerisRootFragment extends Fragment {
     public static OnlineSerisRootFragment getInstance() {
         if (btFragment == null) {
             btFragment = new OnlineSerisRootFragment();
-        } else {
-            return btFragment;
         }
         return btFragment;
     }

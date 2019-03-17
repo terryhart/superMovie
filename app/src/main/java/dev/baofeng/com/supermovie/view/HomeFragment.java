@@ -106,7 +106,6 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
 
         View view = inflater.inflate(R.layout.channel_layout, null);
         unbinder = ButterKnife.bind(this, view);
-
         initView();
         initData();
         initEvent();
@@ -219,7 +218,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                 startActivity(favor);
                 break;
             case R.id.reclist:
-                Intent douban = new Intent(getActivity(), DoubanActivity.class);
+                Intent douban = new Intent(getActivity(), AboutUsActivity.class);
                 startActivity(douban);
                 break;
             case R.id.downCenter:

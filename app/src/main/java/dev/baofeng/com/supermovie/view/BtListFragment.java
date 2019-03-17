@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,6 +49,10 @@ public class BtListFragment extends Fragment implements IAllView {
     private RecentUpdate movieInfo;
     private String type;
 
+    @BindView(R.id.refresh_root)
+    SwipeRefreshLayout pullRefresh;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,6 +86,25 @@ public class BtListFragment extends Fragment implements IAllView {
     private void initView() {
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
+
+        pullRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+
+        pullRefresh.setColorSchemeResources(
+                android.R.color.black,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        pullRefresh.setProgressBackgroundColor(android.R.color.white);
+
+        pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recpresenter.getLibraryDdata(type,1,18);
+            }
+        });
+
     }
 
 
@@ -109,6 +133,7 @@ public class BtListFragment extends Fragment implements IAllView {
         this.movieInfo = movieBean;
         if (loadingView!=null){
             loadingView.setVisibility(View.GONE);
+            pullRefresh.setRefreshing(false);
             adapter =new BTcategoryAdapter(getContext(),movieBean);
             rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
             rvlist.setAdapter(adapter);

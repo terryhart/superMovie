@@ -101,7 +101,7 @@
                                 android:drawablePadding="6dp"
                                 android:focusable="true"
                                 android:gravity="center"
-                                android:text="豆瓣榜单"
+                                android:text="帮助·反馈"
                                 android:textColor="#222222"
                                 android:textSize="12sp" />
 
@@ -147,7 +147,7 @@
                     app:indicatorEndColor="#292929"
                     app:indicatorMarginStart="56dp"
                     app:indicatorMarginEnd="56dp"
-                    app:tabTextColor="#b24c4c4c"/>
+                    app:tabTextColor="#B2171717"/>
             </android.support.design.widget.AppBarLayout>
             <android.support.v4.view.ViewPager
                 android:id="@+id/homepager"

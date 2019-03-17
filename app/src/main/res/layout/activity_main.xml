@@ -31,6 +31,7 @@
                 android:layout_weight="1"
                 android:drawablePadding="0dp"
                 android:gravity="center"
+                android:textColor="@color/titlecor"
                 android:text="离线影院"
                 android:layout_height="50dp"
                 />
@@ -39,6 +40,7 @@
                 android:drawableTop="@drawable/bt_bt"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textColor="@color/titlecor"
                 android:text="在线影院"
                 android:drawablePadding="0dp"
                 android:gravity="center"
@@ -51,6 +53,7 @@
                 android:layout_weight="1"
                 android:text="专题排行"
                 android:drawablePadding="0dp"
+                android:textColor="@color/titlecor"
                 android:gravity="center"
                 android:layout_height="50dp"
                 />
@@ -61,6 +64,7 @@
                 android:layout_width="0dp"
                 android:drawablePadding="0dp"
                 android:gravity="center"
+                android:textColor="@color/titlecor"
                 android:layout_weight="1"
                 android:layout_height="50dp"
                 />

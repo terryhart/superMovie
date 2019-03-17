@@ -203,7 +203,7 @@ public class PlayerActivity extends AppCompatActivity {
     CustomControler.OnstateChangeListener changeListener = new CustomControler.OnstateChangeListener() {
         @Override
         public void onAirPlay() {
-
+            Toast.makeText(PlayerActivity.this, "投屏功能即将上线，敬请期待", Toast.LENGTH_SHORT).show();
         }
 
         @Override

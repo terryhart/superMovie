@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -157,17 +158,25 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
+
                 ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
                 testBean.setContent("热门电影，美剧，海量资源每日更新");
                 testBean.setImgUrl(posterUrl);
                 testBean.setDrawableId(R.mipmap.icon_share);
+
                 try {
-                    String url = "https://hiliving.github.io/?id=" + mvId+"&tab="+isMovie;
-                    testBean.setUrl(url);
+                    if (isMovie==GlobalMsg.MOVIE){
+                        testBean.setUrl("https://hiliving.github.io/olineMvShare.html?id="+ mvId);
+                    }else {
+                        testBean.setUrl("https://hiliving.github.io/olineSrShare.html?id=" + mvId);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 ShareUtil.showShareDialog(OnlineDetailPageActivity.this, testBean, ShareConstant.REQUEST_CODE);
+                break;
+            case R.id.favorate:
                 break;
             default:
                 break;

@@ -22,13 +22,18 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/beans.xml'
+    }
+
 }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:cardview-v7:27.1.1'
-    compile 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     /* //播放器 https://github.com/yangchaojiang/yjPlay
                 compile 'com.ycjiang:VideoPlayModule:2.2.19'*/
     implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:2.5.5'
@@ -37,4 +42,8 @@ dependencies {
     api 'cn.jiajunhui:ijkplayer:3344_088_007'
     implementation project(':modules:common')
     implementation project(':modules:dkplayer-java')
+
+    //投屏
+//    compileOnly 'javax.enterprise:cdi-api:2.0'
+//    implementation 'com.github.yanbo469:VideoDlnaScreen:v1.0'
 }

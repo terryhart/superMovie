@@ -21,6 +21,7 @@ import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.GetSujectPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -102,7 +103,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
             adapter = new SujectTitleAdapter(getContext(), infoList);
             rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
             rvSujectList.setAdapter(adapter);
-
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setShowNoMoreEnabled(true)
+                    .setNoMoreView(R.layout.base_no_more)
+                    .setListener(enabled -> rvSujectList.postDelayed(() -> getSujectPresenter.getMoreTitleData(++index, 18), 1))
+                    .into(rvSujectList);
 
         }
 

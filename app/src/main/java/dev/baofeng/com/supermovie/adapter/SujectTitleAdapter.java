@@ -31,9 +31,9 @@ public class SujectTitleAdapter extends RecyclerView.Adapter {
     private String[] imgArr = {
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614157919&di=bc73926ccaa63949802e095b67a20c45&imgtype=0&src=http%3A%2F%2Fpic36.photophoto.cn%2F20150729%2F0008020929291143_b.jpg",
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614157919&di=2d545ef006736183f788a2dc8b59a8c4&imgtype=0&src=http%3A%2F%2Fimg0.ph.126.net%2FjEfaSloPBy3q2gVsG_0S-w%3D%3D%2F6630259624652424975.jpg",
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614158201&di=03d044dfecb7dac0e44d1018d9968a26&imgtype=0&src=http%3A%2F%2Fimg.iecity.com%2FUpload%2FFile%2F201403%2F08%2F20140308072540279.jpg",
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552846359269&di=a948610e18f89b0918ea1da55b6a8c96&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F86%2F05%2F67%2Fd6fee2babbc1de80cb6d688b19e38bed.jpg",
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614158198&di=a0d1b38ce8be29c63399890a5532ceae&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150507%2F0017029555837290_b.jpg",
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614158194&di=6c856b031837d1df04aff51dc1e936ac&imgtype=0&src=http%3A%2F%2Fs16.sinaimg.cn%2Fmiddle%2F005wu7BJgy6Hb9jPom36f%26690",
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552846398335&di=4bce0bfc4dc833d5cfbb303519ff76b1&imgtype=0&src=http%3A%2F%2Fp1.hoopchina.com.cn%2FsinaPic%2Fde70a063-3df1-4223-bac4-1a7253e17b49.jpg",
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539614158193&di=76b3639b2e4eb3bdf2b602ff54f3db28&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F03%2F00%2F16pic_300699_b.jpg",
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539615667478&di=3ac7b2b5650c295fbf22593e8935ec89&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D725230539%2C1375616201%26fm%3D214%26gp%3D0.jpg",
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539615667274&di=017af22e751d260bc9f4bb4fc0c88152&imgtype=0&src=http%3A%2F%2Fimg31.mtime.cn%2FCMS%2FNews%2F2015%2F06%2F19%2F142441.19344609_620X620.jpg",

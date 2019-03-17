@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +61,6 @@ public class OnlineFilmRootFragment extends Fragment {
     public static OnlineFilmRootFragment getInstance() {
         if (btFragment == null) {
             btFragment = new OnlineFilmRootFragment();
-        } else {
-            return btFragment;
         }
         return btFragment;
     }
