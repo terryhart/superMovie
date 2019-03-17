@@ -40,6 +40,9 @@ public class PlayerLib {
                         //.setOnRecordCallBack()
                         .build());
 
+
+        //投屏功能初始化
+        //VApplication.init(contexts);
     }
 
 

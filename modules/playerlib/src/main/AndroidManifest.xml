@@ -8,24 +8,25 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application>
+        <activity android:name=".dlan.DLanActivity"></activity>
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".QsyPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".IjkAndMediaPlayer"
+        <activity
+            android:name=".IjkAndMediaPlayer"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="landscape"
-            ></activity>
-        <activity android:name=".widget.PIPActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".widget.PIPActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".widget.FloatWindowActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

@@ -32,7 +32,7 @@
         app:indicatorMarginStart="10dp"
         app:indicatorMarginEnd="10dp"
         app:indicatorEndColor="#9d9e9f"
-        app:tabTextColor="#b24c4c4c" />
+        app:tabTextColor="@color/titlecor" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/onlinepager"

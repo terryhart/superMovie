@@ -123,8 +123,6 @@ dependencies {
     implementation 'com.umeng.sdk:analytics:7.5.0'
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
-    //权限管理
-    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     //蚯蚓导航 https://github.com/auv1107/tablayout-android
     implementation 'com.github.hiliving:tablayout-android:1.0.1'
     //https://github.com/yanzhenjie/SwipeRecyclerView
