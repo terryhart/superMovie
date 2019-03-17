@@ -264,6 +264,7 @@ public class IjkVideoView extends BaseIjkVideoView {
         PlayerUtils.showActionBar(mVideoController.getContext());
         this.removeView(mHideNavBarView);
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        removeAllViews();
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         this.requestFocus();
         mIsFullScreen = false;

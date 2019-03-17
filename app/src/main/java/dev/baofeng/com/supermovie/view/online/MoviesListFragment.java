@@ -1,6 +1,8 @@
 package dev.baofeng.com.supermovie.view.online;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -43,13 +45,10 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @BindView(R.id.refresh_root)
     SwipeRefreshLayout refreshRoot;
     private GetOnlinePresenter recpresenter;
-    private static MoviesListFragment btlistFragment;
     private Unbinder bind;
     private int index;
     private OnlinePlayInfo movieInfo;
     private String type;
-    private GetRandomRecpresenter randomRecpresenter;
-    private OnlineCategoryAdapter recAdapter;
 
     @Nullable
     @Override
@@ -72,17 +71,20 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
         recpresenter = new GetOnlinePresenter(getContext(), this);
         index = 1;
         recpresenter.getOnlineMvData(type, index, 18);
-
     }
 
+
+
     public static MoviesListFragment newInstance(String type) {
-        btlistFragment = new MoviesListFragment();
+
+        MoviesListFragment btlistFragment = new MoviesListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Type", type);
         btlistFragment.setArguments(bundle);
         return btlistFragment;
-
     }
+
+
 
     private void initView() {
         Bundle bundle = getArguments();
@@ -123,6 +125,7 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
 
@@ -130,19 +133,22 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
-        refreshRoot.setRefreshing(false);
-        loadingView.setVisibility(View.GONE);
-        Log.e("movieInfo", movieBean.getData().size() + "");
-        adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 0);
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(enabled -> rvlist.postDelayed(() -> recpresenter.getMovieMoreData(type, ++index, 18), 1))
-                .into(rvlist);
-        if (empFram.isShown()) {
-            empFram.setVisibility(View.GONE);
+        if (refreshRoot!=null){
+            refreshRoot.setRefreshing(false);
+            loadingView.setVisibility(View.GONE);
+            Log.e("movieInfo", movieBean.getData().size() + "");
+            adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 0);
+            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            rvlist.setAdapter(adapter);
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setListener(enabled -> rvlist.postDelayed(() -> recpresenter.getMovieMoreData(type, ++index, 18), 1))
+                    .into(rvlist);
+            if (empFram.isShown()) {
+                empFram.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override

@@ -56,8 +56,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     }
 
     private void initView() {
-        //初始化数据
-        initData();
+
     }
 
     private void initData() {
@@ -88,6 +87,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void onResume() {
         super.onResume();
+        //初始化数据
+        initData();
     }
 
     @Override
@@ -97,10 +98,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void loadData(SubjectTitleInfo info) {
         this.infoList = info;
-        if (rvSujectList!=null)
-        adapter = new SujectTitleAdapter(getContext(), infoList);
-        rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvSujectList.setAdapter(adapter);
+        if (rvSujectList!=null){
+            adapter = new SujectTitleAdapter(getContext(), infoList);
+            rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvSujectList.setAdapter(adapter);
+        }
+
     }
 
     @Override

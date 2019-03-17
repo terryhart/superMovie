@@ -52,7 +52,7 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         ButterKnife.bind(this);
         titleType = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         subTitle.setText(titleType);
-        initData(titleType);
+
     }
 
     private void initData(String titleType) {
@@ -87,6 +87,12 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData(titleType);
     }
 
     @Override

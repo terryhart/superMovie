@@ -57,21 +57,29 @@ public class OnlineRootFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_online_film, null);
         unbinder = ButterKnife.bind(this, view);
-        initData();
         return view;
     }
 
+
     private void initData() {
+
 
         toobar.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), OnlineSearchActivity.class);
             getContext().startActivity(intent);
         });
-
-        movieFragment = OnlineFilmRootFragment.getInstance();
-        serisFragment = OnlineSerisRootFragment.getInstance();
-        curtoon = SerisListFragment.newInstance("curtoon");
-        show = SerisListFragment.newInstance("show");
+        if (movieFragment == null) {
+            movieFragment = OnlineFilmRootFragment.getInstance();
+        }
+        if (serisFragment == null) {
+            serisFragment = OnlineSerisRootFragment.getInstance();
+        }
+        if (curtoon == null) {
+            curtoon = SerisListFragment.newInstance("curtoon");
+        }
+        if (show == null) {
+            show = SerisListFragment.newInstance("show");
+        }
         List listfragment = new ArrayList<Fragment>();
         listfragment.add(movieFragment);
         listfragment.add(serisFragment);
@@ -99,6 +107,7 @@ public class OnlineRootFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

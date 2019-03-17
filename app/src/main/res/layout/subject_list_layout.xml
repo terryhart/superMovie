@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:id="@+id/rv_subcat_list"
         android:layout_marginTop="4dp"
+        android:background="@color/white"
         android:layout_marginBottom="4dp"
         android:layout_height="match_parent"/>
 </LinearLayout>

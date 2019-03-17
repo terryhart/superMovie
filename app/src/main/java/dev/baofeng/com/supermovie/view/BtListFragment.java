@@ -54,7 +54,6 @@ public class BtListFragment extends Fragment implements IAllView {
         View view = inflater.inflate(R.layout.home_frag_layout, null);
         bind = ButterKnife.bind(this, view);
         initView();
-        initData();
         return view;
     }
 
@@ -82,7 +81,6 @@ public class BtListFragment extends Fragment implements IAllView {
     private void initView() {
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
-        Log.e("tytpetype", type);
     }
 
 
@@ -103,33 +101,36 @@ public class BtListFragment extends Fragment implements IAllView {
     @Override
     public void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override
     public void loadSuccess(RecentUpdate movieBean) {
         this.movieInfo = movieBean;
-        loadingView.setVisibility(View.GONE);
-        Log.e("movieInfo",movieBean.getData().size()+"");
-        adapter =new BTcategoryAdapter(getContext(),movieBean);
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getLibraryMoreDdata(type, ++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
-                .into(rvlist);
-        if (empFram.isShown()){
-            empFram.setVisibility(View.GONE);
+        if (loadingView!=null){
+            loadingView.setVisibility(View.GONE);
+            adapter =new BTcategoryAdapter(getContext(),movieBean);
+            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            rvlist.setAdapter(adapter);
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                        @Override
+                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                            rvlist.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recpresenter.getLibraryMoreDdata(type, ++index, 18);
+                                }
+                            }, 1);
+                        }
+                    })
+                    .into(rvlist);
+            if (empFram.isShown()){
+                empFram.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override

@@ -100,25 +100,28 @@ public class MovieFragment extends Fragment implements   IRecentView {
         this.movieInfo = movieBean;
         Log.e("testloadmore", "tesloadmore");
         adapter = new CategoryAdapter(getActivity(), movieBean);
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getMovieMore(++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
-                .into(rvlist);
-        if (empFram.isShown()){
-            empFram.setVisibility(View.GONE);
+        if (rvlist!=null){
+            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            rvlist.setAdapter(adapter);
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                        @Override
+                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                            rvlist.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recpresenter.getMovieMore(++index, 18);
+                                }
+                            }, 1);
+                        }
+                    })
+                    .into(rvlist);
+            if (empFram.isShown()){
+                empFram.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override

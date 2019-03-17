@@ -81,7 +81,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
      * 普通列表dialog
      */
     private void showListDialog(String url) {
-        final String listItems[] = new String[]{"应用内播放", "王卡专用免流播放(须选择QQ浏览器)"};
+        final String listItems[] = new String[]{"高级播放(可投屏、小窗)","简单播放",  "王卡专用免流播放(须选择QQ浏览器)"};
 
         AlertDialog.Builder listDialog = new AlertDialog.Builder(context);
         listDialog.setTitle("选择播放方式");
@@ -90,13 +90,6 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         listDialog.setItems(listItems, (dialog, which) -> {
 
             if (which == 0) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("screenMode", 102);
-//                bundle.putBoolean("standardFullScreen", false);
-//                bundle.putBoolean("supportLiteWnd", true);
-//                bundle.putString("title",title);
-//                TbsVideo.openVideo(context, url, bundle);
-
                 Intent intent = new Intent(context, PlayerActivity.class);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
@@ -104,6 +97,14 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
                 context.startActivity(intent);
             }
             if (which == 1) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("screenMode", 102);
+                bundle.putBoolean("standardFullScreen", false);
+                bundle.putBoolean("supportLiteWnd", true);
+                bundle.putString("title",title);
+                TbsVideo.openVideo(context, url, bundle);
+            }
+            if (which ==2){
                 openBrowser(context, url);
             }
         });
