@@ -102,6 +102,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
             adapter = new SujectTitleAdapter(getContext(), infoList);
             rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
             rvSujectList.setAdapter(adapter);
+
+
         }
 
     }

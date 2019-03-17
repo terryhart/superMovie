@@ -22,6 +22,8 @@ import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.presenter.GetSujectPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * @author Huangyong
@@ -65,20 +67,29 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
     @Override
     public void loadData(SubjectInfo info) {
         this.info = info;
-        if (info.getData().size()==0){
+        if (info.getData().size() == 0) {
             Toast.makeText(this, "数据尚未收录，请耐心等待", Toast.LENGTH_SHORT).show();
         }
         adapter = new SujectAdapter(this, info);
         rvSubcatList.setLayoutManager(new GridLayoutManager(this, 3));
         rvSubcatList.setAdapter(adapter);
+
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setShowNoMoreEnabled(true)
+                .setNoMoreView(R.layout.base_no_more)
+                .setListener(enabled -> rvSubcatList.postDelayed(() -> presenter.getMoreData(++index, 18, titleType), 1))
+                .into(rvSubcatList);
     }
 
-    @Override
-    public void loadData(SubjectTitleInfo info) {
-    }
+
 
     @Override
     public void loadError(String msg) {
+
+        LoadMoreWrapper.with(adapter).setLoadMoreEnabled(false);
+
+        Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -98,28 +109,8 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
     @Override
     public void loadMore(SubjectTitleInfo result) {
     }
-
-    /*@Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.getSubject(1, 18,titleType);
-                if (refreshLoadMore!=null){
-                    refreshLoadMore.finishPull("加载完成",true);
-                }
-            }
-        },1000);
+    @Override
+    public void loadData(SubjectTitleInfo info) {
     }
 
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.getMoreData(++index,18,titleType);
-                refreshLoadMore.finishPull("加载完成",true);
-            }
-        },1000);
-    }*/
 }

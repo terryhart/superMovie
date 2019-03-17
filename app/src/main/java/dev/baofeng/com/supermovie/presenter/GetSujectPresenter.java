@@ -74,7 +74,10 @@ public class GetSujectPresenter extends BasePresenter<ISubjectView>{
                         .getSubject(type,page,pagesize), new BaseApi.IResponseListener<SubjectInfo>() {
                     @Override
                     public void onSuccess(SubjectInfo data) {
-                        iview.loadData(data);
+                        iview.loadMore(data);
+                        if (data.getData().size()==0){
+                            iview.loadError("没有更多数据了");
+                        }
                     }
 
                     @Override
