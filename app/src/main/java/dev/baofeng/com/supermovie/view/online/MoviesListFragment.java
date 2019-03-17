@@ -23,7 +23,6 @@ import butterknife.Unbinder;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
-import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.online.GetOnlinePresenter;
 import dev.baofeng.com.supermovie.presenter.online.iview.IOnlineView;
 import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;

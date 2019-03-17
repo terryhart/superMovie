@@ -61,8 +61,6 @@ public class OnlineFilmRootFragment extends Fragment {
     public static OnlineFilmRootFragment getInstance() {
         if (btFragment == null) {
             btFragment = new OnlineFilmRootFragment();
-        } else {
-            return btFragment;
         }
         return btFragment;
     }

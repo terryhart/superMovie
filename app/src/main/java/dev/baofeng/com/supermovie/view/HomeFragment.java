@@ -106,7 +106,6 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
 
         View view = inflater.inflate(R.layout.channel_layout, null);
         unbinder = ButterKnife.bind(this, view);
-
         initView();
         initData();
         initEvent();
