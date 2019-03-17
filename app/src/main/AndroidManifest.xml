@@ -25,6 +25,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.AboutUsActivity" />
