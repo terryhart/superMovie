@@ -57,7 +57,7 @@ public class UpdateDialog extends Dialog {
                 intent.putExtra(Params.DURL,downloadUrl);
                 getContext().startService(intent);
                 dismiss();
-
+                Toast.makeText(getContext(), "后台下载中，请耐心等待……", Toast.LENGTH_SHORT).show();
             }
         });
         btWeb.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,6 @@ public class UpdateDialog extends Dialog {
                 String urls = "https://fir.im/btmovie";
                 mvTv.putExtra(KeyParam.PLAYURL,urls);
                 getContext().startActivity(mvTv);
-                dismiss();
                 dismiss();
             }
         });

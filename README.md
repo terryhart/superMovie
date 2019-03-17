@@ -5,7 +5,7 @@
 
 手机端更舒适地下载高清电影，热门电影，美剧，每日更新。（效果图更新不及时，以最新app实际效果为准）
 
-## 1.2.2版本没适配安卓9.0，新版本到来前，先下载这个版本吧  https://fir.im/btmovie
+## 1.3.0版本已发布，欢迎下载体验 ：https://fir.im/btmovie
 
 
 <table style="border-width: 0px ;">
@@ -36,7 +36,7 @@
 
 
 
-#### 扫码下载体验（release-1.2.2）
+#### 扫码下载体验（release-1.3.0）
 
   若扫不出，点击这里 https://fir.im/btmovie
 
@@ -50,6 +50,26 @@
 <div>
     <img src="https://github.com/hiliving/superMovie/blob/master/picture/qq_group.png" width="300" height="300" alt="仅供学习交流" align=center>
 </div>
+
+
+
+
+
+
+
+>2019/3/17更新：
+
+    最近好忙，才发现距离上个版本已经过去一个月了，赶紧行动起来，不然要荒废了
+
+  - 1.播放器优化，增加小窗播放功能
+
+  - 2.修复布局重叠bug，解决了一些奔溃
+
+  - 3.在线资源增加分享功能，发现好电影可以跟朋友炫耀啦，哈哈哈！
+
+  - TODO:
+    1.即将上线投屏功能，电视看剧更方便
+    2.自定义下载目录，这次太匆忙，下个版本上。
 
 >2019/2/17更新：
 
