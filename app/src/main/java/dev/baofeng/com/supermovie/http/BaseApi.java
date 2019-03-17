@@ -8,6 +8,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -46,6 +47,12 @@ public class BaseApi {
             return;
         }
         observable.subscribeOn(Schedulers.io())
+                .doOnDispose(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<T>() {
 

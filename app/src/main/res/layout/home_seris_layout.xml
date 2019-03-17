@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="50dp"
     android:paddingTop="2dp"
-    android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true">
     <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/empty_view"
@@ -22,19 +21,13 @@
             android:drawablePadding="@dimen/dp_10"
             android:textSize="18sp"
             android:drawableTop="@drawable/common_page_empty_zx"
-
             />
     </FrameLayout>
 
-    <com.xiaosu.pulllayout.SimplePullLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/pull_layout"
+        android:id="@+id/rvlist"
+        android:background="@color/white"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rvlist"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-        </android.support.v7.widget.RecyclerView>
-    </com.xiaosu.pulllayout.SimplePullLayout>
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

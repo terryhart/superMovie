@@ -32,4 +32,7 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     api "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
+    //权限管理
+    api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 }

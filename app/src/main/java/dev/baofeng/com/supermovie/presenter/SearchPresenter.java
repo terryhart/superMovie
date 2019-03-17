@@ -16,10 +16,6 @@ import dev.baofeng.com.supermovie.http.ApiService;
 import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.ISview;
 import dev.baofeng.com.supermovie.presenter.iview.Isearch;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by huangyong on 2018/2/23.

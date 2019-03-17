@@ -25,10 +25,12 @@ import android.widget.Toast;
 
 import com.dueeeke.videocontroller.BatteryReceiver;
 import com.dueeeke.videocontroller.MarqueeTextView;
+import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videoplayer.controller.GestureVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.util.L;
 import com.dueeeke.videoplayer.util.PlayerUtils;
+import com.huangyong.playerlib.manager.PIPManager;
 
 /**
  * creator huangyong
@@ -60,6 +62,8 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private BatteryReceiver mBatteryReceiver;
     protected ImageView mRefreshButton;
     private SpeedDialog speedDialog;
+    private ImageView pic2pic;
+    private ImageView airPlay;
 
     public CustomControler(@NonNull Context context) {
         this(context, null);
@@ -81,6 +85,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     @Override
     protected void initView() {
         super.initView();
+        mDefaultTimeout =6000;
         mFullScreenButton = mControllerView.findViewById(R.id.fullscreen);
         mFullScreenButton.setOnClickListener(this);
         mBottomContainer = mControllerView.findViewById(R.id.bottom_container);
@@ -107,10 +112,15 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mTitle = mControllerView.findViewById(R.id.title);
         mSysTime = mControllerView.findViewById(R.id.sys_time);
         mBatteryLevel = mControllerView.findViewById(R.id.iv_battery);
+        pic2pic = mControllerView.findViewById(R.id.pic2pic);
+        pic2pic.setOnClickListener(this);
+        airPlay = mControllerView.findViewById(R.id.airplay);
+        airPlay.setOnClickListener(this);
         mBatteryReceiver = new BatteryReceiver(mBatteryLevel);
         mRefreshButton = mControllerView.findViewById(R.id.iv_refresh);
         mRefreshButton.setOnClickListener(this);
         speedDialog =new SpeedDialog(getContext());
+
     }
 
     @Override
@@ -141,6 +151,14 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             mMediaPlayer.retry();
         } else if (i == R.id.iv_refresh) {
             mMediaPlayer.refresh();
+        }else if (i==R.id.pic2pic){
+            if (changeListener!=null){
+                changeListener.onPic2Pic();
+            }
+        }else if (i == R.id.airplay){
+            if (changeListener!=null){
+                changeListener.onAirPlay();
+            }
         }
     }
 
@@ -489,5 +507,16 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         if (speedDialog!=null&&speedDialog.isShowing()){
             speedDialog.dismiss();
         }
+    }
+
+
+    private OnstateChangeListener changeListener;
+    public void setOnstateChangeListener(OnstateChangeListener changeListener){
+        this.changeListener = changeListener;
+    }
+    public interface OnstateChangeListener{
+        void onAirPlay();
+
+        void onPic2Pic();
     }
 }

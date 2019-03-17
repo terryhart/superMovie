@@ -23,16 +23,10 @@
             android:textSize="16sp"
             />
     </android.support.v7.widget.Toolbar>
-    <com.xiaosu.pulllayout.SimplePullLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_marginTop="2dp"
-        android:id="@+id/refreshMore"
+        android:id="@+id/rv_suject_list"
         android:layout_marginBottom="60dp"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rv_suject_list"
-            android:layout_height="match_parent"/>
-    </com.xiaosu.pulllayout.SimplePullLayout>
-
+        android:layout_marginTop="2dp"
+        android:layout_height="match_parent"/>
 </LinearLayout>

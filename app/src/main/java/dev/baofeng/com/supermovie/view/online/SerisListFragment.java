@@ -1,9 +1,10 @@
 package dev.baofeng.com.supermovie.view.online;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,8 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mingle.widget.LoadingView;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,11 +31,9 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
  * Created by huangyong on 2018/1/31.
  */
 
-public class SerisListFragment extends Fragment implements BasePullLayout.OnPullCallBackListener, IOnlineView {
+public class SerisListFragment extends Fragment implements IOnlineView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.pull_layout)
-    SimplePullLayout pulllayout;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -44,8 +41,9 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     @BindView(R.id.loadView)
     LoadingView loadingView;
     OnlineCategoryAdapter adapter;
+    @BindView(R.id.refresh_root)
+    SwipeRefreshLayout refreshRoot;
     private GetOnlinePresenter recpresenter;
-    private static SerisListFragment btlistFragment;
     private Unbinder bind;
     private int index;
     private OnlinePlayInfo movieInfo;
@@ -71,11 +69,13 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     private void initData() {
         recpresenter = new GetOnlinePresenter(getContext(), this);
         index = 1;
-        recpresenter.getOnlineSerisData(type, index, 18);
+        if (isVisible()&&isAdded()){
+            recpresenter.getOnlineSerisData(type, index, 18);
+        }
     }
 
     public static SerisListFragment newInstance(String type) {
-        btlistFragment = new SerisListFragment();
+        SerisListFragment  btlistFragment = new SerisListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Type", type);
         btlistFragment.setArguments(bundle);
@@ -84,10 +84,27 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     }
 
     private void initView() {
-        pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
         Log.e("tytpetype", type);
+
+        refreshRoot.setSize(SwipeRefreshLayout.DEFAULT);
+
+        refreshRoot.setColorSchemeResources(
+                android.R.color.black,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+        refreshRoot.setProgressBackgroundColor(android.R.color.white);
+
+        refreshRoot.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recpresenter.getOnlineSerisData(type, 1, 18);
+            }
+        });
     }
 
 
@@ -100,72 +117,54 @@ public class SerisListFragment extends Fragment implements BasePullLayout.OnPull
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+
     }
 
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getOnlineSerisData(type, 1, 18);
-                pulllayout.finishPull("加载完成", true);
-            }
-        }, 2000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getSerisMoreData(type, ++index, 18);
-                pulllayout.finishPull("加载完成", true);
-            }
-        }, 2000);
-
-    }
 
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
-        loadingView.setVisibility(View.GONE);
-        Log.e("movieInfo", movieBean.getData().size() + "");
-        adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getSerisMoreData(type, ++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
-                .into(rvlist);
-        if (empFram.isShown()) {
-            empFram.setVisibility(View.GONE);
+        if (isAdded() && isVisible() && loadingView != null) {
+            loadingView.setVisibility(View.GONE);
+            refreshRoot.setRefreshing(false);
+            Log.e("movieInfo", movieBean.getData().size() + "");
+            adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
+            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            rvlist.setAdapter(adapter);
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                        @Override
+                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                            rvlist.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recpresenter.getSerisMoreData(type, ++index, 18);
+                                }
+                            }, 1);
+                        }
+                    })
+                    .into(rvlist);
+            if (empFram.isShown()) {
+                empFram.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override
     public void loadError(String msg) {
+        refreshRoot.setRefreshing(false);
         empFram.setVisibility(View.VISIBLE);
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pulllayout.autoRefresh();
             }
         });
     }

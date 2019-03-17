@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_main"
     android:layout_width="match_parent"
+    android:id="@+id/pullRefresh"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:fitsSystemWindows="true">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:id="@+id/content_main"
+        android:fitsSystemWindows="true"
+        android:layout_height="match_parent">
+
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
@@ -148,5 +154,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

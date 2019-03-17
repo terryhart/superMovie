@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mingle.widget.LoadingView;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,11 +31,9 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
  * Created by huangyong on 2018/1/31.
  */
 
-public class BtListFragment extends Fragment implements IAllView, BasePullLayout.OnPullCallBackListener {
+public class BtListFragment extends Fragment implements IAllView {
     @BindView(R.id.rvlist)
     RecyclerView rvlist;
-    @BindView(R.id.pull_layout)
-    SimplePullLayout pulllayout;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -58,7 +54,6 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         View view = inflater.inflate(R.layout.home_frag_layout, null);
         bind = ButterKnife.bind(this, view);
         initView();
-        initData();
         return view;
     }
 
@@ -84,10 +79,8 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         loadingView.setLoadingText("正在加载，请稍后……");
     }
     private void initView() {
-        pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
         this.type = bundle.getString("Type");
-        Log.e("tytpetype", type);
     }
 
 
@@ -108,33 +101,36 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     @Override
     public void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override
     public void loadSuccess(RecentUpdate movieBean) {
         this.movieInfo = movieBean;
-        loadingView.setVisibility(View.GONE);
-        Log.e("movieInfo",movieBean.getData().size()+"");
-        adapter =new BTcategoryAdapter(getContext(),movieBean);
-        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getLibraryMoreDdata(type, ++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
-                .into(rvlist);
-        if (empFram.isShown()){
-            empFram.setVisibility(View.GONE);
+        if (loadingView!=null){
+            loadingView.setVisibility(View.GONE);
+            adapter =new BTcategoryAdapter(getContext(),movieBean);
+            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            rvlist.setAdapter(adapter);
+            LoadMoreWrapper.with(adapter)
+                    .setLoadMoreEnabled(true)
+                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                        @Override
+                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                            rvlist.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recpresenter.getLibraryMoreDdata(type, ++index, 18);
+                                }
+                            }, 1);
+                        }
+                    })
+                    .into(rvlist);
+            if (empFram.isShown()){
+                empFram.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override
@@ -152,32 +148,8 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pulllayout.autoRefresh();
             }
         });
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getLibraryDdata(type,1,18);
-                pulllayout.finishPull("加载完成",true);
-            }
-        },2000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recpresenter.getLibraryMoreDdata(type,++index,18);
-                pulllayout.finishPull("加载完成",true);
-            }
-        },2000);
-
     }
 
 }

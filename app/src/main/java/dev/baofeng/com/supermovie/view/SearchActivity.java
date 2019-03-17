@@ -181,7 +181,6 @@ public class SearchActivity extends AppCompatActivity implements Isearch, Search
         if (presenter.keywordsExist(keyword)) {
             return;
         } else {
-
             presenter.addKeyWordsTodb(keyword);
             initSearchHistory();
         }

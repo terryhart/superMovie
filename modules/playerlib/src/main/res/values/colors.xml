@@ -16,5 +16,6 @@
     <color name="text_selected">#1effe9</color>
      <color name="text_un_selected">#f9f9f9</color>
 
-
+    <color name="controller_bg_dark">#66000000</color>
+    <color name="controller_bg_light">#00000000</color>
 </resources>

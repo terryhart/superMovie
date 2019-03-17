@@ -1,20 +1,11 @@
 package dev.baofeng.com.supermovie.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
-
-import dev.baofeng.com.supermovie.domain.DoubanTop250;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
-import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.http.ApiService;
 import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class CenterPresenter extends BasePresenter<IAllView> {
 

@@ -1,9 +1,9 @@
 package dev.baofeng.com.supermovie.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,22 +12,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bftv.myapplication.config.KeyParam;
-import com.bftv.myapplication.view.WebviewPlayer;
-import com.huangyong.downloadlib.utils.MD5Utils;
-import com.huangyong.playerlib.Params;
-import com.huangyong.playerlib.PlayerActivity;
-import com.tencent.smtt.sdk.TbsVideo;
-
-import dev.baofeng.com.supermovie.MyApp;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
+
+import com.huangyong.playerlib.IjkAndMediaPlayer;
+import com.huangyong.playerlib.PlayerActivity;
+import com.huangyong.playerlib.QsyPlayerActivity;
+import com.huangyong.playerlib.widget.PIPActivity;
+import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {
 
@@ -37,11 +32,13 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
 
     private String poster;
     private String title;
+    private Activity activity;
 
-    public OnlinePlayM3u8Adapter(PlayUrlBean playList, String posterUrl, String title) {
+    public OnlinePlayM3u8Adapter(Activity activity, PlayUrlBean playList, String posterUrl, String title) {
         this.playList = playList;
         this.poster = posterUrl;
         this.title = title;
+        this.activity = activity;
     }
 
     @NonNull
@@ -84,7 +81,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
      * 普通列表dialog
      */
     private void showListDialog(String url) {
-        final String listItems[] = new String[]{"应用内播放", "王卡专用免流播放(须选择QQ浏览器)"};
+        final String listItems[] = new String[]{"高级播放(可投屏、小窗)","简单播放",  "王卡专用免流播放(须选择QQ浏览器)"};
 
         AlertDialog.Builder listDialog = new AlertDialog.Builder(context);
         listDialog.setTitle("选择播放方式");
@@ -93,11 +90,21 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         listDialog.setItems(listItems, (dialog, which) -> {
 
             if (which == 0) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("screenMode", 102);
-                TbsVideo.openVideo(context, url, bundle);
+                Intent intent = new Intent(context, PlayerActivity.class);
+                intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
+                intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
+                intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,"this is a title");
+                context.startActivity(intent);
             }
             if (which == 1) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("screenMode", 102);
+                bundle.putBoolean("standardFullScreen", false);
+                bundle.putBoolean("supportLiteWnd", true);
+                bundle.putString("title",title);
+                TbsVideo.openVideo(context, url, bundle);
+            }
+            if (which ==2){
                 openBrowser(context, url);
             }
         });

@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,14 +26,12 @@ import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
  * Created by huangyong on 2018/1/26.
  */
 
-public class SubjectFragment extends Fragment implements View.OnClickListener, ISubjectView, BasePullLayout.OnPullCallBackListener {
+public class SubjectFragment extends Fragment implements View.OnClickListener, ISubjectView{
 
     private static SubjectFragment subjectFragment;
     @BindView(R.id.rv_suject_list)
     RecyclerView rvSujectList;
     Unbinder unbinder;
-    @BindView(R.id.refreshMore)
-    SimplePullLayout refreshMore;
     private GetSujectPresenter getSujectPresenter;
     private int index = 1;
     private SubjectTitleInfo infoList;
@@ -60,16 +56,13 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     }
 
     private void initView() {
-        //初始化数据
-        initData();
+
     }
 
     private void initData() {
         getSujectPresenter = new GetSujectPresenter(getContext(), this);
-
         getSujectPresenter.getSubjectTitle(index, 12);
 
-        refreshMore.setOnPullListener(this);
     }
 
 
@@ -94,6 +87,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void onResume() {
         super.onResume();
+        //初始化数据
+        initData();
     }
 
     @Override
@@ -103,9 +98,14 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void loadData(SubjectTitleInfo info) {
         this.infoList = info;
-        adapter = new SujectTitleAdapter(getContext(), infoList);
-        rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvSujectList.setAdapter(adapter);
+        if (rvSujectList!=null){
+            adapter = new SujectTitleAdapter(getContext(), infoList);
+            rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvSujectList.setAdapter(adapter);
+
+
+        }
+
     }
 
     @Override
@@ -122,29 +122,5 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSujectPresenter.getSubjectTitle(1, 12);
-                if (refreshMore!=null){
-                    refreshMore.finishPull("加载完成",true);
-                }
-            }
-        },1000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSujectPresenter.getMoreTitleData(++index,12);
-                refreshMore.finishPull("加载完成",true);
-            }
-        },1000);
     }
 }

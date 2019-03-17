@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="30dp"
+    android:id="@+id/refresh_root"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:paddingBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/empty_view"
@@ -20,21 +27,15 @@
             android:drawablePadding="@dimen/dp_10"
             android:textSize="18sp"
             android:drawableTop="@drawable/common_page_empty_zx"
-
             />
     </FrameLayout>
 
-    <com.xiaosu.pulllayout.SimplePullLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/pull_layout"
+        android:id="@+id/rvlist"
+        android:background="@color/white"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rvlist"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-        </android.support.v7.widget.RecyclerView>
-    </com.xiaosu.pulllayout.SimplePullLayout>
+    </android.support.v7.widget.RecyclerView>
 
     <com.mingle.widget.LoadingView
         android:id="@+id/loadView"
@@ -42,4 +43,5 @@
         android:layout_width="200pt"
         android:layout_gravity="center"
         android:layout_height="200pt" />
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -11,10 +11,6 @@ import dev.baofeng.com.supermovie.http.ApiService;
 import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IMoview;
 import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by huangyong on 2018/1/26.
@@ -78,7 +74,10 @@ public class GetSujectPresenter extends BasePresenter<ISubjectView>{
                         .getSubject(type,page,pagesize), new BaseApi.IResponseListener<SubjectInfo>() {
                     @Override
                     public void onSuccess(SubjectInfo data) {
-                        iview.loadData(data);
+                        iview.loadMore(data);
+                        if (data.getData().size()==0){
+                            iview.loadError("没有更多数据了");
+                        }
                     }
 
                     @Override

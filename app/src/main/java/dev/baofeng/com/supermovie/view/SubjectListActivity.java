@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.model.Params;
-import com.xiaosu.pulllayout.SimplePullLayout;
-import com.xiaosu.pulllayout.base.BasePullLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +22,8 @@ import dev.baofeng.com.supermovie.domain.SubjectInfo;
 import dev.baofeng.com.supermovie.domain.SubjectTitleInfo;
 import dev.baofeng.com.supermovie.presenter.GetSujectPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * @author Huangyong
@@ -35,14 +35,12 @@ import dev.baofeng.com.supermovie.presenter.iview.ISubjectView;
  * @changeRecord [修改记录] <br/>
  * 2018/10/15 ：created
  */
-public class SubjectListActivity extends AppCompatActivity implements ISubjectView, BasePullLayout.OnPullCallBackListener {
+public class SubjectListActivity extends AppCompatActivity implements ISubjectView {
 
     @BindView(R.id.rv_subcat_list)
     RecyclerView rvSubcatList;
     @BindView(R.id.subTitle)
     TextView subTitle;
-    @BindView(R.id.refreshLoadMore)
-    SimplePullLayout refreshLoadMore;
     private GetSujectPresenter presenter;
     private int index;
     private SubjectInfo info;
@@ -56,7 +54,7 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         ButterKnife.bind(this);
         titleType = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         subTitle.setText(titleType);
-        initData(titleType);
+
     }
 
     private void initData(String titleType) {
@@ -64,26 +62,34 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         index = 1;
         presenter.getSubject(index, 18, titleType);
 
-        refreshLoadMore.setOnPullListener(this);
     }
 
     @Override
     public void loadData(SubjectInfo info) {
         this.info = info;
-        if (info.getData().size()==0){
+        if (info.getData().size() == 0) {
             Toast.makeText(this, "数据尚未收录，请耐心等待", Toast.LENGTH_SHORT).show();
         }
         adapter = new SujectAdapter(this, info);
         rvSubcatList.setLayoutManager(new GridLayoutManager(this, 3));
         rvSubcatList.setAdapter(adapter);
+
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setShowNoMoreEnabled(true)
+                .setNoMoreView(R.layout.base_no_more)
+                .setListener(enabled -> rvSubcatList.postDelayed(() -> presenter.getMoreData(++index, 18, titleType), 1))
+                .into(rvSubcatList);
     }
 
-    @Override
-    public void loadData(SubjectTitleInfo info) {
-    }
+
 
     @Override
     public void loadError(String msg) {
+
+        LoadMoreWrapper.with(adapter).setLoadMoreEnabled(false);
+
+        Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -95,30 +101,16 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        initData(titleType);
+    }
+
+    @Override
     public void loadMore(SubjectTitleInfo result) {
     }
-
     @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.getSubject(1, 18,titleType);
-                if (refreshLoadMore!=null){
-                    refreshLoadMore.finishPull("加载完成",true);
-                }
-            }
-        },1000);
+    public void loadData(SubjectTitleInfo info) {
     }
 
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.getMoreData(++index,18,titleType);
-                refreshLoadMore.finishPull("加载完成",true);
-            }
-        },1000);
-    }
 }

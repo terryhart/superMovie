@@ -162,13 +162,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
-
-                String replace = "";
-                if (sj.contains("·")) {
-                    replace = sj.replaceAll("·", "_");
-                } else {
-                    replace = sj;
-                }
                 ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
                 testBean.setContent("热门电影，美剧，海量资源每日更新");
                 testBean.setImgUrl(posterImagUrl);
@@ -180,11 +173,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                     e.printStackTrace();
                 }
                 ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
-
                 break;
             case R.id.favorate:
                 toggleFavor(item);
-
                 break;
             default:
                 break;
@@ -244,7 +235,6 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             }
         });
 
-        //加入圆角变换
         Glide.with(this)
                 .load(posterImagUrl)
                 .into(mDetailPoster);

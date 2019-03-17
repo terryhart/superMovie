@@ -8,17 +8,17 @@ import android.util.Log;
 
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.playerlib.PlayerLib;
+import com.mob.MobSDK;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.youngfeng.snake.Snake;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import byc.imagewatcher.ImageWatcherHelper;
 import dev.baofeng.com.supermovie.utils.SPUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.internal.cache.CacheInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -44,8 +44,15 @@ public class MyApp extends Application{
         Snake.init(this);
         //初始化缓存管理
         initCache();
-        //让Glide能用HTTPS
 
+
+        //初始化播放器相关
+        PlayerLib.init(this);
+
+
+
+
+        MobSDK.init(this);
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。

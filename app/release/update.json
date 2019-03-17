@@ -1,0 +1,11 @@
+{
+	"code":"200",
+	"data":{
+		"version":"1.2.2",
+		"versionCode":122,
+		"isForce":false,
+		"downloadUrl":"http://123.207.150.253/ygcms/app/BTMovie_1.2.2_release.apk",
+		"updateMsg":"1.更换在线片源，观看更流程，同时支持下载\n2.优化界面UI，交互更友好\nTips.若下载后未自动安装，请到文件管理，找到app_update文件夹，可手动安装。"
+	},
+	"msg":""
+}

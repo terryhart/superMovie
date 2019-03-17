@@ -12,7 +12,6 @@
         android:background="@drawable/dkplayer_shape_standard_controller_top_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         tools:visibility="visible">
 
         <ImageView
@@ -40,7 +39,22 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/dkplayer_controller_text_size"
             tools:text="这是一个标题" />
-
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/pic2pic"
+            android:background="@drawable/ic_picture_in_picture_24dp"
+            />
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/airplay"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_cast_black_24dp"
+            />
         <ImageView
             android:id="@+id/iv_battery"
             android:layout_width="26dp"
@@ -68,7 +82,6 @@
         android:background="@drawable/dkplayer_shape_stardard_controller_bottom_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         tools:visibility="visible">
 
         <ImageView
@@ -216,5 +229,8 @@
         android:indeterminateDrawable="@drawable/dkplayer_progress_loading"
         android:visibility="gone"
         tools:visibility="visible" />
+
+
+
 
 </FrameLayout>

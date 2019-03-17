@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 app:titleTextAppearance="@style/ToolbarTitle"
                 android:fitsSystemWindows="true"
-                android:gravity="bottom"
+                android:paddingTop="26dp"
+                android:gravity="top"
                 android:background="@android:color/transparent"
                 android:layout_height="80dp">
 
