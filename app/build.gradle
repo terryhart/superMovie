@@ -115,7 +115,7 @@ dependencies {
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':modules:downloadlib')
     //下拉刷新上拉加载
-//    implementation 'com.xiaosu:pullLayout:3.0.4'
+    //    implementation 'com.xiaosu:pullLayout:3.0.4'
     implementation project(':modules:playerlib')
     implementation project(':modules:vivideo')
     //友盟统计
@@ -123,8 +123,6 @@ dependencies {
     implementation 'com.umeng.sdk:analytics:7.5.0'
     //展开text
     implementation 'com.github.MZCretin:ExpandableTextView:v1.5.1'
-    //权限管理
-    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     //蚯蚓导航 https://github.com/auv1107/tablayout-android
     implementation 'com.github.hiliving:tablayout-android:1.0.1'
     //https://github.com/yanzhenjie/SwipeRecyclerView
@@ -150,8 +148,7 @@ dependencies {
     implementation 'com.byc:ImageWatcher:1.1.0'
     implementation 'com.youngfeng.android:snake:0.3.2'
     annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
-
-
+    implementation project(':modules:common')
 }
 MobSDK {
     appKey "21d6c31e3d978"

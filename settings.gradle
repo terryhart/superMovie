@@ -1,1 +1,3 @@
-include ':app', ':modules:thunder', ':modules:downloadlib', ':modules:playerlib', ':modules:vivideo', ':modules:AopLib', ':modules:common', ':modules:pagelayout-java'
+include ':app', ':modules:thunder', ':modules:downloadlib', ':modules:playerlib',
+        ':modules:vivideo', ':modules:AopLib', ':modules:common', ':modules:pagelayout-java', ':modules:dkplayer-java'
+

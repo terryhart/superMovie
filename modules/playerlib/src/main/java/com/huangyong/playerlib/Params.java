@@ -27,4 +27,5 @@ public class Params {
 
 
     public static final String DEFAULT_PATH = "/sdcard/AMovieDownload/";
+    public static boolean ignoreMobile;
 }

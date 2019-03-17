@@ -1,44 +1,28 @@
 package com.huangyong.playerlib;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
-import com.huangyong.playerlib.cover.CloseCover;
-import com.huangyong.playerlib.cover.ControllerCover;
-import com.huangyong.playerlib.cover.GestureCover;
-import com.huangyong.playerlib.data.DataInter;
-import com.huangyong.playerlib.util.OrientationSensor;
-import com.huangyong.playerlib.util.PUtil;
-import com.kk.taurus.playerbase.assist.InterEvent;
-import com.kk.taurus.playerbase.assist.OnVideoViewEventHandler;
-import com.kk.taurus.playerbase.entity.DataSource;
-import com.kk.taurus.playerbase.event.OnPlayerEventListener;
-import com.kk.taurus.playerbase.player.IPlayer;
-import com.kk.taurus.playerbase.receiver.OnReceiverEventListener;
-import com.kk.taurus.playerbase.receiver.ReceiverGroup;
-import com.kk.taurus.playerbase.widget.BaseVideoView;
+import com.huangyong.playerlib.manager.PlayerPresenter;
+import com.huangyong.playerlib.manager.ivew.IPlayerView;
+import com.kk.taurus.playerbase.config.PlayerConfig;
 
-public class IjkAndMediaPlayer extends AppCompatActivity implements OnPlayerEventListener, OnReceiverEventListener {
+/**
+ * playBase播放开源库，地址：https://github.com/jiajunhui/PlayerBase
+ */
+public class IjkAndMediaPlayer extends AppCompatActivity implements IPlayerView {
 
-    private BaseVideoView mVideoView;
-    private DataSource mDataSource;
-
-    private boolean hasStart;
-
-    String KEY_LOADING_COVER = "loading_cover";
-    String KEY_CONTROLLER_COVER = "controller_cover";
-    String KEY_GESTURE_COVER = "gesture_cover";
-    String KEY_COMPLETE_COVER = "complete_cover";
-    String KEY_ERROR_COVER = "error_cover";
-    String KEY_CLOSE_COVER = "close_cover";
-    private ReceiverGroup receiverGroup;
-    String KEY_IS_LANDSCAPE = "isLandscape";
+    private FrameLayout container;
     private String url;
-    private OrientationSensor mOrientationSensor;
+
+    /**
+     * 播放器管理封装
+     */
+    private PlayerPresenter playerPresenter;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,157 +34,75 @@ public class IjkAndMediaPlayer extends AppCompatActivity implements OnPlayerEven
                 , WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         url = getIntent().getStringExtra(Params.PROXY_PALY_URL);
-        mVideoView = findViewById(R.id.videoView);
-        mVideoView.setOnPlayerEventListener(this);
-        mVideoView.setOnReceiverEventListener(this);
+        title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
+        container = findViewById(R.id.player_container);
 
-        mOrientationSensor = new OrientationSensor(this,onOrientationListener);
-        mOrientationSensor.enable();
+        //在线资源目前只能通过mediaplayer解码播放，至于ijk、exo如何配置还没解决
+        PlayerConfig.setDefaultPlanId(PlayerConfig.DEFAULT_PLAN_ID);
 
-        receiverGroup = new ReceiverGroup(null);
-//        receiverGroup.addReceiver(KEY_LOADING_COVER, new LoadingCover(context));
-        receiverGroup.addReceiver(KEY_CONTROLLER_COVER, new ControllerCover(this));
-//        receiverGroup.addReceiver(KEY_GESTURE_COVER, new GestureCover(this));
-//        receiverGroup.addReceiver(KEY_COMPLETE_COVER, new CompleteCover(this));
-//        receiverGroup.addReceiver(KEY_ERROR_COVER, new ErrorCover(this));
-        mVideoView.setReceiverGroup(receiverGroup);
+        playerPresenter = new PlayerPresenter(this,this);
 
+        playerPresenter.configOrientationSensor(this);
 
-        //设置一个事件处理器
-        mVideoView.setEventHandler(onVideoViewEventHandler);
-//设置数据提供者 MonitorDataProvider
-//        mVideoView.setDataProvider(new MonitorDataProvider());
+        playerPresenter.setData(url, title,container);
     }
-    private boolean userPause;
-
-    private OnVideoViewEventHandler onVideoViewEventHandler = new OnVideoViewEventHandler(){
-        @Override
-        public void onAssistHandle(BaseVideoView assist, int eventCode, Bundle bundle) {
-            super.onAssistHandle(assist, eventCode, bundle);
-            switch (eventCode){
-                case InterEvent.CODE_REQUEST_PAUSE:
-                    userPause = true;
-                    break;
-                case DataInter.Event.EVENT_CODE_REQUEST_BACK:
-                    if(isLandscape){
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    }else{
-                        finish();
-                    }
-                    break;
-                case DataInter.Event.EVENT_CODE_REQUEST_TOGGLE_SCREEN:
-                    setRequestedOrientation(isLandscape ?
-                            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-                            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    break;
-                case DataInter.Event.EVENT_CODE_ERROR_SHOW:
-                    mVideoView.stop();
-                    break;
-            }
-        }
-
-        @Override
-        public void requestRetry(BaseVideoView videoView, Bundle bundle) {
-            if(PUtil.isTopActivity(IjkAndMediaPlayer.this)){
-                super.requestRetry(videoView, bundle);
-            }
-        }
-    };
-
-    @Override
-    public void onPlayerEvent(int eventCode, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onReceiverEvent(int eventCode, Bundle bundle) {
-
-    }
-    private boolean isLandscape;
 
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
-            isLandscape = true;
-//            updateVideo(true);
-        }else{
-            isLandscape = false;
-//            updateVideo(false);
-        }
-        receiverGroup.getGroupValue().putBoolean(KEY_IS_LANDSCAPE, isLandscape);
+        playerPresenter.onConfigurationChanged(newConfig);
     }
+
     @Override
     public void onBackPressed() {
-        if(isLandscape){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (playerPresenter.onBackPressed()){
             return;
         }
         super.onBackPressed();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        int state = mVideoView.getState();
-        if(state == IPlayer.STATE_PLAYBACK_COMPLETE)
-            return;
-        if(mVideoView.isInPlaybackState()){
-            if(!userPause)
-                mVideoView.resume();
-        }else{
-            mVideoView.rePlay(0);
-        }
-        initPlay();
+        playerPresenter.getPlayer().resume();
     }
 
-    private void initPlay(){
-        if(!hasStart){
-            DataSource dataSource = new DataSource(url);
-            dataSource.setTitle("音乐和艺术如何改变世界");
-            mVideoView.setDataSource(dataSource);
-            mVideoView.start();
-            hasStart = true;
-        }
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mVideoView.stopPlayback();
-        mOrientationSensor.disable();
+        playerPresenter.getPlayer().destroy();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mOrientationSensor.enable();
+        playerPresenter.enableOrientation();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mOrientationSensor.disable();
+        playerPresenter.disableOrientationSensor();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        playerPresenter.getPlayer().pause();
     }
 
 
-    /**
-     * 获取屏幕方向感应，自动旋转屏幕
-     */
-    private OrientationSensor.OnOrientationListener onOrientationListener =
-            new OrientationSensor.OnOrientationListener() {
-                @Override
-                public void onLandScape(int orientation) {
-                    if(mVideoView.isInPlaybackState()){
-                        setRequestedOrientation(orientation);
-                    }
-                }
-                @Override
-                public void onPortrait(int orientation) {
-                    if(mVideoView.isInPlaybackState()){
-                        setRequestedOrientation(orientation);
-                    }
-                }
-            };
+
+    @Override
+    public void onPlayStart() {
+
+    }
+
+    @Override
+    public void onPlayFinish() {
+
+    }
 }

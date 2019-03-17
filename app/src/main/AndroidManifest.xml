@@ -152,7 +152,7 @@
             android:theme="@style/AppTheme" />
 
 
-        <activity android:name="com.huangyong.playerlib.PlayView"
+        <activity android:name="com.huangyong.playerlib.QsyPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
 
             />

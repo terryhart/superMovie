@@ -8,8 +8,8 @@
     tools:context=".IjkAndMediaPlayer">
 
 
-    <com.kk.taurus.playerbase.widget.BaseVideoView
-        android:id="@+id/videoView"
+    <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/player_container"
         android:layout_height="match_parent"/>
 </FrameLayout>

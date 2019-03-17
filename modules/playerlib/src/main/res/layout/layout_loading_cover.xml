@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#11000000"
+        android:padding="10dp"
+        android:layout_centerInParent="true">
+
+        <com.huangyong.playerlib.widget.SmileView
+            android:id="@+id/cover_player_loading_view_loading"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cover_player_loading_view_loading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:text="Loading"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -62,7 +62,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
 
     private void initData() {
         getSujectPresenter = new GetSujectPresenter(getContext(), this);
-
         getSujectPresenter.getSubjectTitle(index, 12);
 
     }
@@ -98,6 +97,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void loadData(SubjectTitleInfo info) {
         this.infoList = info;
+        if (rvSujectList!=null)
         adapter = new SujectTitleAdapter(getContext(), infoList);
         rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSujectList.setAdapter(adapter);
@@ -118,28 +118,4 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
             adapter.notifyDataSetChanged();
         }
     }
-
-    /*@Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSujectPresenter.getSubjectTitle(1, 12);
-                if (refreshMore!=null){
-                    refreshMore.finishPull("加载完成",true);
-                }
-            }
-        },1000);
-    }
-
-    @Override
-    public void onLoad() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSujectPresenter.getMoreTitleData(++index,12);
-                refreshMore.finishPull("加载完成",true);
-            }
-        },1000);
-    }*/
 }

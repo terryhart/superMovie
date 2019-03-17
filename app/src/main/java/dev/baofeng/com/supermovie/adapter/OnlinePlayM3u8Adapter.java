@@ -19,7 +19,8 @@ import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
 import com.huangyong.playerlib.IjkAndMediaPlayer;
-import com.huangyong.playerlib.PlayView;
+import com.huangyong.playerlib.QsyPlayerActivity;
+import com.huangyong.playerlib.widget.PIPActivity;
 import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {
@@ -92,9 +93,10 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
 //                bundle.putInt("screenMode", 102);
 //                bundle.putBoolean("standardFullScreen", false);
 //                bundle.putBoolean("supportLiteWnd", true);
+//                bundle.putString("title",title);
 //                TbsVideo.openVideo(context, url, bundle);
 
-                Intent intent = new Intent(context, IjkAndMediaPlayer.class);
+                Intent intent = new Intent(context, PIPActivity.class);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,"this is a title");

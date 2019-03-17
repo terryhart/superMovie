@@ -8,21 +8,17 @@ import android.util.Log;
 
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
-import com.kk.taurus.ijkplayer.IjkPlayer;
-import com.kk.taurus.playerbase.config.PlayerConfig;
-import com.kk.taurus.playerbase.record.PlayRecordManager;
+import com.huangyong.playerlib.PlayerLib;
 import com.mob.MobSDK;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.youngfeng.snake.Snake;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import byc.imagewatcher.ImageWatcherHelper;
 import dev.baofeng.com.supermovie.utils.SPUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.internal.cache.CacheInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -49,17 +45,10 @@ public class MyApp extends Application{
         //初始化缓存管理
         initCache();
 
-        //initIjkPlayer
-        IjkPlayer.init(this);
-        //播放记录的配置
-        //开启播放记录
-        PlayerConfig.playRecord(true);
-        PlayRecordManager.setRecordConfig(
-                new PlayRecordManager.RecordConfig.Builder()
-                        .setMaxRecordCount(100)
-                        //.setRecordKeyProvider()
-                        //.setOnRecordCallBack()
-                        .build());
+
+        //初始化播放器相关
+        PlayerLib.init(this);
+
 
 
 

@@ -32,6 +32,9 @@ import com.huangyong.downloadlib.utils.MD5Utils;
 import com.huangyong.downloadlib.utils.Utils;
 import com.huangyong.downloadlib.view.DeleteDialog;
 import com.huangyong.playerlib.PlayerActivity;
+import com.huangyong.playerlib.QsyPlayerActivity;
+import com.huangyong.playerlib.widget.FloatWindowActivity;
+import com.huangyong.playerlib.widget.PIPActivity;
 import com.xunlei.downloadlib.XLTaskHelper;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 
