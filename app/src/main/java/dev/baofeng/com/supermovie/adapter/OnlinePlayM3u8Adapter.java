@@ -19,6 +19,7 @@ import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
 import com.huangyong.playerlib.IjkAndMediaPlayer;
+import com.huangyong.playerlib.PlayerActivity;
 import com.huangyong.playerlib.QsyPlayerActivity;
 import com.huangyong.playerlib.widget.PIPActivity;
 import com.tencent.smtt.sdk.TbsVideo;
@@ -96,7 +97,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
 //                bundle.putString("title",title);
 //                TbsVideo.openVideo(context, url, bundle);
 
-                Intent intent = new Intent(context, PIPActivity.class);
+                Intent intent = new Intent(context, PlayerActivity.class);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,"this is a title");
