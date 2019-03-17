@@ -51,7 +51,7 @@ public class SerisFragment extends Fragment implements  IRecentView {
         View view = inflater.inflate(R.layout.home_seris_layout, null);
         bind = ButterKnife.bind(this, view);
         initView();
-
+        initData();
         return view;
     }
 
@@ -93,7 +93,7 @@ public class SerisFragment extends Fragment implements  IRecentView {
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+
     }
 
 

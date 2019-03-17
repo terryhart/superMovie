@@ -29,7 +29,7 @@
         app:indicatorEndColor="#383838"
         app:indicatorMarginStart="18dp"
         app:indicatorMarginEnd="18dp"
-        app:tabTextColor="#b24c4c4c" />
+        app:tabTextColor="@color/titlecor" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

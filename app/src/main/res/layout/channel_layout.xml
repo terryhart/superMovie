@@ -147,7 +147,7 @@
                     app:indicatorEndColor="#292929"
                     app:indicatorMarginStart="56dp"
                     app:indicatorMarginEnd="56dp"
-                    app:tabTextColor="#b24c4c4c"/>
+                    app:tabTextColor="#B2171717"/>
             </android.support.design.widget.AppBarLayout>
             <android.support.v4.view.ViewPager
                 android:id="@+id/homepager"

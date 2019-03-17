@@ -68,18 +68,11 @@ public class OnlineRootFragment extends Fragment {
             Intent intent = new Intent(getContext(), OnlineSearchActivity.class);
             getContext().startActivity(intent);
         });
-        if (movieFragment == null) {
-            movieFragment = OnlineFilmRootFragment.getInstance();
-        }
-        if (serisFragment == null) {
-            serisFragment = OnlineSerisRootFragment.getInstance();
-        }
-        if (curtoon == null) {
-            curtoon = SerisListFragment.newInstance("curtoon");
-        }
-        if (show == null) {
-            show = SerisListFragment.newInstance("show");
-        }
+
+        serisFragment = OnlineSerisRootFragment.getInstance();
+        curtoon = SerisListFragment.newInstance("curtoon");
+        show = SerisListFragment.newInstance("show");
+        movieFragment = OnlineFilmRootFragment.getInstance();
         List listfragment = new ArrayList<Fragment>();
         listfragment.add(movieFragment);
         listfragment.add(serisFragment);

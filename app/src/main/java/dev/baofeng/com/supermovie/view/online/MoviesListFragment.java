@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mingle.widget.LoadingView;
+import com.youngfeng.snake.support.v4.app.Fragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +49,7 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     private int index;
     private OnlinePlayInfo movieInfo;
     private String type;
+    private static MoviesListFragment btlistFragment;
 
     @Nullable
     @Override
@@ -77,7 +78,7 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
 
     public static MoviesListFragment newInstance(String type) {
 
-        MoviesListFragment btlistFragment = new MoviesListFragment();
+        btlistFragment = new MoviesListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Type", type);
         btlistFragment.setArguments(bundle);
@@ -125,7 +126,6 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
 
@@ -133,20 +133,17 @@ public class MoviesListFragment extends Fragment implements IOnlineView {
     @Override
     public void loadData(OnlinePlayInfo movieBean) {
         this.movieInfo = movieBean;
-        if (refreshRoot!=null){
-            refreshRoot.setRefreshing(false);
-            loadingView.setVisibility(View.GONE);
-            Log.e("movieInfo", movieBean.getData().size() + "");
-            adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 0);
-            rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            rvlist.setAdapter(adapter);
-            LoadMoreWrapper.with(adapter)
-                    .setLoadMoreEnabled(true)
-                    .setListener(enabled -> rvlist.postDelayed(() -> recpresenter.getMovieMoreData(type, ++index, 18), 1))
-                    .into(rvlist);
-            if (empFram.isShown()) {
-                empFram.setVisibility(View.GONE);
-            }
+        refreshRoot.setRefreshing(false);
+        loadingView.setVisibility(View.GONE);
+        adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 0);
+        rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvlist.setAdapter(adapter);
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(enabled -> rvlist.postDelayed(() -> recpresenter.getMovieMoreData(type, ++index, 18), 1))
+                .into(rvlist);
+        if (empFram.isShown()) {
+            empFram.setVisibility(View.GONE);
         }
 
     }
