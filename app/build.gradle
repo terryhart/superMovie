@@ -14,7 +14,9 @@ android {
             exclude 'META-INF/rxjava.properties'
         }
     }
-
+    packagingOptions {
+        exclude 'META-INF/beans.xml'
+    }
 
     signingConfigs {
 
@@ -143,8 +145,7 @@ dependencies {
     //调色板
     implementation 'com.android.support:palette-v7:28.0.0'
     implementation project(':modules:pagelayout-java')
-    //loading view https://github.com/zzz40500/android-shapeLoadingView
-    implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+
     implementation 'com.byc:ImageWatcher:1.1.0'
     implementation 'com.youngfeng.android:snake:0.3.2'
     annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'

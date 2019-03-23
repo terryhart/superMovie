@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_desktop"
+        />
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/img_icon"
+        android:ellipsize="end"
+        android:text="设备1"
+        android:textColor="#F4F2F2"
+        android:padding="10dp" />
+    <TextView
+        android:id="@+id/dlan_statu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toLeftOf="@+id/dlan_signal"
+        android:layout_marginRight="10dp"
+        android:text="已连接"
+        android:textSize="12sp"
+        android:ellipsize="end"
+        android:textColor="#FCF9F9"
+        android:padding="10dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#E4E1E1" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dlan_statu_selector"
+        android:layout_centerVertical="true"
+        android:id="@+id/dlan_signal"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        />
+</RelativeLayout>

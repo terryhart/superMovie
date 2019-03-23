@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //自定义属性，定义公共属性名
+    <attr name="titleSize" format="dimension"></attr>
+    <attr name="titleColor" format="color"></attr>
+
+    //自定义控件的主题样式
+    <declare-styleable name="LearningView">
+        <attr name="titleSize"></attr>
+        <attr name="titleColor"></attr>
+    </declare-styleable>
+</resources>

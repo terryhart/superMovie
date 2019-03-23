@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
-import com.huangyong.playerlib.PlayerLib;
+import com.huangyong.playerlib.PlayerApplication;
 import com.mob.MobSDK;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
@@ -47,7 +47,7 @@ public class MyApp extends Application{
 
 
         //初始化播放器相关
-        PlayerLib.init(this);
+        PlayerApplication.init(this);
 
 
 

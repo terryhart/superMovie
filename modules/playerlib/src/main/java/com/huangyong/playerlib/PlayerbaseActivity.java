@@ -1,5 +1,6 @@
 package com.huangyong.playerlib;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import com.kk.taurus.playerbase.config.PlayerConfig;
 /**
  * playBase播放开源库，地址：https://github.com/jiajunhui/PlayerBase
  */
-public class IjkAndMediaPlayer extends AppCompatActivity implements IPlayerView {
+public class PlayerbaseActivity extends AppCompatActivity implements IPlayerView {
 
     private FrameLayout container;
     private String url;
@@ -45,8 +46,16 @@ public class IjkAndMediaPlayer extends AppCompatActivity implements IPlayerView 
         playerPresenter.configOrientationSensor(this);
 
         playerPresenter.setData(url, title,container);
+
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (playerPresenter!=null){
+            playerPresenter.enterFullScreen();
+        }
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -66,14 +75,14 @@ public class IjkAndMediaPlayer extends AppCompatActivity implements IPlayerView 
     @Override
     protected void onResume() {
         super.onResume();
-        playerPresenter.getPlayer().resume();
+        playerPresenter.onResume();
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        playerPresenter.getPlayer().destroy();
+        playerPresenter.onDestroy();
     }
 
     @Override
@@ -85,13 +94,13 @@ public class IjkAndMediaPlayer extends AppCompatActivity implements IPlayerView 
     @Override
     protected void onStop() {
         super.onStop();
-        playerPresenter.disableOrientationSensor();
+        playerPresenter.onStop();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        playerPresenter.getPlayer().pause();
+        playerPresenter.onPause();
     }
 
 

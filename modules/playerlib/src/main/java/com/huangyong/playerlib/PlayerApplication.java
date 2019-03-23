@@ -8,6 +8,8 @@ import com.kk.taurus.playerbase.config.PlayerLibrary;
 import com.kk.taurus.playerbase.entity.DecoderPlan;
 import com.kk.taurus.playerbase.record.PlayRecordManager;
 
+import zmovie.com.dlan.DlanLib;
+
 
 /**
  * creator huangyong
@@ -15,7 +17,7 @@ import com.kk.taurus.playerbase.record.PlayRecordManager;
  * path com.huangyong.playerlib
  * description:这个是初始化PlayBase播放库使用的
  */
-public class PlayerLib {
+public class PlayerApplication {
 
     public static final int PLAN_ID_IJK = 1;
 
@@ -42,7 +44,7 @@ public class PlayerLib {
 
 
         //投屏功能初始化
-        //VApplication.init(contexts);
+        DlanLib.initDlan(contexts);
     }
 
 

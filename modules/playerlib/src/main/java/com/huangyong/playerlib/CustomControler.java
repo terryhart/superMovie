@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,8 @@ import com.huangyong.playerlib.manager.PIPManager;
 public class CustomControler extends GestureVideoController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener{
     protected TextView mTotalTime, mCurrTime;
     protected Button mFullScreenButton;
-    protected LinearLayout mBottomContainer, mTopContainer;
+    protected RelativeLayout mBottomContainer;
+    protected LinearLayout mTopContainer;
     protected SeekBar mVideoProgress;
     protected ImageView mBackButton;
     protected ImageView mLockButton;

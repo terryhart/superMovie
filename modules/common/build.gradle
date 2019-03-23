@@ -37,4 +37,9 @@ dependencies {
     api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     //非常绚的弹框
     api 'com.github.goweii:AnyLayer:2.2.0'
+    //loading
+    api 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    //loading view https://github.com/zzz40500/android-shapeLoadingView
+    api 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 }

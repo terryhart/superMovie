@@ -18,10 +18,8 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
-import com.huangyong.playerlib.IjkAndMediaPlayer;
 import com.huangyong.playerlib.PlayerActivity;
-import com.huangyong.playerlib.QsyPlayerActivity;
-import com.huangyong.playerlib.widget.PIPActivity;
+import com.huangyong.playerlib.PlayerbaseActivity;
 import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {
@@ -90,7 +88,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         listDialog.setItems(listItems, (dialog, which) -> {
 
             if (which == 0) {
-                Intent intent = new Intent(context, PlayerActivity.class);
+                Intent intent = new Intent(context, PlayerbaseActivity.class);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL,url);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,title);
