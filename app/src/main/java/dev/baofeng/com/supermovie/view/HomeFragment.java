@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.antiless.support.widget.TabLayout;
 import com.bftv.myapplication.view.IndexActivity;
 import com.huangyong.downloadlib.DownLoadMainActivity;
+import com.huangyong.playerlib.dlan.DLanActivity;
 import com.leochuan.AutoPlayRecyclerView;
 import com.leochuan.CarouselLayoutManager;
 import com.leochuan.ViewPagerLayoutManager;
@@ -218,7 +219,7 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                 startActivity(favor);
                 break;
             case R.id.reclist:
-                Intent douban = new Intent(getActivity(), AboutUsActivity.class);
+                Intent douban = new Intent(getActivity(), DLanActivity.class);
                 startActivity(douban);
                 break;
             case R.id.downCenter:

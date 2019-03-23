@@ -23,6 +23,8 @@ import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 /**
  * Created by huangyong on 2018/2/11.
  */
@@ -78,13 +80,6 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
 
                     try {
-                        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                (Activity) context,
-                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemimg,
-                                        VIEW_NAME_HEADER_IMAGE),
-                                new android.support.v4.util.Pair<>(((CommonHolder) holder).itemtitle,
-                                        VIEW_NAME_HEADER_TITLE)
-                        );
                         Intent intent = new Intent();
                         intent.putExtra(GlobalMsg.KEY_POST_IMG, finalImgUrl);
                         intent.putExtra(GlobalMsg.KEY_DOWN_URL,datas.getData().get(position).getDownLoadUrl());
@@ -93,9 +88,7 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
                         intent.putExtra(GlobalMsg.KEY_MOVIE_DETAIL,datas.getData().get(position).getMvdesc());
                         intent.putExtra(GlobalMsg.KEY_MV_ID, md5Id);
                         intent.setClass(context, MovieDetailActivity.class);
-
-                        ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
-
+                        context.startActivity(intent);
 
                     }catch (Exception e){
                         e.printStackTrace();

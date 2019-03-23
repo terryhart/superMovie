@@ -66,6 +66,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private SpeedDialog speedDialog;
     private ImageView pic2pic;
     private ImageView airPlay;
+    private ImageView localCast;
 
     public CustomControler(@NonNull Context context) {
         this(context, null);
@@ -114,6 +115,10 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mTitle = mControllerView.findViewById(R.id.title);
         mSysTime = mControllerView.findViewById(R.id.sys_time);
         mBatteryLevel = mControllerView.findViewById(R.id.iv_battery);
+
+        localCast = mControllerView.findViewById(R.id.localCast);
+        localCast.setOnClickListener(this);
+
         pic2pic = mControllerView.findViewById(R.id.pic2pic);
         pic2pic.setOnClickListener(this);
         airPlay = mControllerView.findViewById(R.id.airplay);
@@ -160,6 +165,10 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         }else if (i == R.id.airplay){
             if (changeListener!=null){
                 changeListener.onAirPlay();
+            }
+        }else if (i == R.id.localCast){
+            if (changeListener!=null){
+                changeListener.onLocalCast();
             }
         }
     }
@@ -520,5 +529,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         void onAirPlay();
 
         void onPic2Pic();
+
+        void onLocalCast();
     }
 }

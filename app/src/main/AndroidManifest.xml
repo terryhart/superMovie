@@ -35,8 +35,8 @@
         <activity android:name=".view.DoubanActivity" />
         <activity
             android:name=".view.MovieDetailActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme" />
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            />
         <activity
             android:name=".SplashActivity"
             android:launchMode="singleTask" />

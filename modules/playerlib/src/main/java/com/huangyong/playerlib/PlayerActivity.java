@@ -23,6 +23,7 @@ import java.io.File;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import zmovie.com.dlan.DeviceListActivityPage;
 import zmovie.com.dlan.DlanLib;
+import zmovie.com.dlan.DlanLocalActivity;
 import zmovie.com.dlan.DlanPresenter;
 
 
@@ -230,6 +231,11 @@ public class PlayerActivity extends AppCompatActivity {
         @Override
         public void onPic2Pic() {
             startFloatWindow();
+        }
+
+        @Override
+        public void onLocalCast() {
+            startActivity(new Intent(PlayerActivity.this, DlanLocalActivity.class));
         }
     };
 
