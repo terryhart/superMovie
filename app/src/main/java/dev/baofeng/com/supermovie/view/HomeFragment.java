@@ -211,16 +211,17 @@ public class HomeFragment extends Fragment implements IMoview, View.OnClickListe
                 startActivity(onlineIntent);
                 break;
             case R.id.bangdan:
-                Intent intents = new Intent(getActivity(), IndexActivity.class);
-                startActivity(intents);
+                Intent airPlay = new Intent();
+                airPlay.setClassName(getActivity(),"zmovie.com.dlan.DlanLocalActivity");
+                startActivity(airPlay);
                 break;
             case R.id.douban:
                 Intent favor = new Intent(getActivity(), FavorActivity.class);
                 startActivity(favor);
                 break;
             case R.id.reclist:
-                Intent douban = new Intent(getActivity(), DLanActivity.class);
-                startActivity(douban);
+                Intent intents = new Intent(getActivity(), AboutUsActivity.class);
+                startActivity(intents);
                 break;
             case R.id.downCenter:
                 Intent intent = new Intent(getActivity(), DownLoadMainActivity.class);

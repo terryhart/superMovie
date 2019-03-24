@@ -1,11 +1,8 @@
 package zmovie.com.dlan;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.yanbo.lib_screen.VApplication;
-
-import per.goweii.anylayer.AnyLayer;
 
 /**
  * 描述：

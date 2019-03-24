@@ -37,9 +37,7 @@ public class SpeedDialog extends Dialog implements View.OnClickListener {
         WindowManager.LayoutParams lp =getWindow().getAttributes();
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity=Gravity.BOTTOM|Gravity.RIGHT;
-        lp.x=20;
-        lp.y=120;
+        lp.gravity=Gravity.CENTER;
         getWindow().setAttributes(lp);
         setContentView(R.layout.speed_list);
         check1 = findViewById(R.id.check1);

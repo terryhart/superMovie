@@ -1,11 +1,17 @@
 package zmovie.com.dlan;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -13,11 +19,13 @@ import android.widget.Toast;
 
 import com.yanbo.lib_screen.callback.ControlCallback;
 import com.yanbo.lib_screen.entity.AVTransportInfo;
+import com.yanbo.lib_screen.entity.ClingDevice;
 import com.yanbo.lib_screen.entity.RemoteItem;
 import com.yanbo.lib_screen.entity.RenderingControlInfo;
 import com.yanbo.lib_screen.event.ControlEvent;
 import com.yanbo.lib_screen.manager.ClingManager;
 import com.yanbo.lib_screen.manager.ControlManager;
+import com.yanbo.lib_screen.manager.DeviceManager;
 import com.yanbo.lib_screen.utils.LogUtils;
 import com.yanbo.lib_screen.utils.VMDate;
 
@@ -25,6 +33,9 @@ import org.fourthline.cling.support.model.item.Item;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import per.goweii.anylayer.AnimHelper;
+import per.goweii.anylayer.AnyLayer;
 
 /**
  * 描述：
@@ -41,9 +52,9 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
     SeekBar progressSeekbar;
     TextView playTimeView;
     TextView playMaxTimeView;
-    TextView stopView;
+    ImageView stopView;
     ImageView previousView;
-    TextView playView;
+    ImageView playView;
     ImageView nextView;
 
 
@@ -54,7 +65,8 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
     private int currVolume = defaultVolume;
     private boolean isMute = false;
     private int currProgress = 0;
-    private ImageView local;
+    private ImageView reduce;
+    private ImageView plus;
 
     public static void startSelf(Activity context) {
         Intent intent = new Intent(context, MediaPlayActivity.class);
@@ -73,16 +85,25 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
         playMaxTimeView=findViewById(R.id.text_play_max_time);
         stopView=findViewById(R.id.img_stop);
         previousView=findViewById(R.id.img_previous);
+
+        reduce = findViewById(R.id.reduce_volume);
+        plus = findViewById(R.id.plus_volume);
+        reduce.setOnClickListener(this);
+        plus.setOnClickListener(this);
+
+
         playView=findViewById(R.id.img_play);
         nextView=findViewById(R.id.img_next);
-        local = findViewById(R.id.toLocal);
-        local.setOnClickListener(this);
         playView.setOnClickListener(this);
         nextView.setOnClickListener(this);
         stopView.setOnClickListener(this);
         playTimeView.setOnClickListener(this);
         init();
+
+
     }
+
+
 
 
     private void init() {
@@ -122,6 +143,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 LogUtils.d("Volume seek position: %d", progress);
+
             }
 
             @Override
@@ -173,10 +195,16 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
             play();
 
         } else if (i == R.id.img_next) {
-        }else if (i==R.id.toLocal){
-            startActivity(new Intent(MediaPlayActivity.this,DlanLocalActivity.class));
         }
 
+        if (i == R.id.reduce_volume){
+            currVolume-=5;
+            setVolume(currVolume);
+        }
+        if (i == R.id.plus_volume){
+            currVolume+=5;
+            setVolume(currVolume);
+        }
     }
 
     /**
@@ -205,7 +233,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onError(int code, String msg) {
-                showToast(String.format("Mute cast failed %s", msg));
+               // showToast(String.format("Mute cast failed %s", msg));
             }
         });
     }
@@ -223,7 +251,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onError(int code, String msg) {
-                showToast(String.format("Set cast volume failed %s", msg));
+                //showToast(String.format("音量设置无效，请重试 %s", msg));
             }
         });
     }
@@ -263,7 +291,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setText("暂停");
+                        playView.setSelected(true);
                         Toast.makeText(MediaPlayActivity.this, "播放已开始", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -287,7 +315,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setText("暂停");
+                        playView.setSelected(true);
                     }
                 });
             }
@@ -308,7 +336,8 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setText("暂停");                    }
+                        playView.setSelected(true);
+                    }
                 });
             }
 
@@ -327,14 +356,14 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setText("播放");
+                        playView.setSelected(false);
                     }
                 });
             }
 
             @Override
             public void onError(int code, String msg) {
-                showToast(String.format("Pause cast failed %s", msg));
+                showToast(String.format("暂停失败 %s", msg));
             }
         });
     }
@@ -347,7 +376,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setText("播放");
+                        playView.setSelected(false);
                         finish();
                     }
                 });
@@ -387,20 +416,20 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                     ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
                 } else if (avtInfo.getState().equals("PLAYING")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-                    playView.setText("暂停");
+                    playView.setSelected(true);
                 } else if (avtInfo.getState().equals("PAUSED_PLAYBACK")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.PAUSED);
-                    playView.setText("播放");
+                    playView.setSelected(false);
                 } else if (avtInfo.getState().equals("STOPPED")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-                    playView.setText("播放");
+                    playView.setSelected(false);
 
                     finish();
                 } else {
                     ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-                    playView.setText("播放");
+                    playView.setSelected(false);
 //
-//                    finish();
+//                  finish();
                 }
             }
             if (!TextUtils.isEmpty(avtInfo.getMediaDuration())) {

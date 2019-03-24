@@ -114,7 +114,7 @@
                                 android:drawablePadding="6dp"
                                 android:focusable="true"
                                 android:gravity="center"
-                                android:text="实用工具"
+                                android:text="投屏助手"
                                 android:textColor="#222222"
                                 android:textSize="12sp" />
 

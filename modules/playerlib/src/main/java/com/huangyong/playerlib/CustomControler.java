@@ -31,7 +31,9 @@ import com.dueeeke.videoplayer.controller.GestureVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.util.L;
 import com.dueeeke.videoplayer.util.PlayerUtils;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.huangyong.playerlib.manager.PIPManager;
+import com.mingle.widget.LoadingView;
 
 /**
  * creator huangyong
@@ -54,7 +56,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private ProgressBar mBottomProgress;
     private ImageView mPlayButton;
     private ImageView mStartPlayButton;
-    private ProgressBar mLoadingProgress;
+    private SpinKitView mLoadingProgress;
     private ImageView mThumb;
     private LinearLayout mCompleteContainer;
     private TextView mSysTime;//系统当前时间
@@ -66,7 +68,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private SpeedDialog speedDialog;
     private ImageView pic2pic;
     private ImageView airPlay;
-    private ImageView localCast;
+    private String loadingTips="";
 
     public CustomControler(@NonNull Context context) {
         this(context, null);
@@ -106,7 +108,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mPlayButton = mControllerView.findViewById(R.id.iv_play);
         mPlayButton.setOnClickListener(this);
         mStartPlayButton = mControllerView.findViewById(R.id.start_play);
-        mLoadingProgress = mControllerView.findViewById(R.id.loading);
+        mLoadingProgress = mControllerView.findViewById(R.id.play_loading);
         mBottomProgress = mControllerView.findViewById(R.id.bottom_progress);
         ImageView rePlayButton = mControllerView.findViewById(R.id.iv_replay);
         rePlayButton.setOnClickListener(this);
@@ -116,8 +118,6 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mSysTime = mControllerView.findViewById(R.id.sys_time);
         mBatteryLevel = mControllerView.findViewById(R.id.iv_battery);
 
-        localCast = mControllerView.findViewById(R.id.localCast);
-        localCast.setOnClickListener(this);
 
         pic2pic = mControllerView.findViewById(R.id.pic2pic);
         pic2pic.setOnClickListener(this);
@@ -165,10 +165,6 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         }else if (i == R.id.airplay){
             if (changeListener!=null){
                 changeListener.onAirPlay();
-            }
-        }else if (i == R.id.localCast){
-            if (changeListener!=null){
-                changeListener.onLocalCast();
             }
         }
     }
@@ -378,9 +374,6 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             }
             mShowing = false;
 
-            if (speedDialog!=null&&speedDialog.isShowing()){
-                speedDialog.dismiss();
-            }
         }
     }
 
@@ -389,9 +382,6 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mTopContainer.startAnimation(mHideAnim);
         mBottomContainer.setVisibility(View.GONE);
         mBottomContainer.startAnimation(mHideAnim);
-        if (speedDialog!=null&&speedDialog.isShowing()){
-            speedDialog.dismiss();
-        }
     }
 
     private void show(int timeout) {
@@ -525,6 +515,12 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     public void setOnstateChangeListener(OnstateChangeListener changeListener){
         this.changeListener = changeListener;
     }
+
+    public void setLoadingTips(String title) {
+        this.loadingTips = title;
+        invalidate();
+    }
+
     public interface OnstateChangeListener{
         void onAirPlay();
 

@@ -19,6 +19,7 @@ import com.yanbo.lib_screen.manager.ClingManager;
 import com.yanbo.lib_screen.manager.DeviceManager;
 import com.yanbo.lib_screen.service.upnp.ClingContentDirectoryService;
 
+import per.goweii.anylayer.Alignment;
 import per.goweii.anylayer.AnimHelper;
 import per.goweii.anylayer.AnyLayer;
 
@@ -95,33 +96,32 @@ public class DlanPresenter {
                 .contentView(R.layout.dlan_tip_layout)
                 .backgroundBlurPercent(0.15f)
                 .backgroundColorInt(Color.parseColor("#33ffffff"))
-                .gravity(Gravity.BOTTOM)
+                .gravity(Gravity.TOP)
                 .cancelableOnTouchOutside(true)
                 .cancelableOnClickKeyBack(true)
-                .contentAnim(new AnyLayer.IAnim() {
-                    @Override
-                    public Animator inAnim(View content) {
-
-                        return AnimHelper.createTopAlphaInAnim(content);
-                    }
-
-                    @Override
-                    public Animator outAnim(View content) {
-
-                        return AnimHelper.createTopAlphaOutAnim(content);
-                    }
-                });
+               ;
         final RecyclerView deviceList = anyLayer.getView(R.id.dlan_device_list);
         deviceList.setLayoutManager(new LinearLayoutManager(context));
         final ClingDeviceAdapter adapter = new ClingDeviceAdapter(context);
         deviceList.setAdapter(adapter);
         anyLayer.show();
 
+        final View loading = anyLayer.getView(R.id.search_loading);
         anyLayer.getView(R.id.dlan_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (deviceList!=null){
                     adapter.refresh();
+                    if (!loading.isShown()){
+                        loading.setVisibility(View.VISIBLE);
+
+                        deviceList.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading.setVisibility(View.INVISIBLE);
+                            }
+                        },3000);
+                    }
                 }
             }
         });

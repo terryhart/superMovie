@@ -19,21 +19,23 @@ import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.SocketException;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import zmovie.com.dlan.DeviceListActivityPage;
 import zmovie.com.dlan.DlanLib;
 import zmovie.com.dlan.DlanLocalActivity;
 import zmovie.com.dlan.DlanPresenter;
+import zmovie.com.dlan.utils.UpnpUtil;
+import zmovie.com.dlan.utils.Utils;
 
 
 public class PlayerActivity extends AppCompatActivity {
 
-    private static int PlayMode =0;
+    private static int PlayMode = 0;
     private String title;
     private String urlMd5;
-    private String movieProgress;
-    private String progress = "";
     private String url;
     private String poster;
     private String path;
@@ -42,6 +44,7 @@ public class PlayerActivity extends AppCompatActivity {
     private FrameLayout playerContainer;
     private IjkVideoView ijkVideoView;
     private DlanPresenter dlanPresenter;
+    private String fileAbsolutePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class PlayerActivity extends AppCompatActivity {
         controller = new CustomControler(this);
         controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener);
+        controller.setLoadingTips(title);
         controller.setOnstateChangeListener(changeListener);
         ijkVideoView.setVideoController(controller);
 
@@ -89,11 +93,22 @@ public class PlayerActivity extends AppCompatActivity {
         //如果是本地文件，如果是在线视频
         if (!TextUtils.isEmpty(url) && url.startsWith("/storage")) {
             File file = new File(url);
+            fileAbsolutePath = file.getAbsolutePath();
             if (file.exists()) {
-                path = Uri.parse("file://" + file.getAbsolutePath()).toString();
+                path = Uri.parse("file://" + fileAbsolutePath).toString();
             }
             //如果是本地文件。投屏走本地投屏
-            Log.e("urllocalse",url+"----"+path);
+            Log.e("urllocalse", url + "----" + path);
+            try {
+                //strDir视频路径
+                Uri localUri = Uri.parse("file://" + fileAbsolutePath);
+                Intent localIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+                localIntent.setData(localUri);
+                sendBroadcast(localIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             PlayMode = DlanLib.DLAN_MODE_LOCAL;
         } else {
             path = url;
@@ -214,17 +229,14 @@ public class PlayerActivity extends AppCompatActivity {
         @Override
         public void onAirPlay() {
 
-            if ( PlayMode == DlanLib.DLAN_MODE_ONLINE){
-
-                dlanPresenter.showDialogTip(PlayerActivity.this,path,title);
-
-//                if (dlanPresenter!=null){
-//                    dlanPresenter.startPlay(path,title);
-//                }
-
-            }else {
-
-
+            if (TextUtils.isEmpty(path)){
+                Toast.makeText(PlayerActivity.this, "投屏功能暂不可用", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if ( path.startsWith("https://") || path.startsWith("http://")&& dlanPresenter != null) {
+                dlanPresenter.showDialogTip(PlayerActivity.this, path, title);
+            } else {
+                Toast.makeText(PlayerActivity.this, "已下载完成的视频,请到首页投屏助手观看", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -235,7 +247,8 @@ public class PlayerActivity extends AppCompatActivity {
 
         @Override
         public void onLocalCast() {
-            startActivity(new Intent(PlayerActivity.this, DlanLocalActivity.class));
+
+
         }
     };
 
