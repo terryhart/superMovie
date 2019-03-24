@@ -317,7 +317,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         ArrayList<String> playXunleiUrlList = new ArrayList<>();
 
 
-        for (int i = 0; i < playUrlBean.getNormal().size(); i++) {
+        for (int i = 0; i < playUrlBean.getXunlei().size(); i++) {
             if (playUrlBean.getNormal().size() == 1) {
                 playXunleiUrlList.add("web");
             } else {

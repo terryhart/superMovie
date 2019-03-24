@@ -24,7 +24,7 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-
+        maven {url 'http://4thline.org/m2'}
         maven{url 'https://dl.bintray.com/zchu/maven/'}
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }

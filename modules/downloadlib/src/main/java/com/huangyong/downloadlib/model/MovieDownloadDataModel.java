@@ -123,6 +123,19 @@ public class MovieDownloadDataModel extends AndroidViewModel {
                         intent.putExtra(Params.TASK_TITLE_KEY, downingTaskDaoAll.get(i).getTitle());
                         BroadCastUtils.sendIntentBroadCask(application, intent, Params.TASK_COMMPLETE);
 
+                        //通知系统相册，更新列表
+                        try {
+                            //strDir视频路径
+                            Uri localUri = Uri.parse("file://" + downingTaskDaoAll.get(i).getLocalPath()+"/"+downingTaskDaoAll.get(i).getTitle());
+                            Log.e("hahhahaha", downingTaskDaoAll.get(i).getLocalPath()+"/"+downingTaskDaoAll.get(i).getTitle());
+                            Intent localIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+                            localIntent.setData(localUri);
+                            BroadCastUtils.sendIntentBroadCask(application,localIntent,"android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
                         //播放系统提示音提示下载完成
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         Ringtone r = RingtoneManager.getRingtone(application, notification);

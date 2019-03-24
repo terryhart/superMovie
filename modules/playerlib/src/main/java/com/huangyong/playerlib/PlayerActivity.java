@@ -1,12 +1,11 @@
 package com.huangyong.playerlib;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -18,21 +17,25 @@ import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.huangyong.playerlib.manager.PIPManager;
 import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.SocketException;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import zmovie.com.dlan.DeviceListActivityPage;
+import zmovie.com.dlan.DlanLib;
+import zmovie.com.dlan.DlanLocalActivity;
+import zmovie.com.dlan.DlanPresenter;
+import zmovie.com.dlan.utils.UpnpUtil;
+import zmovie.com.dlan.utils.Utils;
 
 
 public class PlayerActivity extends AppCompatActivity {
 
+    private static int PlayMode = 0;
     private String title;
     private String urlMd5;
-    private String movieProgress;
-    private String progress = "";
     private String url;
     private String poster;
     private String path;
@@ -40,6 +43,8 @@ public class PlayerActivity extends AppCompatActivity {
     private PIPManager mPIPManager;
     private FrameLayout playerContainer;
     private IjkVideoView ijkVideoView;
+    private DlanPresenter dlanPresenter;
+    private String fileAbsolutePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class PlayerActivity extends AppCompatActivity {
         controller = new CustomControler(this);
         controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener);
+        controller.setLoadingTips(title);
         controller.setOnstateChangeListener(changeListener);
         ijkVideoView.setVideoController(controller);
 
@@ -87,11 +93,27 @@ public class PlayerActivity extends AppCompatActivity {
         //如果是本地文件，如果是在线视频
         if (!TextUtils.isEmpty(url) && url.startsWith("/storage")) {
             File file = new File(url);
+            fileAbsolutePath = file.getAbsolutePath();
             if (file.exists()) {
-                path = Uri.parse("file://" + file.getAbsolutePath()).toString();
+                path = Uri.parse("file://" + fileAbsolutePath).toString();
             }
+            //如果是本地文件。投屏走本地投屏
+            Log.e("urllocalse", url + "----" + path);
+            try {
+                //strDir视频路径
+                Uri localUri = Uri.parse("file://" + fileAbsolutePath);
+                Intent localIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+                localIntent.setData(localUri);
+                sendBroadcast(localIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            PlayMode = DlanLib.DLAN_MODE_LOCAL;
         } else {
             path = url;
+            //如果是在线资源，投屏走在线投屏
+            PlayMode = DlanLib.DLAN_MODE_ONLINE;
         }
 
         if (mPIPManager.isStartFloatWindow()) {
@@ -100,8 +122,6 @@ public class PlayerActivity extends AppCompatActivity {
             controller.setPlayState(ijkVideoView.getCurrentPlayState());
         } else {
             mPIPManager.setActClass(PlayerActivity.class);
-//        int widthPixels = getResources().getDisplayMetrics().widthPixels;
-//        ijkVideoView.setLayoutParams(new LinearLayout.LayoutParams(widthPixels, widthPixels / 4 * 3));
             controller.getThumb().setImageResource(R.drawable.preview_bg);
 
             ijkVideoView.setUrl(path);
@@ -112,7 +132,6 @@ public class PlayerActivity extends AppCompatActivity {
 //                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
                     .savingProgress() //保存播放进度
                     .disableAudioFocus() //关闭AudioFocusChange监听
-                    .setLooping() //循环播放当前正在播放的视频
                     .setCustomMediaPlayer(player)
                     .build();
 
@@ -121,8 +140,14 @@ public class PlayerActivity extends AppCompatActivity {
         playerContainer.addView(ijkVideoView);
         ijkVideoView.startFullScreen();
         ijkVideoView.start();
+
+        initDlan();
     }
 
+    private void initDlan() {
+        dlanPresenter = new DlanPresenter(this);
+        dlanPresenter.initService();
+    }
 
 
     OncheckListener listener = new OncheckListener() {
@@ -203,12 +228,27 @@ public class PlayerActivity extends AppCompatActivity {
     CustomControler.OnstateChangeListener changeListener = new CustomControler.OnstateChangeListener() {
         @Override
         public void onAirPlay() {
-            Toast.makeText(PlayerActivity.this, "投屏功能即将上线，敬请期待", Toast.LENGTH_SHORT).show();
+
+            if (TextUtils.isEmpty(path)){
+                Toast.makeText(PlayerActivity.this, "投屏功能暂不可用", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if ( path.startsWith("https://") || path.startsWith("http://")&& dlanPresenter != null) {
+                dlanPresenter.showDialogTip(PlayerActivity.this, path, title);
+            } else {
+                Toast.makeText(PlayerActivity.this, "已下载完成的视频,请到首页投屏助手观看", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
         public void onPic2Pic() {
             startFloatWindow();
+        }
+
+        @Override
+        public void onLocalCast() {
+
+
         }
     };
 

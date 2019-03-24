@@ -4,9 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import com.dueeeke.videoplayer.controller.BaseVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
-import com.huangyong.playerlib.PlayerLib;
+import com.huangyong.playerlib.PlayerApplication;
 import com.huangyong.playerlib.widget.FloatController;
 import com.huangyong.playerlib.widget.FloatView;
 
@@ -35,13 +34,13 @@ public class PIPManager {
 
 
     private PIPManager() {
-        ijkVideoView = new IjkVideoView(PlayerLib.getAppContext());
+        ijkVideoView = new IjkVideoView(PlayerApplication.getAppContext());
 //        ijkVideoView.setVideoListener(mMyVideoListener);
 //        mKeyReceiver = new KeyReceiver();
-        mFloatController = new FloatController(PlayerLib.getAppContext());
+        mFloatController = new FloatController(PlayerApplication.getAppContext());
 //        IntentFilter homeFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
 //        MyApplication.getInstance().registerReceiver(mKeyReceiver, homeFilter);
-        floatView = new FloatView(PlayerLib.getAppContext(), 0, 0);
+        floatView = new FloatView(PlayerApplication.getAppContext(), 0, 0);
     }
 
     public static PIPManager getInstance() {

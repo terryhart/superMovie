@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +29,7 @@ import com.huangyong.downloadlib.utils.FileUtils;
 import com.huangyong.downloadlib.view.CustomViewPager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +85,7 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
         doneList.setPresenter(downLoadPresenter);
 
         initReceiver();
+
 
     }
 

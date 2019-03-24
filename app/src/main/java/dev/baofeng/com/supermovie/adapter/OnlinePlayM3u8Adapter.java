@@ -18,10 +18,8 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
-import com.huangyong.playerlib.IjkAndMediaPlayer;
 import com.huangyong.playerlib.PlayerActivity;
-import com.huangyong.playerlib.QsyPlayerActivity;
-import com.huangyong.playerlib.widget.PIPActivity;
+import com.huangyong.playerlib.PlayerbaseActivity;
 import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {

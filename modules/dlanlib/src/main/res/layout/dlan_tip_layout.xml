@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+   android:background="@android:color/transparent"
+    android:layout_height="wrap_content">
+
+   <RelativeLayout
+       android:layout_width="340dp"
+       android:background="@drawable/dialog_shap_border"
+       android:layout_gravity="top|center_horizontal"
+       android:layout_marginTop="40dp"
+       android:layout_height="240dp">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginLeft="20dp"
+           android:text="可投屏设备列表"
+           android:id="@+id/tips_title"
+           android:gravity="center"
+           android:textSize="14sp"
+           android:textColor="#FAFAFA"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="当前没有设备连接，请点击刷新按钮搜索设备"
+           android:layout_marginLeft="20dp"
+           android:id="@+id/dlan_statu_text"
+           android:layout_below="@+id/tips_title"
+           android:gravity="center"
+           android:textColor="#fff"
+           android:textSize="10sp"
+           android:layout_marginTop="10dp"
+           />
+       <ImageView
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:background="@drawable/bt_refresh_selector"
+           android:layout_alignParentRight="true"
+           android:id="@+id/dlan_refresh"
+           android:layout_marginRight="20dp"
+           android:layout_marginTop="10dp"
+           />
+       <android.support.v7.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_below="@+id/dlan_statu_text"
+           android:layout_marginTop="10dp"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:layout_centerHorizontal="true"
+           android:id="@+id/dlan_device_list"
+           android:paddingBottom="10dp"
+           android:layout_height="160dp"/>
+
+       <Button
+           android:layout_width="70dp"
+           android:layout_height="62dp"
+            android:background="@drawable/ic_bofang"
+           android:id="@+id/confirm"
+           android:textColor="#fff"
+           android:textSize="14sp"
+           android:layout_centerHorizontal="true"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="10dp"
+           />
+
+       <com.github.ybq.android.spinkit.SpinKitView
+           xmlns:app="http://schemas.android.com/apk/res-auto"
+           android:id="@+id/search_loading"
+           style="@style/SpinKitView.Large.ThreeBounce"
+           android:layout_alignParentBottom="true"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="30dp"
+           android:layout_width="80dp"
+           android:visibility="invisible"
+           android:layout_height="80dp"
+           android:padding="20dp"
+           android:layout_gravity="center"
+           app:SpinKit_Color="@color/colorAccent" />
+   </RelativeLayout>
+
+</FrameLayout>

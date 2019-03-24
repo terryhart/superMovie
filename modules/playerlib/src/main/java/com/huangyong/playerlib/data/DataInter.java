@@ -20,6 +20,8 @@ public interface DataInter {
 
         int EVENT_CODE_ERROR_SHOW = -111;
 
+        int EVENT_CODE_TO_FLOAT_MODE =221;
+
     }
 
     interface Key extends InterKey {

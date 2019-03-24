@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".DlanLocalActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:layout_marginTop="30dp"
+        android:layout_height="60dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/head_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/icon_tv"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_dianshi"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/icon_tv"
+                android:text="未连接设备"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="20dp"
+                android:textColor="#343333"
+                android:textSize="18sp"
+                android:id="@+id/local_title"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/icon_tv"
+                android:layout_below="@+id/local_title"
+                android:text="点击连接设备"
+                android:id="@+id/small_title"
+                android:layout_marginLeft="20dp"
+                android:textSize="12sp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/local_content"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

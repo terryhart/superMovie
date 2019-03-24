@@ -57,7 +57,7 @@ public class OnlineXunleiAdapter extends RecyclerView.Adapter<OnlinePlayHolder> 
     @Override
     public int getItemCount() {
         if (playList != null) {
-            return playList.getNormal().size();
+            return playList.getXunlei().size();
         } else {
             return 0;
         }

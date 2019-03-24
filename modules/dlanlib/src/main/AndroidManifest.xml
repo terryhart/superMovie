@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="zmovie.com.dlan">
+
+    <application>
+        <activity android:name=".DlanLocalActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".DeviceListActivityPage" />
+        <activity
+            android:name=".MediaPlayActivity"
+            android:screenOrientation="landscape" />
+    </application>
+
+</manifest>
