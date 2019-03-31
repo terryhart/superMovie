@@ -1,5 +1,5 @@
 ![btMovie-release](https://github.com/hiliving/superMovie/blob/master/picture/bt_movie.png)
-# 🔥基于MVP+RxJava+Retrofit的电影资源聚合APP
+# 🔥集合诸多优秀开源项目，打造超好用电影资源聚合APP
 
 
 
