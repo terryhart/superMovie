@@ -198,7 +198,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     @Override
     public void onDestroy() {
-
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 

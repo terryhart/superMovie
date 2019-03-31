@@ -1,7 +1,12 @@
 package dev.baofeng.com.supermovie;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,6 +29,7 @@ import app.huangyong.com.common.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
+import dev.baofeng.com.supermovie.view.UpdateDialog;
 import dev.baofeng.com.supermovie.view.online.OnlineRootFragment;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private UpdateAppPresenter updateAppPresenter;
     private SharePresenter sharePresenter;
     private OnlineRootFragment onlineFilmRootFragment;
+    private UpdateDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         initView();
         getPermission();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Params.ACTION_UPDATE_PROGERSS);
+        LocalBroadcastManager mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mLocalBroadcastManager.registerReceiver(mReceiver, filter);
     }
 
 
@@ -82,7 +94,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updateYes(AppUpdateInfo result) {
         SharePreferencesUtil.setIntSharePreferences(MainActivity.this, Params.HAVE_UPDATE, 1);
 
-
+        if (dialog!=null){
+            dialog.show();
+        }else {
+            dialog = new UpdateDialog(MainActivity.this, result);
+            dialog.show();
+        }
 
     }
 
@@ -203,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
 
@@ -217,5 +235,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Params.ACTION_UPDATE_PROGERSS)) {
+                int extra = intent.getIntExtra(Params.UPDATE_PROGERSS, 0);
+
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.setProgress(extra);
+                }
+            }
+        }
+    };
+
 
 }
