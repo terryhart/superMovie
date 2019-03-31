@@ -26,7 +26,12 @@
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             >
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/down_toolbar"
+            android:layout_height="60dp">
 
+        </android.support.v7.widget.Toolbar>
             <include layout="@layout/banner_layout"
                 android:layout_height="180dp"
                 android:layout_width="match_parent"

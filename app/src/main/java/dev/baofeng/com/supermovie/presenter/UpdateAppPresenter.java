@@ -6,13 +6,9 @@ package dev.baofeng.com.supermovie.presenter;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
-
 
 
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
-import dev.baofeng.com.supermovie.domain.MovieInfo;
-import dev.baofeng.com.supermovie.http.ApiManager;
 import dev.baofeng.com.supermovie.http.ApiService;
 import dev.baofeng.com.supermovie.http.BaseApi;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
@@ -59,6 +55,10 @@ public class UpdateAppPresenter extends BasePresenter<IupdateView> {
                     }
                 }
         );
+
+    }
+
+    public void getNewViersion(){
 
     }
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/list_bg_shap"
+    android:layout_width="match_parent"
+    android:paddingTop="20dp"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/set_path"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="#fff"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="自定义下载目录"
+                android:textColor="#232323"
+                android:gravity="top"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="当前下载目录:"
+                android:paddingLeft="20dp"
+                android:id="@+id/current_path"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="#fff"
+        android:id="@+id/set_download_task"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:text="新建磁力下载任务"
+            android:textColor="#232323"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_height="50dp" />
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="#fff"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        android:clickable="true"
+        android:id="@+id/set_allow_no_wifi"
+        android:foreground="?attr/selectableItemBackground"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:text="允许非Wi-Fi下载"
+            android:textColor="#232323"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:layout_height="50dp" />
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

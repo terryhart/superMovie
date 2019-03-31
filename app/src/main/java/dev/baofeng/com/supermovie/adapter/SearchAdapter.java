@@ -47,7 +47,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         String downItemTitle = info.getData().get(position).getDowndtitle();
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+        requestOptions.placeholder(R.drawable.place_holder);
         Glide.with(context).load(URLImg).apply(requestOptions).into(((SearchHolder) holder).itemimg);
 
         ((SearchHolder)holder).itemtitle.setText(info.getData().get(position).getDownLoadName());

@@ -16,19 +16,24 @@ import java.io.IOException;
 
 public class TaskLibHelper {
 
+    private static Context contexts;
 
     public static void init(Context context){
+        contexts = context;
         //初始化本地下载
         XLTaskHelper.init(context.getApplicationContext());
-
         //创建本地下载路径
         try {
-           FileUtils.isExistDir(Params.DEFAULT_PATH);
+           FileUtils.isExistDir(Params.getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
         Intent intent = new Intent(context, DownLoadService.class);
         context.startService(intent);
+    }
+
+    public static Context getContexts(){
+        return contexts;
     }
 
     public static void deleteTask(String url,Context context){

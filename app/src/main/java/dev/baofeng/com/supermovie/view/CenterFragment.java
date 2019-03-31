@@ -31,6 +31,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dev.baofeng.com.supermovie.BuildConfig;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.AppUpdateInfo;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
@@ -38,8 +39,8 @@ import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
+import app.huangyong.com.common.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.AppUpdateUtils;
-import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ShareUtil;
 
 /**
@@ -69,6 +70,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     private CenterPresenter presenter;
     private UpdateAppPresenter updatePresenter;
+    private UpdateDialog dialog;
 
     @Nullable
     @Override
@@ -94,40 +96,45 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         IntentFilter filter = new IntentFilter();
         filter.addAction(Params.ACTION_UPDATE_PROGERSS);
 
-        LocalBroadcastManager  mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-        mLocalBroadcastManager.registerReceiver(mReceiver,filter);
+        LocalBroadcastManager mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        mLocalBroadcastManager.registerReceiver(mReceiver, filter);
         //初始化数据
         initData();
     }
-    BroadcastReceiver mReceiver  = new BroadcastReceiver() {
+
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Params.ACTION_UPDATE_PROGERSS)){
+            if (intent.getAction().equals(Params.ACTION_UPDATE_PROGERSS)) {
                 int extra = intent.getIntExtra(Params.UPDATE_PROGERSS, 0);
-                Log.e("extraprogress",extra+"");
-                if (tvUpdate!=null&&extra<100){
-                    tvUpdate.setText("正在更新      "+extra+"%");
-                }else {
+                if (tvUpdate != null && extra < 100) {
+                    tvUpdate.setText("正在更新      " + extra + "%");
+                } else {
                     tvUpdate.setText("版本更新 ");
+                }
+
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.setProgress(extra);
                 }
             }
         }
     };
+
     /**
      * 以数据库的为准
      */
     private void initData() {
 
         int haveUpate = SharePreferencesUtil.getIntSharePreferences(getContext(), Params.HAVE_UPDATE, 0);
-        if (haveUpate==1){
+        if (haveUpate == 1) {
             tvUpdate.setHasUpdate(true);
-        }else {
+        } else {
             tvUpdate.setHasUpdate(false);
         }
 
-        updatePresenter = new UpdateAppPresenter(getContext(),this);
+        updatePresenter = new UpdateAppPresenter(getContext(), this);
 
-        versionName.setText("版本号："+getVersionName(getContext(),"dev.baofeng.com.supermovie"));
+        versionName.setText("版本号：" + getVersionName(getContext(), "dev.baofeng.com.supermovie"));
         //任务列表
         tvList.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
@@ -156,7 +163,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         shareApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtil.share(getContext(),R.string.string_share_text);
+                ShareUtil.share(getContext(), R.string.string_share_text);
             }
         });
 
@@ -178,7 +185,6 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
     }
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -192,7 +198,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
 
     @Override
     public void onDestroy() {
-
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 
@@ -229,7 +235,7 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         try {
             savePath = isExistDir("app_update");
             File file = new File(savePath, getNameFromUrl(downloadUrl));
-            if (file.exists()){
+            if (file.exists()) {
                 AppUpdateUtils.installApp(getActivity(), file);
                 return;
             }
@@ -238,12 +244,15 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
             e.printStackTrace();
         }
 
-
-        UpdateDialog dialog = new UpdateDialog(getContext(),result);
-        dialog.show();
+        if (dialog!=null){
+            dialog.show();
+        }else {
+            dialog = new UpdateDialog(getContext(), result);
+            dialog.show();
+        }
     }
 
-    public static String getVersionName(Context context, String packageName){
+    public static String getVersionName(Context context, String packageName) {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(packageName, 0);
@@ -254,27 +263,27 @@ public class CenterFragment extends Fragment implements View.OnClickListener, IA
         }
         return "";
     }
+
     /**
      * @param url
-     * @return
-     * 从下载连接中解析出文件名
+     * @return 从下载连接中解析出文件名
      */
     @NonNull
     private String getNameFromUrl(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }
+
     /**
      * @param saveDir
      * @return
-     * @throws IOException
-     * 判断下载目录是否存在
+     * @throws IOException 判断下载目录是否存在
      */
     private String isExistDir(String saveDir) throws IOException {
         // 下载位置
         File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
-        }else {
+        } else {
             File[] files = downloadFile.listFiles();
             for (int i = 0; i < files.length; i++) {
                 files[i].delete();

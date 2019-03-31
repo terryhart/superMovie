@@ -1,10 +1,5 @@
 package dev.baofeng.com.supermovie.view;
 
-import java.util.Queue;
-
-import dev.baofeng.com.supermovie.R;
-
-
 /**
  * Created by huangyong on 2018/1/29.
  */

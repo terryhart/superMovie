@@ -225,7 +225,7 @@ public class DownLoadPresenter {
     public void restartTorrent(DowningTaskInfo info) {
         //这个是用来重新启动任务的，更新数据库，而不插入新的记录，一种取巧的重启任务的策略
         try {
-            String savePath = FileUtils.isExistDir(Params.DEFAULT_PATH);
+            String savePath = FileUtils.isExistDir(Params.getPath());
 
             String[] split = info.getIndex().split(",");
             List<Integer> indexList = new ArrayList<>();
@@ -270,7 +270,7 @@ public class DownLoadPresenter {
     public void restartNormalTask(DowningTaskInfo downTaskInfo) {
 
         try {
-            String path = FileUtils.isExistDir(Params.DEFAULT_PATH);
+            String path = FileUtils.isExistDir(Params.getPath());
             DowningTaskDao taskDao = AppDatabaseManager.getInstance(context).donwingDao();
             List<DowningTaskInfo> taskInfos = taskDao.getAll();
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import dev.baofeng.com.supermovie.utils.NetUtil;
-import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.utils.ToastUtil;
 
 

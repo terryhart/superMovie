@@ -31,7 +31,9 @@ allprojects {
         maven { url 'https://dl.bintray.com/jenly/maven' }
         maven { url "http://mvn.mob.com/android" }
         jcenter(){"http://jcenter.bintray.com"}
-
+        maven {
+            url 'http://4thline.org/m2'
+        }
 //        maven {
 //            url "http://117.78.40.97:9003/nexus/content/repositories/releases/"
 //        }

@@ -47,7 +47,7 @@ public class OnlineXunleiAdapter extends RecyclerView.Adapter<OnlinePlayHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.DEFAULT_PATH, poster, context.getApplicationContext());
+                TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.getPath(), poster, context.getApplicationContext());
 
                 ToastUtil.showMessage("下载任务已添加");
             }

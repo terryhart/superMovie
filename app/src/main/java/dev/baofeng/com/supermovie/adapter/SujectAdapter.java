@@ -49,7 +49,7 @@ public class SujectAdapter extends RecyclerView.Adapter {
         String name = info.getData().get(position).getDownLoadName();
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+        requestOptions.placeholder(R.drawable.place_holder);
         Glide.with(context).load(URLImg.split(",")[0]).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
         ((CommonHolder)holder).itemtitle.setText(name);

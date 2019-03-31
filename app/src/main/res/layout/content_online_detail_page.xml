@@ -63,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/poster_border"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
@@ -166,8 +167,22 @@
                 android:id="@+id/rec_list"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
                 android:paddingLeft="20dp"
                 android:layout_height="200dp" />
+
+
+
+            <dev.baofeng.com.supermovie.view.widget.PileLayout
+                android:id="@+id/pie_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:displayCount="2.7"
+                app:interval="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
+                app:scaleStep="0.22"
+                app:sizeRatio="1.44" />
 
         </LinearLayout>
     </RelativeLayout>

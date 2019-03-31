@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginTop="50dp"
     android:layout_marginBottom="50dp"
@@ -38,7 +38,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:id="@+id/update_content"
@@ -64,22 +64,41 @@
         android:id="@+id/bt_layout"
         android:layout_height="wrap_content">
 
-        <Button
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="本地下载更新"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_height="40dp"
             android:textColor="#ffffff"
-            android:background="@drawable/guide_follow_tag"
+            android:gravity="center"
+            android:textSize="@dimen/dp_14"
+            android:text="立即更新"
+            android:background="@drawable/update_bt_shape"
             android:id="@+id/bt_confirm" />
-
-        <Button
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="网页下载更新"
-            android:background="@drawable/guide_follow_tag"
-            android:textColor="#ffffff"
-            android:layout_marginTop="@dimen/dp_10"
-            android:id="@+id/bt_web" />
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_height="40dp"
+            android:textColor="#FF6F00"
+            android:gravity="center"
+            android:textSize="@dimen/dp_18"
+            android:visibility="gone"
+            android:text="正在更新："
+            android:id="@+id/bt_loading" />
+
+        <ProgressBar
+            android:id="@+id/update_progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_height="4dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:max="100"
+            android:progressDrawable="@drawable/update_dialog_progress" />
     </LinearLayout>
     <ImageView
         android:background="@drawable/bottom_shap"

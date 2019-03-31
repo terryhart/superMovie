@@ -170,7 +170,7 @@ public class DownloadedTaskFragment extends Fragment implements DownedTaskAdapte
                     if (presenter!=null){
                         String torrentPath = taskInfo.getLocalPath()+"/"+taskInfo.getTitle();
                         try {
-                            String savePath = FileUtils.isExistDir(Params.DEFAULT_PATH);
+                            String savePath = FileUtils.isExistDir(Params.getPath());
                             presenter.addTorrentTask(taskInfo,torrentPath,savePath,index,torrentInfo,true);
                         } catch (IOException e) {
                             e.printStackTrace();

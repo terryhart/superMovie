@@ -1,6 +1,8 @@
 package com.huangyong.downloadlib.model;
 
-import android.content.Context;
+import com.huangyong.downloadlib.TaskLibHelper;
+
+import app.huangyong.com.common.SharePreferencesUtil;
 
 public class Params {
     public static final String DOWING_DATA_KEY = "DOWING_DATA_KEY";
@@ -31,6 +33,9 @@ public class Params {
 
 
 
+    public static String DEFAULT_PATH = "MovieDownload";
 
-    public static final String DEFAULT_PATH = "MovieDownload";
+    public static String getPath(){
+       return SharePreferencesUtil.getStringSharePreferences(TaskLibHelper.getContexts(),LOCAL_PATH_KEY,"MovieDownload");
+    }
 }

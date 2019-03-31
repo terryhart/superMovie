@@ -67,7 +67,7 @@ public class OnlineSearchAdapter extends RecyclerView.Adapter {
             String name = datas.getData().get(position).getDownLoadName();
 
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+            requestOptions.placeholder(R.drawable.place_holder);
             Glide.with(context).load(imgUrl)
                     .transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
