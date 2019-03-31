@@ -19,8 +19,6 @@ import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
 import com.huangyong.playerlib.PlayerActivity;
-import com.huangyong.playerlib.PlayerbaseActivity;
-import com.tencent.smtt.sdk.TbsVideo;
 
 public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder> {
 
@@ -79,7 +77,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
      * 普通列表dialog
      */
     private void showListDialog(String url) {
-        final String listItems[] = new String[]{"高级播放(可投屏、小窗)","简单播放",  "王卡专用免流播放(须选择QQ浏览器)"};
+        final String listItems[] = new String[]{"智能播放器(可投屏、小窗)",  "王卡专用免流播放(须选择QQ浏览器)"};
 
         AlertDialog.Builder listDialog = new AlertDialog.Builder(context);
         listDialog.setTitle("选择播放方式");
@@ -93,14 +91,6 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
                 intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY,poster);
                 intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY,title);
                 context.startActivity(intent);
-            }
-            if (which == 1) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("screenMode", 102);
-                bundle.putBoolean("standardFullScreen", false);
-                bundle.putBoolean("supportLiteWnd", true);
-                bundle.putString("title",title);
-                TbsVideo.openVideo(context, url, bundle);
             }
             if (which ==2){
                 openBrowser(context, url);

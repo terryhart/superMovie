@@ -22,7 +22,7 @@ import dev.baofeng.com.supermovie.presenter.SharePresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
-import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
+import app.huangyong.com.common.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 
 

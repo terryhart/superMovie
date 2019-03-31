@@ -68,7 +68,7 @@ public class BTcategoryAdapter extends RecyclerView.Adapter {
             Uri uri = Uri.parse(posterImgUrl);
 
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+            requestOptions.placeholder(R.drawable.place_holder);
             Glide.with(context).load(uri).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(((CommonHolder) holder).itemimg);
 
             ((CommonHolder)holder).itemtitle.setText(name);

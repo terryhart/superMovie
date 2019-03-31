@@ -14,6 +14,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.youngfeng.snake.Snake;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import byc.imagewatcher.ImageWatcherHelper;
@@ -46,12 +47,6 @@ public class MyApp extends Application{
         initCache();
 
 
-        //初始化播放器相关，投屏相关
-        PlayerApplication.init(this);
-
-
-
-
         MobSDK.init(this);
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
@@ -70,6 +65,9 @@ public class MyApp extends Application{
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(),  cb);
 
+
+        //初始化播放器相关，投屏相关
+         PlayerApplication.init(this);
 
     }
 

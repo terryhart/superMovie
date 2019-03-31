@@ -366,7 +366,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     @Override
     public void clicked(String url, String imgUrl) {
-        TaskLibHelper.addNewTask(url, Params.DEFAULT_PATH,imgUrl,getApplicationContext());
+        TaskLibHelper.addNewTask(url, Params.getPath(),imgUrl,getApplicationContext());
 
         ToastUtil.showMessage("下载任务已添加");
     }

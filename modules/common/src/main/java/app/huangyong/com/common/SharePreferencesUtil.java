@@ -1,4 +1,4 @@
-package dev.baofeng.com.supermovie.utils;
+package app.huangyong.com.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

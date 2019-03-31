@@ -16,11 +16,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,10 +32,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -47,8 +45,6 @@ import com.xyzlf.share.library.util.ShareUtil;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,15 +52,15 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.OnlineCategoryAdapter;
 import dev.baofeng.com.supermovie.adapter.OnlinePlayM3u8Adapter;
 import dev.baofeng.com.supermovie.adapter.OnlineXunleiAdapter;
+import dev.baofeng.com.supermovie.adapter.PieRandomAdapter;
 import dev.baofeng.com.supermovie.domain.DescBean;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.domain.online.OnlinePlayInfo;
 import dev.baofeng.com.supermovie.presenter.GetRandomRecpresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IRandom;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
-import dev.baofeng.com.supermovie.view.MovieDetailActivity;
 import dev.baofeng.com.supermovie.view.widget.GlideRoundTransform;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import dev.baofeng.com.supermovie.view.widget.PileLayout;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
@@ -115,6 +111,10 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     LinearLayout descContent;
     @BindView(R.id.mv_title)
     TextView mvTitle;
+    @BindView(R.id.poster_border)
+    CardView posterBorder;
+    @BindView(R.id.pie_container)
+    PileLayout pieContainer;
 
 
     private String posterUrl;
@@ -165,9 +165,9 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 testBean.setDrawableId(R.mipmap.icon_share);
 
                 try {
-                    if (isMovie==GlobalMsg.MOVIE){
-                        testBean.setUrl("https://hiliving.github.io/olineMvShare.html?id="+ mvId);
-                    }else {
+                    if (isMovie == GlobalMsg.MOVIE) {
+                        testBean.setUrl("https://hiliving.github.io/olineMvShare.html?id=" + mvId);
+                    } else {
                         testBean.setUrl("https://hiliving.github.io/olineSrShare.html?id=" + mvId);
                     }
 
@@ -195,7 +195,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         });
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.transform(new GlideRoundTransform(this,4));
+        requestOptions.transform(new GlideRoundTransform(this, 4));
         //加入圆角变换
         Glide.with(this)
                 .load(posterUrl)
@@ -344,7 +344,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList.setLayoutManager(linearLayoutManager);
         playList.setAdapter(adapter);
 
-        OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(this,playUrlBean, posterUrl, title);
+        OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(this, playUrlBean, posterUrl, title);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         playList2.setLayoutManager(linearLayoutManager2);
@@ -354,7 +354,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
             playList2.setVisibility(View.GONE);
             m3u8Title.setVisibility(View.GONE);
         }
-        if (playXunleiUrlList.size()==0){
+        if (playXunleiUrlList.size() == 0) {
             playList.setVisibility(View.GONE);
             weburlTitle.setVisibility(View.GONE);
         }
@@ -396,18 +396,23 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         headContent.setText(string);
         bottomSheetDialog.show();
     }
+
     @Override
     public void loadRandomData(OnlinePlayInfo info) {
-        recAdapter = new OnlineCategoryAdapter(OnlineDetailPageActivity.this, info, mvType, isMovie);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recList.setLayoutManager(linearLayoutManager);
-        recList.setAdapter(recAdapter);
+//        recAdapter = new OnlineCategoryAdapter(OnlineDetailPageActivity.this, info, mvType, isMovie);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        recList.setLayoutManager(linearLayoutManager);
+//        recList.setAdapter(recAdapter);
+
+        PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this,info,isMovie,mvType);
+        pieContainer.setAdapter(adapter);
     }
 
     @Override
     public void loadRError(String msg) {
 
     }
+
 
 }

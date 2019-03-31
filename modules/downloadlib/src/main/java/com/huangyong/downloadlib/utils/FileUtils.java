@@ -46,7 +46,7 @@ public class FileUtils {
      */
     public static String getCacheSize(){
         try {
-           String path = isExistDir(Params.DEFAULT_PATH);
+           String path = isExistDir(Params.getPath());
            File file = new File(path);
             return convertFileSize(getFileSizes(file));
         } catch (IOException e) {

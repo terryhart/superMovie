@@ -20,12 +20,10 @@ import dev.baofeng.com.supermovie.presenter.SharePresenter;
 import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
-import dev.baofeng.com.supermovie.utils.SharePreferencesUtil;
+import app.huangyong.com.common.SharePreferencesUtil;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
-import dev.baofeng.com.supermovie.view.UpdateDialog;
-import dev.baofeng.com.supermovie.view.online.OnlineFilmRootFragment;
 import dev.baofeng.com.supermovie.view.online.OnlineRootFragment;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -83,8 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void updateYes(AppUpdateInfo result) {
         SharePreferencesUtil.setIntSharePreferences(MainActivity.this, Params.HAVE_UPDATE, 1);
-        UpdateDialog dialog = new UpdateDialog(this, result);
-        dialog.show();
+
+
+
     }
 
     @Override
@@ -218,4 +217,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 }

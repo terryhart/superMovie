@@ -50,7 +50,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerHolder> {
         }
         String url=info.get(position).getDownimgurl().split(",")[0];
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.ic_dl_magnet_place_holder);
+        requestOptions.placeholder(R.drawable.place_holder);
         Glide.with(context).load(url).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into(holder.iv);
         holder.title.setText(info.get(position).getDownLoadName());
 

@@ -24,8 +24,6 @@ public class PlayerApplication {
     private static Context context;
     public static void init(Context contexts){
         context = contexts;
-        //initIjkPlayer
-//        MyIjkPlayer.init(context);
         //播放记录的配置
         PlayerConfig.addDecoderPlan(new DecoderPlan(
                 PLAN_ID_IJK,
@@ -37,7 +35,7 @@ public class PlayerApplication {
         PlayerConfig.playRecord(true);
         PlayRecordManager.setRecordConfig(
                 new PlayRecordManager.RecordConfig.Builder()
-                        .setMaxRecordCount(100)
+                        .setMaxRecordCount(600)
                         //.setRecordKeyProvider()
                         //.setOnRecordCallBack()
                         .build());

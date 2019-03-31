@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@+id/post_title"
+            android:id="@+id/post_img"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="22dp"
+            android:id="@+id/post_title"
+            android:textSize="10sp"
+            android:layout_gravity="bottom"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textColor="#FEFEFE"
+            android:background="#8B000000"
+            android:text="电影名字"
+            />
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_new_tag"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:id="@+id/item_update_tag"
+            android:visibility="invisible"
+            android:text="新"
+            android:textColor="#ffffff"
+            />
+    </FrameLayout>
+
+</android.support.v7.widget.CardView>

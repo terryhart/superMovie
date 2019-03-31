@@ -32,7 +32,7 @@ class CheckBoxDialog {
             isCheckedList[j]=false;
         }
         try {
-            XLTaskHelper.instance().addTorrentTask(filePath,Params.DEFAULT_PATH,listArr);
+            XLTaskHelper.instance().addTorrentTask(filePath,Params.getPath(),listArr);
         } catch (Exception e) {
             e.printStackTrace();
         }
