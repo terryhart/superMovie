@@ -3,7 +3,6 @@ package dev.baofeng.com.supermovie.view;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
@@ -39,8 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.huangyong.downloadlib.TaskLibHelper;
@@ -63,11 +59,9 @@ import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
 import dev.baofeng.com.supermovie.utils.ImageUtil;
-import dev.baofeng.com.supermovie.utils.ImgUtils;
 import dev.baofeng.com.supermovie.utils.PixUtil;
 import dev.baofeng.com.supermovie.utils.ToastUtil;
 import dev.baofeng.com.supermovie.view.widget.GlideSimpleLoader;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
@@ -171,7 +165,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
-                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
+
+                /*ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
                 testBean.setContent("热门电影，美剧，海量资源每日更新");
                 testBean.setImgUrl(posterImagUrl);
                 testBean.setDrawableId(R.mipmap.icon_share);
@@ -182,10 +177,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-              //  ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
+                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);*/
 
-
-                testSharePicture();
+                //由于微信屏蔽GitHub链接，同时为了提高分享效率，所见即所得，决定改为海报分享
+                ShareMoviePicture();
 
                 break;
             case R.id.favorate:
@@ -197,7 +192,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         return super.onOptionsItemSelected(item);
     }
 
-    private void testSharePicture() {
+    private void ShareMoviePicture() {
 
         View view = LayoutInflater.from(this).inflate(R.layout.poster_layout, null,false);
         view.setLayoutParams(new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
@@ -208,19 +203,12 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         posterDesc.setText("简介：\n"+mvdescTx.substring(mvdescTx.indexOf("介")+1).trim());
         Bitmap poster = ImageUtil.getScreen(posterbg);
         posterImg.setImageBitmap(poster);
-//        view.setBackgroundColor(barColor);
-        // validate view.width and view.height
         ImageUtil.layoutView(view, (int) PixUtil.convertDpToPixel(360,this), getResources().getDisplayMetrics().heightPixels);
 
-
-
         Bitmap screen = ImageUtil.getScreen(view);
-
         if (screen ==null){
             return;
         }
-
-
         ShareEntity testBean = new ShareEntity("","");
         testBean.setShareBigImg(true);
         String filePath = ShareUtil.saveBitmapToSDCard(this, screen);
