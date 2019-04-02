@@ -11,6 +11,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by Administrator on 2016/8/20.
@@ -43,4 +46,45 @@ public class ImageUtil {
         gCanvas.drawRect(0,sourceBitmap.getHeight()+50,sourceBitmap.getWidth(),groupbBitmap.getHeight(),paint);
         return groupbBitmap;
     }
+
+
+    /**
+     * 截屏
+     *
+     * @return
+     */
+    public static Bitmap getScreen(View viewGroup) {
+        Log.e("currentbitmap",viewGroup.getWidth()+"--"+viewGroup.getHeight());
+        if (viewGroup.getWidth()==0){
+            return null;
+        }
+        Bitmap bmp = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+        int rowBytes = bmp.getRowBytes();
+        bmp = null;
+
+        if (rowBytes*viewGroup.getHeight()>=getAvailMemory()){
+            return null;
+        }
+        bmp = Bitmap.createBitmap(viewGroup.getWidth(), viewGroup.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        viewGroup.draw(canvas);
+        return bmp;
+    }
+
+    private static long getAvailMemory() {// 获取android当前可用内存大小
+        return Runtime.getRuntime().maxMemory();
+    }
+
+
+    public static void layoutView(View v, int width, int height) {
+        // validate view.width and view.height
+        v.layout(0, 0, width, height);
+        int measuredWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
+        int measuredHeight = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.UNSPECIFIED);
+        // validate view.measurewidth and view.measureheight
+        v.measure(measuredWidth, measuredHeight);
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+    }
+
+
 }

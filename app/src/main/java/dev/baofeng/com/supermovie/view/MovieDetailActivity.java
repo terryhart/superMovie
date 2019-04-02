@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.view;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -29,9 +30,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,9 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
+import dev.baofeng.com.supermovie.utils.ImageUtil;
+import dev.baofeng.com.supermovie.utils.ImgUtils;
+import dev.baofeng.com.supermovie.utils.PixUtil;
 import dev.baofeng.com.supermovie.utils.ToastUtil;
 import dev.baofeng.com.supermovie.view.widget.GlideSimpleLoader;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -103,6 +109,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private ImageView back;
     private CardView posterbg;
     private ImageWatcherHelper iwHelper;
+    private StringBuffer shortDesc;
+    private Bitmap posterBitmap;
+    private int barColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,11 +177,16 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 testBean.setDrawableId(R.mipmap.icon_share);
                 try {
                     String url = "https://hiliving.github.io/?id=" + md5Id;
+                    Log.e("testlocadsha",url);
                 testBean.setUrl(url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
+              //  ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
+
+
+                testSharePicture();
+
                 break;
             case R.id.favorate:
                 toggleFavor(item);
@@ -181,6 +195,38 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void testSharePicture() {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.poster_layout, null,false);
+        view.setLayoutParams(new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
+        ImageView posterImg = view.findViewById(R.id.detail_poster);
+        TextView posterTitle = view.findViewById(R.id.imgTitle);
+        TextView posterDesc =  view.findViewById(R.id.desc_container);
+        posterTitle.setText(title);
+        posterDesc.setText("简介：\n"+mvdescTx.substring(mvdescTx.indexOf("介")+1).trim());
+        Bitmap poster = ImageUtil.getScreen(posterbg);
+        posterImg.setImageBitmap(poster);
+//        view.setBackgroundColor(barColor);
+        // validate view.width and view.height
+        ImageUtil.layoutView(view, (int) PixUtil.convertDpToPixel(360,this), getResources().getDisplayMetrics().heightPixels);
+
+
+
+        Bitmap screen = ImageUtil.getScreen(view);
+
+        if (screen ==null){
+            return;
+        }
+
+
+        ShareEntity testBean = new ShareEntity("","");
+        testBean.setShareBigImg(true);
+        String filePath = ShareUtil.saveBitmapToSDCard(this, screen);
+        testBean.setImgUrl(filePath);
+        int channel = ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND | ShareConstant.SHARE_CHANNEL_WEIXIN_CIRCLE | ShareConstant.SHARE_CHANNEL_SINA_WEIBO | ShareConstant.SHARE_CHANNEL_QQ;
+        ShareUtil.showShareDialog(this,channel,testBean, ShareConstant.REQUEST_CODE);
     }
 
 
@@ -196,6 +242,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         downItemList = downItemTitle.split(",");
 
 
+        shortDesc = new StringBuffer();
         if (posterUrl.contains(",")){
            String[] imgArr =  posterUrl.split(",");
             imgScreenShot = imgArr[1];
@@ -229,9 +276,12 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
         Glide.with(this).asBitmap().load(posterImagUrl).into(new SimpleTarget<Bitmap>() {
 
+
+
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 getColor(resource);
+                posterBitmap = resource;
             }
         });
 
@@ -274,12 +324,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             info.setMvDesc(descBuffer.toString());
         }else {
             //详情介绍
-            StringBuffer shortDesc = new StringBuffer();
             for (int i = 0; i < splitArr.length; i++) {
-
                 shortDesc.append(splitArr[i]);
             }
             info.setMvDesc(shortDesc.toString());
+
         }
         sj = info.getMvDesc();
         if (sj.contains("◎")) {
@@ -415,7 +464,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                         if (Build.VERSION.SDK_INT >= 21) {
                             Window window = getWindow();
                             window.setStatusBarColor(colorBurn(vibrant.getRgb()));
-                            window.setNavigationBarColor(colorBurn(vibrant.getRgb()));
+                            barColor = colorBurn(vibrant.getRgb());
+                            window.setNavigationBarColor(barColor);
                         }
                     }
                 }

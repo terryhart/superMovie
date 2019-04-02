@@ -11,4 +11,15 @@
         <attr name="displayCount" format="float" />
     </declare-styleable>
 
+
+    <declare-styleable name="SelectableRoundedImageView">
+        <attr name="left_top_corner_radius" format="dimension" />
+        <attr name="right_top_corner_radius" format="dimension" />
+        <attr name="left_bottom_corner_radius" format="dimension" />
+        <attr name="right_bottom_corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
 </resources>
