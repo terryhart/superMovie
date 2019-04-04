@@ -2,6 +2,8 @@ package com.huangyong.playerlib;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.huangyong.playerlib.manager.PIPManager;
 import com.huangyong.playerlib.model.M3u8Bean;
+import com.huangyong.playerlib.util.NetSpeedUtil;
 import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
 
@@ -32,6 +35,7 @@ import static com.huangyong.playerlib.Params.PALY_LIST_URL;
 public class PlayerActivity extends AppCompatActivity {
 
     private static int PlayMode = 0;
+    private static final int REFRESH = 100;
     private String title;
     private String urlMd5;
     private String url;
@@ -43,6 +47,8 @@ public class PlayerActivity extends AppCompatActivity {
     private IjkVideoView ijkVideoView;
     private DlanPresenter dlanPresenter;
     private String fileAbsolutePath;
+    private AndroidMediaPlayer player;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,6 @@ public class PlayerActivity extends AppCompatActivity {
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
         Bundle bundleExtra = getIntent().getBundleExtra(PALY_LIST_URL);
-
 
         ijkVideoView.setTitle(title);
 
@@ -95,7 +100,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         };
 
-        AbstractPlayer player = new AndroidMediaPlayer(this);
+        player = new AndroidMediaPlayer(this);
 
 
         //如果是本地文件，如果是在线视频
@@ -148,7 +153,6 @@ public class PlayerActivity extends AppCompatActivity {
         playerContainer.addView(ijkVideoView);
         ijkVideoView.startFullScreen();
         ijkVideoView.start();
-
         initDlan();
     }
 
@@ -166,27 +170,27 @@ public class PlayerActivity extends AppCompatActivity {
 
                 switch (index) {
                     case 0:
-                        ijkVideoView.setSpeed(1.0f);
+                        player.setSpeed(1.0f);
                         controller.setCheckUpdate("正常");
                         break;
                     case 1:
-                        ijkVideoView.setSpeed(1.25f);
+                        player.setSpeed(1.25f);
                         controller.setCheckUpdate("1.25x");
                         break;
                     case 2:
-                        ijkVideoView.setSpeed(1.5f);
+                        player.setSpeed(1.5f);
                         controller.setCheckUpdate("1.5x");
                         break;
                     case 3:
-                        ijkVideoView.setSpeed(1.75f);
+                        player.setSpeed(1.75f);
                         controller.setCheckUpdate("1.75x");
                         break;
                     case 4:
-                        ijkVideoView.setSpeed(2.0f);
+                        player.setSpeed(2.0f);
                         controller.setCheckUpdate("2.0x");
                         break;
                     default:
-                        ijkVideoView.setSpeed(1.0f);
+                        player.setSpeed(1.0f);
                         controller.setCheckUpdate("1.0x");
                         break;
                 }
@@ -210,7 +214,6 @@ public class PlayerActivity extends AppCompatActivity {
         super.onPause();
         mPIPManager.pause();
     }
-
 
     @Override
     protected void onDestroy() {

@@ -374,12 +374,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
     @Override
     public void loadRandomData(OnlinePlayInfo info) {
-//        recAdapter = new OnlineCategoryAdapter(OnlineDetailPageActivity.this, info, mvType, isMovie);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        recList.setLayoutManager(linearLayoutManager);
-//        recList.setAdapter(recAdapter);
-
         PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this, info, isMovie, mvType);
         pieContainer.setAdapter(adapter);
     }
