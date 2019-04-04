@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4E1B1A1A"
+    android:id="@+id/chose_root"
+    android:layout_gravity="right|center_vertical"
+    android:orientation="vertical">
+    <Button
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="40dp"
+        android:background="@drawable/ic_close_black_24dp"
+        android:layout_gravity="right|bottom"
+        android:id="@+id/ic_list_close"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/play_list"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:focusable="true"
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

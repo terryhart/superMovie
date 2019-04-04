@@ -21,6 +21,7 @@ public class Params {
     public static final String DURL = "DURL";
     public static final String ACTION_UPDATE_PROGERSS = "action.update.progress";
     public static final String HAVE_UPDATE = "HAVE_UPDATE";
+    public static final String PALY_LIST_URL = "PALY_LIST_URL";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
     public static String TASK_START ="downlib.start.task";

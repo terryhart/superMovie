@@ -93,7 +93,7 @@ public class OnlineSearchPresenter extends BasePresenter<IOnlineSearch> {
 
 
     public boolean keywordsExist(String keyword) {
-        return DbHelper.checkKeyWords(keyword);
+        return DbHelper.checkOnlineKeyWords(keyword);
     }
 
     /**

@@ -3,6 +3,7 @@ package dev.baofeng.com.supermovie.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,7 @@ public class OnlineCategoryAdapter extends RecyclerView.Adapter {
         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
         intent.putExtra(GlobalMsg.KEY_MV_TYPE, type);
 
+        Log.e("downloadurl", datas.getData().get(position).getDownLoadUrl());
         intent.putExtra(GlobalMsg.KEY_MV_ID,datas.getData().get(position).getMv_md5_id());
 
         intent.putExtra(GlobalMsg.KEY_IS_MOVIE, isMV);

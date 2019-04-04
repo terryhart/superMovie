@@ -89,7 +89,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     @BindView(R.id.m3u8_title)
     TextView m3u8Title;
     @BindView(R.id.play_list2)
-    RecyclerView playList2;
+    RecyclerView m3u8List;
     @BindView(R.id.weburl_title)
     TextView weburlTitle;
     @BindView(R.id.rec_title)
@@ -313,31 +313,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     private void initPlayerData() {
 
         playUrlBean = gson.fromJson(downUrl, PlayUrlBean.class);
-        ArrayList<String> playM3u8List = new ArrayList<>();
-        ArrayList<String> playXunleiUrlList = new ArrayList<>();
-
-
-        for (int i = 0; i < playUrlBean.getXunlei().size(); i++) {
-            if (playUrlBean.getNormal().size() == 1) {
-                playXunleiUrlList.add("web");
-            } else {
-                playXunleiUrlList.add((i + 1) + "");
-            }
-        }
-        for (int i = 0; i < playUrlBean.getM3u8().size(); i++) {
-            if (playUrlBean.getM3u8().size() == 1) {
-                playM3u8List.add("播放");
-            } else {
-                if (playUrlBean.getM3u8().size() > 10) {
-                    playM3u8List.add((i + 1) + "");
-                    if (i == 9) {
-                        break;
-                    }
-                }
-            }
-
-        }
-
         OnlineXunleiAdapter adapter = new OnlineXunleiAdapter(posterUrl, playUrlBean);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -345,16 +320,16 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList.setAdapter(adapter);
 
         OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(this, playUrlBean, posterUrl, title);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        playList2.setLayoutManager(linearLayoutManager2);
-        playList2.setAdapter(adapter2);
+        LinearLayoutManager horizontalManager = new LinearLayoutManager(this);
+        horizontalManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        m3u8List.setLayoutManager(horizontalManager);
+        m3u8List.setAdapter(adapter2);
 
-        if (playM3u8List.size() == 0) {
-            playList2.setVisibility(View.GONE);
+        if (playUrlBean.getM3u8() != null && playUrlBean.getM3u8().size() == 0) {
+            m3u8List.setVisibility(View.GONE);
             m3u8Title.setVisibility(View.GONE);
         }
-        if (playXunleiUrlList.size() == 0) {
+        if (playUrlBean.getXunlei() != null && playUrlBean.getXunlei().size() == 0) {
             playList.setVisibility(View.GONE);
             weburlTitle.setVisibility(View.GONE);
         }
@@ -405,7 +380,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 //        recList.setLayoutManager(linearLayoutManager);
 //        recList.setAdapter(recAdapter);
 
-        PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this,info,isMovie,mvType);
+        PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this, info, isMovie, mvType);
         pieContainer.setAdapter(adapter);
     }
 

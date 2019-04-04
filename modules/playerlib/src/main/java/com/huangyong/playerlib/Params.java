@@ -12,6 +12,7 @@ public class Params {
     public static final String ACTION_UPDATE_PAGER_POSTER = "com_update_viewpager_poster";
     public static final String HISTORY_SAVE = "com.movie.history";
     public static final String MOVIE_PROGRESS = "MOVIE_PROGRESS";
+    public static final String CURRENT_INDEX = "CURRENT_INDEX";
     public static String NetWorkChangeAction = "downlib.network.changed";
     public static String TASK_DELETE = "downlib.stop.task";
     public static String TASK_PAUSE ="downlib.pause.task";
@@ -22,7 +23,7 @@ public class Params {
 
     public static String TASK_URL_KEY = "TASK_URL_KEY";
     public static String UPDATE_PROGERSS ="UPDATE_PROGERSS";
-
+    public static final String PALY_LIST_URL = "PALY_LIST_URL";
 
 
 

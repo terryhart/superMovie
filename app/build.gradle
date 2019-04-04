@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -117,7 +116,7 @@ dependencies {
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation project(':modules:downloadlib')
     implementation project(':modules:playerlib')
-    implementation project(':modules:vivideo')
+    implementation project(':modules:webview')
     //友盟统计
     implementation 'com.umeng.sdk:common:1.5.0'
     implementation 'com.umeng.sdk:analytics:7.5.0'
@@ -146,11 +145,6 @@ dependencies {
     annotationProcessor 'com.youngfeng.android:snake-compiler:0.3.0'
     implementation project(':modules:common')
 
-}
-MobSDK {
-    appKey "21d6c31e3d978"
-    appSecret "d5f941d2726e2aaa81858b1c8a71203e"
-    SMSSDK {}
 }
 
 

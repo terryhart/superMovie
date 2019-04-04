@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:background="@drawable/chose_selector"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:text="1"
+        android:id="@+id/play_index"
+        />
+</LinearLayout>

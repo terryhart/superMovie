@@ -29,9 +29,10 @@ public class PieRandomAdapter extends PileLayout.Adapter {
 
     private int isMV;
     private String mvType;
+
     public PieRandomAdapter(Context context, OnlinePlayInfo info, int isMovie, String mvType) {
         this.context = context;
-        this.info  = info;
+        this.info = info;
         this.isMV = isMovie;
         this.mvType = mvType;
     }
@@ -51,19 +52,22 @@ public class PieRandomAdapter extends PileLayout.Adapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
         if (viewHolder == null) {
             viewHolder = new ViewHolder();
-            viewHolder.itemimg =  view.findViewById(R.id.post_img);
-            viewHolder.itemtitle =  view.findViewById(R.id.post_title);
+            viewHolder.itemimg = view.findViewById(R.id.post_img);
+            viewHolder.itemtitle = view.findViewById(R.id.post_title);
             viewHolder.itemTag = view.findViewById(R.id.item_update_tag);
             view.setTag(viewHolder);
         }
         String imgUrl = info.getData().get(index).getDownimgurl();
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.place_holder);
-        Glide.with(context).load(imgUrl).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into((viewHolder.itemimg));
-
-
-        viewHolder.itemtitle.setText(info.getData().get(index).getDownLoadName());
-
+        if (context == null) {
+            return;
+        }
+        try {
+            Glide.with(context).load(imgUrl).transition(DrawableTransitionOptions.withCrossFade(300)).apply(requestOptions).into((viewHolder.itemimg));
+            viewHolder.itemtitle.setText(info.getData().get(index).getDownLoadName());
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -73,7 +77,7 @@ public class PieRandomAdapter extends PileLayout.Adapter {
     @Override
     public void onItemClick(View view, int position) {
         String imgUrl = info.getData().get(position).getDownimgurl();
-        toDetailPage(imgUrl,position,info.getData().get(position).getDownLoadName());
+        toDetailPage(imgUrl, position, info.getData().get(position).getDownLoadName());
     }
 
     class ViewHolder {
@@ -83,7 +87,6 @@ public class PieRandomAdapter extends PileLayout.Adapter {
     }
 
 
-
     private void toDetailPage(String imgUrl, int position, String name) {
         Intent intent = new Intent(context, OnlineDetailPageActivity.class);
         intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
@@ -91,7 +94,7 @@ public class PieRandomAdapter extends PileLayout.Adapter {
         intent.putExtra(GlobalMsg.KEY_MOVIE_TITLE, name);
         intent.putExtra(GlobalMsg.KEY_MV_TYPE, mvType);
 
-        intent.putExtra(GlobalMsg.KEY_MV_ID,info.getData().get(position).getMv_md5_id());
+        intent.putExtra(GlobalMsg.KEY_MV_ID, info.getData().get(position).getMv_md5_id());
 
         intent.putExtra(GlobalMsg.KEY_IS_MOVIE, isMV);
         //简介

@@ -15,20 +15,18 @@ import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.huangyong.playerlib.manager.PIPManager;
+import com.huangyong.playerlib.model.M3u8Bean;
 import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.SocketException;
+import java.util.List;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-import zmovie.com.dlan.DeviceListActivityPage;
 import zmovie.com.dlan.DlanLib;
-import zmovie.com.dlan.DlanLocalActivity;
 import zmovie.com.dlan.DlanPresenter;
-import zmovie.com.dlan.utils.UpnpUtil;
-import zmovie.com.dlan.utils.Utils;
+
+import static com.huangyong.playerlib.Params.PALY_LIST_URL;
 
 
 public class PlayerActivity extends AppCompatActivity {
@@ -60,14 +58,24 @@ public class PlayerActivity extends AppCompatActivity {
         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
+        Bundle bundleExtra = getIntent().getBundleExtra(PALY_LIST_URL);
+
 
         ijkVideoView.setTitle(title);
+
 
         controller = new CustomControler(this);
         controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener);
         controller.setLoadingTips(title);
+        controller.setOnItemClickListener(clickedListener);
         controller.setOnstateChangeListener(changeListener);
+        if (bundleExtra!= null) {
+            List<M3u8Bean> m3u8Bean = (List<M3u8Bean>) bundleExtra.getSerializable(PALY_LIST_URL);
+            int currentIndex = bundleExtra.getInt(Params.CURRENT_INDEX,0);
+            controller.configPlayList(m3u8Bean,currentIndex);
+        }
+
         ijkVideoView.setVideoController(controller);
 
 
@@ -229,11 +237,11 @@ public class PlayerActivity extends AppCompatActivity {
         @Override
         public void onAirPlay() {
 
-            if (TextUtils.isEmpty(path)){
+            if (TextUtils.isEmpty(path)) {
                 Toast.makeText(PlayerActivity.this, "投屏功能暂不可用", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if ( path.startsWith("https://") || path.startsWith("http://")&& dlanPresenter != null) {
+            if (path.startsWith("https://") || path.startsWith("http://") && dlanPresenter != null) {
                 dlanPresenter.showDialogTip(PlayerActivity.this, path, title);
             } else {
                 Toast.makeText(PlayerActivity.this, "已下载完成的视频,请到首页投屏助手观看", Toast.LENGTH_SHORT).show();
@@ -262,4 +270,14 @@ public class PlayerActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    CustomControler.OnItemClickedListener clickedListener = new CustomControler.OnItemClickedListener() {
+        @Override
+        public void clicked(String url) {
+            ijkVideoView.stopPlayback();
+            ijkVideoView.release();
+            ijkVideoView.setUrl(url);
+            ijkVideoView.start();
+        }
+    };
 }
