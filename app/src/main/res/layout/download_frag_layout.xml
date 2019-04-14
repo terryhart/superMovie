@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
@@ -23,13 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="#fff"
+        android:background="@android:color/transparent"
         app:tabIndicatorHeight="2dp"
         app:indicatorStartColor="#2b2b2b"
         app:indicatorEndColor="#383838"
         app:indicatorMarginStart="18dp"
         app:indicatorMarginEnd="18dp"
-        app:tabTextColor="@color/titlecor" />
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextAppearance="@style/CustomTablayoutTextAppearance"
+        app:tabTextColor="#82090909" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

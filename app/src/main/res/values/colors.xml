@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#249bb3</color>
-    <color name="colorPrimaryDark">#249bb3</color>
+    <color name="colorPrimaryDark">#00249BB3</color>
     <color name="colorAccent">#249bb3</color>
 
     <color name="editcolor">#fde6e5e5</color>
@@ -33,6 +33,9 @@
     <color name="favor_unchecked">#55ffffff</color>
 
     <drawable name="image_default">#454545</drawable>
+
+
+
 
     <!-- 系统配色 -->
     <color name="theme_dark">#262734</color>

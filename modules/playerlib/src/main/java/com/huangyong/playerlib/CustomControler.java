@@ -1,15 +1,23 @@
 package com.huangyong.playerlib;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,14 +34,26 @@ import android.widget.Toast;
 
 import com.dueeeke.videocontroller.BatteryReceiver;
 import com.dueeeke.videocontroller.MarqueeTextView;
-import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videoplayer.controller.GestureVideoController;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.util.L;
 import com.dueeeke.videoplayer.util.PlayerUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.huangyong.playerlib.manager.PIPManager;
-import com.mingle.widget.LoadingView;
+import com.huangyong.playerlib.adapter.PlayListAdapter;
+import com.huangyong.playerlib.adapter.RecyclerItemDecoration;
+import com.huangyong.playerlib.model.M3u8Bean;
+import com.huangyong.playerlib.util.NetSpeedUtil;
+import com.kk.taurus.playerbase.utils.NetworkUtils;
+
+import java.util.List;
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import per.goweii.anylayer.AnimHelper;
+import per.goweii.anylayer.AnyLayer;
+import per.goweii.anylayer.LayerManager;
+import zmovie.com.dlan.utils.Utils;
 
 /**
  * creator huangyong
@@ -41,7 +61,10 @@ import com.mingle.widget.LoadingView;
  * path com.huangyong.playerlib
  * description:
  */
-public class CustomControler extends GestureVideoController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener{
+public class CustomControler extends GestureVideoController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+
+    public static int CurrentIndex = 0;
+    private Context activity;
     protected TextView mTotalTime, mCurrTime;
     protected Button mFullScreenButton;
     protected RelativeLayout mBottomContainer;
@@ -68,10 +91,31 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private SpeedDialog speedDialog;
     private ImageView pic2pic;
     private ImageView airPlay;
-    private String loadingTips="";
+    private String loadingTips = "";
+    private TextView choseList;
+    private boolean showChoseBtn = false;
+    private List<M3u8Bean> mPlayList;
+    private AnyLayer anyLayer;
+    private TextView netSpeed;
+    private RelativeLayout loadingContainer;
+    private NetSpeedUtil util;
+    private TextView tvSpeed;
+
+    Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==111){
+                loadNetSpeed();
+                handler.sendEmptyMessageDelayed(111,1000);
+            }
+
+        }
+    };
 
     public CustomControler(@NonNull Context context) {
         this(context, null);
+        this.activity = context;
     }
 
     public CustomControler(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -90,7 +134,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     @Override
     protected void initView() {
         super.initView();
-        mDefaultTimeout =6000;
+        mDefaultTimeout = 6000;
         mFullScreenButton = mControllerView.findViewById(R.id.fullscreen);
         mFullScreenButton.setOnClickListener(this);
         mBottomContainer = mControllerView.findViewById(R.id.bottom_container);
@@ -100,6 +144,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mTotalTime = mControllerView.findViewById(R.id.total_time);
         mCurrTime = mControllerView.findViewById(R.id.curr_time);
         mBackButton = mControllerView.findViewById(R.id.back);
+        choseList = mControllerView.findViewById(R.id.chose_list);
         mBackButton.setOnClickListener(this);
         mLockButton = mControllerView.findViewById(R.id.lock);
         mLockButton.setOnClickListener(this);
@@ -109,7 +154,11 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mPlayButton.setOnClickListener(this);
         mStartPlayButton = mControllerView.findViewById(R.id.start_play);
         mLoadingProgress = mControllerView.findViewById(R.id.play_loading);
+        loadingContainer = mControllerView.findViewById(R.id.loading_content);
+        netSpeed = mControllerView.findViewById(R.id.net_speed);
         mBottomProgress = mControllerView.findViewById(R.id.bottom_progress);
+        tvSpeed = mControllerView.findViewById(R.id.net_speed_tv);
+
         ImageView rePlayButton = mControllerView.findViewById(R.id.iv_replay);
         rePlayButton.setOnClickListener(this);
         mCompleteContainer = mControllerView.findViewById(R.id.complete_container);
@@ -119,6 +168,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mBatteryLevel = mControllerView.findViewById(R.id.iv_battery);
 
 
+        choseList.setOnClickListener(this);
         pic2pic = mControllerView.findViewById(R.id.pic2pic);
         pic2pic.setOnClickListener(this);
         airPlay = mControllerView.findViewById(R.id.airplay);
@@ -126,9 +176,13 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mBatteryReceiver = new BatteryReceiver(mBatteryLevel);
         mRefreshButton = mControllerView.findViewById(R.id.iv_refresh);
         mRefreshButton.setOnClickListener(this);
-        speedDialog =new SpeedDialog(getContext());
+        speedDialog = new SpeedDialog(getContext());
 
+        util = new NetSpeedUtil();
     }
+
+
+
 
     @Override
     protected void onDetachedFromWindow() {
@@ -145,7 +199,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i==R.id.back){
+        if (i == R.id.back) {
             onBackPressed();
         }
         if (i == R.id.fullscreen) {
@@ -158,26 +212,76 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             mMediaPlayer.retry();
         } else if (i == R.id.iv_refresh) {
             mMediaPlayer.refresh();
-        }else if (i==R.id.pic2pic){
-            if (changeListener!=null){
+        } else if (i == R.id.pic2pic) {
+            if (changeListener != null) {
                 changeListener.onPic2Pic();
             }
-        }else if (i == R.id.airplay){
-            if (changeListener!=null){
+        } else if (i == R.id.airplay) {
+            if (changeListener != null) {
                 changeListener.onAirPlay();
             }
+        } else if (i == R.id.chose_list) {
+            showList();
+            hideAllViews();
+            mShowing = false;
         }
+    }
+
+    /**
+     * 显示选集对话框
+     */
+    private void showList() {
+        if (anyLayer == null) {
+            anyLayer = AnyLayer.with(activity)
+                    .contentView(R.layout.play_list_layout)
+                    .gravity(Gravity.RIGHT)
+                    .contentAnim(new LayerManager.IAnim() {
+                        @Override
+                        public Animator inAnim(View content) {
+                            return AnimHelper.createRightInAnim(content);
+                        }
+
+                        @Override
+                        public Animator outAnim(View content) {
+                            return AnimHelper.createRightOutAnim(content);
+                        }
+                    });
+        }
+        anyLayer.show();
+        RecyclerView playList = anyLayer.getView(R.id.play_list);
+        PlayListAdapter adapter = new PlayListAdapter(mPlayList, activity, clickedListener);
+        playList.setLayoutManager(new GridLayoutManager(activity, 6));
+        playList.setAdapter(adapter);
+
+        anyLayer.getContentView().setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP && anyLayer != null && anyLayer.isShow()) {
+                    float y = event.getRawY();
+                    int[] location = new int[2];
+                    View view =  anyLayer.getView(R.id.play_list);
+                    view.getLocationInWindow(location);
+                    if (y>location[1]+view.getHeight()) {
+                        anyLayer.dismiss();
+                    }
+                    return true;
+                }
+                return true;
+            }
+        });
     }
 
     public void showTitle() {
         mTitle.setVisibility(View.VISIBLE);
     }
+
     private void toggleSpeed() {
-        if (speedDialog!=null&&!speedDialog.isShowing()){
+        if (speedDialog != null && !speedDialog.isShowing()) {
             speedDialog.show();
 
         }
     }
+
     @Override
     public void setPlayerState(int playerState) {
         switch (playerState) {
@@ -231,7 +335,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 mVideoProgress.setSecondaryProgress(0);
                 mCompleteContainer.setVisibility(View.GONE);
                 mBottomProgress.setVisibility(View.GONE);
-                mLoadingProgress.setVisibility(View.GONE);
+                hideLoadingContent();
                 mStartPlayButton.setVisibility(View.VISIBLE);
                 mThumb.setVisibility(View.VISIBLE);
                 break;
@@ -239,7 +343,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 L.e("STATE_PLAYING");
                 post(mShowProgress);
                 mPlayButton.setSelected(true);
-                mLoadingProgress.setVisibility(View.GONE);
+                hideLoadingContent();
                 mCompleteContainer.setVisibility(View.GONE);
                 mThumb.setVisibility(View.GONE);
                 mStartPlayButton.setVisibility(View.GONE);
@@ -253,7 +357,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 L.e("STATE_PREPARING");
                 mCompleteContainer.setVisibility(View.GONE);
                 mStartPlayButton.setVisibility(View.GONE);
-                mLoadingProgress.setVisibility(View.VISIBLE);
+                showLoadingContent();
 //                mThumb.setVisibility(View.VISIBLE);
                 break;
             case IjkVideoView.STATE_PREPARED:
@@ -265,7 +369,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             case IjkVideoView.STATE_ERROR:
                 L.e("STATE_ERROR");
                 mStartPlayButton.setVisibility(View.GONE);
-                mLoadingProgress.setVisibility(View.GONE);
+                hideLoadingContent();
                 mThumb.setVisibility(View.GONE);
                 mBottomProgress.setVisibility(View.GONE);
                 mTopContainer.setVisibility(View.GONE);
@@ -273,11 +377,11 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             case IjkVideoView.STATE_BUFFERING:
                 L.e("STATE_BUFFERING");
                 mStartPlayButton.setVisibility(View.GONE);
-                mLoadingProgress.setVisibility(View.VISIBLE);
+                showLoadingContent();
                 mThumb.setVisibility(View.GONE);
                 break;
             case IjkVideoView.STATE_BUFFERED:
-                mLoadingProgress.setVisibility(View.GONE);
+                hideLoadingContent();
                 mStartPlayButton.setVisibility(View.GONE);
                 mThumb.setVisibility(View.GONE);
                 L.e("STATE_BUFFERED");
@@ -295,6 +399,25 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 mMediaPlayer.setLock(false);
                 break;
         }
+    }
+
+    /**
+     * 显示loading
+     */
+    private void showLoadingContent() {
+        loadingContainer.setVisibility(View.VISIBLE);
+        //开始获取网速
+        refreshNetSpeed();
+        handler.sendEmptyMessage(111);
+    }
+
+    /**
+     * 隐藏loading
+     */
+    private void hideLoadingContent() {
+        loadingContainer.setVisibility(View.GONE);
+        mLoadingProgress.clearAnimation();
+        handler.removeCallbacksAndMessages(null);
     }
 
     protected void doLockUnlock() {
@@ -352,8 +475,9 @@ public class CustomControler extends GestureVideoController implements View.OnCl
 
         long duration = mMediaPlayer.getDuration();
         long newPosition = (duration * progress) / mVideoProgress.getMax();
-        if (mCurrTime != null)
+        if (mCurrTime != null){
             mCurrTime.setText(stringForTime((int) newPosition));
+        }
     }
 
     @Override
@@ -382,6 +506,11 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mTopContainer.startAnimation(mHideAnim);
         mBottomContainer.setVisibility(View.GONE);
         mBottomContainer.startAnimation(mHideAnim);
+        if (choseList.isShown()){
+            choseList.setVisibility(GONE);
+            choseList.startAnimation(mHideAnim);
+        }
+
     }
 
     private void show(int timeout) {
@@ -414,6 +543,11 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mBottomContainer.startAnimation(mShowAnim);
         mTopContainer.setVisibility(View.VISIBLE);
         mTopContainer.startAnimation(mShowAnim);
+        if (showChoseBtn) {
+            choseList.setVisibility(VISIBLE);
+            choseList.startAnimation(mShowAnim);
+        }
+
     }
 
     @Override
@@ -459,7 +593,33 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         if (mCurrTime != null)
             mCurrTime.setText(stringForTime(position));
 
+
+        refreshNetSpeed();
         return position;
+    }
+
+    /**
+     * 刷新网速
+     */
+    private void refreshNetSpeed() {
+        if (util==null){
+            util = new NetSpeedUtil();
+        }
+        if (tvSpeed.isShown()){
+            String netSpeeds = util.getNetSpeed(getContext());
+            tvSpeed.setText(netSpeeds);
+        }
+
+    }
+
+    private void loadNetSpeed(){
+        if (util==null){
+            util = new NetSpeedUtil();
+        }
+        if (netSpeed.isShown()){
+            String netSpeeds = util.getNetSpeed(getContext());
+            netSpeed.setText(netSpeeds);
+        }
     }
 
 
@@ -484,35 +644,30 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             return true;
         }
 
-        Activity activity = PlayerUtils.scanForActivity(getContext());
-        if (activity == null) return super.onBackPressed();
 
-        if (mMediaPlayer.isFullScreen()) {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            mMediaPlayer.stopFullScreen();
-            return true;
-        }
-        return super.onBackPressed();
+        ((Activity) activity).onBackPressed();
+        return true;
     }
 
     public void setOnCheckListener(PlayerActivity.OncheckListener listener) {
-        if (speedDialog!=null){
+        if (speedDialog != null) {
             speedDialog.setOnCheckListener(listener);
         }
     }
 
     public void setCheckUpdate(String text) {
-        if (mFullScreenButton!=null){
+        if (mFullScreenButton != null) {
             mFullScreenButton.setText(text);
         }
-        if (speedDialog!=null&&speedDialog.isShowing()){
+        if (speedDialog != null && speedDialog.isShowing()) {
             speedDialog.dismiss();
         }
     }
 
 
     private OnstateChangeListener changeListener;
-    public void setOnstateChangeListener(OnstateChangeListener changeListener){
+
+    public void setOnstateChangeListener(OnstateChangeListener changeListener) {
         this.changeListener = changeListener;
     }
 
@@ -521,11 +676,35 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         invalidate();
     }
 
-    public interface OnstateChangeListener{
+    public void configPlayList(List<M3u8Bean> m3u8Bean, int currentIndex) {
+        if (m3u8Bean.size() > 1) {
+            CurrentIndex = currentIndex;
+            this.showChoseBtn = true;
+            this.mPlayList = m3u8Bean;
+            invalidate();
+        }
+    }
+
+
+    private OnItemClickedListener clickedListener;
+
+    public void setOnItemClickListener(OnItemClickedListener clickedListener) {
+        this.clickedListener = clickedListener;
+    }
+
+    public interface OnstateChangeListener {
         void onAirPlay();
 
         void onPic2Pic();
 
         void onLocalCast();
+    }
+
+    public interface OnItemClickedListener {
+        void clicked(String position);
+    }
+
+    public void startNetSpeedGet(String speed){
+
     }
 }

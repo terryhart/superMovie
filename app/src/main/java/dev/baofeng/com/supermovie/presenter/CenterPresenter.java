@@ -27,7 +27,12 @@ public class CenterPresenter extends BasePresenter<IAllView> {
                         .getLibraryDatas(type,page,pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
                     public void onSuccess(RecentUpdate data) {
-                        iview.loadSuccess(data);
+
+                        if (data.getData().size()>0){
+                            iview.loadSuccess(data);
+                        }else {
+                            iview.loadFail();
+                        }
                     }
 
                     @Override
@@ -43,11 +48,17 @@ public class CenterPresenter extends BasePresenter<IAllView> {
                         .getLibraryDatas(type,page,pagesize), new BaseApi.IResponseListener<RecentUpdate>() {
                     @Override
                     public void onSuccess(RecentUpdate data) {
-                        iview.loadMore(data);
+
+                        if (data.getData().size()>0){
+                            iview.loadMore(data);
+                        }else {
+                            iview.loadFail();
+                        }
                     }
 
                     @Override
                     public void onFail() {
+
                     }
                 }
         );

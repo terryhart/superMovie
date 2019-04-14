@@ -2,6 +2,7 @@ package com.huangyong.downloadlib.utils;
 
 import android.os.Environment;
 import android.os.StatFs;
+import android.util.Log;
 
 import com.huangyong.downloadlib.model.Params;
 
@@ -92,8 +93,11 @@ public class FileUtils {
      * 判断下载目录是否存在，不存在就创建
      */
     public static String isExistDir(String saveDir) throws IOException {
+        File file = new File(saveDir);
+
+        Log.e("testlocalpath",""+saveDir+(file.isFile()));
         // 下载位置
-        File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
+        File downloadFile = new File(saveDir);
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }

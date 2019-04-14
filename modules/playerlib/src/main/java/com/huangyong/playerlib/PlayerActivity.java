@@ -10,30 +10,28 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.dueeeke.videoplayer.player.AbstractPlayer;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.huangyong.playerlib.manager.PIPManager;
+import com.huangyong.playerlib.model.M3u8Bean;
 import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.SocketException;
+import java.util.List;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-import zmovie.com.dlan.DeviceListActivityPage;
 import zmovie.com.dlan.DlanLib;
-import zmovie.com.dlan.DlanLocalActivity;
 import zmovie.com.dlan.DlanPresenter;
-import zmovie.com.dlan.utils.UpnpUtil;
-import zmovie.com.dlan.utils.Utils;
+
+import static com.huangyong.playerlib.Params.PALY_LIST_URL;
 
 
 public class PlayerActivity extends AppCompatActivity {
 
     private static int PlayMode = 0;
+    private static final int REFRESH = 100;
     private String title;
     private String urlMd5;
     private String url;
@@ -45,6 +43,8 @@ public class PlayerActivity extends AppCompatActivity {
     private IjkVideoView ijkVideoView;
     private DlanPresenter dlanPresenter;
     private String fileAbsolutePath;
+    private AndroidMediaPlayer player;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +60,23 @@ public class PlayerActivity extends AppCompatActivity {
         title = getIntent().getStringExtra(Params.TASK_TITLE_KEY);
         urlMd5 = getIntent().getStringExtra(Params.URL_MD5_KEY);
         poster = getIntent().getStringExtra(Params.POST_IMG_KEY);
+        Bundle bundleExtra = getIntent().getBundleExtra(PALY_LIST_URL);
 
         ijkVideoView.setTitle(title);
+
 
         controller = new CustomControler(this);
         controller.getThumb().setImageResource(R.drawable.preview_bg);
         controller.setOnCheckListener(listener);
         controller.setLoadingTips(title);
+        controller.setOnItemClickListener(clickedListener);
         controller.setOnstateChangeListener(changeListener);
+        if (bundleExtra!= null) {
+            List<M3u8Bean> m3u8Bean = (List<M3u8Bean>) bundleExtra.getSerializable(PALY_LIST_URL);
+            int currentIndex = bundleExtra.getInt(Params.CURRENT_INDEX,0);
+            controller.configPlayList(m3u8Bean,currentIndex);
+        }
+
         ijkVideoView.setVideoController(controller);
 
 
@@ -87,7 +96,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         };
 
-        AbstractPlayer player = new AndroidMediaPlayer(this);
+        player = new AndroidMediaPlayer(this);
 
 
         //如果是本地文件，如果是在线视频
@@ -140,7 +149,6 @@ public class PlayerActivity extends AppCompatActivity {
         playerContainer.addView(ijkVideoView);
         ijkVideoView.startFullScreen();
         ijkVideoView.start();
-
         initDlan();
     }
 
@@ -158,27 +166,27 @@ public class PlayerActivity extends AppCompatActivity {
 
                 switch (index) {
                     case 0:
-                        ijkVideoView.setSpeed(1.0f);
+                        player.setSpeed(1.0f);
                         controller.setCheckUpdate("正常");
                         break;
                     case 1:
-                        ijkVideoView.setSpeed(1.25f);
+                        player.setSpeed(1.25f);
                         controller.setCheckUpdate("1.25x");
                         break;
                     case 2:
-                        ijkVideoView.setSpeed(1.5f);
+                        player.setSpeed(1.5f);
                         controller.setCheckUpdate("1.5x");
                         break;
                     case 3:
-                        ijkVideoView.setSpeed(1.75f);
+                        player.setSpeed(1.75f);
                         controller.setCheckUpdate("1.75x");
                         break;
                     case 4:
-                        ijkVideoView.setSpeed(2.0f);
+                        player.setSpeed(2.0f);
                         controller.setCheckUpdate("2.0x");
                         break;
                     default:
-                        ijkVideoView.setSpeed(1.0f);
+                        player.setSpeed(1.0f);
                         controller.setCheckUpdate("1.0x");
                         break;
                 }
@@ -203,12 +211,11 @@ public class PlayerActivity extends AppCompatActivity {
         mPIPManager.pause();
     }
 
-
     @Override
     protected void onDestroy() {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_TITLE_KEY, title);
-        intent.putExtra(Params.LOCAL_PATH_KEY, url);
+        intent.putExtra(Params.PLAY_PATH_KEY, url);
         intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition() + "");
         intent.putExtra(Params.URL_MD5_KEY, urlMd5);
         intent.putExtra(Params.POST_IMG_KEY, poster);
@@ -229,11 +236,11 @@ public class PlayerActivity extends AppCompatActivity {
         @Override
         public void onAirPlay() {
 
-            if (TextUtils.isEmpty(path)){
+            if (TextUtils.isEmpty(path)) {
                 Toast.makeText(PlayerActivity.this, "投屏功能暂不可用", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if ( path.startsWith("https://") || path.startsWith("http://")&& dlanPresenter != null) {
+            if (path.startsWith("https://") || path.startsWith("http://") && dlanPresenter != null) {
                 dlanPresenter.showDialogTip(PlayerActivity.this, path, title);
             } else {
                 Toast.makeText(PlayerActivity.this, "已下载完成的视频,请到首页投屏助手观看", Toast.LENGTH_SHORT).show();
@@ -262,4 +269,14 @@ public class PlayerActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    CustomControler.OnItemClickedListener clickedListener = new CustomControler.OnItemClickedListener() {
+        @Override
+        public void clicked(String url) {
+            ijkVideoView.stopPlayback();
+            ijkVideoView.release();
+            ijkVideoView.setUrl(url);
+            ijkVideoView.start();
+        }
+    };
 }

@@ -1,5 +1,6 @@
 package dev.baofeng.com.supermovie.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * path dev.baofeng.com.supermovie.domain
  * description:
  */
-public class PlayUrlBean {
+public class PlayUrlBean implements Serializable{
 
 
     private List<M3u8Bean> m3u8;

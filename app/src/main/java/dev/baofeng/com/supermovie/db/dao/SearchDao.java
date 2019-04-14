@@ -32,6 +32,11 @@ public interface SearchDao {
     @Query("SELECT * FROM T_SEARCH WHERE  searchKeyWords=:keyword ")
     List<SearchHistory> getByKeywords(String keyword);
 
+    @Query("SELECT * FROM T_ONLINE_SEARCH WHERE  searchKeyWords=:keyword ")
+    List<OnlineSearchHistory> getOnlineByKeywords(String keyword);
+
+
+
     @Insert
     void insertOnline(OnlineSearchHistory searchHistory);
 }

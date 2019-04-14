@@ -26,6 +26,7 @@ public class GlobalMsg {
     public static final String KEY_IS_MOVIE = "KEY_IS_MOVIE";
     public static final int MOVIE = 0;
     public static final String KEY_BLUR_COLOR = "KEY_BLUR_COLOR";
+    public static final String CONTENT_M3U8 = "content_online";
 
     public static boolean ISSHOW = false;
 

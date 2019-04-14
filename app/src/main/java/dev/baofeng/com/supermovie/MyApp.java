@@ -9,7 +9,6 @@ import android.util.Log;
 import com.huangyong.downloadlib.TaskLibHelper;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.playerlib.PlayerApplication;
-import com.mob.MobSDK;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.youngfeng.snake.Snake;
@@ -45,9 +44,6 @@ public class MyApp extends Application{
         Snake.init(this);
         //初始化缓存管理
         initCache();
-
-
-        MobSDK.init(this);
         //初始化友盟统计
         UMConfigure.init(this, Params.UMENG_KEY, "zmovie",  UMConfigure.DEVICE_TYPE_PHONE, "");
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。

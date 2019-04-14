@@ -141,7 +141,7 @@
                     android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:background="#fff"
+                    android:background="@android:color/transparent"
                     app:tabIndicatorHeight="3dp"
                     app:indicatorStartColor="#303030"
                     app:indicatorEndColor="#292929"

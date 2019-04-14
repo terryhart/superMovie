@@ -2,6 +2,7 @@ package dev.baofeng.com.supermovie.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +48,16 @@ public class OnlineXunleiAdapter extends RecyclerView.Adapter<OnlinePlayHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.getPath(), poster, context.getApplicationContext());
+                String url = playList.getXunlei().get(position).getUrl();
+                String showText = url.substring(0, 10) + "......"+url.substring(url.length() - 18);
+                Snackbar.make(holder.itemView,"即将下载："+showText,Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TaskLibHelper.addNewTask(playList.getXunlei().get(position).getUrl(), Params.getPath(), poster, context.getApplicationContext());
 
-                ToastUtil.showMessage("下载任务已添加");
+                        ToastUtil.showMessage("下载任务已添加");
+                    }
+                }).show();
             }
         });
     }

@@ -14,7 +14,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
@@ -29,15 +28,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.huangyong.downloadlib.TaskLibHelper;
@@ -45,6 +44,7 @@ import com.huangyong.downloadlib.db.FavorDao;
 import com.huangyong.downloadlib.domain.FavorInfo;
 import com.huangyong.downloadlib.model.Params;
 import com.huangyong.downloadlib.utils.MD5Utils;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
@@ -59,9 +59,10 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.DetailAdapter;
 import dev.baofeng.com.supermovie.adapter.DownListAdapter;
 import dev.baofeng.com.supermovie.domain.DetailInfo;
+import dev.baofeng.com.supermovie.utils.ImageUtil;
+import dev.baofeng.com.supermovie.utils.PixUtil;
 import dev.baofeng.com.supermovie.utils.ToastUtil;
 import dev.baofeng.com.supermovie.view.widget.GlideSimpleLoader;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static dev.baofeng.com.supermovie.utils.ColorHelper.colorBurn;
 
@@ -103,6 +104,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     private ImageView back;
     private CardView posterbg;
     private ImageWatcherHelper iwHelper;
+    private StringBuffer shortDesc;
+    private Bitmap posterBitmap;
+    private int barColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,17 +166,23 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
-                ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
+
+                /*ShareEntity testBean = new ShareEntity(title, "看电影，更方便");
                 testBean.setContent("热门电影，美剧，海量资源每日更新");
                 testBean.setImgUrl(posterImagUrl);
                 testBean.setDrawableId(R.mipmap.icon_share);
                 try {
                     String url = "https://hiliving.github.io/?id=" + md5Id;
+                    Log.e("testlocadsha",url);
                 testBean.setUrl(url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);
+                ShareUtil.showShareDialog(MovieDetailActivity.this, testBean, ShareConstant.REQUEST_CODE);*/
+
+                //由于微信屏蔽GitHub链接，同时为了提高分享效率，所见即所得，决定改为海报分享
+                ShareMoviePicture();
+
                 break;
             case R.id.favorate:
                 toggleFavor(item);
@@ -181,6 +191,34 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 生成图片分享海报
+     */
+    private void ShareMoviePicture() {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.poster_layout, null,false);
+        view.setLayoutParams(new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
+        ImageView posterImg = view.findViewById(R.id.detail_poster);
+        TextView posterTitle = view.findViewById(R.id.imgTitle);
+        TextView posterDesc =  view.findViewById(R.id.desc_container);
+        posterTitle.setText(title);
+        posterDesc.setText("简介：\n"+mvdescTx.substring(mvdescTx.indexOf("介")+1).trim());
+        Bitmap poster = ImageUtil.getScreen(posterbg);
+        posterImg.setImageBitmap(poster);
+        ImageUtil.layoutView(view, (int) PixUtil.convertDpToPixel(360,this), getResources().getDisplayMetrics().heightPixels);
+
+        Bitmap screen = ImageUtil.getScreen(view);
+        if (screen ==null){
+            return;
+        }
+        ShareEntity testBean = new ShareEntity("","");
+        testBean.setShareBigImg(true);
+        String filePath = ShareUtil.saveBitmapToSDCard(this, screen);
+        testBean.setImgUrl(filePath);
+        int channel = ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND | ShareConstant.SHARE_CHANNEL_WEIXIN_CIRCLE | ShareConstant.SHARE_CHANNEL_SINA_WEIBO | ShareConstant.SHARE_CHANNEL_QQ;
+        ShareUtil.showShareDialog(this,channel,testBean, ShareConstant.REQUEST_CODE);
     }
 
 
@@ -196,6 +234,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         downItemList = downItemTitle.split(",");
 
 
+        shortDesc = new StringBuffer();
         if (posterUrl.contains(",")){
            String[] imgArr =  posterUrl.split(",");
             imgScreenShot = imgArr[1];
@@ -228,10 +267,10 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
 
         Glide.with(this).asBitmap().load(posterImagUrl).into(new SimpleTarget<Bitmap>() {
-
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 getColor(resource);
+                posterBitmap = resource;
             }
         });
 
@@ -243,12 +282,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         StringBuffer buffer = new StringBuffer();
         ArrayList<String> listDesc=new ArrayList<>();
         info = new DetailInfo();
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
 
         if (splitArr.length>5){
             for (int i = 1; i < 5; i++) {
@@ -274,12 +308,11 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
             info.setMvDesc(descBuffer.toString());
         }else {
             //详情介绍
-            StringBuffer shortDesc = new StringBuffer();
             for (int i = 0; i < splitArr.length; i++) {
-
                 shortDesc.append(splitArr[i]);
             }
             info.setMvDesc(shortDesc.toString());
+
         }
         sj = info.getMvDesc();
         if (sj.contains("◎")) {
@@ -304,15 +337,9 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
         downLoadList = new ArrayList<>();
         downLoadList.add(info);
         detailAdapter = new DetailAdapter(downItemList, downLoadList, this);
-        DownListAdapter dialogAdapter = new DownListAdapter(downItemList, downLoadList, this);
         recyclerView.setAdapter(detailAdapter);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomSheetDialog();
-            }
-        });
+        fab.setOnClickListener(view -> showBottomSheetDialog());
     }
 
 
@@ -415,7 +442,8 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
                         if (Build.VERSION.SDK_INT >= 21) {
                             Window window = getWindow();
                             window.setStatusBarColor(colorBurn(vibrant.getRgb()));
-                            window.setNavigationBarColor(colorBurn(vibrant.getRgb()));
+                            barColor = colorBurn(vibrant.getRgb());
+                            window.setNavigationBarColor(barColor);
                         }
                     }
                 }
@@ -437,18 +465,19 @@ public class MovieDetailActivity extends AppCompatActivity implements OnItemClic
 
     private void handleList(View bottomSheetInternal) {
 
-        RecyclerView recyclerView = bottomSheetInternal.findViewById(R.id.down_rv_list);
+        XRecyclerView recyclerView = bottomSheetInternal.findViewById(R.id.down_rv_list);
+        recyclerView.setPullRefreshEnabled(false);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    root.requestDisallowInterceptTouchEvent(false);
-                }
-                return false;
-            }
-        });
+//        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    root.requestDisallowInterceptTouchEvent(false);
+//                }
+//                return false;
+//            }
+//        });
         recyclerView.setLayoutManager(manager);
         DownListAdapter dialogAdapter = new DownListAdapter(downItemList, downLoadList, this);
         recyclerView.setAdapter(dialogAdapter);

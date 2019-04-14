@@ -41,7 +41,11 @@ public class DbHelper {
         return byKeywords != null && byKeywords.size() > 0;
     }
 
+    public static boolean checkOnlineKeyWords(String keyword) {
 
+        ArrayList<OnlineSearchHistory> byKeywords = (ArrayList<OnlineSearchHistory>) AppDatabase.getInstance(MyApp.getContext()).searchDao().getOnlineByKeywords(keyword);
+        return byKeywords != null && byKeywords.size() > 0;
+    }
     public static void addKeywords(String keyword) {
         ArrayList<SearchHistory> allHistory = getAllHistory();
         if (allHistory.size() > 16) {

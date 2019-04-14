@@ -82,7 +82,7 @@
     </style>
 
     <style name="CustomTablayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 

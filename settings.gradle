@@ -1,4 +1,4 @@
 include ':app', ':modules:thunder', ':modules:downloadlib', ':modules:playerlib', ':modules:dlanlib',
-        ':modules:vivideo', ':modules:AopLib', ':modules:common', ':modules:pagelayout-java',
+        ':modules:webview', ':modules:AopLib', ':modules:common', ':modules:pagelayout-java',
         ':modules:dkplayer-java', ':modules:filepicker'
 

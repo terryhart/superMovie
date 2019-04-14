@@ -45,4 +45,6 @@ dependencies {
     api 'com.github.hiliving:tablayout-android:1.0.1'
 
     api 'com.github.Jay-Goo:RangeSeekBar:2.0.6'
+
+    api 'com.jcodecraeer:xrecyclerview:1.5.9'
 }

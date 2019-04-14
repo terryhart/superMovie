@@ -22,7 +22,6 @@ import dev.baofeng.com.supermovie.holder.SecondHolder;
 import dev.baofeng.com.supermovie.http.UrlConfig;
 import dev.baofeng.com.supermovie.view.GlobalMsg;
 import dev.baofeng.com.supermovie.view.online.detail.OnlineDetailPageActivity;
-import retrofit2.http.Url;
 
 /**
  * Created by huangyong on 2018/2/11.
@@ -102,7 +101,6 @@ public class OnlineSearchAdapter extends RecyclerView.Adapter {
                 }
             }
         }
-        Log.e("getmovie", movieType + "--" + classType);
         Intent intent = new Intent(context, OnlineDetailPageActivity.class);
         intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
         intent.putExtra(GlobalMsg.KEY_DOWN_URL, datas.getData().get(position).getDownLoadUrl());

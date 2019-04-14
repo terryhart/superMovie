@@ -4,11 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.LayoutDirection;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +33,7 @@ import dev.baofeng.com.supermovie.presenter.UpdateAppPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IShare;
 import dev.baofeng.com.supermovie.presenter.iview.IupdateView;
 import app.huangyong.com.common.SharePreferencesUtil;
+import dev.baofeng.com.supermovie.utils.Util;
 import dev.baofeng.com.supermovie.view.BTFragment;
 import dev.baofeng.com.supermovie.view.CenterFragment;
 import dev.baofeng.com.supermovie.view.SubjectFragment;
@@ -251,4 +259,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
+    /**
+     * 再按一次退出
+     */
+    private long mExitTime = 0;
+    @Override
+    public void onBackPressed() {
+
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            Snackbar snackbar = Snackbar.make(content, "再按一次退出噢~", Toast.LENGTH_SHORT);
+            snackbar.show();
+            mExitTime = System.currentTimeMillis();
+        }else {
+            super.onBackPressed();
+        }
+
+    }
 }

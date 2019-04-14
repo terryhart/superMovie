@@ -166,7 +166,6 @@ public class OnlineSearchActivity extends AppCompatActivity implements IOnlineSe
         if (presenter.keywordsExist(keyword)) {
             return;
         } else {
-
             presenter.addKeyWordsTodb(keyword);
             initSearchHistory();
         }

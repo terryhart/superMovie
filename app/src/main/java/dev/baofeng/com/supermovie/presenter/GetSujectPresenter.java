@@ -96,6 +96,9 @@ public class GetSujectPresenter extends BasePresenter<ISubjectView>{
                     @Override
                     public void onSuccess(SubjectTitleInfo data) {
                         iview.loadMore(data);
+                        if (data.getData().size()==0){
+                            iview.loadError("no");
+                        }
                     }
 
                     @Override

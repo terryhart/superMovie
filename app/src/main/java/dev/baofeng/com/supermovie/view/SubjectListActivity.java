@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.model.Params;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +40,7 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 public class SubjectListActivity extends AppCompatActivity implements ISubjectView {
 
     @BindView(R.id.rv_subcat_list)
-    RecyclerView rvSubcatList;
+    XRecyclerView rvSubcatList;
     @BindView(R.id.subTitle)
     TextView subTitle;
     private GetSujectPresenter presenter;
@@ -62,6 +64,27 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         index = 1;
         presenter.getSubject(index, 18, titleType);
 
+        rvSubcatList.getDefaultFootView().setLoadingHint("正在加载请稍后");
+        rvSubcatList.getDefaultFootView().setNoMoreHint("已经到底了");
+        rvSubcatList.setLimitNumberToCallLoadMore(2);
+        rvSubcatList.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvSubcatList.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvSubcatList.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                rvSubcatList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvSubcatList.refreshComplete();
+                    }
+                },2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                presenter.getMoreData(++index, 18, titleType);
+            }
+        });
     }
 
     @Override
@@ -74,22 +97,13 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         rvSubcatList.setLayoutManager(new GridLayoutManager(this, 3));
         rvSubcatList.setAdapter(adapter);
 
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setShowNoMoreEnabled(true)
-                .setNoMoreView(R.layout.base_no_more)
-                .setListener(enabled -> rvSubcatList.postDelayed(() -> presenter.getMoreData(++index, 18, titleType), 1))
-                .into(rvSubcatList);
     }
 
 
 
     @Override
     public void loadError(String msg) {
-
-        LoadMoreWrapper.with(adapter).setLoadMoreEnabled(false);
-
-        Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+        rvSubcatList.setNoMore(true);
     }
 
     @Override
@@ -98,6 +112,7 @@ public class SubjectListActivity extends AppCompatActivity implements ISubjectVi
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+        rvSubcatList.loadMoreComplete();
     }
 
     @Override

@@ -35,13 +35,8 @@ public class DownListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.context = parent.getContext();
-        if (viewType==1){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.down_list_head_item,null);
-            return new ListHeadHolder(view);
-        }else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.down_item,null);
-            return new DownHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.down_item,null);
+        return new DownHolder(view);
     }
 
     @Override
@@ -52,15 +47,15 @@ public class DownListAdapter extends RecyclerView.Adapter {
 
             }
             if (holder instanceof DownHolder){
-                String downUrl = infos.get(0).getDownUrl().get(position-1);
+                String downUrl = infos.get(0).getDownUrl().get(position);
                 if (downUrl.contains("ed2k")){
-                    ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position-1]);
+                    ((DownHolder) holder).tvdown.setText("电驴下载"+"\n"+downItemList[position]);
                     Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
                 }else if (downUrl.contains("magnet")){
-                    ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position-1]);
+                    ((DownHolder) holder).tvdown.setText("磁力下载"+"\n"+downItemList[position]);
                     Glide.with(context).load(R.drawable.ic_dl_torrent).into(((DownHolder) holder).donwIconPic);
                 }else if (downUrl.contains("thunder")){
-                    ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position-1]);
+                    ((DownHolder) holder).tvdown.setText("迅雷下载"+"\n"+downItemList[position]);
                     Glide.with(context).load(R.drawable.share_ic_task_file_mp4).into(((DownHolder) holder).donwIconPic);
                 }
 
@@ -68,7 +63,7 @@ public class DownListAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View view) {
                         if (listenr !=null){
-                            listenr.clicked(infos.get(0).getDownUrl().get(position-1),infos.get(0).getImgUrl());
+                            listenr.clicked(infos.get(0).getDownUrl().get(position),infos.get(0).getImgUrl());
                         }
                     }
                 });
@@ -78,15 +73,7 @@ public class DownListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 1+infos.get(0).getDownUrl().size();
+        return infos.get(0).getDownUrl().size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position==0){
-            return 1;
-        }else {
-            return 2;
-        }
-    }
 }

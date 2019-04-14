@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -39,12 +40,16 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
+import com.huangyong.downloadlib.db.FavorDao;
+import com.huangyong.downloadlib.domain.FavorInfo;
+import com.huangyong.downloadlib.utils.MD5Utils;
 import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +94,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     @BindView(R.id.m3u8_title)
     TextView m3u8Title;
     @BindView(R.id.play_list2)
-    RecyclerView playList2;
+    RecyclerView m3u8List;
     @BindView(R.id.weburl_title)
     TextView weburlTitle;
     @BindView(R.id.rec_title)
@@ -155,6 +160,23 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!TextUtils.isEmpty(downUrl)) {
+            MenuItem item = menu.findItem(R.id.favorate);
+            FavorDao dao = FavorDao.getInstance(getApplicationContext());
+            String md5 = MD5Utils.stringToMD5(downUrl);
+            List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+            if (favorInfos != null && favorInfos.size() > 0) {
+                item.setIcon(R.drawable.ic_favorite_black_24dp);
+            } else {
+                item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+            }
+
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
@@ -177,11 +199,53 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 ShareUtil.showShareDialog(OnlineDetailPageActivity.this, testBean, ShareConstant.REQUEST_CODE);
                 break;
             case R.id.favorate:
+                toggleFavor(item);
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 添加或取消收藏
+     * @param item
+     */
+    private void toggleFavor(MenuItem item) {
+
+        FavorDao dao = FavorDao.getInstance(getApplicationContext());
+        String md5 = MD5Utils.stringToMD5(downUrl);
+        List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+        if (favorInfos!=null&&favorInfos.size()>0){
+            dao.delete(favorInfos.get(0).getId());
+            Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+            item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+
+        }else {
+            FavorInfo info = new FavorInfo();
+            //详情
+            info.setMovieDesc(movDescription);
+            //海报
+            info.setPostImgUrl(posterUrl);
+            //标题
+            info.setTitle(title);
+            //下载地址集合
+            info.setDownload_url(downUrl);
+            //唯一标签
+            info.setUrlMd5(md5);
+            //下载列表标题（好像没用到）
+            info.setDownItemTitle(downItemTitle);
+            //资源类型，区分离线还是在线
+            info.setContent_type(GlobalMsg.CONTENT_M3U8);
+            //资源类型，区分电视剧还是电影
+            info.setIs_movie(isMovie+"");
+            //影片分类key，根据这个type去请求不同分类的资源
+            info.setMovie_type(mvType);
+            dao.add(info);
+            Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();
+            item.setIcon(R.drawable.ic_favorite_black_24dp);
+        }
+
     }
 
     private void initThemeColor() {
@@ -313,31 +377,6 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     private void initPlayerData() {
 
         playUrlBean = gson.fromJson(downUrl, PlayUrlBean.class);
-        ArrayList<String> playM3u8List = new ArrayList<>();
-        ArrayList<String> playXunleiUrlList = new ArrayList<>();
-
-
-        for (int i = 0; i < playUrlBean.getXunlei().size(); i++) {
-            if (playUrlBean.getNormal().size() == 1) {
-                playXunleiUrlList.add("web");
-            } else {
-                playXunleiUrlList.add((i + 1) + "");
-            }
-        }
-        for (int i = 0; i < playUrlBean.getM3u8().size(); i++) {
-            if (playUrlBean.getM3u8().size() == 1) {
-                playM3u8List.add("播放");
-            } else {
-                if (playUrlBean.getM3u8().size() > 10) {
-                    playM3u8List.add((i + 1) + "");
-                    if (i == 9) {
-                        break;
-                    }
-                }
-            }
-
-        }
-
         OnlineXunleiAdapter adapter = new OnlineXunleiAdapter(posterUrl, playUrlBean);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -345,16 +384,16 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
         playList.setAdapter(adapter);
 
         OnlinePlayM3u8Adapter adapter2 = new OnlinePlayM3u8Adapter(this, playUrlBean, posterUrl, title);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        playList2.setLayoutManager(linearLayoutManager2);
-        playList2.setAdapter(adapter2);
+        LinearLayoutManager horizontalManager = new LinearLayoutManager(this);
+        horizontalManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        m3u8List.setLayoutManager(horizontalManager);
+        m3u8List.setAdapter(adapter2);
 
-        if (playM3u8List.size() == 0) {
-            playList2.setVisibility(View.GONE);
+        if (playUrlBean.getM3u8() != null && playUrlBean.getM3u8().size() == 0) {
+            m3u8List.setVisibility(View.GONE);
             m3u8Title.setVisibility(View.GONE);
         }
-        if (playXunleiUrlList.size() == 0) {
+        if (playUrlBean.getXunlei() != null && playUrlBean.getXunlei().size() == 0) {
             playList.setVisibility(View.GONE);
             weburlTitle.setVisibility(View.GONE);
         }
@@ -399,13 +438,7 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
 
     @Override
     public void loadRandomData(OnlinePlayInfo info) {
-//        recAdapter = new OnlineCategoryAdapter(OnlineDetailPageActivity.this, info, mvType, isMovie);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        recList.setLayoutManager(linearLayoutManager);
-//        recList.setAdapter(recAdapter);
-
-        PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this,info,isMovie,mvType);
+        PieRandomAdapter adapter = new PieRandomAdapter(OnlineDetailPageActivity.this, info, isMovie, mvType);
         pieContainer.setAdapter(adapter);
     }
 

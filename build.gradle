@@ -11,8 +11,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.0.0'
 
         classpath 'org.aspectj:aspectjtools:1.8.13'
-        // 注册MobSDK
-        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -29,14 +27,10 @@ allprojects {
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
         maven { url 'https://dl.bintray.com/jenly/maven' }
-        maven { url "http://mvn.mob.com/android" }
         jcenter(){"http://jcenter.bintray.com"}
         maven {
             url 'http://4thline.org/m2'
         }
-//        maven {
-//            url "http://117.78.40.97:9003/nexus/content/repositories/releases/"
-//        }
     }
 }
 
