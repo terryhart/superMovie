@@ -101,7 +101,6 @@ public class OnlineSearchAdapter extends RecyclerView.Adapter {
                 }
             }
         }
-        Log.e("getmovie", movieType + "--" + classType);
         Intent intent = new Intent(context, OnlineDetailPageActivity.class);
         intent.putExtra(GlobalMsg.KEY_POST_IMG, imgUrl);
         intent.putExtra(GlobalMsg.KEY_DOWN_URL, datas.getData().get(position).getDownLoadUrl());

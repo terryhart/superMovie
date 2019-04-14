@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +18,9 @@ import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.domain.PlayUrlBean;
 import dev.baofeng.com.supermovie.holder.OnlinePlayHolder;
 
-import com.huangyong.playerlib.Params;
-import com.huangyong.playerlib.PlayerActivity;
+import com.huangyong.downloadlib.utils.MD5Utils;
+import com.huangyong.playerlib.OnlinePlayerActivity;
+import com.huangyong.playerlib.PlayKey;
 import com.huangyong.playerlib.model.M3u8Bean;
 
 import java.io.Serializable;
@@ -64,9 +63,7 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showListDialog(playList.getM3u8().get(position).getUrl(),position);
-
             }
         });
     }
@@ -94,11 +91,6 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
         listDialog.setItems(listItems, (dialog, which) -> {
 
             if (which == 0) {
-
-//                for (int i = 0; i < playList.getM3u8().size(); i++) {
-//                    playUrlList.put(i,playList.getM3u8().get(i).getUrl());
-//
-//                }
                 List<M3u8Bean> list = new ArrayList<>();
                 for (int i = 0; i < playList.getM3u8().size(); i++) {
                     M3u8Bean m3u8Bean = new M3u8Bean();
@@ -108,14 +100,17 @@ public class OnlinePlayM3u8Adapter extends RecyclerView.Adapter<OnlinePlayHolder
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(Params.CURRENT_INDEX,position);
-                bundle.putSerializable(Params.PALY_LIST_URL, (Serializable) list);
+                bundle.putInt(PlayKey.CURRENT_INDEX,position);
+                bundle.putSerializable(PlayKey.PALY_LIST_URL, (Serializable) list);
 
-                Intent intent = new Intent(context, PlayerActivity.class);
-                intent.putExtra(com.huangyong.downloadlib.model.Params.PROXY_PALY_URL, url);
-                intent.putExtra(Params.PALY_LIST_URL,bundle);
-                intent.putExtra(com.huangyong.downloadlib.model.Params.POST_IMG_KEY, poster);
-                intent.putExtra(com.huangyong.downloadlib.model.Params.TASK_TITLE_KEY, title);
+                Intent intent = new Intent(context, OnlinePlayerActivity.class);
+                intent.putExtra(PlayKey.PLAY_PATH_KEY, url);
+                intent.putExtra(PlayKey.PALY_LIST_URL,bundle);
+                intent.putExtra(PlayKey.POSTER_IMG_KEY, poster);
+                intent.putExtra(PlayKey.PLAY_TITLE_KEY, title);
+                intent.putExtra(PlayKey.URL_MD5_KEY, MD5Utils.stringToMD5(url));
+                //在线资源类型，历史记录需要
+                intent.putExtra(PlayKey.CENTENT_TYPE,PlayKey.CONTENT_M3U8);
                 context.startActivity(intent);
             }
             if (which == 1) {

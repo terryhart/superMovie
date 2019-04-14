@@ -34,6 +34,9 @@
 
     <drawable name="image_default">#454545</drawable>
 
+
+
+
     <!-- 系统配色 -->
     <color name="theme_dark">#262734</color>
     <!-- 标题栏的颜色 -->

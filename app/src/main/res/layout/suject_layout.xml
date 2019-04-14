@@ -23,7 +23,7 @@
             android:textSize="16sp"
             />
     </android.support.v7.widget.Toolbar>
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:layout_width="match_parent"
         android:id="@+id/rv_suject_list"
         android:layout_marginBottom="60dp"

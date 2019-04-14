@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/his_pic"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,19 +19,12 @@
             android:layout_marginLeft="20dp"
             android:textSize="16sp"
             />
-        <Button
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:backgroundTint="#fff"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/clear_shap"
-            android:id="@+id/clearFavor"
-            />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="2dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_marginBottom="4dp"
         android:id="@+id/rv_favor_list"
         android:layout_height="match_parent"/>

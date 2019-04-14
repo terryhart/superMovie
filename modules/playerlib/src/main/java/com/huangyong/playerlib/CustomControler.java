@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
@@ -97,8 +98,20 @@ public class CustomControler extends GestureVideoController implements View.OnCl
     private AnyLayer anyLayer;
     private TextView netSpeed;
     private RelativeLayout loadingContainer;
+    private NetSpeedUtil util;
+    private TextView tvSpeed;
 
+    Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==111){
+                refreshNetSpeed();
+                handler.sendEmptyMessageDelayed(111,1000);
+            }
 
+        }
+    };
 
     public CustomControler(@NonNull Context context) {
         this(context, null);
@@ -144,6 +157,8 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         loadingContainer = mControllerView.findViewById(R.id.loading_content);
         netSpeed = mControllerView.findViewById(R.id.net_speed);
         mBottomProgress = mControllerView.findViewById(R.id.bottom_progress);
+        tvSpeed = mControllerView.findViewById(R.id.net_speed_tv);
+
         ImageView rePlayButton = mControllerView.findViewById(R.id.iv_replay);
         rePlayButton.setOnClickListener(this);
         mCompleteContainer = mControllerView.findViewById(R.id.complete_container);
@@ -163,7 +178,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         mRefreshButton.setOnClickListener(this);
         speedDialog = new SpeedDialog(getContext());
 
-
+        util = new NetSpeedUtil();
     }
 
 
@@ -320,7 +335,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 mVideoProgress.setSecondaryProgress(0);
                 mCompleteContainer.setVisibility(View.GONE);
                 mBottomProgress.setVisibility(View.GONE);
-                loadingContainer.setVisibility(View.GONE);
+                hideLoadingContent();
                 mStartPlayButton.setVisibility(View.VISIBLE);
                 mThumb.setVisibility(View.VISIBLE);
                 break;
@@ -328,7 +343,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 L.e("STATE_PLAYING");
                 post(mShowProgress);
                 mPlayButton.setSelected(true);
-                loadingContainer.setVisibility(View.GONE);
+                hideLoadingContent();
                 mCompleteContainer.setVisibility(View.GONE);
                 mThumb.setVisibility(View.GONE);
                 mStartPlayButton.setVisibility(View.GONE);
@@ -342,7 +357,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 L.e("STATE_PREPARING");
                 mCompleteContainer.setVisibility(View.GONE);
                 mStartPlayButton.setVisibility(View.GONE);
-                loadingContainer.setVisibility(View.VISIBLE);
+                showLoadingContent();
 //                mThumb.setVisibility(View.VISIBLE);
                 break;
             case IjkVideoView.STATE_PREPARED:
@@ -354,7 +369,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             case IjkVideoView.STATE_ERROR:
                 L.e("STATE_ERROR");
                 mStartPlayButton.setVisibility(View.GONE);
-                loadingContainer.setVisibility(View.GONE);
+                hideLoadingContent();
                 mThumb.setVisibility(View.GONE);
                 mBottomProgress.setVisibility(View.GONE);
                 mTopContainer.setVisibility(View.GONE);
@@ -362,11 +377,11 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             case IjkVideoView.STATE_BUFFERING:
                 L.e("STATE_BUFFERING");
                 mStartPlayButton.setVisibility(View.GONE);
-                loadingContainer.setVisibility(View.VISIBLE);
+                showLoadingContent();
                 mThumb.setVisibility(View.GONE);
                 break;
             case IjkVideoView.STATE_BUFFERED:
-                loadingContainer.setVisibility(View.GONE);
+                hideLoadingContent();
                 mStartPlayButton.setVisibility(View.GONE);
                 mThumb.setVisibility(View.GONE);
                 L.e("STATE_BUFFERED");
@@ -384,6 +399,25 @@ public class CustomControler extends GestureVideoController implements View.OnCl
                 mMediaPlayer.setLock(false);
                 break;
         }
+    }
+
+    /**
+     * 显示loading
+     */
+    private void showLoadingContent() {
+        loadingContainer.setVisibility(View.VISIBLE);
+        //开始获取网速
+        refreshNetSpeed();
+        handler.sendEmptyMessage(111);
+    }
+
+    /**
+     * 隐藏loading
+     */
+    private void hideLoadingContent() {
+        loadingContainer.setVisibility(View.GONE);
+        mLoadingProgress.clearAnimation();
+        handler.removeCallbacksAndMessages(null);
     }
 
     protected void doLockUnlock() {
@@ -441,8 +475,9 @@ public class CustomControler extends GestureVideoController implements View.OnCl
 
         long duration = mMediaPlayer.getDuration();
         long newPosition = (duration * progress) / mVideoProgress.getMax();
-        if (mCurrTime != null)
+        if (mCurrTime != null){
             mCurrTime.setText(stringForTime((int) newPosition));
+        }
     }
 
     @Override
@@ -475,6 +510,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
             choseList.setVisibility(GONE);
             choseList.startAnimation(mHideAnim);
         }
+
     }
 
     private void show(int timeout) {
@@ -557,7 +593,20 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         if (mCurrTime != null)
             mCurrTime.setText(stringForTime(position));
 
+
+        refreshNetSpeed();
         return position;
+    }
+
+    /**
+     * 刷新网速
+     */
+    private void refreshNetSpeed() {
+        if (util==null){
+            util = new NetSpeedUtil();
+        }
+        String netSpeeds = util.getNetSpeed(getContext());
+        tvSpeed.setText(netSpeeds);
     }
 
 

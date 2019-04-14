@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -39,12 +40,16 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.ctetin.expandabletextviewlibrary.ExpandableTextView;
 import com.google.gson.Gson;
+import com.huangyong.downloadlib.db.FavorDao;
+import com.huangyong.downloadlib.domain.FavorInfo;
+import com.huangyong.downloadlib.utils.MD5Utils;
 import com.xyzlf.share.library.bean.ShareEntity;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.util.ShareUtil;
 import com.youngfeng.snake.annotations.EnableDragToClose;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,6 +160,23 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!TextUtils.isEmpty(downUrl)) {
+            MenuItem item = menu.findItem(R.id.favorate);
+            FavorDao dao = FavorDao.getInstance(getApplicationContext());
+            String md5 = MD5Utils.stringToMD5(downUrl);
+            List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+            if (favorInfos != null && favorInfos.size() > 0) {
+                item.setIcon(R.drawable.ic_favorite_black_24dp);
+            } else {
+                item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+            }
+
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shares:
@@ -177,11 +199,53 @@ public class OnlineDetailPageActivity extends AppCompatActivity implements IRand
                 ShareUtil.showShareDialog(OnlineDetailPageActivity.this, testBean, ShareConstant.REQUEST_CODE);
                 break;
             case R.id.favorate:
+                toggleFavor(item);
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 添加或取消收藏
+     * @param item
+     */
+    private void toggleFavor(MenuItem item) {
+
+        FavorDao dao = FavorDao.getInstance(getApplicationContext());
+        String md5 = MD5Utils.stringToMD5(downUrl);
+        List<FavorInfo> favorInfos = dao.queryForFeilds("urlMd5", md5);
+        if (favorInfos!=null&&favorInfos.size()>0){
+            dao.delete(favorInfos.get(0).getId());
+            Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+            item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+
+        }else {
+            FavorInfo info = new FavorInfo();
+            //详情
+            info.setMovieDesc(movDescription);
+            //海报
+            info.setPostImgUrl(posterUrl);
+            //标题
+            info.setTitle(title);
+            //下载地址集合
+            info.setDownload_url(downUrl);
+            //唯一标签
+            info.setUrlMd5(md5);
+            //下载列表标题（好像没用到）
+            info.setDownItemTitle(downItemTitle);
+            //资源类型，区分离线还是在线
+            info.setContent_type(GlobalMsg.CONTENT_M3U8);
+            //资源类型，区分电视剧还是电影
+            info.setIs_movie(isMovie+"");
+            //影片分类key，根据这个type去请求不同分类的资源
+            info.setMovie_type(mvType);
+            dao.add(info);
+            Toast.makeText(this, "已添加收藏", Toast.LENGTH_SHORT).show();
+            item.setIcon(R.drawable.ic_favorite_black_24dp);
+        }
+
     }
 
     private void initThemeColor() {

@@ -42,7 +42,6 @@ public class SearchAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         String URLImg= info.getData().get(position).getDownimgurl().split(",")[0];
-        Log.e("slldldldld",URLImg);
         String name = info.getData().get(position).getDownLoadName();
         String downItemTitle = info.getData().get(position).getDowndtitle();
 

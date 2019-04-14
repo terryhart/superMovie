@@ -268,7 +268,7 @@ public class DownLoadMainActivity extends AppCompatActivity implements View.OnCl
         if (requestCode == REQUEST_CODE_CHOOSE) {
             ArrayList<EssFile> fileList = data.getParcelableArrayListExtra(com.ess.filepicker.util.Const.EXTRA_RESULT_SELECTION);
             if (!TextUtils.isEmpty(fileList.get(0).getAbsolutePath())) {
-                SharePreferencesUtil.setStringSharePreferences(this, Params.LOCAL_PATH_KEY, fileList.get(0).getName());
+                SharePreferencesUtil.setStringSharePreferences(this, Params.LOCAL_PATH_KEY, fileList.get(0).getAbsolutePath());
                 Toast.makeText(DownLoadMainActivity.this, "文件路径已更新", Toast.LENGTH_SHORT).show();
                 if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
                     TextView currentPath = bottomSheetDialog.findViewById(R.id.current_path);

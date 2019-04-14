@@ -11,7 +11,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:background="@drawable/live_voice"
+        android:background="@drawable/banner_pic3"
         android:elevation="12dp"
         app:elevation="12dp"
         android:fitsSystemWindows="true"

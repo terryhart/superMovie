@@ -43,13 +43,20 @@
             tools:text="这是一个标题" />
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="#fff"
+            android:layout_marginRight="20dp"
+            android:id="@+id/net_speed_tv"
+            android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/airplay"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:background="@drawable/ic_airplay" />
+            android:background="@drawable/dlan_pic" />
 
         <ImageView
             android:id="@+id/iv_battery"
@@ -106,7 +113,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_picture_in_picture_24dp"
+            android:background="@drawable/float_mode_pic"
             android:id="@+id/pic2pic"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
@@ -253,16 +260,17 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/loading_content"
         android:orientation="vertical"
+        android:background="@drawable/loading_shape"
         android:layout_height="match_parent">
 
         <com.github.ybq.android.spinkit.SpinKitView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/play_loading"
             style="@style/SpinKitView.Large.FadingCircle"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:progressDrawable="@drawable/dkplayer_layer_loading_bar"
             android:layout_centerInParent="true"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:padding="20dp"
             app:SpinKit_Color="@color/colorAccent" />
 
@@ -272,7 +280,7 @@
             android:textColor="#F6F3F3"
             android:gravity="center"
             android:textSize="15sp"
-            android:text="网速"
+            android:text=""
             android:layout_centerHorizontal="true"
             android:layout_marginTop="2dp"
             android:id="@+id/net_speed"

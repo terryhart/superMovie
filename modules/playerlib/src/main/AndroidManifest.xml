@@ -12,7 +12,10 @@
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".OnlinePlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape" />
         <activity
             android:name=".QsyPlayerActivity"
@@ -20,13 +23,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PlayerbaseActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".widget.PIPActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".widget.FloatWindowActivity"

@@ -2,8 +2,6 @@ package com.huangyong.playerlib;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,13 +10,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.dueeeke.videoplayer.player.AbstractPlayer;
 import com.dueeeke.videoplayer.player.IjkPlayer;
 import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.huangyong.playerlib.manager.PIPManager;
 import com.huangyong.playerlib.model.M3u8Bean;
-import com.huangyong.playerlib.util.NetSpeedUtil;
 import com.huangyong.playerlib.util.WindowPermissionCheck;
 import com.huangyong.playerlib.widget.AndroidMediaPlayer;
 
@@ -219,7 +215,7 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onDestroy() {
         Intent intent = new Intent();
         intent.putExtra(Params.TASK_TITLE_KEY, title);
-        intent.putExtra(Params.LOCAL_PATH_KEY, url);
+        intent.putExtra(Params.PLAY_PATH_KEY, url);
         intent.putExtra(Params.MOVIE_PROGRESS, ijkVideoView.getCurrentPosition() + "");
         intent.putExtra(Params.URL_MD5_KEY, urlMd5);
         intent.putExtra(Params.POST_IMG_KEY, poster);

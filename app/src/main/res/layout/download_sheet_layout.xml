@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/list_bg_shap"
-    android:id="@+id/bottome_sheet"
-    android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/down_rv_list"
-        app:behavior_hideable="true"
+    android:orientation="vertical">
+    <TextView
         android:layout_width="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:focusable="true"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/dp_60" />
-</android.support.v4.widget.NestedScrollView>
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="下载列表"
+        android:id="@+id/down_title"
+        />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/bottome_sheet"
+        android:layout_below="@+id/down_title"
+        android:layout_height="match_parent">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/down_rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="@dimen/dp_60"
+            app:behavior_hideable="true" />
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

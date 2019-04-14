@@ -6,10 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +35,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
 
     private static SubjectFragment subjectFragment;
     @BindView(R.id.rv_suject_list)
-    RecyclerView rvSujectList;
+    XRecyclerView rvSujectList;
     Unbinder unbinder;
     private GetSujectPresenter getSujectPresenter;
     private int index = 1;
@@ -64,6 +68,28 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
         getSujectPresenter = new GetSujectPresenter(getContext(), this);
         getSujectPresenter.getSubjectTitle(index, 12);
 
+
+        rvSujectList.getDefaultFootView().setLoadingHint("正在加载请稍后");
+        rvSujectList.getDefaultFootView().setNoMoreHint("已经到底了");
+        rvSujectList.setLimitNumberToCallLoadMore(2);
+        rvSujectList.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvSujectList.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvSujectList.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                rvSujectList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvSujectList.refreshComplete();
+                    }
+                },2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                getSujectPresenter.getMoreTitleData(++index,18);
+            }
+        });
     }
 
 
@@ -103,19 +129,13 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
             adapter = new SujectTitleAdapter(getContext(), infoList);
             rvSujectList.setLayoutManager(new LinearLayoutManager(getContext()));
             rvSujectList.setAdapter(adapter);
-            LoadMoreWrapper.with(adapter)
-                    .setLoadMoreEnabled(true)
-                    .setShowNoMoreEnabled(true)
-                    .setNoMoreView(R.layout.base_no_more)
-                    .setListener(enabled -> rvSujectList.postDelayed(() -> getSujectPresenter.getMoreTitleData(++index, 18), 1))
-                    .into(rvSujectList);
-
         }
 
     }
 
     @Override
     public void loadError(String msg) {
+        rvSujectList.setNoMore(true);
     }
 
     @Override
@@ -128,5 +148,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, I
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+        rvSujectList.loadMoreComplete();
     }
 }

@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mingle.widget.LoadingView;
 
 import butterknife.BindView;
@@ -33,7 +35,7 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 public class SerisListFragment extends Fragment implements IOnlineView {
     @BindView(R.id.rvlist)
-    RecyclerView rvlist;
+    XRecyclerView rvlist;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -71,6 +73,28 @@ public class SerisListFragment extends Fragment implements IOnlineView {
         recpresenter = new GetOnlinePresenter(getContext(), this);
         index = 1;
         recpresenter.getOnlineSerisData(type, index, 18);
+
+        rvlist.getDefaultFootView().setLoadingHint("正在加载请稍后");
+        rvlist.getDefaultFootView().setNoMoreHint("已经到底了");
+        rvlist.setLimitNumberToCallLoadMore(6);
+        rvlist.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvlist.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvlist.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                rvlist.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvlist.refreshComplete();
+                    }
+                },2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                recpresenter.getSerisMoreData(type, ++index, 18);
+            }
+        });
     }
 
     public static SerisListFragment newInstance(String type) {
@@ -127,20 +151,6 @@ public class SerisListFragment extends Fragment implements IOnlineView {
         adapter = new OnlineCategoryAdapter(getActivity(), movieBean, type, 1);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-        LoadMoreWrapper.with(adapter)
-                .setLoadMoreEnabled(true)
-                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                        rvlist.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                recpresenter.getSerisMoreData(type, ++index, 18);
-                            }
-                        }, 1);
-                    }
-                })
-                .into(rvlist);
         if (empFram.isShown()) {
             empFram.setVisibility(View.GONE);
         }
@@ -149,12 +159,7 @@ public class SerisListFragment extends Fragment implements IOnlineView {
     @Override
     public void loadError(String msg) {
         refreshRoot.setRefreshing(false);
-        empFram.setVisibility(View.VISIBLE);
-        empImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        rvlist.setNoMore(true);
     }
 
     @Override
@@ -164,5 +169,6 @@ public class SerisListFragment extends Fragment implements IOnlineView {
         if (empFram.isShown()) {
             empFram.setVisibility(View.GONE);
         }
+        rvlist.loadMoreComplete();
     }
 }

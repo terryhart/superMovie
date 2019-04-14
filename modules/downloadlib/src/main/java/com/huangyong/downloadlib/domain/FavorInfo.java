@@ -50,6 +50,54 @@ public class FavorInfo {
     @DatabaseField(columnName = "downItemTitle")
     private String downItemTitle;
 
+    @DatabaseField(columnName = "content_type")
+    private String content_type;
+
+
+
+    public String getMovie_type() {
+        return movie_type;
+    }
+
+    public void setMovie_type(String movie_type) {
+        this.movie_type = movie_type;
+    }
+
+    public String getIs_movie() {
+        return is_movie;
+    }
+
+    public void setIs_movie(String is_movie) {
+        this.is_movie = is_movie;
+    }
+
+    @DatabaseField(columnName = "is_movie")
+    private String is_movie;
+
+    @DatabaseField(columnName = "movie_type")
+    private String movie_type;
+
+    public String getDownload_url() {
+        return download_url;
+    }
+
+
+
+    public void setDownload_url(String download_url) {
+        this.download_url = download_url;
+    }
+
+    @DatabaseField(columnName = "download_url")
+    private String download_url;
+
+    public String getContent_type() {
+        return content_type;
+    }
+
+    public void setContent_type(String content_type) {
+        this.content_type = content_type;
+    }
+
     public String getDownItemTitle() {
         return downItemTitle;
     }

@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.mingle.widget.LoadingView;
 
 import butterknife.BindView;
@@ -34,7 +36,7 @@ import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 public class BtListFragment extends Fragment implements IAllView {
     @BindView(R.id.rvlist)
-    RecyclerView rvlist;
+    XRecyclerView rvlist;
     @BindView(R.id.empty_img)
     TextView empImg;
     @BindView(R.id.empty_view)
@@ -66,6 +68,23 @@ public class BtListFragment extends Fragment implements IAllView {
         recpresenter = new CenterPresenter(getContext(), this);
         index = 1;
         recpresenter.getLibraryDdata(type,index,18);
+
+        rvlist.setPullRefreshEnabled(false);
+        rvlist.getDefaultFootView().setLoadingHint("正在加载请稍后");
+        rvlist.getDefaultFootView().setNoMoreHint("已经到底了");
+        rvlist.setLimitNumberToCallLoadMore(2);
+        rvlist.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvlist.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvlist.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+            }
+
+            @Override
+            public void onLoadMore() {
+                recpresenter.getLibraryMoreDdata(type, ++index, 18);
+            }
+        });
     }
 
     public static BtListFragment newInstance(String type) {
@@ -137,20 +156,6 @@ public class BtListFragment extends Fragment implements IAllView {
             adapter =new BTcategoryAdapter(getContext(),movieBean);
             rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
             rvlist.setAdapter(adapter);
-            LoadMoreWrapper.with(adapter)
-                    .setLoadMoreEnabled(true)
-                    .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
-                        @Override
-                        public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
-                            rvlist.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    recpresenter.getLibraryMoreDdata(type, ++index, 18);
-                                }
-                            }, 1);
-                        }
-                    })
-                    .into(rvlist);
             if (empFram.isShown()){
                 empFram.setVisibility(View.GONE);
             }
@@ -165,6 +170,7 @@ public class BtListFragment extends Fragment implements IAllView {
         if (empFram.isShown()){
             empFram.setVisibility(View.GONE);
         }
+        rvlist.loadMoreComplete();
     }
 
     @Override
@@ -173,8 +179,10 @@ public class BtListFragment extends Fragment implements IAllView {
         empImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recpresenter.getLibraryDdata(type,1,18);
             }
         });
+        rvlist.setNoMore(true);
     }
 
 }

@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginLeft="18dp"
-    android:layout_marginRight="18dp"
-    android:paddingRight="6dp"
-    android:layout_marginTop="8dp"
-    app:cardCornerRadius="@dimen/dp_6"
-    app:cardElevation="@dimen/dp_6"
-    android:background="#19c3c1"
-    android:layout_marginBottom="5dp"
+    android:layout_marginTop="1dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp"
+    android:layout_marginBottom="8dp"
     android:layout_height="wrap_content"
+    android:layout_marginRight="2dp"
+    android:layout_marginLeft="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toBottomOf="@+id/sc_favor_title"
             android:id="@+id/sc_favor_img"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
             />
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="24dp"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:id="@+id/sc_favor_title"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sc_favor_img"
             android:textSize="12sp"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
-            android:textColor="#2a2a2a"
+            android:textColor="@color/titlecor"
             android:text="电影名字"
             />
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

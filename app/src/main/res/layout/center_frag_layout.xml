@@ -12,12 +12,14 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/live_voice_pw_bg_one"
+                android:layout_height="210dp"
+                android:background="@drawable/banner_pic3"
                 app:layout_collapseMode="parallax"
+                android:scaleType="fitCenter"
                 android:id="@+id/user_bg"
                 />
             <ImageView

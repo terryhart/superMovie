@@ -11,6 +11,7 @@ import android.util.Log;
 import com.huangyong.downloadlib.db.HistoryDao;
 import com.huangyong.downloadlib.domain.HistoryInfo;
 import com.huangyong.downloadlib.model.Params;
+import com.huangyong.playerlib.PlayKey;
 
 import java.util.List;
 
@@ -27,23 +28,22 @@ import java.util.List;
 public class LocalDataReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(Params.HISTORY_SAVE)){
+        if (intent.getAction().equals(PlayKey.HISTORY_SAVE)){
             //播放退出，保存观看信息
-            String title =intent.getStringExtra(Params.TASK_TITLE_KEY);
-            String path = intent.getStringExtra(Params.LOCAL_PATH_KEY);
-            String progress = intent.getStringExtra(Params.MOVIE_PROGRESS);
-            String urlMd5 = intent.getStringExtra(Params.URL_MD5_KEY);
-            Log.e("baocunjilu","progress"+progress);
-            String posterUrl = intent.getStringExtra(Params.POST_IMG_KEY);
+            String title =intent.getStringExtra(PlayKey.PLAY_TITLE_KEY);
+            String path = intent.getStringExtra(PlayKey.PLAY_PATH_KEY);
+            int originType = intent.getIntExtra(PlayKey.CENTENT_TYPE,0);
+            String progress = intent.getStringExtra(PlayKey.MOVIE_PROGRESS);
+            String urlMd5 = intent.getStringExtra(PlayKey.URL_MD5_KEY);
+            String posterUrl = intent.getStringExtra(PlayKey.POSTER_IMG_KEY);
             HistoryDao dao = HistoryDao.getInstance(context);
-            //更新本地数据
+            //更新本地数据,根据urlmd5去查询，理论上应该是唯一记录
             List<HistoryInfo> urlMd5Info = dao.queryForFeilds("urlMd5", urlMd5);
             if (urlMd5Info!=null&&urlMd5Info.size()>0){
                 //更新数据
                 urlMd5Info.get(0).setProgress(progress);
                 urlMd5Info.get(0).setLocalPath(path);
                 dao.updata(urlMd5Info.get(0));
-                Log.e("baocunjilu","更新数据baocunjilu");
             }else {
                 //插入新数据
                 HistoryInfo info = new HistoryInfo();
@@ -51,9 +51,10 @@ public class LocalDataReceiver extends BroadcastReceiver {
                 info.setTitle(title);
                 info.setPostImgUrl(posterUrl);
                 info.setProgress(progress);
+                info.setContent_type(String.valueOf(originType));
                 info.setLocalPath(path);
                 dao.add(info);
-                Log.e("baocunjilu","插入新电影数据baocunjilu");
+
             }
 
         }
