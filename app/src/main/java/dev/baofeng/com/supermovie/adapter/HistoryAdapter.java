@@ -40,9 +40,10 @@ public class HistoryAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<HistoryInfo> info;
 
-    public HistoryAdapter(Context context, List<HistoryInfo> info) {
+    public HistoryAdapter(Context context, List<HistoryInfo> info,OnItemLongClickListener longClickListener) {
         this.context = context;
         this.info = info;
+        this.clickListener = longClickListener;
     }
 
     @Override
@@ -102,6 +103,16 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             ((HistoryHolder) holder).timeProgress.setText("已观看" + formatDuring);
         }
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (clickListener!=null){
+                    clickListener.onItemLongClick(info.get(position).getId(),info,position);
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -109,6 +120,10 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         return info.size();
     }
 
+    private OnItemLongClickListener clickListener;
+    public interface OnItemLongClickListener{
+        void onItemLongClick(int id,List<HistoryInfo> historyInfos,int position);
+    }
 
     public void clear() {
         if (info.size() > 0)

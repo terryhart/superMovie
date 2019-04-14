@@ -106,7 +106,7 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what==111){
-                refreshNetSpeed();
+                loadNetSpeed();
                 handler.sendEmptyMessageDelayed(111,1000);
             }
 
@@ -605,8 +605,21 @@ public class CustomControler extends GestureVideoController implements View.OnCl
         if (util==null){
             util = new NetSpeedUtil();
         }
-        String netSpeeds = util.getNetSpeed(getContext());
-        tvSpeed.setText(netSpeeds);
+        if (tvSpeed.isShown()){
+            String netSpeeds = util.getNetSpeed(getContext());
+            tvSpeed.setText(netSpeeds);
+        }
+
+    }
+
+    private void loadNetSpeed(){
+        if (util==null){
+            util = new NetSpeedUtil();
+        }
+        if (netSpeed.isShown()){
+            String netSpeeds = util.getNetSpeed(getContext());
+            netSpeed.setText(netSpeeds);
+        }
     }
 
 

@@ -218,7 +218,8 @@ public class OnlinePlayerActivity extends AppCompatActivity {
         //用于区分是在线资源还是本地资源
         intent.putExtra(PlayKey.CENTENT_TYPE,PlayKey.CONTENT_M3U8);
         intent.putExtra(PlayKey.POSTER_IMG_KEY, poster);
-
+        //安卓8.0对广播要求必须显示注册
+        intent.setPackage("dev.baofeng.com.supermovie");
         intent.setAction(PlayKey.HISTORY_SAVE);
         sendBroadcast(intent);
 

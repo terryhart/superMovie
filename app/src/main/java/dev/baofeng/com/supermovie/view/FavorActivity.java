@@ -4,18 +4,12 @@ package dev.baofeng.com.supermovie.view;
  */
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.huangyong.downloadlib.db.FavorDao;
@@ -23,8 +17,6 @@ import com.huangyong.downloadlib.domain.FavorInfo;
 
 import java.util.List;
 
-import app.huangyong.com.common.widget.timeline.itemdecoration.DotItemDecoration;
-import app.huangyong.com.common.widget.timeline.itemdecoration.SpanIndexListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.baofeng.com.supermovie.R;

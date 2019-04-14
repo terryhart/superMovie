@@ -55,6 +55,7 @@ public class LocalDataReceiver extends BroadcastReceiver {
                 info.setLocalPath(path);
                 dao.add(info);
 
+
             }
 
         }

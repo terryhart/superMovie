@@ -21,7 +21,7 @@
             />
 
     </LinearLayout>
-    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:id="@+id/rv_his_list"
